@@ -1,4 +1,4 @@
-import type {Wholesale} from './wholesale.interface';
+import type { Wholesale } from './wholesale.interface';
 
 export interface Product {
     productId: string;

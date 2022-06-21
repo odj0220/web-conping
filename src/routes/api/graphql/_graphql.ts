@@ -1,8 +1,8 @@
 import { buildSchema, graphql } from 'graphql';
-import {list, product} from '../product/_product';
+import { list, product } from '../product/_product';
 
 export async function Graphql(query: string) {
-    const schema = buildSchema(`
+  const schema = buildSchema(`
 		type Wholesale {
             wholesaleStoreId: ID
 			address: String
@@ -44,20 +44,20 @@ export async function Graphql(query: string) {
   	    }
 	`);
 
-    const rootValue = {
-        products: async () => {
-            const result = await list();
-            return result;
-        },
-        product: async ({id}: {id:string}) => {
-            const result = await product(id);
-            return result;
-        }
-    }
+  const rootValue = {
+    products: async () => {
+      const result = await list();
+      return result;
+    },
+    product: async ({ id }: {id:string}) => {
+      const result = await product(id);
+      return result;
+    },
+  };
 
-    return graphql({
-        schema,
-        source: query,
-        rootValue
-    });
+  return graphql({
+    schema,
+    source: query,
+    rootValue,
+  });
 }
