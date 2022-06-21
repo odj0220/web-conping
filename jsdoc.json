@@ -1,0 +1,42 @@
+{
+  "sourceType": "module",
+  "source": {
+    "include": ["./src"],
+    "includePattern": "\\.(ts)$",
+    "excludePattern": "(node_modules|docs)"
+  },
+  "tags": {
+    "allowUnknownTags": ["category", "optional"]
+  },
+  "plugins": [
+    "node_modules/better-docs/category",
+    "node_modules/better-docs/typescript"
+  ],
+  "opts": {
+    "template": "./node_modules/better-docs",
+    "encoding": "utf8",
+    "destination": "docs",
+    "recurse": true,
+    "verbose": true
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false,
+    "search": true,
+    "better-docs": {
+      "name": "Sample Documentation",
+      "title": "Gollala Documentation",
+      "hideGenerator": false,
+      "navLinks": [
+        {
+          "label": "Github",
+          "href": "https://github.com/SoftwareBrothers/admin-bro"
+        },
+        {
+          "label": "Example Application",
+          "href": "https://admin-bro-example-app-staging.herokuapp.com/admin"
+        }
+      ]
+    }
+  }
+}
