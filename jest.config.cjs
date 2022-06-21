@@ -1,4 +1,7 @@
 module.exports = {
+    jest: {
+        verbose: true
+    },
     transform: {
         "^.+\\.svelte$": [
             "svelte-jester",
@@ -17,4 +20,5 @@ module.exports = {
             "<rootDir>/.svelte-kit/build/runtime/app$1",
         ],
     },
+    setupFilesAfterEnv: ["<rootDir>/jest-setup.ts"],
 };
