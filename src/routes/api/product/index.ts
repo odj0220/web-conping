@@ -1,7 +1,7 @@
-import {list} from './_product';
+import { list } from './_product';
 export async function get() {
-	const productList = await list();
-	return {
-		body: productList
-	}
+  const productList = await list();
+  return {
+    body: productList,
+  };
 }
