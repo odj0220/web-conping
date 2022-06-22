@@ -1,9 +1,14 @@
 import { product } from './_product';
+import type {RequestHandler} from '@sveltejs/kit';
 
-/** @type {import('./__types/[id]').RequestHandler} */
-export async function get({ params }: any) {
-  const response = await product(params.id);
+/**
+ * /api/product/{id} 호출시 상품 상세 정보 리턴
+ * @param {Record<string, string>} params
+ * @returns {Promise<{body: any}>}
+ */
+export const get:RequestHandler = async ({ params }) => {
+  const response: any = await product(params.id);
   return {
-    body: response,
+    body: response
   };
 }
