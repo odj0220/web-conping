@@ -10,7 +10,8 @@
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "eslint .",
-		"test": "jest"
+		"test": "jest",
+		"doc": "jsdoc -c jsdoc.json"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
@@ -20,10 +21,12 @@
 		"@types/jest": "^28.1.2",
 		"@typescript-eslint/eslint-plugin": "^5.27.0",
 		"@typescript-eslint/parser": "^5.27.0",
+		"better-docs": "^2.7.2",
 		"eslint": "^8.16.0",
 		"eslint-plugin-svelte3": "^4.0.0",
 		"jest": "^28.1.1",
 		"jest-environment-jsdom": "^28.1.1",
+		"jsdoc": "^3.6.10",
 		"sass": "^1.52.3",
 		"svelte": "^3.44.0",
 		"svelte-check": "^2.7.1",

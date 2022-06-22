@@ -1,0 +1,43 @@
+{
+  "sourceType": "module",
+  "source": {
+    "include": ["./src"],
+    "includePattern": "\\.(ts)$",
+    "excludePattern": "(node_modules|docs|src/__test)"
+  },
+  "tags": {
+    "allowUnknownTags": ["category", "optional"]
+  },
+  "plugins": [
+    "node_modules/jsdoc/plugins/markdown",
+    "node_modules/better-docs/category",
+    "node_modules/better-docs/typescript"
+  ],
+  "opts": {
+    "template": "./node_modules/better-docs",
+    "encoding": "utf8",
+    "destination": "docs",
+    "recurse": true,
+    "verbose": true
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false,
+    "search": true,
+    "better-docs": {
+      "name": "골라라 문서",
+      "title": "골라라 문서",
+      "hideGenerator": false,
+      "navLinks": [
+        {
+          "label": "Repository",
+          "href": "https://github.com/Gollala-Inc/tracer-ammunition-sveltekit"
+        },
+        {
+          "label": "Notion.so",
+          "href": "https://www.notion.so/gollala/Tracer-ammunition-sveltekit-434549f31b424f5f9d50b3024be0ac7e"
+        }
+      ]
+    }
+  }
+}
