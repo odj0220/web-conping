@@ -9,6 +9,7 @@
 ## Documetations
 - [함수 명세서](https://gollala-inc.github.io/tracer-ammunition-sveltekit/index.html)
 - [노션](https://www.notion.so/gollala/Tracer-ammunition-sveltekit-434549f31b424f5f9d50b3024be0ac7e)
+- [Page 구조 및 Mock, API](https://www.notion.so/gollala/Page-Mock-API-5b4d7da93a5b4757b406287a3d7e7d2a)
 
 ## Tech Requirement (Tech Stack)
 
