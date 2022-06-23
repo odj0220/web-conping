@@ -1,10 +1,11 @@
-FROM node:16.15.1 as build
+FROM node:16 as build
 COPY . ./app
 WORKDIR ./app
-RUN npm install -g npm@8.13.0
 RUN npm install
 RUN npm run build
 
-EXPOSE 80
+EXPOSE 3000
 
-CMD ["node", "build/index.js"]
+FROM build
+
+CMD ["npm", "run", "start"]

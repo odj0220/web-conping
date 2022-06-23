@@ -11,7 +11,8 @@
 		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "eslint .",
 		"test": "jest",
-		"doc": "jsdoc -c jsdoc.json & gh-pages -d docs"
+		"doc": "jsdoc -c jsdoc.json & gh-pages -d docs",
+		"start": "node build/index.js"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
