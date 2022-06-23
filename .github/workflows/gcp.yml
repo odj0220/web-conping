@@ -48,7 +48,7 @@ jobs:
         run: |-
           gcloud builds submit \
             --tag "asia-northeast3-docker.pkg.dev/$PROJECT_ID/$ARTIFACT_REGISTRY_REPO_NAME/$IMAGE" --timeout "2h15m5s"
-      - name: STG - Deploy to Cloud Run
+      - name: PROD - Deploy to Cloud Run
         id: deploy
         uses: google-github-actions/deploy-cloudrun@main
         with:
