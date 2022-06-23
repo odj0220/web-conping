@@ -42,12 +42,7 @@ jobs:
         run: |-
           echo "package.json version: $PACKAGE_VERSION"
           echo "version from git tag: $TAG"
-      - name: Test version match
-        if: ${{ env.TAG != env.PACKAGE_VERSION }}
-        run: |-
-          echo "Fail due to versions from package.json and git mismatch!"
-          echo "TAG is $TAG but PACKAGE_VERSION is $PACKAGE_VERSION"
-          exit 1
+
       # Build and Deploy Docker Image
       - name: PROD - Build
         run: |-
