@@ -15,8 +15,16 @@ jobs:
   test:
     name: PROD - Test Before Deploy to GCP
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
     steps:
-      - run: npm run test
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{matrix.node-version}}
+      - uses: actions/setup-node@v1
+      - run: npm i
+      - run: npm run build --if-present
+      - run: npm test
   deploy-to-artifact:
     needs: test
     name: PROD - Deploy to GCP
