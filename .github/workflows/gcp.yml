@@ -14,10 +14,10 @@ env:
 jobs:
   test:
     needs: build
+    name: PROD - Test Before Deploy to GCP
     runs-on: ubuntu-latest
     steps:
       - run: npm run test
-
   deploy-to-artifact:
     needs: test
     name: PROD - Deploy to GCP
