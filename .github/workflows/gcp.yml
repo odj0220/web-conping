@@ -12,7 +12,14 @@ env:
   ARTIFACT_REGISTRY_REPO_NAME: tracer-ammunition-sveltekit
 
 jobs:
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm run test
+
   deploy-to-artifact:
+    needs: test
     name: PROD - Deploy to GCP
     runs-on: ubuntu-latest
     environment: production
