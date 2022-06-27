@@ -2,13 +2,13 @@
  * @jest-environment jsdom
  */
 
-import { render } from "@testing-library/svelte";
-import Index from "./index.svelte";
+import { render } from '@testing-library/svelte';
+import Index from './index.svelte';
 
-describe("Home", () => {
+describe('Home', () => {
   const renderHomePage = () => render(Index);
 
-  it("renders titles", () => {
+  it('renders titles', () => {
     const { container } = renderHomePage();
 
     expect(container).toHaveTextContent('Welcome to SvelteKit');
