@@ -1,5 +1,9 @@
 import { buildSchema, graphql } from 'graphql';
 import { list, product } from '../product/_product';
+/*import { readFileSync } from 'fs';
+const contentsJson = readFileSync('./content.json', 'utf8');*/
+import contentsJson from '../../../../static/data/content.json';
+console.log(contentsJson);
 
 export async function Graphql(query: string) {
   const schema = buildSchema(`
@@ -27,20 +31,33 @@ export async function Graphql(query: string) {
 		type Product {
 			productId: ID!
             code: String!
-            createDt: Int!
+            createDt: Float!
             expired: Boolean
             imgPaths: [String]
             item: Category
             name: String!
             price: Int!
-            updateDt: Int
+            updateDt: Float
             wholesale: Wholesale
             similar: [Product]
+		}
+		
+		type Content {
+		  id: ID!
+          name: String!
+          programId: String
+          contentType: String
+          createDt: Float!
+          round: Int
+          description: String
+          url: String
+          thumb: String
 		}
 		
 		type Query {
 			products: [Product]
 			product(id:ID): Product
+			contents: [Content]
   	    }
 	`);
 
@@ -53,6 +70,9 @@ export async function Graphql(query: string) {
       const result = await product(id);
       return result;
     },
+    contents: () => {
+      return contentsJson;
+    }
   };
 
   return graphql({
