@@ -11,6 +11,9 @@ const config = {
     adapter: adapter({
       out: 'build'
     }),
+    alias: {
+      $component: 'src/components'
+    }
   },
 };
 
