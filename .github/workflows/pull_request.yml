@@ -1,0 +1,23 @@
+name: Pull Request
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  name: Run EsLint and Test
+  runs-on: ubuntu-latest
+  strategy:
+    matrix:
+      node-version: [16.x]
+  step:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{matrix.node-version}}
+      use: actions/setup-node@v1
+      with:
+        node-version: ${{matrix.node-version}}
+    - run: npm i
+    - run: npm run build --if-present
+    - run: npm run lint
+    - run: npm run test
+
