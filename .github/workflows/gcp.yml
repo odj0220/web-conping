@@ -13,7 +13,7 @@ env:
 
 jobs:
   test:
-    name: PROD - Test Before Deploy to GCP
+    name: PROD - Test AND Docs Deploy Before Deploy to GCP
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -24,9 +24,16 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{matrix.node_version}}
-      - run: npm i
-      - run: npm run build --if-present
-      - run: npm test
+      - name: [Step 1] Install node_modules
+        run: npm i
+      - name: [Step 2] Build
+        run: npm run build --if-present
+      - name: [Step 3] Run Lint
+        run: npm run lint
+      - name: [Step 4] Run Unit Test
+        run: npm test
+      - name: [Step 5] Deploy Better-docs
+        run: npm run doc
   deploy-to-artifact:
     needs: test
     name: PROD - Deploy to GCP
