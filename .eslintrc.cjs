@@ -45,5 +45,6 @@ module.exports = {
     "arrow-spacing": ["error", { before: true, after: true }],
     "linebreak-style": "off",
     "quotes": ["error", "single"],
+    "eol-last": ["error", "always"],
   },
 };
