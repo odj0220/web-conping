@@ -3,7 +3,7 @@
   "source": {
     "include": ["./src"],
     "includePattern": "\\.(ts)$",
-    "excludePattern": "(node_modules|docs|src/__test)"
+    "excludePattern": "(node_modules|docs|\\.(spec.ts)$)"
   },
   "tags": {
     "allowUnknownTags": ["category", "optional"]
