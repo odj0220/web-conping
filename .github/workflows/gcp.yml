@@ -23,17 +23,12 @@ jobs:
       - name: Use Node.js ${{matrix.node-version}}
         uses: actions/setup-node@v1
         with:
-         node-version: ${{matrix.node_version}}
-      - name: [Step 1] Install node_modules
-        run: npm i
-      - name: [Step 2] Build
-        run: npm run build --if-present
-      - name: [Step 3] Run Lint
-        run: npm run lint
-      - name: [Step 4] Run Unit Test
-        run: npm test
-      - name: [Step 5] Deploy Better-docs
-        run: npm run doc
+          node-version: ${{matrix.node_version}}
+      - run: npm i
+      - run: npm run build --if-present
+      - run: npm run lint
+      - run: npm test
+      - run: npm run doc
   deploy-to-artifact:
     needs: test
     name: PROD - Deploy to GCP
