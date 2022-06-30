@@ -1,7 +1,5 @@
 module.exports = {
-    jest: {
-        verbose: true
-    },
+    verbose: true,
     transform: {
         "^.+\\.svelte$": [
             "svelte-jester",
@@ -15,6 +13,7 @@ module.exports = {
     moduleFileExtensions: ["js", "ts", "svelte"],
     moduleNameMapper: {
         "^\\$lib(.*)$": "<rootDir>/src/lib$1",
+        "^\\$components(.*)$": "<rootDir>/src/components$1",
         "^\\$app(.*)$": [
             "<rootDir>/.svelte-kit/dev/runtime/app$1",
             "<rootDir>/.svelte-kit/build/runtime/app$1",
