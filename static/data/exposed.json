@@ -1,0 +1,20 @@
+[
+  {
+    "id": "exposed1",
+    "content": "content1",
+    "product": "product3",
+    "timelines": [[300, 315], [502, 510]]
+  },
+  {
+    "id": "exposed2",
+    "content": "content2",
+    "product": "product1",
+    "timelines": [[300, 315], [502, 510]]
+  },
+  {
+    "id": "exposed3",
+    "content": "content3",
+    "product": "product1",
+    "timelines": [[300, 315], [502, 510]]
+  }
+]
