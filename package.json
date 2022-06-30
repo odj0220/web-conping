@@ -12,7 +12,7 @@
 		"lint": "eslint .",
 		"test": "jest --verbose --passWithNoTests",
 		"coverage": "npm run test -- --coverage",
-		"doc": "jsdoc -c jsdoc.json & gh-pages -d docs",
+		"doc": "jsdoc -c jsdoc.json && gh-pages -d docs",
 		"start": "node build/index.js"
 	},
 	"devDependencies": {
@@ -44,9 +44,10 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@types/youtube-player": "^5.5.6",
 		"eslint-config-airbnb-typescript": "^17.0.0",
 		"graphql": "^16.5.0",
-		"svelte-horizontal-scroller": "^1.0.1"
+		"youtube-player": "^5.5.2"
 	},
 	"lint-staged": {
 		"*.{ts, svelte}": "eslint --cache --fix"

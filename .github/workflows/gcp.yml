@@ -9,7 +9,7 @@ env:
   ZONE: asia-northeast3
   IMAGE: prod
   SERVICE_ID: ${{ secrets.GCP_PROD_SERVICE_ID }}
-  ARTIFACT_REGISTRY_REPO_NAME: tracer-ammunition-sveltekit
+  ARTIFACT_REGISTRY_REPO_NAME: gollala-frontend-web
 
 jobs:
   test:
@@ -28,7 +28,6 @@ jobs:
       - run: npm run build --if-present
       - run: npm run lint
       - run: npm test
-      - run: npm run doc
   deploy-to-artifact:
     needs: test
     name: PROD - Deploy to GCP

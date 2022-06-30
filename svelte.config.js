@@ -13,8 +13,8 @@ const config = {
       out: 'build',
     }),
     alias: {
-      $components: 'src/components'
-    }
+      $component: 'src/components',
+    },
   },
 };
 
