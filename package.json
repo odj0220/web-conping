@@ -10,7 +10,7 @@
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "eslint .",
-		"test": "jest --verbose",
+		"test": "jest --verbose --passWithNoTests",
 		"coverage": "npm run test -- --coverage",
 		"doc": "jsdoc -c jsdoc.json & gh-pages -d docs",
 		"start": "node build/index.js"
@@ -45,7 +45,8 @@
 	"type": "module",
 	"dependencies": {
 		"eslint-config-airbnb-typescript": "^17.0.0",
-		"graphql": "^16.5.0"
+		"graphql": "^16.5.0",
+		"svelte-horizontal-scroller": "^1.0.1"
 	},
 	"lint-staged": {
 		"*.{ts, svelte}": "eslint --cache --fix"
