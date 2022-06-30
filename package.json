@@ -12,7 +12,7 @@
 		"lint": "eslint .",
 		"test": "jest --verbose",
 		"coverage": "npm run test -- --coverage",
-		"doc": "jsdoc -c jsdoc.json & gh-pages -d docs",
+		"doc": "jsdoc -c jsdoc.json && gh-pages -d docs",
 		"start": "node build/index.js"
 	},
 	"devDependencies": {
