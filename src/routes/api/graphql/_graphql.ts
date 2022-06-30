@@ -12,9 +12,9 @@ export async function Graphql(query: string) {
 		    id: String!
             name: String!
             brand: String
-            price: Int,
-            discount: Int,
-            category: String,
+            price: Int
+            discount: Int
+            category: String
             exposed: [[Int]]
 		}
 		

@@ -1,9 +1,9 @@
 <script type="ts">
-    import { guid, toHHMMSS } from "$lib/util";
-    export { toHHMMSS } from "$lib/util";
-    import { onMount } from "svelte";
-    import YP from "youtube-player";
-    import { YouTubePlayer } from "youtube-player/dist/types";
+    import { guid, toHHMMSS } from '$lib/util';
+    export { toHHMMSS } from '$lib/util';
+    import { onMount } from 'svelte';
+    import YP from 'youtube-player';
+    import type { YouTubePlayer } from 'youtube-player/dist/types';
 
     export let videoId: string;
     export let width: number;
