@@ -12,7 +12,25 @@ env:
   ARTIFACT_REGISTRY_REPO_NAME: tracer-ammunition-sveltekit
 
 jobs:
+  test:
+    name: PROD - Test AND Docs Deploy Before Deploy to GCP
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{matrix.node-version}}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{matrix.node_version}}
+      - run: npm i
+      - run: npm run build --if-present
+      - run: npm run lint
+      - run: npm test
+      - run: npm run doc
   deploy-to-artifact:
+    needs: test
     name: PROD - Deploy to GCP
     runs-on: ubuntu-latest
     environment: production

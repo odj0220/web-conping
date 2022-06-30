@@ -6,7 +6,7 @@ import type { Product } from '$lib/models/interfaces/product.interface';
  * @returns {Promise<Product[]>}
  */
 export async function list() {
-  const response = await trendApi('post', `api/brand/latest/product`);
+  const response = await trendApi('post', 'api/brand/latest/product');
   const products: Product[] = response.content;
 
   return products;
