@@ -1,8 +1,15 @@
 <script lang="ts">
     export let width: number = 140;
+
+    function handleClick() {
+        console.log('아이템 클릭');
+    }
 </script>
 
-<section style="width: {width / 10}rem">
+<section
+        on:click={handleClick}
+        style="width: {width / 10}rem"
+>
     <div class="container">
         <img src="/images/shorts_01.png" alt="shorts-preview">
         <div class="data">
@@ -32,6 +39,11 @@
           width: 100%;
           height: 100%;
           z-index: 1;
+          -webkit-user-drag: none;
+          -khtml-user-drag: none;
+          -moz-user-drag: none;
+          -o-user-drag: none;
+          user-drag: none;
         }
 
         .data {
