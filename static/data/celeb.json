@@ -1,0 +1,105 @@
+[
+  {
+    "id": "celeb1",
+    "name": "장삐쭈",
+    "description": "안녕하세요",
+    "category": "기획"
+  },
+  {
+    "id": "celeb2",
+    "name": "허혜원",
+    "description": "안녕하세요",
+    "category": "기획"
+  },
+  {
+    "id": "celeb3",
+    "name": "지정민",
+    "description": "안녕하세요",
+    "category": "기획"
+  },
+  {
+    "id": "celeb4",
+    "name": "류호찬",
+    "description": "안녕하세요",
+    "category": "기획"
+  },
+  {
+    "id": "celeb5",
+    "name": "최민아",
+    "description": "안녕하세요",
+    "category": "기획"
+  },
+  {
+    "id": "celeb6",
+    "name": "크리스",
+    "description": "안녕하세요",
+    "category": "2d"
+  },
+  {
+    "id": "celeb7",
+    "name": "윤성원",
+    "description": "안녕하세요",
+    "category": "3d"
+  },
+  {
+    "id": "celeb8",
+    "name": "포포",
+    "description": "안녕하세요",
+    "category": "애니메이션"
+  },
+  {
+    "id": "celeb9",
+    "name": "원동우",
+    "description": "안녕하세요",
+    "category": "애니메이션"
+  },
+  {
+    "id": "celeb10",
+    "name": "강선영",
+    "description": "안녕하세요",
+    "category": "애니메이션"
+  },
+  {
+    "id": "celeb11",
+    "name": "박정인",
+    "description": "안녕하세요",
+    "category": "애니메이션"
+  },
+  {
+    "id": "celeb12",
+    "name": "권태웅",
+    "description": "안녕하세요",
+    "category": "성우"
+  },
+  {
+    "id": "celeb13",
+    "name": "강찬",
+    "description": "안녕하세요",
+    "category": "성우"
+  },
+  {
+    "id": "celeb14",
+    "name": "J.Fla",
+    "description": "안녕하세요",
+    "category": "음악"
+  },
+  {
+    "id": "celeb15",
+    "name": "침착맨",
+    "description": "안녕하세요",
+    "category": "토크"
+  },
+  {
+    "id": "celeb16",
+    "name": "곽튜브",
+    "description": "안녕하세요",
+    "category": "여행"
+  },
+  {
+    "id": "celeb17",
+    "name": "빠니보틀",
+    "description": "안녕하세요",
+    "category": "여행"
+  }
+
+]
