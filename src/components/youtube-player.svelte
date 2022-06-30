@@ -1,9 +1,9 @@
 <script type="ts">
-    import {guid, toHHMMSS} from "$lib/util";
-    export {toHHMMSS} from "$lib/util";
-    import {onMount} from "svelte";
+    import { guid, toHHMMSS } from "$lib/util";
+    export { toHHMMSS } from "$lib/util";
+    import { onMount } from "svelte";
     import YP from "youtube-player";
-    import {YouTubePlayer} from "youtube-player/dist/types";
+    import { YouTubePlayer } from "youtube-player/dist/types";
 
     export let videoId: string;
     export let width: number;
@@ -16,78 +16,78 @@
     let displayLogo = true;
     const playerId = guid();
     const defaultPlayerVars = {
-        controls: 0, //플레이어 컨드롤러 표시여부
-        rel: 0, //연관동영상 표시여부
-        mute: 1,
-        playsinline: 1, //ios환경에서 전체화면으로 재생하지 않게하는 옵션
-        autoplay: 1, //자동재생 여부(모바일에서 작동하지 않습니다. mute설정을 하면 작동합니다.)
-        loop: 1,
-        modestbranding: 1
-    }
+      controls: 0, //플레이어 컨드롤러 표시여부
+      rel: 0, //연관동영상 표시여부
+      mute: 1,
+      playsinline: 1, //ios환경에서 전체화면으로 재생하지 않게하는 옵션
+      autoplay: 1, //자동재생 여부(모바일에서 작동하지 않습니다. mute설정을 하면 작동합니다.)
+      loop: 1,
+      modestbranding: 1,
+    };
 
     let player: YouTubePlayer;
 
     onMount(async () => {
-        const option = {
-            ...(videoId && {videoId}),
-            ...(width && {width}),
-            ...(height && {height}),
-            ...(playerVars ? {playerVars} : {playerVars: defaultPlayerVars}),
-            ...(events && {events})
+      const option = {
+        ...(videoId && { videoId }),
+        ...(width && { width }),
+        ...(height && { height }),
+        ...(playerVars ? { playerVars } : { playerVars: defaultPlayerVars }),
+        ...(events && { events }),
+      };
+
+      player = YP(playerId, option);
+      player.on('ready', (event) => {
+        const element = event.target.i;
+
+        // player.playVideo();
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              player.playVideo();
+            } else {
+              // 최초 로딩시 검은화면을 방지하기 위해 1초뒤 일시정지
+              setTimeout(() => {
+                player.pauseVideo();
+              }, 1000);
+            }
+          });
+        }, {
+          threshold: 1,
+        });
+        io.observe(element);
+
+      });
+
+      let displayLogDebounce;
+      let firstLoad = true;
+      player.on('stateChange', event => {
+        // playing
+        if (event.data === 1) {
+          displayLogDebounce = setTimeout(() => {
+            displayLogo = false;
+            firstLoad = false;
+          }, firstLoad ? 3200 : 100);
+        }
+        // paused
+        if (event.data === 2) {
+          if (displayLogDebounce) {
+            window.clearTimeout(displayLogDebounce);
+          }
+          displayLogo = true;
         }
 
-        player = YP(playerId, option);
-        player.on('ready', (event) => {
-            const element = event.target.i;
+        // buffer
+        if (event.data === 3) {
+          setTimeout(() => {
+            firstLoad = false;
+          }, 4000);
+        }
+      });
 
-            player.playVideo();
-            const io = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        player.playVideo();
-                    } else {
-                        // 최초 로딩시 검은화면을 방지하기 위해 1초뒤 일시정지
-                        setTimeout(() => {
-                            player.pauseVideo();
-                        }, 1000);
-                    }
-                });
-            }, {
-                threshold: 1
-            });
-            io.observe(element);
-
-        });
-
-        let displayLogDebounce;
-        let firstLoad = true;
-        player.on('stateChange', event => {
-            // playing
-            if (event.data === 1) {
-                displayLogDebounce = setTimeout(() => {
-                    displayLogo = false;
-                    firstLoad = false;
-                }, firstLoad ? 3200 : 100);
-            }
-            // paused
-            if (event.data === 2) {
-                if (displayLogDebounce) {
-                    window.clearTimeout(displayLogDebounce);
-                }
-                displayLogo = true;
-            }
-
-            // buffer
-            if (event.data === 3) {
-                setTimeout(() => {
-                    firstLoad = false;
-                }, 4000)
-            }
-        });
-
-        setInterval(() => {
-            playTime = player.getCurrentTime();
-        }, 1000);
+      setInterval(() => {
+        playTime = player.getCurrentTime();
+      }, 1000);
     });
 </script>
 <div class="player-wrap">
