@@ -9,7 +9,7 @@ env:
   ZONE: asia-northeast3
   IMAGE: prod
   SERVICE_ID: ${{ secrets.GCP_PROD_SERVICE_ID }}
-  ARTIFACT_REGISTRY_REPO_NAME: tracer-ammunition-sveltekit
+  ARTIFACT_REGISTRY_REPO_NAME: gollala-frontend-web
 
 jobs:
   test:
