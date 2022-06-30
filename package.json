@@ -2,7 +2,7 @@
 	"name": "tracer-ammunition-sveltekit",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "svelte-kit dev",
+		"dev": "svelte-kit dev --host",
 		"build": "svelte-kit build",
 		"package": "svelte-kit package",
 		"preview": "svelte-kit preview",
@@ -47,7 +47,7 @@
 		"@types/youtube-player": "^5.5.6",
 		"eslint-config-airbnb-typescript": "^17.0.0",
 		"graphql": "^16.5.0",
-		"svelte-horizontal-scroller": "^1.0.1",
+		"svelte-device-info": "^1.0.0",
 		"youtube-player": "^5.5.2"
 	},
 	"lint-staged": {
