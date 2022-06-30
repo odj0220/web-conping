@@ -38,7 +38,8 @@
 
       player = YP(playerId, option);
       player.on('ready', (event) => {
-        const element = event.target.i;
+        const target: any = event.target;
+        const element = target.i;
 
         // player.playVideo();
         const io = new IntersectionObserver((entries) => {
