@@ -1,11 +1,8 @@
 <script lang="ts">
-    import Hscroller from '$component/Hscroller.svelte';
-    import ShortList from "../../components/ShortList.svelte";
+    import MostHighLight from "../../components/MostHighLightContainer.svelte";
 </script>
 
-<Hscroller>
-    <ShortList></ShortList>
-</Hscroller>
+<MostHighLight/>
 
 <style lang="scss">
 
