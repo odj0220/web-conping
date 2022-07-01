@@ -1,5 +1,5 @@
 <script>
-  import PopularVideoContainer from '../components/popular-video-container.svelte';
+  import PopularVideoContainer from '../components/PopularVideoContainer.svelte';
 
 </script>
 

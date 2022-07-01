@@ -1,6 +1,6 @@
 import { render } from '@testing-library/svelte';
 
-import PopularVideos from './popular-videos.svelte';
+import PopularVideos from './PopularVideos.svelte';
 
 import contents from '../fixtures/contents';
 

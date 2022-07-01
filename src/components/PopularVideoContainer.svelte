@@ -1,7 +1,7 @@
 <script>
   import contents from '../fixtures/contents';
 
-  import PopularVideos from './popular-videos.svelte';
+  import PopularVideos from './PopularVideos.svelte';
 
 </script>
 
