@@ -1,5 +1,34 @@
 <script lang="ts">
+    import YP from 'youtube-player';
+    import type {YouTubePlayer} from "youtube-player/dist/types";
+    import {guid, toHHMMSS} from "$lib/util";
+
     export let width: number = 140;
+    export let content!: {
+        id: string;
+        name: string;
+        description: string;
+        createdAt: number;
+        program: {
+            id: string;
+            name: string;
+        };
+        programId: string;
+        thumb: string;
+        url: string;
+        videoId: string;
+    };
+
+    const options: any = {
+        controls: 0,
+        rel: 0,
+        mute: 1,
+        playsinline: 1,
+        autoplay: 1,
+        loop: 1,
+        modestbranding: 1,
+    };
+    let player: YouTubePlayer;
 
     function handleClick() {
         console.log('아이템 클릭');

@@ -1,6 +1,21 @@
 <script lang="ts">
     import Hscroller from './HorizontalScroller.svelte';
-    import ShortList from "./ShortList.svelte";
+    import HighLightList from "./HighLightVodList.svelte";
+    import Contents from '../fixtures/contents';
+    import {onMount} from 'svelte';
+
+    let contents: any[] = [];
+
+    onMount(() => {
+        getShorts();
+    });
+
+    function getShorts() {
+     /*
+     * To do: get Short vods from graphql api
+     * */
+        contents = Contents;
+    }
 
 </script>
 
@@ -9,7 +24,7 @@
 </header>
 
 <Hscroller>
-    <ShortList></ShortList>
+    <HighLightList contents={contents}></HighLightList>
 </Hscroller>
 
 <style lang="scss">
