@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Hscroller from './Hscroller.svelte';
+    import Hscroller from './HorizontalScroller.svelte';
     import ShortList from "./ShortList.svelte";
 
 </script>
