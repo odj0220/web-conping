@@ -7,15 +7,13 @@ describe('Home', () => {
   it('renders titles', () => {
     const { container } = renderHomePage();
 
-    expect(container).toHaveTextContent('Welcome to SvelteKit');
-
-    expect(container).toHaveTextContent('상품리스트');
+    expect(container).toHaveTextContent('지금 인기있는 영상');
   });
 
-  it('renders a link to 상품리스트 page', () => {
-    const { getByText } = renderHomePage();
+  // it('renders a link to 상품리스트 page', () => {
+  //   const { getByText } = renderHomePage();
 
-    expect(getByText('상품리스트')).toHaveAttribute('href', '/products');
-  });
+  //   expect(getByText('상품리스트')).toHaveAttribute('href', '/products');
+  // });
 
 });
