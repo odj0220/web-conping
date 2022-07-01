@@ -72,10 +72,6 @@
     }
 </script>
 
-<header>
-    <h1>타이틀</h1>
-</header>
-
 <section
     class="horizontal-scroller"
     on:mousedown={mouseDownHandler}
