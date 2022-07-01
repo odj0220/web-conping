@@ -92,8 +92,7 @@
     });
 </script>
 <div class="player-wrap">
-    <div id='{playerId}'></div>
-    <iframe style="display: none;"></iframe>
+    <div id='{playerId}' class="youtube-player"></div>
     <div class="overlay-wrap">
         {#if player}
             <div class="logo overlay {displayLogo ? '' : 'hide'}"></div>
@@ -121,7 +120,7 @@
         border-radius: 4px;
         overflow: hidden;
     }
-    .player-wrap iframe {
+    .player-wrap .youtube-player {
         z-index: 1;
         top: 0;
         left: 0;
