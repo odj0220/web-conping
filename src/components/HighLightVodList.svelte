@@ -9,10 +9,20 @@
     });
 </script>
 
-{#each contents as content}
-    <HighLightItem></HighLightItem>
-{/each}
+<section>
+    {#each contents as content}
+        <HighLightItem content={content}></HighLightItem>
+    {/each}
+</section>
 
 <style lang="scss">
-
+    section {
+      display: flex;
+      margin: 0 auto;
+      & > :global(*) {
+        &:first-child {
+          margin-left: 0 !important;
+        }
+      }
+    }
 </style>

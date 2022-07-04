@@ -1,8 +1,4 @@
 <script lang="ts">
-    import YP from 'youtube-player';
-    import type {YouTubePlayer} from "youtube-player/dist/types";
-    import {guid, toHHMMSS} from "$lib/util";
-
     export let width: number = 140;
     export let content!: {
         id: string;
@@ -19,48 +15,39 @@
         videoId: string;
     };
 
-    const options: any = {
-        controls: 0,
-        rel: 0,
-        mute: 1,
-        playsinline: 1,
-        autoplay: 1,
-        loop: 1,
-        modestbranding: 1,
-    };
-    let player: YouTubePlayer;
-
-    function handleClick() {
-        console.log('아이템 클릭');
-    }
 </script>
 
 <section
-        on:click={handleClick}
         style="width: {width / 10}rem"
 >
     <div class="container">
-        <img src="/images/shorts_01.png" alt="shorts-preview">
+        <img src={content.thumb} alt="shorts-preview">
+        <div class="overlay"></div>
         <div class="data">
-            <h6 class="title"></h6>
-            <div class="creator">
-            <span class="youtuber">
-                랜선뷰티
-            </span>
-                <span class="divider"></span>
-                <date>
-                    날짜
-                </date>
-            </div>
+            <h6 class="title">
+                {content.name}
+            </h6>
         </div>
     </div>
 </section>
 
 <style lang="scss">
     section {
+      margin-left: 1.2rem;
       .container {
         position: relative;
         padding-bottom: 171.42%;
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #1c1c1c;
+            opacity: 0.5;
+            z-index: 2;
+        }
+
         img {
           position: absolute;
           top: 0;
@@ -73,6 +60,7 @@
           -moz-user-drag: none;
           -o-user-drag: none;
           user-drag: none;
+          object-fit: cover;
         }
 
         .data {
@@ -80,7 +68,12 @@
           left: 0;
           bottom: 0;
           width: 100%;
-          z-index: 2;
+          z-index: 3;
+
+          .title {
+            padding: 0 0.6rem 1rem 1rem;
+            color: #fff;
+          }
         }
       }
     }
