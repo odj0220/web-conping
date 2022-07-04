@@ -73,6 +73,7 @@
           .title {
             padding: 0 0.6rem 1rem 1rem;
             color: #fff;
+            height: 3rem;
           }
         }
       }
