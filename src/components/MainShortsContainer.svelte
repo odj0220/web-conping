@@ -1,6 +1,6 @@
 <script lang="ts">
     import Hscroller from './HorizontalScroller.svelte';
-    import HighLightList from "./HighLightVodList.svelte";
+    import ShortVodList from "./ShortVodList.svelte";
     import Contents from '../fixtures/contents';
     import {onMount} from 'svelte';
 
@@ -25,7 +25,7 @@
 
 <main>
     <Hscroller>
-        <HighLightList contents={contents}></HighLightList>
+        <ShortVodList contents={contents}></ShortVodList>
     </Hscroller>
 </main>
 

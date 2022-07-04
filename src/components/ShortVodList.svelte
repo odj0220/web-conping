@@ -1,17 +1,13 @@
 <script lang="ts">
-    import HighLightItem from './HighLightVodItem.svelte';
-    import {onMount} from "svelte";
+    import ShortVodItem from './ShortVodItem.svelte';
 
     export let contents: any[] = [];
 
-    onMount(() => {
-        console.log(contents);
-    });
 </script>
 
 <section>
     {#each contents as content}
-        <HighLightItem content={content}></HighLightItem>
+        <ShortVodItem content={content}></ShortVodItem>
     {/each}
 </section>
 

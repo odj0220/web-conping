@@ -1,8 +1,8 @@
 <script lang="ts">
-    import MostHighLight from "../../components/MostHighLightContainer.svelte";
+    import MainShortsContainer from "../../components/MainShortsContainer.svelte";
 </script>
 
-<MostHighLight/>
+<MainShortsContainer/>
 
 <style lang="scss">
 
