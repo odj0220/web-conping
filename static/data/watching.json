@@ -1,0 +1,22 @@
+[
+  {
+    "id": "watching1",
+    "contentId": "content1",
+    "currentTime": 30
+  },
+  {
+    "id": "watching2",
+    "contentId": "content2",
+    "currentTime": 180
+  },
+  {
+    "id": "watching3",
+    "contentId": "content7",
+    "currentTime": 340
+  },
+  {
+    "id": "watching4",
+    "contentId": "content9",
+    "currentTime": 110
+  }
+]
