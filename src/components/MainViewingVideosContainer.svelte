@@ -1,8 +1,14 @@
 <script lang="ts">
     import Hscroller from "./HorizontalScroller.svelte";
+    import ViewingVodList from "./ViewingVodList.svelte";
     import {onMount} from "svelte";
+    import Contents from "../fixtures/contents";
 
-    let contents: any[] = [];
+    let contents: any[] = Contents;
+
+    onMount(() => {
+        console.log(contents);
+    })
 </script>
 
 <section>
@@ -12,7 +18,7 @@
 
     <main>
         <Hscroller>
-            <section>anksflnfkfkakf</section>
+            <ViewingVodList contents={contents}></ViewingVodList>
         </Hscroller>
     </main>
 </section>
