@@ -25,6 +25,7 @@
       border-radius: 0.4rem;
       margin: 0 1.6rem;
       padding: 1.6rem 1.2rem 2.6rem 1.2rem;
+      margin-bottom: 4rem;
 
       header {
         margin-bottom: 1.6rem;
