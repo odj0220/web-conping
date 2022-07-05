@@ -18,7 +18,6 @@
 <style lang="scss">
     section {
       display: flex;
-      margin: 0 auto;
       & > :global(*) {
         &:first-child {
           margin-left: 0 !important;
