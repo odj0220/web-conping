@@ -5,6 +5,7 @@ import contents from '../fixtures/contents'; //TODO: 목데이터
 
 import GridViewList from './GridViewList.svelte';
 import Button from './Button.svelte';
+import Title from './Title.svelte';
 
 const handleClick = (id) => {
   console.log('TODO: click 이벤트');
@@ -12,7 +13,7 @@ const handleClick = (id) => {
 </script>
 
 <CenterSection>
-  <h2>뷰티 꿀팁 가득한 #랜선뷰티 모아보기</h2>
+  <Title title={'뷰티 꿀팁 가득한 #랜선뷰티 모아보기'} />
   
   <GridViewList
     {contents}
