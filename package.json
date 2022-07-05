@@ -50,6 +50,7 @@
 		"eslint-config-airbnb-typescript": "^17.0.0",
 		"graphql": "^16.5.0",
 		"svelte-device-info": "^1.0.0",
+		"swiper": "^8.2.6",
 		"youtube-player": "^5.5.2"
 	},
 	"lint-staged": {
