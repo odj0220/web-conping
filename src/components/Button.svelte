@@ -1,0 +1,29 @@
+<script>
+  export let buttonName;
+  export let onClick;
+</script>
+
+<div
+  class="button"
+  role="button"
+  on:click={() => onClick()}
+>
+  {buttonName}
+</div>
+
+<style lang="scss">
+  .button {
+    border: 1px solid #F2F2F2;
+    border-radius: 0.2rem;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 1.4rem;
+    
+    &:active {
+      background-color: #9E04EA;
+    }
+  }
+</style>
