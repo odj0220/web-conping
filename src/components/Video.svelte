@@ -20,24 +20,30 @@
     </div>
     <div class="sub-info">
       <img class="profile-icon" src={content.thumb} alt="방송로고">
-      <div>랜선뷰티 &middot; 5화 &middot; 2일 전</div>
+      <span class="profile-info">랜선뷰티 &middot; 5화 &middot; 2일 전</span>
       <!-- TODO: 하드코딩 -->
     </div>
   </div>
 </li>
 
 <style lang="scss">
+  @import '../styles/modules.scss';
+  @import '../styles/variables.scss';
+
   .item-card {
     display: flex;
     flex-direction: column;
     width: 100%;
+    border-radius: 0.4rem;
+    overflow: hidden;
     
     .image-wrapper {
-      flex: 1;
-      
+      width: 100%;
+      height: 56.4%;
       img {
         width: 100%;
-        border-radius: 0.4rem 0.4rem 0 0;
+        height: 100%;
+        object-fit: cover;
       }
 
       cursor: pointer;
@@ -48,17 +54,11 @@
       flex-direction: column;
       gap: 0.8rem;
       padding: 1.2rem;
-      background-color: #212121;
-      line-height: 1.2rem;
+      background-color: $bg-black-21;
 
       .info-title {
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        word-wrap:break-word; 
-        line-height: 1.2em;
-        height: 3.6em;
+        @include ellipsis(3);
+        @include caption1-400;
       }
 
       .sub-info {
@@ -73,6 +73,9 @@
           overflow: visible;
           border-radius: 1.2rem;
           object-fit: fill;
+        }
+        .profile-info {
+          @include caption2-400;
         }
       }
     }
