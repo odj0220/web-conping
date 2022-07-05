@@ -18,6 +18,7 @@
     };
 
     export let percent = 24;
+    export let onClick: () => void;
     let ratio = 0;
 
     onMount(() => {
@@ -38,16 +39,22 @@
             </div>
         </div>
         <img class="thumbnail" src={content.thumb} alt="thubnail"/>
+        <div class="play-btn-wrapper">
+            <button on:click={onClick}>
+                <img class="play-btn" src="/images/icons/ic_play.svg" alt="play-btn"/>
+            </button>
+        </div>
     </div>
 
-    <div class="name">
-        {content.name}
-    </div>
+    <p class="name">
+        {content.name}asjkfbasjkfbfklbanklfbalkfbaklfkb
+    </p>
 </section>
 
 <style lang="scss">
     .viewing-vod-item {
       width: 8rem;
+      margin-left: 2rem;
 
       .thumb-wrapper {
         position: relative;
@@ -56,8 +63,9 @@
         border-radius: 50%;
         overflow: hidden;
         background-color: #F2F2F2;
+        margin-bottom: 0.4rem;
 
-        img {
+        .thumbnail {
           position: absolute;
           top: 50%;
           left: 50%;
@@ -68,6 +76,24 @@
           z-index: 2;
           object-fit: cover;
           object-position: center center;
+        }
+
+        .play-btn-wrapper {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          z-index: 3;
+          width: 2rem;
+          height: 2rem;
+
+          button {
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            border: none;
+            cursor:pointer;
+          }
         }
 
         .circle {
@@ -95,6 +121,18 @@
             }
           }
         }
+      }
+
+      .name {
+        font-size: 1.1rem;
+        line-height: 1.373rem;
+        color: #fff;
+        word-break: break-all;
+        text-overflow: ellipsis;
+
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
       }
     }
 </style>
