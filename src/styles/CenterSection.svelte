@@ -5,7 +5,8 @@
 
 <style>
   section {
-    margin: 0 1.6rem;
+    margin: 4rem 1.6rem;
+    padding: 1.6rem;
     background-color: #212121;
 
     display: flex;

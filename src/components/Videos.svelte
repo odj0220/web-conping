@@ -22,8 +22,6 @@
 
 <style lang="scss">
   .videos-wrapper {
-    padding: 1.6rem;
-    
     .title {
       margin-bottom: 1.2rem;
       font-size: '2rem';
