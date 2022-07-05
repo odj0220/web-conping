@@ -3,11 +3,15 @@
 
     export let contents: any[] = [];
 
+    function onClick() {
+        console.log('onClick');
+    }
+
 </script>
 
 <section>
     {#each contents as content}
-        <ShortVodItem content={content}></ShortVodItem>
+        <ShortVodItem content={content} onClick={onClick}></ShortVodItem>
     {/each}
 </section>
 
