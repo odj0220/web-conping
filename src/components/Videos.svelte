@@ -12,8 +12,10 @@
   </h2>
   
   <ul class="contents-container">
-    {#each contents as content }
-      <Video {content} {onClick} />
+    {#each contents as content, index }
+      {#if index < 2}  
+        <Video {content} {onClick} />
+      {/if}
     {/each}
   </ul>
 </section>
@@ -22,8 +24,6 @@
   @import '../styles/variables.scss';
 
   .videos-wrapper {
-    padding: 1.6rem;
-    
     .title {
       @include body3-700;
       margin-bottom: 1.2rem;

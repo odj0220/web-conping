@@ -1,5 +1,4 @@
 <script>
-  export let contents;
   export let onClick;
   export let content;
 </script>
