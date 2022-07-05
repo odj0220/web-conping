@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {onMount} from "svelte";
+    import { onMount } from 'svelte';
 
     export let content!: {
         contentType: string;
@@ -22,7 +22,7 @@
     let ratio = 0;
 
     onMount(() => {
-        ratio = ((360 / 100) * percent) / 2;
+      ratio = ((360 / 100) * percent) / 2;
     });
 </script>
 

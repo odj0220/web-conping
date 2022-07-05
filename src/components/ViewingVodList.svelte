@@ -3,7 +3,7 @@
     export let contents: any[] = [];
 
     function onClick() {
-        console.log('클릭!');
+      console.log('클릭!');
     }
 </script>
 

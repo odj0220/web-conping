@@ -1,8 +1,7 @@
 <script lang="ts">
-    import Hscroller from "./HorizontalScroller.svelte";
-    import ViewingVodList from "./ViewingVodList.svelte";
-    import {onMount} from "svelte";
-    import Contents from "../fixtures/contents";
+    import Hscroller from './HorizontalScroller.svelte';
+    import ViewingVodList from './ViewingVodList.svelte';
+    import Contents from '../fixtures/contents';
 
     let contents: any[] = Contents;
 </script>
