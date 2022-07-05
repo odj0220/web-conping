@@ -34,8 +34,10 @@
       margin-bottom: 1.2rem;
       padding: 0 1.6rem;
       h1 {
-        font-size: 2.8rem;
+        font-size: 1.6rem;
+        line-height: 1.997rem;
         font-weight: bold;
+        letter-spacing: -0.01rem;
       }
     }
 
