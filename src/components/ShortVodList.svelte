@@ -4,7 +4,7 @@
     export let contents: any[] = [];
 
     function onClick() {
-        console.log('onClick');
+      console.log('onClick');
     }
 
 </script>

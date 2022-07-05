@@ -1,20 +1,20 @@
 <script lang="ts">
     import Hscroller from './HorizontalScroller.svelte';
-    import ShortVodList from "./ShortVodList.svelte";
+    import ShortVodList from './ShortVodList.svelte';
     import Contents from '../fixtures/contents';
-    import {onMount} from 'svelte';
+    import { onMount } from 'svelte';
 
     let contents: any[] = [];
 
     onMount(() => {
-        getShorts();
+      getShorts();
     });
 
     function getShorts() {
-     /*
+      /*
      * To do: get Short vods from graphql api
      * */
-        contents = Contents;
+      contents = Contents;
     }
 
 </script>
