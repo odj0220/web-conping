@@ -43,5 +43,6 @@
 
     main {
       padding: 0 1.6rem;
+      margin-bottom: 4rem;
     }
 </style>
