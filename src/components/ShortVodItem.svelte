@@ -1,5 +1,4 @@
 <script lang="ts">
-    export let width: number = 140;
     export let content!: {
         id: string;
         name: string;
@@ -14,13 +13,12 @@
         url: string;
         videoId: string;
     };
+    export let onClick: () => void;
 
 </script>
 
-<section
-        style="width: {width / 10}rem"
->
-    <div class="container">
+<section>
+    <div class="container" on:click={onClick}>
         <img src={content.thumb} alt="shorts-preview">
         <div class="overlay"></div>
         <div class="data">
@@ -33,7 +31,10 @@
 
 <style lang="scss">
     section {
+      width: 14rem;
       margin-left: 1.2rem;
+      border-radius: 0.4rem;
+      overflow: hidden;
       .container {
         position: relative;
         padding-bottom: 171.42%;
@@ -69,11 +70,25 @@
           bottom: 0;
           width: 100%;
           z-index: 3;
+          padding: 0 0.6rem 1rem 1rem;
+          box-sizing: border-box;
+          height: 5.5rem;
 
           .title {
-            padding: 0 0.6rem 1rem 1rem;
             color: #fff;
-            height: 3rem;
+            font-size: 1.2rem;
+            line-height: 1.498rem;
+            letter-spacing: -0.015rem;
+            font-weight: 400;
+            height: 100%;
+            overflow: hidden;
+
+            word-break: break-all;
+            text-overflow: ellipsis;
+
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
           }
         }
       }
