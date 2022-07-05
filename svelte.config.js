@@ -14,8 +14,11 @@ const config = {
     }),
     alias: {
       $component: 'src/components',
+      $styles: 'src/styles',
     },
   },
+
+
 };
 
 export default config;

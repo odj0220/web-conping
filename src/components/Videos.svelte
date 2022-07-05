@@ -19,16 +19,14 @@
 </section>
 
 <style lang="scss">
+  @import '../styles/variables.scss';
+
   .videos-wrapper {
     padding: 1.6rem;
     
     .title {
+      @include body3-700;
       margin-bottom: 1.2rem;
-      font-size: '2rem';
-      font-weight: bold;
-      text-align: 'center';
-      color: '#75A293';
-      line-height: 1.2;
     }
     
     .contents-container {
