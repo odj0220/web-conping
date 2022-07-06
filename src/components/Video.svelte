@@ -14,8 +14,11 @@
     >
   </div>
   <div class="content-info-wrapper">
-    <div class="info-title">
-      {(content.program.name).repeat(10)}
+    <div
+      class="info-title"
+      on:click={() => onClick(content.id)}
+    >
+      {(content.program.name).repeat(15)}
       <!-- TODO: 테스트용 코드 수정 -->
     </div>
     <div class="sub-info">
@@ -44,6 +47,11 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        
+        &:active {
+          transform: scale(1.01);
+          //TODO: 클릭할 때 효과 정의 필요
+        }
       }
 
       cursor: pointer;
@@ -59,6 +67,11 @@
       .info-title {
         @include ellipsis(3);
         @include caption1-400;
+
+        &:active {
+          transform: scale(1.01);
+          //TODO: 클릭할 때 효과 정의 필요
+        }
       }
 
       .sub-info {

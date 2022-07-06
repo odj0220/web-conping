@@ -1,6 +1,6 @@
-<script>
-  export let buttonName;
-  export let onClick;
+<script lang="ts">
+  export let buttonName : string;
+  export let onClick : () => void;
 </script>
 
 <div
