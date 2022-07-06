@@ -9,12 +9,10 @@
   export let onClick: () => void;
 
   let playTime;
-  let displayLogo = true;
   const playerId = guid();
 
   let player: YouTubePlayer;
   let firstLoad = true;
-  let displayLogDebounce;
   let pauseTimer: any = null;
 
   const PLAYER_STATE = {
@@ -52,7 +50,6 @@
         if (entry.isIntersecting) {
           play();
         } else {
-          // 최초 로딩시 검은화면을 방지하기 위해 1초뒤 일시정지
           pause();
         }
       });
@@ -83,31 +80,14 @@
       }
 
       if (status === PLAYER_STATE.PLAYING) {
-        console.log('시작');
-        /*
-        * 시작할때 로고를 가려야한다.
-        * */
-        // displayLogDebounce = setTimeout(() => {
-        //   displayLogo = false;
-        //   firstLoad = false;
-        // }, firstLoad ? 3200 : 100);
         return;
       }
 
       if (status === PLAYER_STATE.PAUSED) {
-        console.log('일시정지');
-        if (displayLogDebounce) {
-          // window.clearTimeout(displayLogDebounce);
-        }
-        displayLogo = true;
         return;
       }
 
       if (status === PLAYER_STATE.BUFFERING) {
-        console.log('버퍼');
-        // setTimeout(() => {
-        //   firstLoad = false;
-        // }, 4000);
         return;
       }
     });
