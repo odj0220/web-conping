@@ -1,9 +1,9 @@
-<script>
+<script lang="ts">
   import Video from './Video.svelte';
 
-  export let title;
-  export let contents;
-  export let onClick;
+  export let title: string;
+  export let contents: any[];
+  export let onClick: () => void;
 </script>
 
 <section class="videos-wrapper">
