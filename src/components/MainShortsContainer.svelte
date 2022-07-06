@@ -1,10 +1,11 @@
 <script lang="ts">
     import Hscroller from './HorizontalScroller.svelte';
     import ShortVodList from './ShortVodList.svelte';
-    import Contents from '../fixtures/contents';
+    import Title from './Title.svelte';
     import { onMount } from 'svelte';
 
     let contents: any[] = [];
+    let title = [];
 
     onMount(() => {
       getShorts();
@@ -14,13 +15,27 @@
       /*
      * To do: get Short vods from graphql api
      * */
-      contents = Contents;
+      //contents = Contents;
+      const body = {
+        query: '{getMainShorts{title {text type} contents {thumb name videoId}}}',
+      };
+      fetch('/api/graphql', {
+        method: 'POST',
+        body: JSON.stringify(body),
+      }).then(response => {
+        return response.json();
+      }).then(response => {
+        const { title: titleArray, contents: contentList } = response.data.getMainShorts;
+        title = titleArray;
+        contents = contentList;
+        console.log(contents);
+      });
     }
 
 </script>
 
 <header>
-    <h1>많이 본 쇼츠</h1>
+    <Title {title}></Title>
 </header>
 
 <main>

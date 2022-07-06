@@ -3,25 +3,26 @@
     import SwiperCore, { Autoplay, Pagination } from 'swiper';
     import 'swiper/css';
     import 'swiper/css/pagination';
+    import { onMount } from 'svelte';
 
-    const banners: any[] = [
-      {
-        src: '/images/thumb.png',
-        title: 'Banner 01',
-      },
-      {
-        src: '/images/thumb.png',
-        title: 'Banner 02',
-      },
-      {
-        src: '/images/thumb.png',
-        title: 'Banner 02',
-      },
-      {
-        src: '/images/thumb.png',
-        title: 'Banner 02',
-      },
-    ];
+    let banners = [];
+    console.log('sdfasfasf');
+
+    onMount(async () => {
+      console.log('aaaaa');
+      const body = {
+        query: '{getBanners{title imgPath link}}',
+      };
+      fetch('/api/graphql', {
+        method: 'POST',
+        body: JSON.stringify(body),
+      }).then(response => {
+        return response.json();
+      }).then(response => {
+        console.log(response);
+        banners = response.data.getBanners;
+      });
+    });
 
     SwiperCore.use([Pagination, Autoplay]);
 
@@ -43,7 +44,7 @@
         {#each banners as banner}
             <SwiperSlide>
                 <section class="banner-wrapper">
-                    <img src={banner.src} alt="">
+                    <img src={banner.imgPath} alt="{banner.title}">
                 </section>
             </SwiperSlide>
         {/each}
