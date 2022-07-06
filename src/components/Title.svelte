@@ -22,6 +22,11 @@
     line-height: 1.997rem;
     font-weight: 700;
     color: #fff;
+
+    &:active {
+      transform: scale(1.05);
+      //TODO: 클릭할 때 효과 정의 필요
+    }
     
     .primary-90 {
       color: $primary-90; 
