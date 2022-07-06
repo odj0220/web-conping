@@ -3,7 +3,10 @@
   export let content;
 </script>
 
-<li class="grid-item">
+<li
+  class="grid-item"
+  on:click={() => onClick(content.id)}
+>
   <img
     src={content.thumb}
     alt="방송이미지"

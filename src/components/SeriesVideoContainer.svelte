@@ -7,9 +7,14 @@ import GridViewList from './GridViewList.svelte';
 import Button from './Button.svelte';
 import Title from './Title.svelte';
 
-const handleClick = (id) => {
-  console.log('TODO: click 이벤트');
+const handleClickItem = (id) => {
+  console.log('TODO: click 이벤트 : ', id);
 };
+
+const handleClickButton = () => {
+  console.log('TODO: click 이벤트 : ');
+};
+
 </script>
 
 <CenterSection>
@@ -17,11 +22,11 @@ const handleClick = (id) => {
   
   <GridViewList
     {contents}
-    onClick={handleClick}
+    onClick={handleClickItem}
   />
 
   <Button
     buttonName={'랜선뷰티 시리즈 보러가기'}
-    onClick={handleClick}
+    onClick={handleClickButton}
   />
 </CenterSection>
