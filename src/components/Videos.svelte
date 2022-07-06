@@ -14,7 +14,7 @@
   {/if}
   
   <ul class="contents-container">
-    {#each contents as content, index }
+    {#each contents.splice(0, 2) as content, index }
       <Video {content} {onClick} />
     {/each}
   </ul>
