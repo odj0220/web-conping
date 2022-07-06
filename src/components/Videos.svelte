@@ -1,19 +1,14 @@
 <script>
   import Video from './Video.svelte';
 
-  export let title;
   export let contents;
   export let onClick;
 </script>
 
 <section class="videos-wrapper">
-  <h2 class="title">
-    {title}
-  </h2>
-  
-  <ul class="contents-container">
+  <ul class="contents-container"> 
     {#each contents as content, index }
-      {#if index < 2}  
+      {#if index < 2}
         <Video {content} {onClick} />
       {/if}
     {/each}
@@ -24,11 +19,6 @@
   @import '../styles/variables.scss';
 
   .videos-wrapper {
-    .title {
-      @include body3-700;
-      margin-bottom: 1.2rem;
-    }
-    
     .contents-container {
       display: flex;
       flex-wrap: 'wrap';
