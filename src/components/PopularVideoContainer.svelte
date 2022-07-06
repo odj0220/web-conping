@@ -11,13 +11,18 @@ const handleClick = (id: string) => {
   console.log('click : ', id);
 };
 
+const handleTitleClick = () => {
+  //TODO: click 이벤트
+  console.log('click : 타이틀');
+};
+
 const title = [
   {
     text: '지금',
   },
   {
     text: '인기있는',
-    color: '#BE65F2',
+    type: 'primary-40',
   },
   {
     text: '영상',
@@ -26,8 +31,11 @@ const title = [
 
 </script>
 
-<CenterSection>
-  <Title {title} />
+<CenterSection type="transparency">
+  <Title
+    {title}
+    onClick={handleTitleClick}
+  />
   <Videos
     {contents}
     onClick={handleClick}

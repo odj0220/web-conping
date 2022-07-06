@@ -21,7 +21,7 @@ const title = [
   },
   {
     text: '#랜선뷰티',
-    color: '#FF70E2',
+    type: 'primary-20',
   },
   {
     text: '모아보기',

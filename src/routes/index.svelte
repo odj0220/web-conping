@@ -8,6 +8,6 @@
 
 <MainBannerContainer/>
 <MainViewingVideosContainer/>
+<PopularVideoContainer/>
 <SeriesVideoContainer />
 <MainShortsContainer/>
-<PopularVideoContainer/>
