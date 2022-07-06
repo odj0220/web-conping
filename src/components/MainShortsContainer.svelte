@@ -28,7 +28,6 @@
         const { title: titleArray, contents: contentList } = response.data.getMainShorts;
         title = titleArray;
         contents = contentList;
-        console.log(contents);
       });
     }
 

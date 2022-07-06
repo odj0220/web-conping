@@ -6,10 +6,8 @@
     import { onMount } from 'svelte';
 
     let banners = [];
-    console.log('sdfasfasf');
 
     onMount(async () => {
-      console.log('aaaaa');
       const body = {
         query: '{getBanners{title imgPath link}}',
       };
@@ -19,7 +17,6 @@
       }).then(response => {
         return response.json();
       }).then(response => {
-        console.log(response);
         banners = response.data.getBanners;
       });
     });

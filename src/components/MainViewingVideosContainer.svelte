@@ -15,7 +15,6 @@
       }).then(response => {
         return response.json();
       }).then(response => {
-        console.log(response);
         contents = response.data.getContinueWatching;
       });
     });
