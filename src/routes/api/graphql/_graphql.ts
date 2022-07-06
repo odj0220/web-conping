@@ -256,7 +256,14 @@ export async function Graphql(query: string) {
     },
     getMainSeries: () => {
       const programId = 'programId4';
-      const contents = contentJson.filter(content => content.programId === programId);
+      const contents = contentJson
+        .filter(content => content.programId === programId)
+        .map(content => {
+          return {
+            ...content,
+            program: programJson.find(program => program.id === content.programId),
+          };
+        });
       const series = programJson.find(program => program.id === programId);
       return {
         title: [
