@@ -7,15 +7,15 @@
 </script>
 
 <section class="videos-wrapper">
-  <h2 class="title">
-    {title}
-  </h2>
+  {#if title}
+    <h2 class="title">
+      {title}
+    </h2>
+  {/if}
   
   <ul class="contents-container">
     {#each contents as content, index }
-      {#if index < 2}  
-        <Video {content} {onClick} />
-      {/if}
+      <Video {content} {onClick} />
     {/each}
   </ul>
 </section>
