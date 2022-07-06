@@ -1,23 +1,23 @@
 <script lang="ts">
-  export let title : string;
+  interface TitleElement {
+    text : string,
+    color?: string
+  }
+
+  export let title : TitleElement[];
 </script>
 
-<section>
-  <header>
-    <h1>{title}</h1>
-  </header>
-</section>
-
+<h1>
+  {#each title as element }
+    <span style="color:{element?.color}">{element.text} </span>
+  {/each}
+</h1>
 
 <style lang="scss">
-  section {
-    header {
-      h1 {
-        font-size: 1.6rem;
-        line-height: 1.997rem;
-        font-weight: 700;
-        color: #fff;
-      }
-    }
+  h1 {
+    font-size: 1.6rem;
+    line-height: 1.997rem;
+    font-weight: 700;
+    color: #fff;
   }
 </style>

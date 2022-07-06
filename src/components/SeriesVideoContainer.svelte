@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import CenterSection from '../styles/CenterSection.svelte';
 
 import contents from '../fixtures/contents'; //TODO: 목데이터
@@ -7,7 +7,7 @@ import GridViewList from './GridViewList.svelte';
 import Button from './Button.svelte';
 import Title from './Title.svelte';
 
-const handleClickItem = (id) => {
+const handleClickItem = (id: string) => {
   console.log('TODO: click 이벤트 : ', id);
 };
 
@@ -15,10 +15,23 @@ const handleClickButton = () => {
   console.log('TODO: click 이벤트 : ');
 };
 
+const title = [
+  {
+    text: '뷰티 꿀팁 가득한',
+  },
+  {
+    text: '#랜선뷰티',
+    color: '#FF70E2',
+  },
+  {
+    text: '모아보기',
+  },
+];
+
 </script>
 
 <CenterSection>
-  <Title title={'뷰티 꿀팁 가득한 #랜선뷰티 모아보기'} />
+  <Title {title} />
   
   <GridViewList
     {contents}
