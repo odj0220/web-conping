@@ -1,0 +1,32 @@
+[
+  {
+    "id": "banner1",
+    "title": "[축! 골라라TV 오픈] 배우 이세은님 축하 메세지",
+    "imgPath": "https://i.ytimg.com/vi/vAWXTFDfLtk/hqdefault.jpg",
+    "link": "/content/content16"
+  },
+  {
+    "id": "banner2",
+    "title": "[비하인드] 출연자가 출연자를 메이크업 해줍니다.",
+    "imgPath": "https://i.ytimg.com/vi/CeHLlBCOBA8/hqdefault.jpg",
+    "link": "/content/content17"
+  },
+  {
+    "id": "banner3",
+    "title": "[축! 골라라TV 오픈]방송인 서동주님의 축하 메세지",
+    "imgPath": "https://i.ytimg.com/vi/AHeRIn4sNwU/hqdefault.jpg",
+    "link": "/content/content18"
+  },
+  {
+    "id": "banner4",
+    "title": "[축! 골라라TV 오픈] 배우 최정윤님의 축하 메세지",
+    "imgPath": "https://i.ytimg.com/vi/Vbd8XOvcHDM/hqdefault.jpg",
+    "link": "/content/content19"
+  },
+  {
+    "id": "banner2",
+    "title": "[축! 골라라TV 오픈] 배우 이세은님 축하 메세지",
+    "imgPath": "https://i.ytimg.com/vi/8XZe5aX5Ruk/hqdefault.jpg",
+    "link": "/content/content20"
+  }
+]

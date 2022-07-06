@@ -5,52 +5,113 @@ import celebJson from '../../../../static/data/celeb.json';
 import exposedJson from '../../../../static/data/exposed.json';
 import programJson from '../../../../static/data/program.json';
 import relationJson from '../../../../static/data/relation.json';
+import watchingJson from '../../../../static/data/watching.json';
+import bannerJson from '../../../../static/data/banner.json';
+import type { GraphQLSchema } from 'graphql/type/schema';
 
 export async function Graphql(query: string) {
-  const schema = buildSchema(`
+  const schema: GraphQLSchema = buildSchema(`
 		type Product {
-		    id: String!
-            name: String!
-            brand: String
-            price: Int
-            discount: Int
-            category: String
-            exposed: [[Int]]
+      id: String!
+      name: String!
+      brand: String
+      price: Int
+      discount: Int
+      category: String
+      exposed: [[Int]]
 		}
 		
-        type Program {
-          id: String!
-          name: String!
-          description: String
+    type Program {
+      id: String!
+      name: String!
+      description: String,
+      bannerImg: String
+      profileImg: String
+      releasedAt: Float
+      airingAt: Float
+      airingBeginAt: Float
+      airingEndAt: Float 
 		}
 		
 		type Content {
 		  id: ID!
-          name: String!
-          programId: String
-          contentType: String
-          createDt: Float!
-          round: Int
-          description: String
-          url: String
-          videoId: String
-          thumb: String
-          program: Program
+      name: String!
+      programId: String
+      contentType: ContentType
+      createDt: Float!
+      round: Int
+      description: String
+      url: String
+      videoId: String
+      thumb: String
+      program: Program
+      currentTime: Float,
+      duration: Float
 		}
 		
 		type Celeb {
-          id: String!
-          name: String!
-          description: String
-          category: String
+      id: String!
+      name: String!
+      description: String
+      category: String
 		}
 		
+		enum Order {
+		  LIKE
+		  VIEW
+		  CREATE
+		}
+		
+		enum ContentType {
+		  EPISODE
+		  HIGHLIGHT
+		  SHORTS
+		  ORIGIN
+		}
+		
+		type Banner {
+		  title: String
+		  imgPath: String
+		  link: String
+		}
+		
+		type MainContent {
+		  title: [Title]
+		  contents: [Content]
+		}
+		
+		type Title {
+		  text: String
+		  type: String
+		}
+		
+		type MainSeries {
+		  title: [Title]
+		  contents: [Content]
+		  series: Program
+		}
+		
+		type ContentEdge {
+		  node: Content
+		  cursor: String
+		}
+		
+		type PageInfo {
+      startCursor: String
+      hasNextPage: Boolean
+    }
+    
+		type PageContent {
+		  totalCount: String
+		  edges: [ContentEdge]
+		  pageInfo: PageInfo
+		}
 	
 		
 		type Query {
-			products: [Product]
+		  products: [Product]
 			product(id:ID!): Product
-			contents: [Content]
+			contents(order: Order, type: ContentType): [Content]
 			content(id:ID!): Content
 			celebs: [Celeb]
 			celeb(id:ID!): Celeb
@@ -58,38 +119,50 @@ export async function Graphql(query: string) {
 			program(id:ID!): Program
 			getProductsByContentId(id:ID!): [Product]
 			getCelebsByContentId(id:ID!): [Celeb]
-            getContentsByProgramId(id:ID!): [Content]
-            getContentsByProductId(id:ID!): [Content]
-            getCelebsByProductId(id:ID!): [Celeb]
-            getProductByCelebId(id:ID!): [Product]
-            getContentsByCelebId(id:ID!): [Content]
-            getProductsByCategory(category:String!): [Product]
-  	    }
+      getContentsByProgramId(id:ID!): [Content]
+      getContentsByProductId(id:ID!): [Content]
+      getCelebsByProductId(id:ID!): [Celeb]
+      getProductByCelebId(id:ID!): [Product]
+      getContentsByCelebId(id:ID!): [Content]
+      getProductsByCategory(category:String!): [Product]
+      getContinueWatching: [Content]
+       
+      getBanners: [Banner]
+      getMainContents: MainContent
+      getMainSeries: MainSeries
+      getMainShorts: MainContent
+      getMainInfiniteContents(first: Int, afterCursor: String): PageContent
+    }
 	`);
 
+
   const rootValue = {
+    getBanners: () => {
+      return bannerJson;
+    },
     products: () => {
       return productJson;
     },
     product: ({ id }: {id:string}) => {
       return productJson.find(product => product.id === id);
     },
-    contents: () => {
+    contents: ({ order, type }: {order: string, type: string}) => {
       const result = contentJson.map(content => {
         return {
           ...content,
           program: programJson.find(program => program.id === content.programId),
         };
       });
-      console.log(result);
-
       return result;
     },
     content: ({ id }: {id:string}) => {
       const content: any = contentJson.find(content => content.id === id);
+      const program = programJson.find(program => program.id === content.programId);
+      const currentTime = (watchingJson.find(watching => watching.contentId === content.id))?.currentTime || 0;
       return {
         ...content,
-        program: programJson.find(program => program.id === content.programId),
+        program,
+        currentTime,
       };
     },
     celebs: () => {
@@ -151,6 +224,104 @@ export async function Graphql(query: string) {
     },
     getProductsByCategory: ({ category }: {category:string}) => {
       return productJson.filter(product => product.category === category);
+    },
+    getContinueWatching: () => {
+      return contentJson
+        .filter(content => watchingJson.map(watching => watching.contentId).includes(content.id))
+        .map(content => {
+          const currentTime = (watchingJson.find(watching => watching.contentId === content.id))?.currentTime;
+          return {
+            ...content,
+            currentTime,
+            program: programJson.find(program => program.id === content.programId),
+          };
+        });
+    },
+    getMainContents: () => {
+      return {
+        title: [
+          {
+            text: '지금',
+          },
+          {
+            text: '인기있는',
+            type: 'primary-90',
+          },
+          {
+            text: '영상',
+          },
+        ],
+        contents: contentJson.slice(0, 2),
+      };
+    },
+    getMainSeries: () => {
+      const programId = 'programId4';
+      const contents = contentJson
+        .filter(content => content.programId === programId)
+        .map(content => {
+          return {
+            ...content,
+            program: programJson.find(program => program.id === content.programId),
+          };
+        });
+      const series = programJson.find(program => program.id === programId);
+      return {
+        title: [
+          {
+            text: '뷰티 꿀팁 가득한',
+          },
+          {
+            text: '#랜선뷰티',
+            type: 'primary-20',
+          },
+          {
+            text: '모아보기',
+          },
+        ],
+        contents,
+        series,
+      };
+    },
+    getMainShorts: () => {
+      return {
+        title: [
+          {
+            text: '많이 본 쇼츠',
+          },
+        ],
+        contents: contentJson.filter(content => content.contentType === 'shorts').slice(0, 6),
+      };
+    },
+
+    getMainInfiniteContents: ({ first, afterCursor }: {first: number, afterCursor: string}) => {
+      const totalCount = contentJson.length;
+      const data = contentJson;
+      let afterIndex = 0;
+      if (afterCursor) {
+        const nodeIndex = data.findIndex(datum => datum.id === afterCursor);
+        if (nodeIndex >= 0) {
+          afterIndex = nodeIndex + 1;
+        }
+      }
+      const slicedData = data.slice(afterIndex, afterIndex + first);
+      const edges = slicedData.map(node => ({
+        node,
+        cursor: node.id,
+      }));
+      let startCursor = undefined;
+      if (edges.length > 0) {
+        startCursor = edges[edges.length - 1].node.id;
+      }
+      const hasNextPage = data.length > afterIndex + first;
+
+      return {
+        totalCount: data.length,
+        edges,
+        pageInfo: {
+          startCursor,
+          hasNextPage,
+        },
+      };
     },
   };
 
