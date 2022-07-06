@@ -1,45 +1,47 @@
-<script lang="ts">
+<script>
 import CenterSection from '../styles/CenterSection.svelte';
-
-import contents from '../fixtures/contents'; //TODO: 목데이터
-
 import GridViewList from './GridViewList.svelte';
 import Button from './Button.svelte';
+import { onMount } from 'svelte';
 import Title from './Title.svelte';
 
-const handleClickItem = (id: string) => {
-  console.log('TODO: click 이벤트 : ', id);
+const handleClick = (id) => {
+  console.log('TODO: click 이벤트', seriesId);
 };
 
-const handleClickButton = () => {
-  console.log('TODO: click 이벤트 : ');
-};
+let contents = [];
+let seriesId;
+let title = [];
 
-const title = [
-  {
-    text: '뷰티 꿀팁 가득한',
-  },
-  {
-    text: '#랜선뷰티',
-    type: 'primary-20',
-  },
-  {
-    text: '모아보기',
-  },
-];
+onMount(async () => {
+  const body = {
+    query: '{getMainSeries{title {text type} series {name id} contents {thumb name videoId program {name}}}}',
+  };
+  fetch('/api/graphql', {
+    method: 'POST',
+    body: JSON.stringify(body),
+  }).then(response => {
+    return response.json();
+  }).then(response => {
+    const { title: titleArray, series, contents: contentList } = response.data.getMainSeries;
+    title = titleArray;
+    seriesId = series.id;
+    contents = contentList;
+  });
+});
 
 </script>
 
 <CenterSection>
-  <Title {title} />
+  <Title {title}></Title>
   
   <GridViewList
     {contents}
-    onClick={handleClickItem}
+    onClick={handleClick}
   />
 
   <Button
     buttonName={'랜선뷰티 시리즈 보러가기'}
-    onClick={handleClickButton}
+    onClick={handleClick}
   />
 </CenterSection>
