@@ -6,6 +6,7 @@ import exposedJson from '../../../../static/data/exposed.json';
 import programJson from '../../../../static/data/program.json';
 import relationJson from '../../../../static/data/relation.json';
 import watchingJson from '../../../../static/data/watching.json';
+import bannerJson from '../../../../static/data/banner.json';
 import type { GraphQLSchema } from 'graphql/type/schema';
 
 export async function Graphql(query: string) {
@@ -44,7 +45,8 @@ export async function Graphql(query: string) {
       videoId: String
       thumb: String
       program: Program
-      currentTime: Float
+      currentTime: Float,
+      duration: Float
 		}
 		
 		type Celeb {
@@ -67,6 +69,43 @@ export async function Graphql(query: string) {
 		  ORIGIN
 		}
 		
+		type Banner {
+		  title: String
+		  imgPath: String
+		  link: String
+		}
+		
+		type MainContent {
+		  title: [Title]
+		  contents: [Content]
+		}
+		
+		type Title {
+		  text: String
+		  type: String
+		}
+		
+		type MainSeries {
+		  title: [Title]
+		  contents: [Content]
+		  series: [Program]
+		}
+		
+		type ContentEdge {
+		  node: Content
+		  cursor: String
+		}
+		
+		type PageInfo {
+      startCursor: String
+      hasNextPage: Boolean
+    }
+    
+		type PageContent {
+		  totalCount: String
+		  edges: [ContentEdge]
+		  pageInfo: PageInfo
+		}
 	
 		
 		type Query {
@@ -86,12 +125,21 @@ export async function Graphql(query: string) {
       getProductByCelebId(id:ID!): [Product]
       getContentsByCelebId(id:ID!): [Content]
       getProductsByCategory(category:String!): [Product]
-      continueWatching: [Content]
+      getContinueWatching: [Content]
+       
+      getBanners: [Banner]
+      getMainContents: MainContent
+      getMainSeries: MainSeries
+      getMainShorts: MainContent
+      getMainInfiniteContents(first: Int, afterCursor: String): PageContent
     }
 	`);
 
 
   const rootValue = {
+    getBanners: () => {
+      return bannerJson;
+    },
     products: () => {
       return productJson;
     },
@@ -99,7 +147,6 @@ export async function Graphql(query: string) {
       return productJson.find(product => product.id === id);
     },
     contents: ({ order, type }: {order: string, type: string}) => {
-      console.log(order, type, schema.getType('Order'));
       const result = contentJson.map(content => {
         return {
           ...content,
@@ -178,7 +225,7 @@ export async function Graphql(query: string) {
     getProductsByCategory: ({ category }: {category:string}) => {
       return productJson.filter(product => product.category === category);
     },
-    continueWatching: () => {
+    getContinueWatching: () => {
       return contentJson
         .filter(content => watchingJson.map(watching => watching.contentId).includes(content.id))
         .map(content => {
@@ -186,8 +233,86 @@ export async function Graphql(query: string) {
           return {
             ...content,
             currentTime,
+            program: programJson.find(program => program.id === content.programId),
           };
         });
+    },
+    getMainContents: () => {
+      return {
+        title: [
+          {
+            text: '지금',
+          },
+          {
+            text: '인기있는',
+            type: 'primary-90',
+          },
+          {
+            text: '영상',
+          },
+        ],
+        contents: contentJson.slice(0, 2),
+      };
+    },
+    getMainSeries: () => {
+      const programId = 'programId3';
+      return {
+        title: [
+          {
+            text: '뷰티 꿀팁 가득한',
+          },
+          {
+            text: '#랜선뷰티',
+            type: 'primary-90',
+          },
+          {
+            text: '모아보기',
+          },
+        ],
+        contents: contentJson.filter(content => content.programId === programId),
+        series: programJson.find(program => program.id === programId),
+      };
+    },
+    getMainShorts: () => {
+      return {
+        title: [
+          {
+            text: '많이 본 쇼츠',
+          },
+        ],
+        contents: contentJson.filter(content => content.contentType === 'shorts').slice(0, 6),
+      };
+    },
+
+    getMainInfiniteContents: ({ first, afterCursor }: {first: number, afterCursor: string}) => {
+      const totalCount = contentJson.length;
+      const data = contentJson;
+      let afterIndex = 0;
+      if (afterCursor) {
+        const nodeIndex = data.findIndex(datum => datum.id === afterCursor);
+        if (nodeIndex >= 0) {
+          afterIndex = nodeIndex + 1;
+        }
+      }
+      const slicedData = data.slice(afterIndex, afterIndex + first);
+      const edges = slicedData.map(node => ({
+        node,
+        cursor: node.id,
+      }));
+      let startCursor = undefined;
+      if (edges.length > 0) {
+        startCursor = edges[edges.length - 1].node.id;
+      }
+      const hasNextPage = data.length > afterIndex + first;
+
+      return {
+        totalCount: data.length,
+        edges,
+        pageInfo: {
+          startCursor,
+          hasNextPage,
+        },
+      };
     },
   };
 
