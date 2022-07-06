@@ -88,7 +88,7 @@ export async function Graphql(query: string) {
 		type MainSeries {
 		  title: [Title]
 		  contents: [Content]
-		  series: [Program]
+		  series: Program
 		}
 		
 		type ContentEdge {
@@ -255,7 +255,9 @@ export async function Graphql(query: string) {
       };
     },
     getMainSeries: () => {
-      const programId = 'programId3';
+      const programId = 'programId4';
+      const contents = contentJson.filter(content => content.programId === programId);
+      const series = programJson.find(program => program.id === programId);
       return {
         title: [
           {
@@ -269,8 +271,8 @@ export async function Graphql(query: string) {
             text: '모아보기',
           },
         ],
-        contents: contentJson.filter(content => content.programId === programId),
-        series: programJson.find(program => program.id === programId),
+        contents,
+        series,
       };
     },
     getMainShorts: () => {
