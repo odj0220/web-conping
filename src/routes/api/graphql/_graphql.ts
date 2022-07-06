@@ -272,7 +272,7 @@ export async function Graphql(query: string) {
           },
           {
             text: '#랜선뷰티',
-            type: 'primary-90',
+            type: 'primary-20',
           },
           {
             text: '모아보기',
