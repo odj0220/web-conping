@@ -11,7 +11,7 @@
   @import '../styles/variables.scss';
   
   section {
-    margin: 0 1.6rem;
+    margin: 2rem 1.6rem;
     padding: 1.6rem 0;
     display: flex;
     flex-direction: column;
