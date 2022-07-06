@@ -5,7 +5,7 @@
 
 <style>
   section {
-    margin: 4rem 1.6rem;
+    margin: 4rem 0;
     padding: 1.6rem;
     background-color: #0A0A0A;
 
