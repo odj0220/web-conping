@@ -34,7 +34,7 @@
     display: flex;
     flex-wrap: nowrap;
     gap: 2rem;
-    padding-left: 1.6rem;
+    padding: 2.4rem 1.6rem 0;
 
     li {
       display: flex;
@@ -55,6 +55,6 @@
   .contents-container {
     display: flex;
     flex: 1;
-    padding: 1.6rem;
+    padding: 2.4em 1.6rem;
 	}
 </style>

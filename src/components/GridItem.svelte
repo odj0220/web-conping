@@ -6,12 +6,14 @@
 <li
   class="grid-item"
 >
+<div class="left">
   <img
     src={content.thumb}
     alt="방송이미지"
-    class="left"
     on:click={() => onClick(content.id)}
   > 
+
+</div>
 
   <div
     class="right"
@@ -28,11 +30,16 @@
     flex-direction: row;
     height: 6.8rem;
     gap: 1.2rem;
-
     
     .left {
       width: 12rem;
-      object-fit: cover;
+      border-radius: 2px;
+      overflow: hidden;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
    
       &:active {
         transform: scale(1.1);
