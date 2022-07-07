@@ -1,9 +1,8 @@
-
 <section>
   <slot />
 </section>
 
-<style>
+<style lang="scss">
   section {
     margin: 4rem 0;
     padding: 1.6rem;
