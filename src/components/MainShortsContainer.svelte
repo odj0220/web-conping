@@ -3,7 +3,7 @@
     import ShortVodList from './ShortVodList.svelte';
     import Title from './Title.svelte';
     import { onMount } from 'svelte';
-    import { graphqlApi } from '../lib/_api_graphql';
+    import { graphqlApi } from '$lib/_api_graphql';
 
     let contents: any[] = [];
     let title = [];

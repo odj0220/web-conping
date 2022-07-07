@@ -2,7 +2,7 @@
     import Hscroller from './HorizontalScroller.svelte';
     import ViewingVodList from './ViewingVodList.svelte';
     import { onMount } from 'svelte';
-    import { graphqlApi } from '../lib/_api_graphql';
+    import { graphqlApi } from '$lib/_api_graphql';
 
     let contents = [];
 

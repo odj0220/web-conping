@@ -4,7 +4,7 @@
     import 'swiper/css';
     import 'swiper/css/pagination';
     import { onMount } from 'svelte';
-    import { graphqlApi } from '../lib/_api_graphql';
+    import { graphqlApi } from '$lib/_api_graphql';
 
     let banners = [];
 
