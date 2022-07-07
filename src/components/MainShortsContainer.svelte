@@ -3,6 +3,7 @@
     import ShortVodList from './ShortVodList.svelte';
     import Title from './Title.svelte';
     import { onMount } from 'svelte';
+    import { graphqlApi } from '$lib/_api_graphql';
 
     let contents: any[] = [];
     let title = [];
@@ -12,19 +13,8 @@
     });
 
     function getShorts() {
-      /*
-     * To do: get Short vods from graphql api
-     * */
-      //contents = Contents;
-      const body = {
-        query: '{getMainShorts{title {text type} contents {thumb name videoId}}}',
-      };
-      fetch('/api/graphql', {
-        method: 'POST',
-        body: JSON.stringify(body),
-      }).then(response => {
-        return response.json();
-      }).then(response => {
+      const query = '{getMainShorts{title {text type} contents {thumb name videoId}}}';
+      graphqlApi(query).then(response => {
         const { title: titleArray, contents: contentList } = response.data.getMainShorts;
         title = titleArray;
         contents = contentList;

@@ -1,12 +1,11 @@
 <script lang="ts">
 import CenterSection from '../styles/CenterSection.svelte';
-
 import contents from '../fixtures/contents';
-
 import Videos from './Videos.svelte';
 import Title from './Title.svelte';
 
-const handleClick = (id: string) => {
+const popularVideos = contents.splice(0, 2);
+const handleClick = (id) => {
   //TODO: click 이벤트
   console.log('click : ', id);
 };
@@ -16,7 +15,7 @@ const handleTitleClick = () => {
   console.log('click : 타이틀');
 };
 
-const title = [
+const title: any[] = [
   {
     text: '지금',
   },
@@ -37,7 +36,7 @@ const title = [
     onClick={handleTitleClick}
   />
   <Videos
-    {contents}
+    contents={popularVideos}
     onClick={handleClick}
   />
 </CenterSection>
