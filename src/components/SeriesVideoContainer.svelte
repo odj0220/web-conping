@@ -1,8 +1,9 @@
 <script>
   import { onMount } from 'svelte';
-  
   import { goto } from '$app/navigation';
-
+  
+  import { graphqlApi } from '$lib/_api_graphql';
+  
   import CenterSection from '../styles/CenterSection.svelte';
   import GridViewList from './GridViewList.svelte';
   import Button from './Button.svelte';
@@ -16,6 +17,16 @@
     console.log('TODO: click 이벤트');
     goto(`/programs/${contents.programId}`);
   };
+
+  onMount(async () => {
+    const query = '{getMainSeries{title {text type} series {name id} contents {thumb name videoId program {name}}}}';
+    graphqlApi(query).then(response => {
+      const { title: titleArray, series, contents: contentList } = response.data.getMainSeries;
+      title = titleArray;
+      seriesId = series.id;
+      contents = contentList;
+    });
+  });
 
   let contents = [];
   let title = [];
