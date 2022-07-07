@@ -14,10 +14,9 @@
   {/if}
   
   <ul class="contents-container">
-    {#each contents.splice(0, 2) as content, index }
-      <Video {content} {onClick} />
+    {#each contents as content, order (content.id)}
+      <Video {content} order={order + 1} {onClick}/>
     {/each}
-  </ul>
 </section>
 
 <style lang="scss">
