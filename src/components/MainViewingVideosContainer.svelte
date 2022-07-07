@@ -1,9 +1,18 @@
 <script lang="ts">
     import Hscroller from './HorizontalScroller.svelte';
     import ViewingVodList from './ViewingVodList.svelte';
-    import Contents from '../fixtures/contents';
+    import { onMount } from 'svelte';
+    import { graphqlApi } from '$lib/_api_graphql';
 
-    let contents: any[] = Contents;
+    let contents = [];
+
+    onMount(async () => {
+      const query = '{getContinueWatching{thumb name program {name}}}';
+      graphqlApi(query).then(response => {
+        contents = response.data.getContinueWatching;
+      });
+    });
+
 </script>
 
 <section>

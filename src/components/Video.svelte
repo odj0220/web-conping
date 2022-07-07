@@ -46,6 +46,7 @@
   let player: YouTubePlayer;
   let firstLoad = true;
   let pauseTimer: any = null;
+  let duration = 0;
 
   const PLAYER_STATE = {
     NOT_STARTED: -1,
@@ -104,7 +105,7 @@
     player.on('ready', (event) => {
       const target = event.target;
       const element = target.i;
-  
+
       setIntersectionObserver(element);
     });
   }
@@ -146,7 +147,7 @@
   }
 
   function showEnd() {
-    player.seekTo(3600, true);
+    player.seekTo(duration - 1, true);
     player.playVideo();
   }
 
@@ -158,6 +159,8 @@
     setInterval(() => {
       playTime = player.getCurrentTime();
     }, 1000);
+
+    duration = await player.getDuration();
 
     () => {
       observers.remove(playerId);
@@ -186,9 +189,37 @@
         {/if}
     </div>
 </div>
+<!-- 찰리님 태그 -->
+<!--<li-->
+<!--        class="item-card"-->
+<!--        role="list"-->
+<!--&gt;-->
+<!--  <div class="image-wrapper">-->
+<!--    <img-->
+<!--            src={content.thumb} alt={content.name}-->
+<!--            on:click={() => onClick(content.id)}-->
+<!--    >-->
+<!--  </div>-->
+<!--  <div class="content-info-wrapper">-->
+<!--    <div-->
+<!--            class="info-title"-->
+<!--            on:click={() => onClick(content.id)}-->
+<!--    >-->
+<!--      {(content.program.name).repeat(15)}-->
+<!--      &lt;!&ndash; TODO: 테스트용 코드 수정 &ndash;&gt;-->
+<!--    </div>-->
+<!--    <div class="sub-info">-->
+<!--      <img class="profile-icon" src={content.thumb} alt="방송로고">-->
+<!--      <span class="profile-info">랜선뷰티 &middot; 5화 &middot; 2일 전</span>-->
+<!--      &lt;!&ndash; TODO: 하드코딩 &ndash;&gt;-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</li>-->
 
+<style lang="scss">
+  @import '../styles/modules.scss';
+  @import '../styles/variables.scss';
 
-<style>
     .player-wrap {
         display: inline-block;
         width: 100%;
@@ -198,6 +229,7 @@
         border-radius: 4px;
         overflow: hidden;
     }
+
     .player-wrap .youtube-player {
         z-index: 1;
         top: 0;
@@ -218,7 +250,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: -1;
+        z-index: 2;
     }
 
     .player-wrap .hide {
@@ -249,3 +281,72 @@
         }
     }
 </style>
+
+
+<!-- 찰리님 스타일 -->
+<!--<style lang="scss">-->
+<!--  @import '../styles/modules.scss';-->
+<!--  @import '../styles/variables.scss';-->
+
+<!--  .item-card {-->
+<!--    display: flex;-->
+<!--    flex-direction: column;-->
+<!--    width: 100%;-->
+<!--    border-radius: 0.4rem;-->
+<!--    overflow: hidden;-->
+
+<!--    .image-wrapper {-->
+<!--      width: 100%;-->
+<!--      height: 56.4%;-->
+<!--      img {-->
+<!--        width: 100%;-->
+<!--        height: 100%;-->
+<!--        object-fit: cover;-->
+
+<!--        &:active {-->
+<!--          transform: scale(1.01);-->
+<!--          //TODO: 클릭할 때 효과 정의 필요-->
+<!--        }-->
+<!--      }-->
+
+<!--      cursor: pointer;-->
+<!--    }-->
+
+<!--    .content-info-wrapper {-->
+<!--      display: flex;-->
+<!--      flex-direction: column;-->
+<!--      gap: 0.8rem;-->
+<!--      padding: 1.2rem;-->
+<!--      background-color: $bg-black-21;-->
+
+<!--      .info-title {-->
+<!--        @include ellipsis(3);-->
+<!--        @include caption1-400;-->
+
+<!--        &:active {-->
+<!--          transform: scale(1.01);-->
+<!--          //TODO: 클릭할 때 효과 정의 필요-->
+<!--        }-->
+<!--      }-->
+
+<!--      .sub-info {-->
+<!--        display: flex;-->
+<!--        flex-direction: row;-->
+<!--        gap: 0.8rem;-->
+<!--        align-items: center;-->
+
+<!--        .profile-icon {-->
+<!--          width: 2.4rem;-->
+<!--          height: 2.4rem;-->
+<!--          overflow: visible;-->
+<!--          border-radius: 1.2rem;-->
+<!--          object-fit: fill;-->
+<!--        }-->
+<!--        .profile-info {-->
+<!--          @include caption2-400;-->
+<!--        }-->
+<!--      }-->
+<!--    }-->
+<!--  }-->
+
+<!--</style>-->

@@ -12,11 +12,12 @@
       {title}
     </h2>
   {/if}
-  
+
   <ul class="contents-container">
     {#each contents as content, order (content.id)}
       <Video {content} order={order + 1} {onClick}/>
     {/each}
+  </ul>
 </section>
 
 <style lang="scss">

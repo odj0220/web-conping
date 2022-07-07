@@ -1,18 +1,33 @@
 <script>
 import CenterSection from '../styles/CenterSection.svelte';
-
-import contents from '../fixtures/contents'; //TODO: 목데이터
-
 import GridViewList from './GridViewList.svelte';
 import Button from './Button.svelte';
+import { onMount } from 'svelte';
+import Title from './Title.svelte';
+import { graphqlApi } from '$lib/_api_graphql';
 
 const handleClick = (id) => {
-  console.log('TODO: click 이벤트');
+  console.log('TODO: click 이벤트', seriesId);
 };
+
+let contents = [];
+let seriesId;
+let title = [];
+
+onMount(async () => {
+  const query = '{getMainSeries{title {text type} series {name id} contents {thumb name videoId program {name}}}}';
+  graphqlApi(query).then(response => {
+    const { title: titleArray, series, contents: contentList } = response.data.getMainSeries;
+    title = titleArray;
+    seriesId = series.id;
+    contents = contentList;
+  });
+});
+
 </script>
 
 <CenterSection>
-  <h2>뷰티 꿀팁 가득한 #랜선뷰티 모아보기</h2>
+  <Title {title}></Title>
   
   <GridViewList
     {contents}
