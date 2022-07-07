@@ -4,19 +4,13 @@
     import 'swiper/css';
     import 'swiper/css/pagination';
     import { onMount } from 'svelte';
+    import { graphqlApi } from '../lib/_api_graphql';
 
     let banners = [];
 
     onMount(async () => {
-      const body = {
-        query: '{getBanners{title imgPath link}}',
-      };
-      fetch('/api/graphql', {
-        method: 'POST',
-        body: JSON.stringify(body),
-      }).then(response => {
-        return response.json();
-      }).then(response => {
+      const query = '{getBanners{title imgPath link}}';
+      graphqlApi(query).then(response => {
         banners = response.data.getBanners;
       });
     });

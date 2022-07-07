@@ -2,19 +2,13 @@
     import Hscroller from './HorizontalScroller.svelte';
     import ViewingVodList from './ViewingVodList.svelte';
     import { onMount } from 'svelte';
+    import { graphqlApi } from '../lib/_api_graphql';
 
     let contents = [];
 
     onMount(async () => {
-      const body = {
-        query: '{getContinueWatching{thumb name program {name}}}',
-      };
-      fetch('/api/graphql', {
-        method: 'POST',
-        body: JSON.stringify(body),
-      }).then(response => {
-        return response.json();
-      }).then(response => {
+      const query = '{getContinueWatching{thumb name program {name}}}';
+      graphqlApi(query).then(response => {
         contents = response.data.getContinueWatching;
       });
     });
