@@ -1,4 +1,5 @@
 <script lang="ts" context="module">
+    let current;
     const observers = {
       map: new Map([]),
       add: function (key: string, value: {order: number; entry: any}) {
@@ -26,6 +27,20 @@
         });
         this.map = new Map(arrayFromMap);
       },
+      playOnlyFirst: function() {
+        const players = [...this.map].map(((player) => player[1]));
+
+        for (let i = 0; i < players.length; i++) {
+          const player = players[i];
+    
+          if (i === 0) {
+            player.play();
+            continue;
+          }
+    
+          player.pause();
+        }
+      },
     };
 </script>
 
@@ -44,9 +59,10 @@
   const playerId = guid();
 
   let player: YouTubePlayer;
+  let videoElement: HTMLElement | null = null;
   let firstLoad = true;
   let pauseTimer: any = null;
-  let duration = 0;
+  let interval: any = null;
 
   const PLAYER_STATE = {
     NOT_STARTED: -1,
@@ -62,7 +78,7 @@
       rel: 0, //연관동영상 표시여부
       mute: 1,
       playsinline: 1, //ios환경에서 전체화면으로 재생하지 않게하는 옵션
-      autoplay: 1, //자동재생 여부(모바일에서 작동하지 않습니다. mute설정을 하면 작동합니다.)
+      autoplay: 0, //자동재생 여부(모바일에서 작동하지 않습니다. mute설정을 하면 작동합니다.)
       loop: 0,
       modestbranding: 1,
       disablekb: 1,
@@ -80,19 +96,19 @@
   function setIntersectionObserver(element: HTMLElement) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && entry.intersectionRatio === 1) {
           const value = {
             order,
             entry,
+            play,
+            pause,
           };
           observers.add(playerId, value);
-          console.log(observers);
-          // play();
-
-          pause();
+          observers.playOnlyFirst();
         } else {
-          // pause();
+          pause();
           observers.remove(playerId);
+          observers.playOnlyFirst();
         }
       });
     }, {
@@ -104,9 +120,9 @@
   function onPlayerReady() {
     player.on('ready', (event) => {
       const target = event.target;
-      const element = target.i;
-
-      setIntersectionObserver(element);
+      videoElement = target.i;
+      player.playVideo();
+      pause();
     });
   }
 
@@ -115,21 +131,31 @@
       const status = event.data;
 
       if (status === PLAYER_STATE.NOT_STARTED) {
+        return;
+      }
+
+      if (status === PLAYER_STATE.PLAYING) {
+        interval = setInterval(() => {
+          playTime = player.getCurrentTime();
+        }, 1000);
+        return;
+      }
+
+      if (status === PLAYER_STATE.PAUSED) {
+        clearTimeout(interval);
+        return;
+      }
+
+      if (status === PLAYER_STATE.BUFFERING) {
         if (firstLoad) {
+          setIntersectionObserver(videoElement);
           firstLoad = false;
         }
         return;
       }
 
-      if (status === PLAYER_STATE.PLAYING) {
-        return;
-      }
-
-      if (status === PLAYER_STATE.PAUSED) {
-        return;
-      }
-
-      if (status === PLAYER_STATE.BUFFERING) {
+      if (status === PLAYER_STATE.ENDED) {
+        clearTimeout(interval);
         return;
       }
     });
@@ -146,33 +172,18 @@
     player.playVideo();
   }
 
-  function showEnd() {
-    player.seekTo(duration - 1, true);
-    player.playVideo();
-  }
-
   onMount(async () => {
     loadYoutubePlayer();
     onPlayerReady();
     onPlayerStateChange();
-
-    setInterval(() => {
-      playTime = player.getCurrentTime();
-    }, 1000);
-
-    duration = await player.getDuration();
-
+  
     () => {
       observers.remove(playerId);
+      clearTimeout(interval);
     };
   });
 </script>
 
-<div>
-    <button on:click={play}>재생</button>
-    <button on:click={player.pauseVideo}>멈춤</button>
-    <button on:click={showEnd}>재생완료</button>
-</div>
 <div class="player-wrap" on:click={onClick}>
     <div id='{playerId}' class="youtube-player"></div>
     <div class="overlay-wrap">
