@@ -156,6 +156,7 @@
 
       if (status === PLAYER_STATE.ENDED) {
         clearTimeout(interval);
+        player.seekTo(0, true);
         return;
       }
     });
