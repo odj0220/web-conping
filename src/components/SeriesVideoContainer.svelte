@@ -6,7 +6,7 @@ import { onMount } from 'svelte';
 import Title from './Title.svelte';
 
 const handleClick = (id) => {
-  console.log('TODO: click 이벤트', seriesId);
+  console.log('TODO: click 이벤트', id);
 };
 
 let contents = [];
