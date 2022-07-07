@@ -32,6 +32,7 @@
     
     .left {
       width: 12rem;
+      object-fit: cover;
    
       &:active {
         transform: scale(1.1);
