@@ -7,7 +7,7 @@ import Title from './Title.svelte';
 import { graphqlApi } from '$lib/_api_graphql';
 
 const handleClick = (id) => {
-  console.log('TODO: click 이벤트', seriesId);
+  console.log('TODO: click 이벤트', id);
 };
 
 let contents = [];
