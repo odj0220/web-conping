@@ -1,3 +1,34 @@
+<script lang="ts" context="module">
+    const observers = {
+      map: new Map([]),
+      add: function (key: string, value: {order: number; entry: any}) {
+        if (!this.map.has(key)) {
+          this.map.set(key, value);
+          this.sort();
+        }
+      },
+      remove: function(key: string) {
+        this.map.delete(key);
+      },
+      sort: function() {
+        const arrayFromMap = [...this.map];
+        arrayFromMap.sort((entryA, entryB) => {
+          const { order: orderA } = entryA[1];
+          const { order: orderB } = entryB[1];
+
+          if (orderA > orderB) {
+            return 1;
+          }
+          if (orderA < orderB) {
+            return -1;
+          }
+          return 0;
+        });
+        this.map = new Map(arrayFromMap);
+      },
+    };
+</script>
+
 <script type="ts">
   import { guid, toHHMMSS } from '$lib/util';
   export { toHHMMSS } from '$lib/util';
@@ -6,6 +37,7 @@
   import type { YouTubePlayer } from 'youtube-player/dist/types';
 
   export let content: any;
+  export let order = 0;
   export let onClick: () => void;
 
   let playTime;
@@ -30,7 +62,7 @@
       mute: 1,
       playsinline: 1, //ios환경에서 전체화면으로 재생하지 않게하는 옵션
       autoplay: 1, //자동재생 여부(모바일에서 작동하지 않습니다. mute설정을 하면 작동합니다.)
-      loop: 1,
+      loop: 0,
       modestbranding: 1,
       disablekb: 1,
       enablejsapi: 1,
@@ -48,9 +80,18 @@
     const io = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          play();
-        } else {
+          const value = {
+            order,
+            entry,
+          };
+          observers.add(playerId, value);
+          console.log(observers);
+          // play();
+
           pause();
+        } else {
+          // pause();
+          observers.remove(playerId);
         }
       });
     }, {
@@ -104,6 +145,11 @@
     player.playVideo();
   }
 
+  function showEnd() {
+    player.seekTo(3600, true);
+    player.playVideo();
+  }
+
   onMount(async () => {
     loadYoutubePlayer();
     onPlayerReady();
@@ -112,8 +158,18 @@
     setInterval(() => {
       playTime = player.getCurrentTime();
     }, 1000);
+
+    () => {
+      observers.remove(playerId);
+    };
   });
 </script>
+
+<div>
+    <button on:click={play}>재생</button>
+    <button on:click={player.pauseVideo}>멈춤</button>
+    <button on:click={showEnd}>재생완료</button>
+</div>
 <div class="player-wrap" on:click={onClick}>
     <div id='{playerId}' class="youtube-player"></div>
     <div class="overlay-wrap">
@@ -162,7 +218,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: 2;
+        z-index: -1;
     }
 
     .player-wrap .hide {
