@@ -4,7 +4,7 @@ import GridViewList from './GridViewList.svelte';
 import Button from './Button.svelte';
 import { onMount } from 'svelte';
 import Title from './Title.svelte';
-import { graphqlApi } from '$lib/_api_graphql.js';
+import { graphqlApi } from '$lib/_api_graphql';
 
 const handleClick = (id) => {
   console.log('TODO: click 이벤트', seriesId);
