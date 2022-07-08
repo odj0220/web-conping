@@ -50,6 +50,7 @@
   import { onMount } from 'svelte';
   import YP from 'youtube-player';
   import type { YouTubePlayer } from 'youtube-player/dist/types';
+  import PastTimeDelta from './PastTimeDelta.svelte';
 
   export let content: any;
   export let order = 0;
@@ -59,6 +60,7 @@
   const playerId = guid();
 
   let player: YouTubePlayer;
+  let container: HTMLElement | null = null;
   let videoElement: HTMLElement | null = null;
   let firstLoad = true;
   let pauseTimer: any = null;
@@ -71,6 +73,11 @@
     PAUSED: 2,
     BUFFERING: 3,
   };
+
+  $: videoName = content.name;
+  $: programName = content.program.name;
+  $: round = `${content.round && `${content.round}화`}`;
+  $: createdAt = content.createDt;
 
   function loadYoutubePlayer() {
     const playerVars = {
@@ -148,7 +155,7 @@
 
       if (status === PLAYER_STATE.BUFFERING) {
         if (firstLoad) {
-          setIntersectionObserver(videoElement);
+          setIntersectionObserver(container);
           firstLoad = false;
         }
         return;
@@ -174,6 +181,7 @@
   }
 
   onMount(async () => {
+    console.log(content);
     loadYoutubePlayer();
     onPlayerReady();
     onPlayerStateChange();
@@ -185,54 +193,49 @@
   });
 </script>
 
-<div class="player-wrap" on:click={onClick}>
-    <div id='{playerId}' class="youtube-player"></div>
-    <div class="overlay-wrap">
-        {#if player}
-            <div class="running-time overlay">
-                {#await playTime}
-                    ...waiting
-                {:then number}
-                    {toHHMMSS(number)}
-                {:catch error}
-                    {error.message}
-                {/await}
-            </div>
-        {/if}
-    </div>
-</div>
-<!-- 찰리님 태그 -->
-<!--<li-->
-<!--        class="item-card"-->
-<!--        role="list"-->
-<!--&gt;-->
-<!--  <div class="image-wrapper">-->
-<!--    <img-->
-<!--            src={content.thumb} alt={content.name}-->
-<!--            on:click={() => onClick(content.id)}-->
-<!--    >-->
-<!--  </div>-->
-<!--  <div class="content-info-wrapper">-->
-<!--    <div-->
-<!--            class="info-title"-->
-<!--            on:click={() => onClick(content.id)}-->
-<!--    >-->
-<!--      {(content.program.name).repeat(15)}-->
-<!--      &lt;!&ndash; TODO: 테스트용 코드 수정 &ndash;&gt;-->
-<!--    </div>-->
-<!--    <div class="sub-info">-->
-<!--      <img class="profile-icon" src={content.thumb} alt="방송로고">-->
-<!--      <span class="profile-info">랜선뷰티 &middot; 5화 &middot; 2일 전</span>-->
-<!--      &lt;!&ndash; TODO: 하드코딩 &ndash;&gt;-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</li>-->
+<section class="preview-wrap" bind:this={container}>
+    <section class="player-wrap" on:click={onClick}>
+        <div id='{playerId}' class="youtube-player"></div>
+        <div class="overlay-wrap">
+            {#if player}
+                <div class="running-time overlay">
+                    {#await playTime}
+                        ...waiting
+                    {:then number}
+                        {toHHMMSS(number)}
+                    {:catch error}
+                        {error.message}
+                    {/await}
+                </div>
+            {/if}
+        </div>
+    </section>
+
+    <section class="data-wrap">
+        <div class="title-wrapper">
+            <span class="title">
+                  {videoName}
+            </span>
+        </div>
+        <div class="rest">
+            <span class="program-name">{programName}</span>
+            <span class="divider">・</span>
+            <span calss="round">{round}</span>
+            <span class="divider">・</span>
+            <PastTimeDelta className="createdAt" pastTime={createdAt} />
+        </div>
+    </section>
+</section>
 
 <style lang="scss">
   @import '../styles/modules.scss';
   @import '../styles/variables.scss';
+    .preview-wrap {
+      /* 유튜브 플레이어 영역 */
+      border-radius: 0rem 0rem 0.4rem 0.4rem;
+      overflow: hidden;
 
-    .player-wrap {
+      .player-wrap {
         display: inline-block;
         width: 100%;
         height: auto;
@@ -240,125 +243,62 @@
         position: relative;
         border-radius: 4px;
         overflow: hidden;
-    }
 
-    .player-wrap .youtube-player {
-        z-index: 1;
-        top: 0;
-        left: 0;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-    }
-
-    .player-wrap .overlay {
-        position: absolute;
-    }
-
-    .player-wrap .overlay-wrap {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 2;
-    }
-
-    .player-wrap .hide {
-        opacity: 0;
-        transition: opacity 0.3s;
-    }
-
-    .player-wrap .running-time {
-        bottom: 15px;
-        right: 16px;
-        z-index: 3;
-        display: flex;
-        width: 110px;
-        height: 26px;
-        background: #323232;
-        border-radius: 5px;
-        color: #fff;
-        align-items: center;
-        justify-content: center;
-        font-family: system-ui;
-    }
-
-    @media (max-width: 495px) {
-        .player-wrap .running-time {
-            width: 85px;
-            height: 20px;
-            font-size: 12px;
+        .youtube-player {
+          z-index: 1;
+          top: 0;
+          left: 0;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
         }
+
+        .overlay {
+          position: absolute;
+        }
+
+        .overlay-wrap {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 2;
+        }
+
+        .hide {
+          opacity: 0;
+          transition: opacity 0.3s;
+        }
+
+        .running-time {
+          @include caption3;
+          bottom: 1rem;
+          right: 0.8rem;
+          background: rgba(0, 0, 0, 0.4);
+          border-radius: 0.2rem;
+          color: #fff;
+          font-family: system-ui;
+          padding: 0.2rem 0.6rem;
+        }
+      }
+
+      .data-wrap {
+        padding: 1.2rem;
+        background-color: #212121;
+
+        .title-wrapper {
+          @include ellipsis(2);
+          margin-bottom: 0.8rem;
+          .title {
+            @include caption1-400;
+          }
+        }
+
+        .rest {
+          @include caption2-400;
+        }
+      }
     }
 </style>
-
-
-<!-- 찰리님 스타일 -->
-<!--<style lang="scss">-->
-<!--  @import '../styles/modules.scss';-->
-<!--  @import '../styles/variables.scss';-->
-
-<!--  .item-card {-->
-<!--    display: flex;-->
-<!--    flex-direction: column;-->
-<!--    width: 100%;-->
-<!--    border-radius: 0.4rem;-->
-<!--    overflow: hidden;-->
-
-<!--    .image-wrapper {-->
-<!--      width: 100%;-->
-<!--      height: 56.4%;-->
-<!--      img {-->
-<!--        width: 100%;-->
-<!--        height: 100%;-->
-<!--        object-fit: cover;-->
-
-<!--        &:active {-->
-<!--          transform: scale(1.01);-->
-<!--          //TODO: 클릭할 때 효과 정의 필요-->
-<!--        }-->
-<!--      }-->
-
-<!--      cursor: pointer;-->
-<!--    }-->
-
-<!--    .content-info-wrapper {-->
-<!--      display: flex;-->
-<!--      flex-direction: column;-->
-<!--      gap: 0.8rem;-->
-<!--      padding: 1.2rem;-->
-<!--      background-color: $bg-black-21;-->
-
-<!--      .info-title {-->
-<!--        @include ellipsis(3);-->
-<!--        @include caption1-400;-->
-
-<!--        &:active {-->
-<!--          transform: scale(1.01);-->
-<!--          //TODO: 클릭할 때 효과 정의 필요-->
-<!--        }-->
-<!--      }-->
-
-<!--      .sub-info {-->
-<!--        display: flex;-->
-<!--        flex-direction: row;-->
-<!--        gap: 0.8rem;-->
-<!--        align-items: center;-->
-
-<!--        .profile-icon {-->
-<!--          width: 2.4rem;-->
-<!--          height: 2.4rem;-->
-<!--          overflow: visible;-->
-<!--          border-radius: 1.2rem;-->
-<!--          object-fit: fill;-->
-<!--        }-->
-<!--        .profile-info {-->
-<!--          @include caption2-400;-->
-<!--        }-->
-<!--      }-->
-<!--    }-->
-<!--  }-->
-
-<!--</style>-->
