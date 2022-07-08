@@ -10,14 +10,14 @@
   <img
     src={content.thumb}
     alt="방송이미지"
-    on:click={() => onClick(content.id)}
+    on:click={() => onClick(content.program.id)}
   > 
 
 </div>
 
   <div
     class="right"
-    on:click={() => onClick(content.id)}
+    on:click={() => onClick(content.program.id)}
   >
     <span class="title">{content.program.name}</span>
     <span class="sub-title">{content.name}</span>

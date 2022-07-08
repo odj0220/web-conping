@@ -7,8 +7,5 @@
     const id = $page.params.id;
 </script>
   
-  <!-- <HeaderContainer /> TODO: 헤더 -->
-  
-  
-  <ContentsDetailContainer {id} />
+<ContentsDetailContainer {id} />
   

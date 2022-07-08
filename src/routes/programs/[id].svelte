@@ -6,7 +6,4 @@
   const id = $page.params.id;
 </script>
 
-<!-- <HeaderContainer /> TODO: 헤더 -->
-
-
 <ProgramListContainer {id} />
