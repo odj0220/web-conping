@@ -1,7 +1,7 @@
 <script lang=ts>
 import { graphqlApi } from '$lib/_api_graphql';
 import { onMount } from 'svelte';
-import Metadata from './Metadata.svelte';
+import Metadata from './MetadataContainer.svelte';
 
 
 let data = {};
@@ -47,17 +47,16 @@ let items = [
   </div>
   <Metadata {...data}/>
 </div>
-<div class="gap" />
 <Tabs {items} />
 
 <style lang="scss">
   @import '../styles/variables.scss';
 
   .container {
-    padding: 8px 16px 24px;
     .visual {
       border-radius: 4px;
       overflow: hidden;
+      margin: 0.8rem 1.6rem;
       img {
         width: 100%;
       }
