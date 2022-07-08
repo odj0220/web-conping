@@ -3,12 +3,10 @@ import CenterSection from '../styles/CenterSection.svelte';
 
 import contents from '../fixtures/contents';
 
-import Videos from './Videos.svelte';
+import PreviewVideos from './PreviewVideos.svelte';
 import Title from './Title.svelte';
 
-const handleClick = (id: string) => {
 const popularVideos = contents.splice(0, 2);
-
 const handleClick = (id) => {
   //TODO: click 이벤트
   console.log('click : ', id);
@@ -37,10 +35,12 @@ const title = [
 <CenterSection type="transparency">
   <Title
     {title}
-    onClick={popularVideos}
+    onClick={handleTitleClick}
   />
-  <Videos
-    {contents}
+  <PreviewVideos
+    contents={popularVideos}
     onClick={handleClick}
+    infinite={false}
+    autoPlay={true}
   />
 </CenterSection>
