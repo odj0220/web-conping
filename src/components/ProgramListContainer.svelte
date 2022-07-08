@@ -1,45 +1,45 @@
 <script lang=ts>
-import { graphqlApi } from '$lib/_api_graphql';
-import { onMount } from 'svelte';
-import Metadata from './MetadataContainer.svelte';
+  import { onMount } from 'svelte';
 
-let data = {};
+  import { graphqlApi } from '$lib/_api_graphql';
 
-onMount(async () => {
-  const query = `{program(id:"${id}"){id name description bannerImg}}`;
-  const result = await graphqlApi(query);
-  data = result?.data?.program;
-});
+  import Metadata from './MetadataContainer.svelte';
+  import Tabs from './Tabs.svelte';
+  import EpisodeContainer from './EpisodeContainer.svelte';
+  import HighlightContainer from './HighlightContainer.svelte';
+  import ShortsContainer from './ShortsContainer.svelte';
+  import SubHeaderContainer from './SubHeaderContainer.svelte';
 
-import Tabs from './Tabs.svelte';
-import EpisodeContainer from './EpisodeContainer.svelte';
-import HighlightContainer from './HighlightContainer.svelte';
-import ShortsContainer from './ShortsContainer.svelte';
+  let data = {};
 
-export let id: string;
+  onMount(async () => {
+    const query = `{program(id:"${id}"){id name description bannerImg}}`;
+    const result = await graphqlApi(query);
+    data = result?.data?.program;
+  });
 
-// TODO: id data 가져오기
+  export let id: string;
 
-let items = [
-  { label: '에피소드',
-    value: 1,
-    id,
-    component: EpisodeContainer,
-  },
-  { label: '하이라이트',
-    value: 2,
-    id,
-    component: HighlightContainer,
-  },
-  { label: '쇼츠',
-    value: 3,
-    id,
-    component: ShortsContainer,
-  },
-];
-
+  let items = [
+    { label: '에피소드',
+      value: 1,
+      id,
+      component: EpisodeContainer,
+    },
+    { label: '하이라이트',
+      value: 2,
+      id,
+      component: HighlightContainer,
+    },
+    { label: '쇼츠',
+      value: 3,
+      id,
+      component: ShortsContainer,
+    },
+  ];
 </script>
 
+<SubHeaderContainer title={data?.name} />
 <div class="container">                             
   <div class="visual">
     <img src={data?.bannerImg} alt=""/>
