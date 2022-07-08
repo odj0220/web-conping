@@ -3,23 +3,63 @@ import Avatar from './Avatar.svelte';
 import GrayBox from './GrayBox.svelte';
 import Hscroller from './HorizontalScroller.svelte';
 
-import Icon from './icons/Icon.svelte';
-
 export let name: string;
+export let title: string;
 export let description: string;
+export let airingBeginAt: number;
+export let airingEndAt: number;
+export let airingAt: number;
 
 </script>
 
 <section class="container">
-    <h4 class="name">{name}</h4>
-    <span class="info">2022.05.04~2022.06.22 &middot 8부작 &middot (수) 오후 08:00</span>
-    <h5 class="title">MZ세대의 트렌드 Y2K, 트렌드에 맞는 핵심 메이크업 비결을 알아보자!!??</h5>
-    <div class="desc">
-      {description}
-    </div>
+    {#if name}<h4 class="name">{name}</h4>{/if}
+    <span class="info">
+
+      {#if airingBeginAt && airingEndAt}{airingBeginAt}~{airingEndAt} &middot{/if}
+      8부작 &middot 
+      (수) 오후 08:00</span>
+    {#if title}<h5 class="title">{title}</h5>{/if}
+    {#if description}<div class="description">{description}</div>{/if}
+    
     <GrayBox title="골라라 셀럽">
       <Hscroller>
         <ul class="profile-list">
+          <li class="profile-item">
+            <Avatar size="80px" src="" />
+            <span class="profile-name">이름</span>
+            <span class="profile-role">역할</span>
+          </li>
+          <li class="profile-item">
+            <Avatar size="80px" src="" />
+            <span class="profile-name">이름</span>
+            <span class="profile-role">역할</span>
+          </li>
+          <li class="profile-item">
+            <Avatar size="80px" src="" />
+            <span class="profile-name">이름</span>
+            <span class="profile-role">역할</span>
+          </li>
+          <li class="profile-item">
+            <Avatar size="80px" src="" />
+            <span class="profile-name">이름</span>
+            <span class="profile-role">역할</span>
+          </li>
+          <li class="profile-item">
+            <Avatar size="80px" src="" />
+            <span class="profile-name">이름</span>
+            <span class="profile-role">역할</span>
+          </li>
+          <li class="profile-item">
+            <Avatar size="80px" src="" />
+            <span class="profile-name">이름</span>
+            <span class="profile-role">역할</span>
+          </li>
+          <li class="profile-item">
+            <Avatar size="80px" src="" />
+            <span class="profile-name">이름</span>
+            <span class="profile-role">역할</span>
+          </li>
           <li class="profile-item">
             <Avatar size="80px" src="" />
             <span class="profile-name">이름</span>
@@ -42,25 +82,31 @@ export let description: string;
       }
       .title {
         @include body3-700;
-        margin-top: 8px;
+        margin: 8px 0 24px;
       }
       .info {
         @include body3-400;
         display: block;
         color: $disabled-8a;
       }
-      .desc {
+      .description {
         @include caption1-400;
         margin: 24px 0;
       }
 
     }
     .profile-list {
+      display: flex;
       .profile-item {
         display: flex;
         flex-direction: column;
         align-items: center;
         @include caption3;
+
+        &:not(:last-child) {
+          margin-right: 12px;
+        }
+
         .profile-name {
           display: block;
           margin: 0.4rem 0 0.2rem;

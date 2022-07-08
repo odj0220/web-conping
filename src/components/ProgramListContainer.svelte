@@ -3,7 +3,6 @@ import { graphqlApi } from '$lib/_api_graphql';
 import { onMount } from 'svelte';
 import Metadata from './MetadataContainer.svelte';
 
-
 let data = {};
 
 onMount(async () => {
@@ -45,7 +44,7 @@ let items = [
   <div class="visual">
     <img src={data?.bannerImg} alt=""/>
   </div>
-  <Metadata {...data}/>
+  <Metadata name={data?.name} description={data?.description} />
 </div>
 <Tabs {items} />
 

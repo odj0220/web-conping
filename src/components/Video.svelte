@@ -174,8 +174,8 @@
     <button on:click={showEnd}>재생완료</button>
 </div>
 <div class="player-wrap" on:click={onClick}>
-    <div id='{playerId}' class="youtube-player"></div>
-    <div class="overlay-wrap">
+<div id='{playerId}' class="youtube-player"></div>
+    <div class="overlay-wrap">    
         {#if player}
             <div class="running-time overlay">
                 {#await playTime}
