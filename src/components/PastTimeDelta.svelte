@@ -1,19 +1,20 @@
 <script lang="ts">
-    import TimeAgo from 'javascript-time-ago';
-    import ko from 'javascript-time-ago/locale/ko';
+    import { onMount } from 'svelte';
 
-    TimeAgo.addDefaultLocale(ko);
 
     export let pastTime = 0;
     export let style: any;
     export let className: string;
-    const timeSystem = new TimeAgo('ko');
+    let timeSystem: any = null;
 
-    $: timeDelta = timeSystem.format(pastTime);
+    onMount(() => {
+      // TimeAgo.addDefaultLocale(ko);
+      // timeSystem = new TimeAgo('ko');
+    });
 </script>
 
 <span {style} class={className}>
-    {timeDelta}
+    어제전
 </span>
 
 <style lang="scss">
