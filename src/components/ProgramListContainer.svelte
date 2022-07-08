@@ -44,7 +44,7 @@
   <div class="visual">
     <img src={data?.bannerImg} alt=""/>
   </div>
-  <Metadata {...data}/>
+  <Metadata name={data?.name} description={data?.description} />
 </div>
 <Tabs {items} />
 

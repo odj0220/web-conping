@@ -1,5 +1,9 @@
 <script lang="ts">
-import Icon from './icons/Icon.svelte';
+export let name:string;
+
+const setCurrentTime = (num: number) => {
+  console.log('dkddd', num);
+};
 
 </script>
 
@@ -8,20 +12,10 @@ import Icon from './icons/Icon.svelte';
         <img src="" alt="" />
     </div>
     <div class="contents">
-        <div class="metadata">
-            <div class="info">
-                <h6 class="name">상품 이름 상품 이름 상품 이름 상품 이름 상품 이름 상품 이름 상품 이름 상품 이름 상품 이름 상품 이름 상품 이름 상품 이름</h6>
-                <span class="price">1,000원</span>
-            </div>
-            <button class="btn btn-scrap">
-                <Icon name="scrap" />
-            </button>
-        </div>
+        <h6 class="name">{name}</h6>
+        <span class="price">1,000원</span>
         <ul class="time-stamps">
-            <li class="time-stamp">00:00</li>
-            <li class="time-stamp">00:00</li>
-            <li class="time-stamp">00:00</li>
-            <li class="time-stamp">00:00</li>
+            <li on:click="{() => setCurrentTime(1)}" class="time-stamp">00:12</li>
         </ul>
     </div>
 </li>
@@ -47,23 +41,17 @@ import Icon from './icons/Icon.svelte';
     flex-shrink: 0;
 }
 .contents {
-    .metadata {
-        display: flex;
-        .info {
-            padding-top: 0.4rem;
-            .name {
-                @include caption2-400;
-                @include ellipsis(1);
-            }
-            .price {
-                @include body2-700;
-                display: block;
-                margin: 0.4rem 0 1.6rem;
-            }
-            .btn-scrap {
-            
-            }
-        }
+    display: flex;
+    flex-direction: column;
+    padding-top: 0.4rem;
+    .name {
+        @include caption2-400;
+        @include ellipsis(1);
+    }
+    .price {
+        @include body2-700;
+        display: block;
+        margin: 0.4rem 0 1.6rem;
     }
 }
 .time-stamps {
