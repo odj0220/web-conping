@@ -55,6 +55,7 @@
   export let content: any;
   export let order = 0;
   export let onClick: () => void;
+  export let autoPlay: boolean;
 
   let playTime;
   const playerId = guid();
@@ -149,20 +150,22 @@
       }
 
       if (status === PLAYER_STATE.PAUSED) {
-        clearTimeout(interval);
+        clearInterval(interval);
         return;
       }
 
       if (status === PLAYER_STATE.BUFFERING) {
         if (firstLoad) {
-          setIntersectionObserver(container);
+          if (autoPlay) {
+            setIntersectionObserver(container);
+          }
           firstLoad = false;
         }
         return;
       }
 
       if (status === PLAYER_STATE.ENDED) {
-        clearTimeout(interval);
+        clearInterval(interval);
         player.seekTo(0, true);
         return;
       }
@@ -181,14 +184,13 @@
   }
 
   onMount(async () => {
-    console.log(content);
     loadYoutubePlayer();
     onPlayerReady();
     onPlayerStateChange();
   
     () => {
       observers.remove(playerId);
-      clearTimeout(interval);
+      clearInterval(interval);
     };
   });
 </script>
@@ -234,6 +236,7 @@
       /* 유튜브 플레이어 영역 */
       border-radius: 0rem 0rem 0.4rem 0.4rem;
       overflow: hidden;
+      height: 27.3rem;
 
       .player-wrap {
         display: inline-block;
