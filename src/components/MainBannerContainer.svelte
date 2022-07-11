@@ -17,9 +17,8 @@
 
   async function loadBannersData() {
     const query = '{getBanners{title imgPath link}}';
-    (
-      { data: { getBanners: banners } } = await graphqlApi(query)
-    );
+    const { data: { getBanners } } = await graphqlApi(query);
+    banners = getBanners;
   }
 </script>
 
