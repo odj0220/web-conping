@@ -3,7 +3,7 @@
 
   import { graphqlApi } from '$lib/_api_graphql';
 
-  import Metadata from './MetadataContainer.svelte';
+  import Metadata from './Metadata.svelte';
   import Tabs from './Tabs.svelte';
   import EpisodeContainer from './EpisodeContainer.svelte';
   import HighlightContainer from './HighlightContainer.svelte';
