@@ -305,7 +305,10 @@ export async function Graphql(query: string) {
       }
       const slicedData = data.slice(afterIndex, afterIndex + first);
       const edges = slicedData.map(node => ({
-        node,
+        node: {
+          ...node,
+          program: programJson.find(program => program.id === node.programId),
+        },
         cursor: node.id,
       }));
       let startCursor = undefined;
