@@ -8,15 +8,24 @@
   import GridViewList from './GridViewList.svelte';
   import Button from './Button.svelte';
   import Title from './Title.svelte';
+  
+  const move = (targetUrl) => {
+    goto(targetUrl);
+  };
+
+  const handleTitleClick = () => {
+    move(`/programs/${seriesId}`);
+  };
 
   const handleItemClick = (id) => {
+    //TODO: 상세 화면으로 이동
     console.log('TODO: click 이벤트', id);
   };
 
   const handleButtonClick = () => {
-    console.log('TODO: click 이벤트');
-    goto(`/programs/${contents.programId}`);
+    move(`/programs/${seriesId}`);
   };
+  
 
   onMount(async () => {
     const query = '{getMainSeries{title {text type} series {name id} contents {thumb name videoId program {name}}}}';
@@ -24,6 +33,7 @@
       const { title: titleArray, series, contents: contentList } = response.data.getMainSeries;
       title = titleArray;
       seriesId = series.id;
+      seriesName = series.name;
       contents = contentList;
     });
   });
@@ -31,10 +41,11 @@
   let contents = [];
   let title = [];
   let seriesId;
+  let seriesName;
 
   onMount(async () => {
     const body = {
-      query: '{getMainSeries{title {text type} series {name id} contents {thumb name videoId programId program {name}}}}',
+      query: '{getMainSeries{title {text type} series {name id} contents {thumb name videoId programId program {name id}}}}',
     };
     fetch('/api/graphql', {
       method: 'POST',
@@ -46,21 +57,24 @@
       title = titleArray;
       seriesId = series.id;
       contents = contentList;
+      seriesName = series.name;
     });
   });
 </script>
 
 <CenterSection>
-  <Title {title}></Title>
+  <Title
+    onClick={handleTitleClick}
+    {title}
+  />
   
   <GridViewList
     {contents}
     onClick={handleItemClick}
   />
 
-  <!-- TODO: 버튼명 하드코딩 수정 -->
   <Button
-    buttonName={'랜선뷰티 시리즈 보러가기'}
+    buttonName={`${seriesName} 시리즈 보러가기`}
     onClick={handleButtonClick}
   />
 </CenterSection>

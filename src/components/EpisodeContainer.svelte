@@ -1,21 +1,23 @@
 <script lang=ts>
-import contents from '../fixtures/contents';
+  import GridViewList from './GridViewList.svelte';
+  import { onMount } from 'svelte';
+  import { graphqlApi } from '../lib/_api_graphql';
 
-import GridViewList from './GridViewList.svelte';
+  export let id; //TODO: data get
+  let contents = [];
 
-export let id; //TODO: data get
+  onMount(async () => {
+    const query = `{getContentsByProgramId(id:"${id}", type:EPISODE){id name videoId thumb program {name}}}`;
+    const result = await graphqlApi(query);
+    contents = result.data.getContentsByProgramId;
+  });
 
-const handleClick = (clickedId: string) => {
-  console.log('TODO: click 이벤트', clickedId);
-};
+  const handleClick = (clickedId: string) => {
+    console.log('TODO: click 이벤트', clickedId);
+  };
 </script>
 
 <GridViewList
   {contents}
   onClick={handleClick}
 />
-
-
-<style>
-
-</style>

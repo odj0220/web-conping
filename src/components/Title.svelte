@@ -8,7 +8,7 @@
   export let title : TitleElement[];
 </script>
 
-<h1 {onClick}>
+<h1 on:click={onClick ? () => onClick() : null}>
   {#each title as element }
     <span class={element?.type}>{element.text} </span>
   {/each}

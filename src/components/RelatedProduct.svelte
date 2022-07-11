@@ -1,0 +1,84 @@
+<script lang="ts">
+import IconArrow from './icons/IconArrow.svelte';
+import ProductItem from './ProductItem.svelte';
+
+export let data: any[] = [];
+export let setCurrentTime : (num: number) => void;
+
+let list: any[] = [];
+let displayMore = true;
+
+$: if (data.length > 5) {
+  list = [...data].slice(0, 5);
+} else {
+  list = [...data];
+}
+
+console.log('data', data);
+
+const onClickMore = () => {
+  displayMore = false;
+  list = [...data];
+};
+
+</script>
+
+<section class="container">
+    <h4 class="title">관련 상품</h4>
+    <div class="contents">
+        <ul class="list">
+            {#each list as el}
+                <ProductItem {...el} setCurrentTime={setCurrentTime}/>
+            {/each}
+        </ul>
+        {#if data?.length > 5 && displayMore}
+            <button class="more" on:click={onClickMore}>
+                <span class="value">관련 상품 더보기</span>
+                <IconArrow name="small-down" />
+            </button>
+        {/if}
+
+    </div>
+</section>
+
+<style lang="scss">
+    @import "../styles/variables.scss";
+    
+    .container {
+        position: relative;
+        padding: 2.4rem 1.6rem;
+        .title {
+            @include body1-700;
+            margin-bottom: 12px;
+        }
+        .contents {
+            position: relative;
+        }
+        .more {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: $default-black;
+            padding: 1.6rem 0 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .value {
+                @include caption1-700;
+                color: $text-white-f2;
+                margin-right: 4px;
+            }
+            &:before {
+                content: "";
+                display: block;
+                position: absolute;
+                background: linear-gradient(180deg, rgba(10, 10, 10, 0.6) 0%, #0A0A0A 100%);
+                height: 40px;
+                left: 0;
+                right: 0;
+                bottom: 40px;
+            }
+        }
+    }
+</style>

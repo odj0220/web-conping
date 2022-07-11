@@ -1,5 +1,5 @@
-<script>
-  export let onClick;
+<script lang="ts">
+  export let onClick: () => void;
   export let content;
 </script>
 
@@ -10,14 +10,13 @@
   <img
     src={content.thumb}
     alt="방송이미지"
-    on:click={() => onClick(content.id)}
+    on:click={() => onClick(content.program.id)}
   > 
-
 </div>
 
   <div
     class="right"
-    on:click={() => onClick(content.id)}
+    on:click={() => onClick(content.program.id)}
   >
     <span class="title">{content.program.name}</span>
     <span class="sub-title">{content.name}</span>
@@ -25,16 +24,18 @@
 </li>
 
 <style lang="scss">
+  @import '../styles/modules.scss';
+  @import '../styles/variables.scss';
+
   .grid-item {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
     height: 6.8rem;
-    gap: 1.2rem;
     
     .left {
-      width: 12rem;
       border-radius: 2px;
       overflow: hidden;
+
       img {
         width: 100%;
         height: 100%;
@@ -51,18 +52,11 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      margin: 1rem;
+      padding: 1rem;
       font-size: 1.2rem;
 
       .title {
         color: #8A8A8A;
-      }
-
-      > *{
-        &:active {
-          transform: scale(1.1);
-          //TODO: 클릭할 때 효과 정의 필요
-        }
       }
     }
   }

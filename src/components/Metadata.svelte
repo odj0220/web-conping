@@ -1,101 +1,89 @@
 <script lang="ts">
-import Icon from './icons/Icon.svelte';
+import Avatar from './Avatar.svelte';
+import GrayBox from './GrayBox.svelte';
+import Hscroller from './HorizontalScroller.svelte';
 
 export let name: string;
+export let title: string;
 export let description: string;
+export let airingBeginAt: number;
+export let airingEndAt: number;
+export let airingAt: number;
+export let celebs: any;
 
-const onClickLike = () => {
-  console.log('like handler');
-};
-
-const onClickScrap = () => {
-  console.log('scrap handler');
-};
-
-const onClickShare = () => {
-  console.log('share handler');
-};
-
-const BUTTONS = [
-  {
-    name: '좋아요',
-    icon: 'like',
-    handler: onClickLike,
-  },
-  {
-    name: '찜하기',
-    icon: 'scrap',
-    handler: onClickScrap,
-  },
-  {
-    name: '공유하기',
-    icon: 'share',
-    handler: onClickShare,
-  },
-];
 </script>
 
-<div class="metadata">
-    <h4 class="title">{name}</h4>
-    <span class="info">2022.05.04~2022.06.22 &middot 8부작 &middot (수) 오후 08:00</span>
-    <div class="desc">
-        <p class="desc-value">{description}</p>
-        <span class="desc-arrow">
-            <Icon name="dropdown-small-white-down" />
-        </span>
-    </div>
-  </div>  
-  <div class="buttons">
-    {#each BUTTONS as button}
-      <button class="button" on:click={button.handler}>
-        <Icon name={button.icon} />
-        <span class="button-name">{button.name}</span>
-      </button>
-    {/each}
-  </div>
+<section class="container">
+    {#if name}<h4 class="name">{name}</h4>{/if}
+    <span class="info">
+
+      {#if airingBeginAt && airingEndAt}{airingBeginAt}~{airingEndAt} &middot{/if}
+      8부작 &middot 
+      (수) 오후 08:00</span>
+    {#if title}<h5 class="title">{title}</h5>{/if}
+    {#if description}<div class="description">{description}</div>{/if}
+
+    {#if celebs?.length}
+      <GrayBox title="골라라 셀럽">
+        <Hscroller>
+          <ul class="profile-list">
+            {#each celebs as celeb}
+              <li class="profile-item">
+                <Avatar size="80px" src="{celeb.thumbnail}" />
+                <span class="profile-name">{celeb.name}</span>
+              </li>
+            {/each}
+          </ul>
+        </Hscroller>
+      </GrayBox>
+    {/if}
+  </section>  
+
 
   <style lang="scss">
     @import '../styles/variables.scss';
 
-    .metadata {
-      .title {
+    .container {
+      padding: 1.6rem;
+      .name {
         @include title1-700;
-        margin: 24px 0 8px;
+        margin-bottom: 0.8rem;
+      }
+      .title {
+        @include body3-700;
+        margin: 8px 0 24px;
       }
       .info {
         @include body3-400;
         display: block;
         color: $disabled-8a;
       }
-      .desc {
+      .description {
         @include caption1-400;
         margin: 24px 0;
-        display: flex;
-        .desc-value {
-            flex-grow: 1;
-            margin-right: 12px;
-        }
-        .desc-arrow {
-
-        }
       }
 
     }
-    .buttons {
-      padding: 0 4px;
+    .profile-list {
       display: flex;
-      .button {
-        color: #f2f2f2;
+      .profile-item {
         display: flex;
         flex-direction: column;
         align-items: center;
+        @include caption3;
+
         &:not(:last-child) {
-          margin-right: 32px;
+          margin-right: 12px;
         }
-        .button-name {
-          margin-top: 4px;
-          @include caption1-400;
+
+        .profile-name {
+          display: block;
+          margin: 0.4rem 0 0.2rem;
         }
+        .profile-role {
+          color: $disabled-8a;
+        }
+
       }
-    } 
+    }
   </style>
