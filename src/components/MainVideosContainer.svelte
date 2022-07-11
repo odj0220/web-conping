@@ -10,9 +10,6 @@
     cursor: '',
   };
 
-  let autoPlay = true;
-  let promise: any = null;
-
   onMount(async () => {
     await loadContents(2);
   });
