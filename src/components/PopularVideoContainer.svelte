@@ -1,11 +1,16 @@
 <script lang="ts">
 import CenterSection from '../styles/CenterSection.svelte';
-import contents from '../fixtures/contents';
+import videos from '../fixtures/contents';
 import PreviewVideos from './PreviewVideos.svelte';
 import Title from './Title.svelte';
 import { onMount } from 'svelte';
 
-const popularVideos = contents.splice(0, 2);
+
+let contents: {data: any[]; end: boolean; cursor:string} = {
+  data: videos.splice(0, 2),
+  end: false,
+  cursor: '',
+};
 
 onMount(() => {
   console.log('on mount');
@@ -42,7 +47,7 @@ const title: any[] = [
     onClick={handleTitleClick}
   />
   <PreviewVideos
-    contents={popularVideos}
+    contents={contents}
     onClick={handleClick}
     infinite={false}
     autoPlay={true}
