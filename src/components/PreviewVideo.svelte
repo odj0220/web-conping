@@ -75,8 +75,13 @@
     BUFFERING: 3,
   };
 
+  // $: videoName = content.name;
+  // $: programName = content.program.name;
+  // $: round = `${content.round && `${content.round}화`}`;
+  // $: createdAt = content.createDt;
+
   $: videoName = content.name;
-  $: programName = content.program.name;
+  $: programName = 'content';
   $: round = `${content.round && `${content.round}화`}`;
   $: createdAt = content.createDt;
 
@@ -184,6 +189,7 @@
   }
 
   onMount(async () => {
+    console.log(content);
     loadYoutubePlayer();
     onPlayerReady();
     onPlayerStateChange();
