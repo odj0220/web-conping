@@ -23,7 +23,7 @@ export let celebs: any;
     {#if title}<h5 class="title">{title}</h5>{/if}
     {#if description}<div class="description">{description}</div>{/if}
 
-    {#if celebs.length}
+    {#if celebs?.length}
       <GrayBox title="골라라 셀럽">
         <Hscroller>
           <ul class="profile-list">
