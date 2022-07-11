@@ -9,6 +9,7 @@ export let description: string;
 export let airingBeginAt: number;
 export let airingEndAt: number;
 export let airingAt: number;
+export let celebs: any;
 
 </script>
 
@@ -21,53 +22,21 @@ export let airingAt: number;
       (수) 오후 08:00</span>
     {#if title}<h5 class="title">{title}</h5>{/if}
     {#if description}<div class="description">{description}</div>{/if}
-    
-    <GrayBox title="골라라 셀럽">
-      <Hscroller>
-        <ul class="profile-list">
-          <li class="profile-item">
-            <Avatar size="80px" src="" />
-            <span class="profile-name">이름</span>
-            <span class="profile-role">역할</span>
-          </li>
-          <li class="profile-item">
-            <Avatar size="80px" src="" />
-            <span class="profile-name">이름</span>
-            <span class="profile-role">역할</span>
-          </li>
-          <li class="profile-item">
-            <Avatar size="80px" src="" />
-            <span class="profile-name">이름</span>
-            <span class="profile-role">역할</span>
-          </li>
-          <li class="profile-item">
-            <Avatar size="80px" src="" />
-            <span class="profile-name">이름</span>
-            <span class="profile-role">역할</span>
-          </li>
-          <li class="profile-item">
-            <Avatar size="80px" src="" />
-            <span class="profile-name">이름</span>
-            <span class="profile-role">역할</span>
-          </li>
-          <li class="profile-item">
-            <Avatar size="80px" src="" />
-            <span class="profile-name">이름</span>
-            <span class="profile-role">역할</span>
-          </li>
-          <li class="profile-item">
-            <Avatar size="80px" src="" />
-            <span class="profile-name">이름</span>
-            <span class="profile-role">역할</span>
-          </li>
-          <li class="profile-item">
-            <Avatar size="80px" src="" />
-            <span class="profile-name">이름</span>
-            <span class="profile-role">역할</span>
-          </li>
-        </ul>
-      </Hscroller>
-    </GrayBox>
+
+    {#if celebs.length}
+      <GrayBox title="골라라 셀럽">
+        <Hscroller>
+          <ul class="profile-list">
+            {#each celebs as celeb}
+              <li class="profile-item">
+                <Avatar size="80px" src="{celeb.thumbnail}" />
+                <span class="profile-name">{celeb.name}</span>
+              </li>
+            {/each}
+          </ul>
+        </Hscroller>
+      </GrayBox>
+    {/if}
   </section>  
 
 

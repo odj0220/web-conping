@@ -45,7 +45,7 @@ export async function Graphql(query: string) {
       videoId: String
       thumb: String
       program: Program
-      currentTime: Float,
+      currentTime: Float
       duration: Float
 		}
 		
@@ -53,7 +53,11 @@ export async function Graphql(query: string) {
       id: String!
       name: String!
       description: String
-      category: String
+      categories: [String]
+      thumbnail: String
+      follows: [Celeb]
+      programs: [Program]
+      products: [Product]
 		}
 		
 		enum Order {
@@ -111,7 +115,7 @@ export async function Graphql(query: string) {
 		type Query {
 		  products: [Product]
 			product(id:ID!): Product
-			contents(order: Order, type: ContentType): [Content]
+			contents(order:Order, type:ContentType): [Content]
 			content(id:ID!): Content
 			celebs: [Celeb]
 			celeb(id:ID!): Celeb
@@ -119,9 +123,10 @@ export async function Graphql(query: string) {
 			program(id:ID!): Program
 			getProductsByContentId(id:ID!): [Product]
 			getCelebsByContentId(id:ID!): [Celeb]
-      getContentsByProgramId(id:ID!): [Content]
+      getContentsByProgramId(id:ID!, type:ContentType): [Content]
       getContentsByProductId(id:ID!): [Content]
       getCelebsByProductId(id:ID!): [Celeb]
+      getCelebsByProgramId(id:ID!): [Celeb]
       getProductByCelebId(id:ID!): [Product]
       getContentsByCelebId(id:ID!): [Content]
       getProductsByCategory(category:String!): [Product]
@@ -135,6 +140,7 @@ export async function Graphql(query: string) {
     }
 	`);
 
+
   const rootValue = {
     getBanners: () => {
       return bannerJson;
@@ -142,28 +148,22 @@ export async function Graphql(query: string) {
     products: () => {
       return productJson;
     },
-    product: ({ id }: { id: string }) => {
-      return productJson.find((product) => product.id === id);
+    product: ({ id }: {id:string}) => {
+      return productJson.find(product => product.id === id);
     },
-    contents: ({ order, type }: { order: string; type: string }) => {
-      const result = contentJson.map((content) => {
+    contents: ({ order, type }: {order: string, type: string}) => {
+      const result = contentJson.map(content => {
         return {
           ...content,
-          program: programJson.find(
-            (program) => program.id === content.programId,
-          ),
+          program: programJson.find(program => program.id === content.programId),
         };
       });
       return result;
     },
-    content: ({ id }: { id: string }) => {
-      const content: any = contentJson.find((content) => content.id === id);
-      const program = programJson.find(
-        (program) => program.id === content.programId,
-      );
-      const currentTime =
-        watchingJson.find((watching) => watching.contentId === content.id)
-          ?.currentTime || 0;
+    content: ({ id }: {id:string}) => {
+      const content: any = contentJson.find(content => content.id === id);
+      const program = programJson.find(program => program.id === content.programId);
+      const currentTime = (watchingJson.find(watching => watching.contentId === content.id))?.currentTime || 0;
       return {
         ...content,
         program,
@@ -173,22 +173,20 @@ export async function Graphql(query: string) {
     celebs: () => {
       return celebJson;
     },
-    celeb: ({ id }: { id: string }) => {
-      return celebJson.find((celeb) => celeb.id === id);
+    celeb: ({ id }: {id:string}) => {
+      return celebJson.find(celeb => celeb.id === id);
     },
     programs: () => {
       return programJson;
     },
-    program: ({ id }: { id: string }) => {
-      return programJson.find((program) => program.id === id);
+    program: ({ id }: {id:string}) => {
+      return programJson.find(program => program.id === id);
     },
-    getProductsByContentId: ({ id }: { id: string }) => {
+    getProductsByContentId: ({ id }: {id:string}) => {
       const products = exposedJson
-        .filter((exposed) => exposed.content === id)
-        .map((exposed) => {
-          const product = productJson.find(
-            (product) => product.id === exposed.product,
-          );
+        .filter(exposed => exposed.content === id)
+        .map(exposed => {
+          const product = productJson.find(product => product.id === exposed.product);
           return {
             ...product,
             exposed: exposed.timelines,
@@ -196,59 +194,70 @@ export async function Graphql(query: string) {
         });
       return products;
     },
-    getCelebsByContentId: ({ id }: { id: string }) => {
+    getCelebsByContentId: ({ id }: {id:string}) => {
       const celebIds = relationJson
-        .filter((relation) => relation.content === id)
-        .map((relation) => relation.celeb);
-      return celebJson.filter((celeb) => celebIds.includes(celeb.id));
+        .filter(relation => relation.content === id)
+        .map(relation => relation.celeb);
+      return celebJson.filter(celeb => celebIds.includes(celeb.id));
     },
-    getContentsByProductId: ({ id }: { id: string }) => {
+    getContentsByProductId: ({ id }: {id:string}) => {
       const contentIds = relationJson
-        .filter((relation) => relation.product === id)
-        .map((relation) => relation.content);
-      return contentJson.filter((content) => contentIds.includes(content.id));
+        .filter(relation => relation.product === id)
+        .map(relation => relation.content);
+      return contentJson.filter(content => contentIds.includes(content.id));
     },
-    getCelebsByProductId: ({ id }: { id: string }) => {
+    getCelebsByProductId: ({ id }: {id:string}) => {
       const celebIds = relationJson
-        .filter((relation) => relation.product === id)
-        .map((relation) => relation.celeb);
-      return celebJson.filter((celeb) => celebIds.includes(celeb.id));
+        .filter(relation => relation.product === id)
+        .map(relation => relation.celeb);
+      return celebJson.filter(celeb => celebIds.includes(celeb.id));
     },
-    getProductByCelebId: ({ id }: { id: string }) => {
+    getCelebsByProgramId: ({ id }: {id:string}) => {
+      const contents = contentJson.filter(content => content.programId === id).map(content => content.id);
+      const celebIds = relationJson
+        .filter(relation => contents.includes(relation.content))
+        .map(relation => relation.celeb);
+      return celebJson.filter(celeb => celebIds.includes(celeb.id));
+    },
+    getProductByCelebId: ({ id }: {id:string}) => {
       const productIds = relationJson
-        .filter((relation) => relation.celeb === id)
-        .map((relation) => relation.product);
-      return productJson.filter((product) => productIds.includes(product.id));
+        .filter(relation => relation.celeb === id)
+        .map(relation => relation.product);
+      return productJson.filter(product => productIds.includes(product.id));
     },
-    getContentsByCelebId: ({ id }: { id: string }) => {
+    getContentsByCelebId: ({ id }: {id:string}) => {
       const contentIds = relationJson
-        .filter((relation) => relation.celeb === id)
-        .map((relation) => relation.content);
-      return contentJson.filter((content) => contentIds.includes(content.id));
+        .filter(relation => relation.celeb === id)
+        .map(relation => relation.content);
+      return contentJson.filter(content => contentIds.includes(content.id));
     },
-    getContentsByProgramId: ({ id }: { id: string }) => {
-      return contentJson.filter((content) => content.programId === id);
+    getContentsByProgramId: ({ id, type }: {id:string, type: string}) => {
+      return contentJson
+        .filter(content => {
+          if (content.programId !== id) {
+            return false;
+          }
+          return !type || type === content.contentType;
+        })
+        .map(content => {
+          return {
+            ...content,
+            program: programJson.find(program => program.id === content.programId),
+          };
+        });
     },
-    getProductsByCategory: ({ category }: { category: string }) => {
-      return productJson.filter((product) => product.category === category);
+    getProductsByCategory: ({ category }: {category:string}) => {
+      return productJson.filter(product => product.category === category);
     },
     getContinueWatching: () => {
       return contentJson
-        .filter((content) =>
-          watchingJson
-            .map((watching) => watching.contentId)
-            .includes(content.id),
-        )
-        .map((content) => {
-          const currentTime = watchingJson.find(
-            (watching) => watching.contentId === content.id,
-          )?.currentTime;
+        .filter(content => watchingJson.map(watching => watching.contentId).includes(content.id))
+        .map(content => {
+          const currentTime = (watchingJson.find(watching => watching.contentId === content.id))?.currentTime;
           return {
             ...content,
             currentTime,
-            program: programJson.find(
-              (program) => program.id === content.programId,
-            ),
+            program: programJson.find(program => program.id === content.programId),
           };
         });
     },
@@ -272,16 +281,14 @@ export async function Graphql(query: string) {
     getMainSeries: () => {
       const programId = 'programId4';
       const contents = contentJson
-        .filter((content) => content.programId === programId)
-        .map((content) => {
+        .filter(content => content.programId === programId)
+        .map(content => {
           return {
             ...content,
-            program: programJson.find(
-              (program) => program.id === content.programId,
-            ),
+            program: programJson.find(program => program.id === content.programId),
           };
         });
-      const series = programJson.find((program) => program.id === programId);
+      const series = programJson.find(program => program.id === programId);
       return {
         title: [
           {
@@ -306,30 +313,22 @@ export async function Graphql(query: string) {
             text: '많이 본 쇼츠',
           },
         ],
-        contents: contentJson
-          .filter((content) => content.contentType === 'shorts')
-          .slice(0, 6),
+        contents: contentJson.filter(content => content.contentType === 'shorts').slice(0, 6),
       };
     },
 
-    getMainInfiniteContents: ({
-      first,
-      afterCursor,
-    }: {
-      first: number;
-      afterCursor: string;
-    }) => {
+    getMainInfiniteContents: ({ first, afterCursor }: {first: number, afterCursor: string}) => {
       const totalCount = contentJson.length;
       const data = contentJson;
       let afterIndex = 0;
       if (afterCursor) {
-        const nodeIndex = data.findIndex((datum) => datum.id === afterCursor);
+        const nodeIndex = data.findIndex(datum => datum.id === afterCursor);
         if (nodeIndex >= 0) {
           afterIndex = nodeIndex + 1;
         }
       }
       const slicedData = data.slice(afterIndex, afterIndex + first);
-      const edges = slicedData.map((node) => ({
+      const edges = slicedData.map(node => ({
         node,
         cursor: node.id,
       }));
