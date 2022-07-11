@@ -1,28 +1,28 @@
 <script lang="ts">
   import CenterSection from '../styles/CenterSection.svelte';
-  import PreviewVideos, { stopScrolling } from './PreviewVideos.svelte';
+  import PreviewVideos from './PreviewVideos.svelte';
   import { onMount, tick } from 'svelte';
   import { graphqlApi } from '../lib/_api_graphql';
 
-  let contents: any = {
-    loading: true,
+  let contents: {data: any[]; end: boolean; cursor:string} = {
     data: [],
     end: false,
+    cursor: '',
   };
 
   let autoPlay = true;
   let promise: any = null;
-  let videos = [];
 
   onMount(async () => {
-    await initialGetContents(3);
+    await loadContents(2);
   });
 
-  $: loading = contents.loading;
-
-  async function initialGetContents(num: number): Promise<any> {
+  async function loadContents(num: number, cursor?: string): Promise<any> {
     const query = `{
-        getMainInfiniteContents(first: ${num}) {
+        getMainInfiniteContents(
+            first: ${num},
+            ${cursor ? `afterCursor: "${cursor}"` : ''}
+        ) {
             totalCount,
             edges {
                 cursor
@@ -50,9 +50,11 @@
     try {
       const { data: { getMainInfiniteContents } } = await graphqlApi(query);
       const newContents = getMainInfiniteContents.edges.map((edge) => edge.node);
-      videos = [...videos, ...newContents];
+      const videos = [...contents.data, ...newContents];
+      contents.data = videos;
+      contents.end = !getMainInfiniteContents.pageInfo.hasNextPage;
+      contents.cursor = getMainInfiniteContents.pageInfo.startCursor;
     } catch (error) {
-      console.log('에러 발생');
       console.log(error);
     }
   }
@@ -62,14 +64,15 @@
   }
 
   async function runInfiniteScrolling(event) {
-    console.log('끝!');
-    stopScrolling();
+    const detail = event.detail;
+    await loadContents(6, contents.cursor);
+    detail.stop();
   }
 </script>
 
 <CenterSection>
     <PreviewVideos
-            contents={videos}
+            contents={contents}
             infiniteScroll={true}
             autoPlay={true}
             onClick={handleClick}

@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-  import { writable } from 'svelte/store';
+  import { get, writable } from 'svelte/store';
   const scrolling = writable(false);
   
   export function startScrolling () {
@@ -17,20 +17,27 @@
   import { onMount } from 'svelte';
 
   export let title: string;
-  export let contents: any[];
+  export let contents!: {data: any[]; end: boolean; cursor: string};
   export let onClick: () => void;
   export let infiniteScroll = false;
   export let autoPlay = true;
 
   let infiniteScrollArea: HTMLElement | null = null;
-  let infiniteScrollConfig: {done: boolean;} | null = null;
   let scrollTimer: any = null;
+  let io: any = null;
 
-  const dispatch = createEventDispatcher<{'request-more': {request: true}}>();
+  $: videos = contents.data ? contents.data : [];
+
+  const dispatch = createEventDispatcher<{'request-more': {stop:() => void}}>();
 
   onMount(() => {
-    console.log(contents);
     initialInfiniteScroll();
+
+    return () => {
+      if (io && infiniteScrollArea) {
+        io.unobserve(infiniteScrollArea);
+      }
+    };
   });
 
   function initialInfiniteScroll() {
@@ -38,13 +45,21 @@
       return;
     }
 
-    infiniteScrollConfig = {
-      done: false,
-    };
-
-    const io = new IntersectionObserver((entries) => {
+    io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
+          if (!videos.length) {
+            return;
+          }
+
+          if ($scrolling) {
+            return;
+          }
+
+          if (contents.end) {
+            return;
+          }
+
           startScrolling();
           requestInfiniteScroll();
         }
@@ -58,7 +73,7 @@
     clearTimeout(scrollTimer);
     scrollTimer = setTimeout(() => {
       dispatch('request-more', {
-        request: true,
+        stop: stopScrolling,
       });
     }, 1000);
   }
@@ -72,10 +87,11 @@
     {/if}
 
     <ul class="contents-container">
-          {#each contents as content, order (content.id)}
-<!--            <PreviewVideo content={content} order={order + 1} {onClick} {autoPlay}/>-->
-            <PreviewVideo content={content} order={order + 1} autoPlay={autoPlay}/>
-          {/each}
+        {#if videos.length > 0}
+            {#each videos as video, order (video.id)}
+                <PreviewVideo content={video} order={order + 1} autoPlay={autoPlay}/>
+            {/each}
+        {/if}
     </ul>
 
     {#if infiniteScroll}
@@ -87,29 +103,6 @@
       {/if}
     {/if}
 </section>
-
-<!--<section class="videos-wrapper">-->
-<!--  {#if title}-->
-<!--    <h2 class="title">-->
-<!--      {title}-->
-<!--    </h2>-->
-<!--  {/if}-->
-
-<!--  <ul class="contents-container">-->
-<!--    {#each contents as content, order (content.id)}-->
-<!--      <PreviewVideo content={content} order={order + 1} {onClick} {autoPlay}/>-->
-<!--    {/each}-->
-<!--  </ul>-->
-
-<!--  {#if infiniteScroll}-->
-<!--    <section class="infinite-scroll" bind:this={infiniteScrollArea}></section>-->
-<!--    {#if $scrolling}-->
-<!--      <div class="spinner-wrapper">-->
-<!--        <div class="spinner"></div>-->
-<!--      </div>-->
-<!--    {/if}-->
-<!--  {/if}-->
-<!--</section>-->
 
 <style lang="scss">
   @import '../styles/variables.scss';
