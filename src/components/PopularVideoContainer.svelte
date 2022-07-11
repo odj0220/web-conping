@@ -21,7 +21,7 @@ const handleTitleClick = () => {
   console.log('click : 타이틀');
 };
 
-const title = [
+const title: any[] = [
   {
     text: '지금',
   },

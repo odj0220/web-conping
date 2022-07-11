@@ -8,17 +8,13 @@
 <section class="grid-view-section">
   <ul class="grid-list">
     {#each contents as content, index }
-      {#if index < 5} 
-        <!-- TODO: 매직넘버 제거 -->
-        <GridItem {content} {onClick} />
-      {/if}
+      <GridItem {content} {onClick} />
     {/each}
   </ul>
 </section>
 
 <style lang="scss">
   .grid-view-section {
-    
     .grid-list {
       display: flex;
       flex-wrap: 'wrap';
