@@ -3,17 +3,8 @@
     import SwiperCore, { Autoplay, Pagination } from 'swiper';
     import 'swiper/css';
     import 'swiper/css/pagination';
-    import { onMount } from 'svelte';
-    import { graphqlApi } from '$lib/_api_graphql';
 
-    let banners = [];
-
-    onMount(async () => {
-      const query = '{getBanners{title imgPath link}}';
-      graphqlApi(query).then(response => {
-        banners = response.data.getBanners;
-      });
-    });
+    export let banners = [];
 
     SwiperCore.use([Pagination, Autoplay]);
 
