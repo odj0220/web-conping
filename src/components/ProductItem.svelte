@@ -1,9 +1,8 @@
 <script lang="ts">
 export let name:string;
+export let setCurrentTime : (num: number) => void;
 
-const setCurrentTime = (num: number) => {
-  console.log('dkddd', num);
-};
+const timelines = [0, 133, 193];
 
 </script>
 
@@ -15,7 +14,7 @@ const setCurrentTime = (num: number) => {
         <h6 class="name">{name}</h6>
         <span class="price">1,000원</span>
         <ul class="time-stamps">
-            <li on:click="{() => setCurrentTime(1)}" class="time-stamp">00:12</li>
+            <li on:click="{() => setCurrentTime(137)}" class="time-stamp">00:12</li>
         </ul>
     </div>
 </li>
