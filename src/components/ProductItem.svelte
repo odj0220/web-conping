@@ -1,8 +1,14 @@
 <script lang="ts">
 export let name:string;
+export let price: number;
+export let exposed: any[] = [];
 export let setCurrentTime : (num: number) => void;
 
-const timelines = [0, 133, 193];
+const timelines = () => {
+  let arr: any[] = [];
+  exposed.map(el => arr.push(el[0]));
+  return arr;
+};
 
 </script>
 
@@ -14,7 +20,10 @@ const timelines = [0, 133, 193];
         <h6 class="name">{name}</h6>
         <span class="price">1,000원</span>
         <ul class="time-stamps">
-            <li on:click="{() => setCurrentTime(137)}" class="time-stamp">00:12</li>
+            {#each timelines() as timeline}
+                <li on:click="{() => setCurrentTime(timeline)}" class="time-stamp">{timeline}</li>
+            {/each}
+            
         </ul>
     </div>
 </li>
