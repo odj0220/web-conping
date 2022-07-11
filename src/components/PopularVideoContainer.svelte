@@ -1,12 +1,16 @@
 <script lang="ts">
 import CenterSection from '../styles/CenterSection.svelte';
-
 import contents from '../fixtures/contents';
-
 import PreviewVideos from './PreviewVideos.svelte';
 import Title from './Title.svelte';
+import { onMount } from 'svelte';
 
 const popularVideos = contents.splice(0, 2);
+
+onMount(() => {
+  console.log('on mount');
+});
+
 const handleClick = (id) => {
   //TODO: click 이벤트
   console.log('click : ', id);
