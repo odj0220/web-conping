@@ -63,6 +63,7 @@
   let player: YouTubePlayer;
   let container: HTMLElement | null = null;
   let videoElement: HTMLElement | null = null;
+  let thumbnailElement: HTMLElement | null = null;
   let firstLoad = true;
   let pauseTimer: any = null;
   let interval: any = null;
@@ -157,6 +158,7 @@
       if (status === PLAYER_STATE.BUFFERING) {
         if (firstLoad) {
           if (autoPlay) {
+            hideThumbnail();
             setIntersectionObserver(container);
           }
           firstLoad = false;
@@ -183,11 +185,15 @@
     player.playVideo();
   }
 
+  function hideThumbnail() {
+    thumbnailElement.style.display = 'none';
+  }
+
   onMount(async () => {
     loadYoutubePlayer();
     onPlayerReady();
     onPlayerStateChange();
-  
+
     () => {
       observers.remove(playerId);
       clearInterval(interval);
@@ -199,6 +205,9 @@
     <section class="preview-container">
         <section class="player-wrap" on:click={onClick}>
             <div id='{playerId}' class="youtube-player"></div>
+            <section class="thumb-wrap" bind:this={thumbnailElement}>
+                <img src={content.thumb} alt={content.name + '의 썸네일'}>
+            </section>
             <div class="overlay-wrap">
                 {#if player}
                     <div class="running-time overlay">
@@ -257,8 +266,22 @@
           height: 0;
           padding-bottom: 56.25%;
           position: relative;
-          border-radius: 4px;
           overflow: hidden;
+
+          .thumb-wrap {
+            z-index: 2;
+            top: 0;
+            left: 0;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+          }
 
           .youtube-player {
             z-index: 1;
