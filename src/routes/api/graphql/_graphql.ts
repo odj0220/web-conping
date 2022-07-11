@@ -45,7 +45,7 @@ export async function Graphql(query: string) {
       videoId: String
       thumb: String
       program: Program
-      currentTime: Float,
+      currentTime: Float
       duration: Float
 		}
 		
@@ -53,7 +53,11 @@ export async function Graphql(query: string) {
       id: String!
       name: String!
       description: String
-      category: String
+      categories: [String]
+      thumbnail: String
+      follows: [Celeb]
+      programs: [Program]
+      products: [Product]
 		}
 		
 		enum Order {
@@ -111,7 +115,7 @@ export async function Graphql(query: string) {
 		type Query {
 		  products: [Product]
 			product(id:ID!): Product
-			contents(order: Order, type: ContentType): [Content]
+			contents(order:Order, type:ContentType): [Content]
 			content(id:ID!): Content
 			celebs: [Celeb]
 			celeb(id:ID!): Celeb
@@ -119,9 +123,10 @@ export async function Graphql(query: string) {
 			program(id:ID!): Program
 			getProductsByContentId(id:ID!): [Product]
 			getCelebsByContentId(id:ID!): [Celeb]
-      getContentsByProgramId(id:ID!): [Content]
+      getContentsByProgramId(id:ID!, type:ContentType): [Content]
       getContentsByProductId(id:ID!): [Content]
       getCelebsByProductId(id:ID!): [Celeb]
+      getCelebsByProgramId(id:ID!): [Celeb]
       getProductByCelebId(id:ID!): [Product]
       getContentsByCelebId(id:ID!): [Content]
       getProductsByCategory(category:String!): [Product]
@@ -207,6 +212,13 @@ export async function Graphql(query: string) {
         .map(relation => relation.celeb);
       return celebJson.filter(celeb => celebIds.includes(celeb.id));
     },
+    getCelebsByProgramId: ({ id }: {id:string}) => {
+      const contents = contentJson.filter(content => content.programId === id).map(content => content.id);
+      const celebIds = relationJson
+        .filter(relation => contents.includes(relation.content))
+        .map(relation => relation.celeb);
+      return celebJson.filter(celeb => celebIds.includes(celeb.id));
+    },
     getProductByCelebId: ({ id }: {id:string}) => {
       const productIds = relationJson
         .filter(relation => relation.celeb === id)
@@ -219,8 +231,20 @@ export async function Graphql(query: string) {
         .map(relation => relation.content);
       return contentJson.filter(content => contentIds.includes(content.id));
     },
-    getContentsByProgramId: ({ id }: {id:string}) => {
-      return contentJson.filter(content => content.programId === id);
+    getContentsByProgramId: ({ id, type }: {id:string, type: string}) => {
+      return contentJson
+        .filter(content => {
+          if (content.programId !== id) {
+            return false;
+          }
+          return !type || type === content.contentType;
+        })
+        .map(content => {
+          return {
+            ...content,
+            program: programJson.find(program => program.id === content.programId),
+          };
+        });
     },
     getProductsByCategory: ({ category }: {category:string}) => {
       return productJson.filter(product => product.category === category);
