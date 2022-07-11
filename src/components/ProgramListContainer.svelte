@@ -3,7 +3,7 @@
 
   import { graphqlApi } from '$lib/_api_graphql';
 
-  import Metadata from './MetadataContainer.svelte';
+  import Metadata from './Metadata.svelte';
   import Tabs from './Tabs.svelte';
   import EpisodeContainer from './EpisodeContainer.svelte';
   import HighlightContainer from './HighlightContainer.svelte';
@@ -11,11 +11,14 @@
   import SubHeaderContainer from './SubHeaderContainer.svelte';
 
   let data = {};
+  let celebs = [];
 
   onMount(async () => {
-    const query = `{program(id:"${id}"){id name description bannerImg}}`;
+    const query = `{program(id:"${id}"){id name description bannerImg} getCelebsByProgramId(id:"${id}"){thumbnail name categories}}`;
     const result = await graphqlApi(query);
     data = result?.data?.program;
+    celebs = result?.data?.getCelebsByProgramId;
+    console.log(celebs);
   });
 
   export let id: string;
@@ -44,7 +47,7 @@
   <div class="visual">
     <img src={data?.bannerImg} alt=""/>
   </div>
-  <Metadata name={data?.name} description={data?.description} />
+  <Metadata name={data?.name} description={data?.description} celebs={celebs}/>
 </div>
 <Tabs {items} />
 

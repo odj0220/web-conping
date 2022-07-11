@@ -6,8 +6,9 @@ import { onMount } from 'svelte';
 import YP from 'youtube-player';
 import type { YouTubePlayer } from 'youtube-player/dist/types';
 
-import MetadataContainer from './MetadataContainer.svelte';
-import RelationProductContainer from './RelatedProductContainer.svelte';
+import Metadata from './Metadata.svelte';
+import Player from './Player.svelte';
+import RelationProduct from './RelatedProduct.svelte';
 
 const id = $page.params.id;
 let player: YouTubePlayer;
@@ -35,27 +36,29 @@ const loadYoutubePlayer = () => {
   player = YP(playerId, option);
 };
 
-let productList;
+let productList: any[] = [];
 const getData = async () => {
-  const query = `{getProductsByContentId(id:"${id}"){id name}}`;
+  const query = `{getProductsByContentId(id:"${id}"){id name price exposed}}`;
   const result = await graphqlApi(query);
   productList = result?.data?.getProductsByContentId;
-  console.log('result', result);
 };
-
-console.log('productList', productList);
 
 onMount(async () => {
   loadYoutubePlayer();
   getData();
 });
 
+const setCurrentTime = (num: number) => {
+  player.seekTo(num, true);
+  console.log('currentTime', num);
+};
+
 </script>
 
 <div class="container">
-    <div class="player-wrap"><div id='{playerId}' class="youtube-player"></div></div>
-    <MetadataContainer title="MZ세대의 트렌드 Y2K, 트렌드에 맞는 핵심 메이크업 비결을 알아보자!!??" airingBeginAt={1655045914850} airingEndAt={1655045914850} />
-    <RelationProductContainer data={productList} />
+    <Player player={player} playerId={playerId} />
+    <Metadata title="MZ세대의 트렌드 Y2K, 트렌드에 맞는 핵심 메이크업 비결을 알아보자!!??" airingBeginAt={1655045914850} airingEndAt={1655045914850} />
+    <RelationProduct data={productList} setCurrentTime={setCurrentTime} />
 </div>
 
 <style lang="scss">
