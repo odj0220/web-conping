@@ -11,7 +11,6 @@ export let airingEndAt: number;
 export let airingAt: number;
 export let celebs: any;
 
-console.log(celebs);
 </script>
 
 <section class="container">
