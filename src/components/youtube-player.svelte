@@ -11,6 +11,9 @@
     export let playerVars;
     export let events;
 
+    let clientWidth;
+    let clientHeight;
+
 
     let playTime;
     let displayLogo = true;
@@ -28,6 +31,12 @@
     let player: YouTubePlayer;
 
     onMount(async () => {
+      clientWidth = screen.width;
+      clientHeight = screen.height;
+      height = screen.height;
+      width = screen.width;
+
+    
       const option = {
         ...(videoId && { videoId }),
         ...(width && { width }),
@@ -91,7 +100,7 @@
       }, 1000);
     });
 </script>
-<div class="player-wrap">
+<div class="player-wrap" style="height: {clientHeight}px; width: {clientWidth}px">
     <div id='{playerId}' class="youtube-player"></div>
     <div class="overlay-wrap">
         {#if player}
@@ -107,17 +116,17 @@
             </div>
         {/if}
     </div>
+    <div class="over">
+        sdfjlkasfjdklsafjaskl
+    </div>
 </div>
 
 
 <style>
     .player-wrap {
-        display: inline-block;
-        width: 100%;
-        height: auto;
-        padding-top: 56.25%;
-        position: relative;
-        border-radius: 4px;
+        position: fixed;
+        top: 0;
+        display: block;
         overflow: hidden;
     }
     .player-wrap .youtube-player {
@@ -125,8 +134,6 @@
         top: 0;
         left: 0;
         position: absolute;
-        width: 100%;
-        height: 100%;
     }
 
     .player-wrap .overlay {
@@ -143,11 +150,11 @@
     }
 
     .player-wrap .logo {
-        top: 7px;
-        left: 7px;
-        width: 48px;
-        height: 48px;
-        background: url('../gollala.png');
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        background: #000;
         background-size: cover;
         z-index: 3;
     }
@@ -170,6 +177,16 @@
         align-items: center;
         justify-content: center;
         font-family: system-ui;
+    }
+
+    .over {
+        width: 200px;
+        height: 200px;
+        background: red;
+        position: fixed;
+        top: 10px;
+        z-index: 2;
+        opacity: .2;
     }
     
     @media (max-width: 495px) {
