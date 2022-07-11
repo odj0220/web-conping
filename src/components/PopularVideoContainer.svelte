@@ -12,10 +12,6 @@ let contents: {data: any[]; end: boolean; cursor:string} = {
   cursor: '',
 };
 
-onMount(() => {
-  console.log('on mount');
-});
-
 const handleClick = (id) => {
   //TODO: click 이벤트
   console.log('click : ', id);
