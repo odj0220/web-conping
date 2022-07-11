@@ -1,5 +1,4 @@
 <script lang="ts">
-import { page } from '$app/stores';
 import { guid } from '$lib/util';
 import { graphqlApi } from '$lib/_api_graphql';
 import { onMount } from 'svelte';
@@ -10,7 +9,8 @@ import Metadata from './Metadata.svelte';
 import Player from './Player.svelte';
 import RelationProduct from './RelatedProduct.svelte';
 
-const id = $page.params.id;
+export let id: string;
+
 let player: YouTubePlayer;
 
 const playerId = guid();
@@ -36,15 +36,12 @@ const loadYoutubePlayer = () => {
   player = YP(playerId, option);
 };
 
-let productList;
+let productList: any[] = [];
 const getData = async () => {
-  const query = `{getProductsByContentId(id:"${id}"){id name}}`;
+  const query = `{getProductsByContentId(id:"${id}"){id name price exposed}}`;
   const result = await graphqlApi(query);
   productList = result?.data?.getProductsByContentId;
-  console.log('result', result);
 };
-
-console.log('productList', productList);
 
 onMount(async () => {
   loadYoutubePlayer();
@@ -53,6 +50,7 @@ onMount(async () => {
 
 const setCurrentTime = (num: number) => {
   player.seekTo(num, true);
+  console.log('currentTime', num);
 };
 
 </script>

@@ -3,7 +3,7 @@
     export let size : string;
     
     const theme = 'dark';
-    $: color = '#FFFFFF';
+    const color = '#FFFFFF';
 
     const icons = [
       {

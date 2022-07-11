@@ -18,8 +18,12 @@
   @import '../styles/variables.scss';
 
   h1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 4.5rem;
     font-size: 1.6rem;
-    line-height: 1.997rem;
+    line-height: 2rem;
     font-weight: 700;
     color: #fff;
 
