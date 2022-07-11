@@ -2,22 +2,41 @@
   {
     "id": "programId1",
     "name": "장삐쭈",
-    "description": "비즈니스 문의: jangbbijju@metacomedy.net\n스튜디오장삐쭈 지원하기: recruit@studiojbbj.com"
+    "description": "비즈니스 문의: jangbbijju@metacomedy.net\n스튜디오장삐쭈 지원하기: recruit@studiojbbj.com",
+    "bannerImg": "https://yt3.ggpht.com/x2yhmVdbKZ3CmNnFVIe27lM6lIob0Fs-9s8Z0SGNA_QxwsjAlEAheM1-yjpjMXNmo7Gg01sj=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj",
+    "profileImg": "https://yt3.ggpht.com/ytc/AKedOLTWnTm2noTcBo90p-ZeVXyg9T8g7hCgl3kKsfL33w=s88-c-k-c0x00ffffff-no-rj",
+    "releasedAt": "1466002800000",
+    "airingAt": "1466002800000",
+    "airingBeginAt": "1466002800000"
   },
   {
     "id": "programId2",
     "name": "JFlaMusic",
-    "description": "I really hope you guys enjoy my videos♥\n"
+    "description": "I really hope you guys enjoy my videos♥\n",
+    "profileImg": "https://yt3.ggpht.com/ytc/AKedOLQQ6ZetceDhyzgyckA_LRMnCqkpNEINN9lw6Sjv9Q=s88-c-k-c0x00ffffff-no-rj",
+    "releasedAt": "1313938800000",
+    "airingAt": "1313938800000",
+    "airingBeginAt": "1313938800000"
   },
   {
     "id": "programId3",
     "name": "침착맨",
-    "description": "반갑습니다. 오늘도 즐거운 날입니다."
+    "description": "반갑습니다. 오늘도 즐거운 날입니다.",
+    "bannerImg": "https://yt3.ggpht.com/SLdh9XFua-UIYb_MNaoVAEFmKnBHf689ALDtGKm04IBYwAV_ZDq11Mqupcjw3JvXAxwYxwTwbtA=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj",
+    "profileImg": "https://yt3.ggpht.com/ytc/AKedOLTi6w4E6985-QdVBbovBSsnCeTETyj0WomjM5IY8Q=s88-c-k-c0x00ffffff-no-rj",
+    "releasedAt": "1412002800000",
+    "airingAt": "1412002800000",
+    "airingBeginAt": "1412002800000"
   },
   {
     "id": "programId4",
     "name": "gollala TV / 골라라TV",
     "description": "What's your choice?\n당신이 원하는 걸 골라라!\n\n새롭게 제안하는 라이프스타일 콘텐츠, 여러분의 많은 관심 바랍니다.\n구독과 좋아요! 부탁드립니다.",
-    "bannerImg": "https://i.ytimg.com/vi/vAWXTFDfLtk/hqdefault.jpg"
+    "bannerImg": "https://image.newsis.com/2022/04/20/NISI20220420_0000978809_web.jpg?rnd=20220420114212",
+    "profileImg": "https://yt3.ggpht.com/9MkNKNAV-Vg59XLejG1Y0EuQaoTfS7LyHhFvEp4DrEJ8sziFF-TDGVLovAbHDYw9k8OQAZvt1Q=s88-c-k-c0x00ffffff-no-rj",
+    "releasedAt": "1651662000000",
+    "airingAt": "1651662000000",
+    "airingBeginAt": "1651662000000",
+    "airingEndAt": ""
   }
 ]
