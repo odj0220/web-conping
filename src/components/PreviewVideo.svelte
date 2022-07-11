@@ -195,112 +195,127 @@
   });
 </script>
 
-<section class="preview-wrap" bind:this={container}>
-    <section class="player-wrap" on:click={onClick}>
-        <div id='{playerId}' class="youtube-player"></div>
-        <div class="overlay-wrap">
-            {#if player}
-                <div class="running-time overlay">
-                    {#await playTime}
-                        ...waiting
-                    {:then number}
-                        {toHHMMSS(number)}
-                    {:catch error}
-                        {error.message}
-                    {/await}
-                </div>
-            {/if}
-        </div>
-    </section>
+<section class="preview-layout" bind:this={container}>
+    <section class="preview-container">
+        <section class="player-wrap" on:click={onClick}>
+            <div id='{playerId}' class="youtube-player"></div>
+            <div class="overlay-wrap">
+                {#if player}
+                    <div class="running-time overlay">
+                        {#await playTime}
+                            ...waiting
+                        {:then number}
+                            {toHHMMSS(number)}
+                        {:catch error}
+                            {error.message}
+                        {/await}
+                    </div>
+                {/if}
+            </div>
+        </section>
 
-    <section class="data-wrap">
-        <div class="title-wrapper">
+        <section class="data-wrap">
+            <div class="title-wrapper">
             <span class="title">
                   {videoName}
             </span>
-        </div>
-        <div class="rest">
-            <span class="program-name">{programName}</span>
-            <span class="divider">・</span>
-            <span calss="round">{round}</span>
-            <span class="divider">・</span>
-            <PastTimeDelta className="createdAt" pastTime={createdAt} />
-        </div>
+            </div>
+            <div class="rest">
+                <span class="program-name">{programName}</span>
+                <span class="divider">・</span>
+                <span calss="round">{round}</span>
+                <span class="divider">・</span>
+                <PastTimeDelta className="createdAt" pastTime={createdAt} />
+            </div>
+        </section>
     </section>
 </section>
 
 <style lang="scss">
   @import '../styles/modules.scss';
   @import '../styles/variables.scss';
-    .preview-wrap {
+    .preview-layout {
       /* 유튜브 플레이어 영역 */
       border-radius: 0rem 0rem 0.4rem 0.4rem;
       overflow: hidden;
-      height: 27.3rem;
+      height: 0;
+      padding-top: 78.35%;
+      position: relative;
 
-      .player-wrap {
-        display: inline-block;
+      .preview-container {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
-        height: auto;
-        padding-top: 56.25%;
-        position: relative;
-        border-radius: 4px;
-        overflow: hidden;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
 
-        .youtube-player {
-          z-index: 1;
-          top: 0;
-          left: 0;
-          position: absolute;
+        .player-wrap {
+          display: inline-block;
           width: 100%;
-          height: 100%;
-          pointer-events: none;
-        }
+          height: 0;
+          padding-bottom: 56.25%;
+          position: relative;
+          border-radius: 4px;
+          overflow: hidden;
 
-        .overlay {
-          position: absolute;
-        }
+          .youtube-player {
+            z-index: 1;
+            top: 0;
+            left: 0;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+          }
 
-        .overlay-wrap {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          z-index: 2;
-        }
+          .overlay {
+            position: absolute;
+          }
 
-        .hide {
-          opacity: 0;
-          transition: opacity 0.3s;
-        }
+          .overlay-wrap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+          }
 
-        .running-time {
-          @include caption3;
-          bottom: 1rem;
-          right: 0.8rem;
-          background: rgba(0, 0, 0, 0.4);
-          border-radius: 0.2rem;
-          color: #fff;
-          font-family: system-ui;
-          padding: 0.2rem 0.6rem;
-        }
-      }
+          .hide {
+            opacity: 0;
+            transition: opacity 0.3s;
+          }
 
-      .data-wrap {
-        padding: 1.2rem;
-        background-color: #212121;
-
-        .title-wrapper {
-          @include ellipsis(2);
-          margin-bottom: 0.8rem;
-          .title {
-            @include caption1-400;
+          .running-time {
+            @include caption3;
+            bottom: 1rem;
+            right: 0.8rem;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 0.2rem;
+            color: #fff;
+            font-family: system-ui;
+            padding: 0.2rem 0.6rem;
           }
         }
 
-        .rest {
-          @include caption2-400;
+        .data-wrap {
+          flex: 1;
+          padding: 1.2rem;
+          background-color: #212121;
+
+          .title-wrapper {
+            @include ellipsis(2);
+            margin-bottom: 0.8rem;
+            .title {
+              @include caption1-400;
+            }
+          }
+
+          .rest {
+            @include caption2-400;
+          }
         }
       }
     }
