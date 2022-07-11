@@ -3,7 +3,7 @@
     export let size : string;
     
     const theme = 'dark';
-    $: color = '#FFFFFF';
+    const color = '#FFFFFF';
 
     const icons = [
       {
@@ -95,3 +95,11 @@
 <span class='icon'>
     {@html icon?.svg}
 </span>
+
+<style lang="scss">
+    .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>

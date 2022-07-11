@@ -10,7 +10,7 @@
     {#if title }
       <div class="title">{title}</div>
     {:else}
-      <Icon name="logo-white" />
+      <Icon name="logo" />
     {/if}
     
   </div>
@@ -19,13 +19,13 @@
       type="button"
       on:click={() => onClick('noti')}
     >
-      <Icon name="noti-white"/>
+      <Icon name="noti"/>
     </button>
     <button
       type="button"
       on:click={() => onClick('setting')}
     >
-      <Icon name="setting-white" />
+      <Icon name="setting" />
     </button>
   </div>
 </div>

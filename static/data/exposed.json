@@ -3,18 +3,81 @@
     "id": "exposed1",
     "content": "content1",
     "product": "product3",
-    "timelines": [[300, 315], [502, 510]]
+    "timelines": [
+      [300, 315],
+      [502, 510]
+    ]
   },
   {
     "id": "exposed2",
     "content": "content2",
     "product": "product1",
-    "timelines": [[300, 315], [502, 510]]
+    "timelines": [
+      [300, 315],
+      [502, 510]
+    ]
   },
   {
     "id": "exposed3",
     "content": "content3",
     "product": "product1",
-    "timelines": [[300, 315], [502, 510]]
+    "timelines": [
+      [300, 315],
+      [502, 510]
+    ]
+  },
+  {
+    "id": "exposed4",
+    "content": "content3",
+    "product": "product2",
+    "timelines": [
+      [300, 315],
+      [502, 510]
+    ]
+  },
+  {
+    "id": "exposed5",
+    "content": "content3",
+    "product": "product3",
+    "timelines": [
+      [300, 315],
+      [502, 510]
+    ]
+  },
+  {
+    "id": "exposed6",
+    "content": "content3",
+    "product": "product3",
+    "timelines": [
+      [300, 315],
+      [502, 510]
+    ]
+  },
+  {
+    "id": "exposed7",
+    "content": "content3",
+    "product": "product3",
+    "timelines": [
+      [300, 315],
+      [502, 510]
+    ]
+  },
+  {
+    "id": "exposed8",
+    "content": "content3",
+    "product": "product3",
+    "timelines": [
+      [300, 315],
+      [502, 510]
+    ]
+  },
+  {
+    "id": "exposed9",
+    "content": "content3",
+    "product": "product3",
+    "timelines": [
+      [300, 315],
+      [502, 510]
+    ]
   }
 ]
