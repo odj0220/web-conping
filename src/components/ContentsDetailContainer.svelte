@@ -36,15 +36,12 @@ const loadYoutubePlayer = () => {
   player = YP(playerId, option);
 };
 
-let productList;
+let productList: any[] = [];
 const getData = async () => {
-  const query = `{getProductsByContentId(id:"${id}"){id name}}`;
+  const query = `{getProductsByContentId(id:"${id}"){id name price exposed}}`;
   const result = await graphqlApi(query);
   productList = result?.data?.getProductsByContentId;
-  console.log('result', result);
 };
-
-console.log('productList', productList);
 
 onMount(async () => {
   loadYoutubePlayer();
@@ -53,6 +50,7 @@ onMount(async () => {
 
 const setCurrentTime = (num: number) => {
   player.seekTo(num, true);
+  console.log('currentTime', num);
 };
 
 </script>
