@@ -46,7 +46,10 @@
   </div>
   <Metadata name={data?.name} description={data?.description} celebs={celebs}/>
 </div>
-<Tabs {items} />
+
+<section class="tabs-wrapper">
+  <Tabs {items} />
+</section>
 
 <style lang="scss">
   @import '../styles/variables.scss';
@@ -74,6 +77,10 @@
     width: 100%;
     height: 8px;
     background-color: $bg-black-21;
+  }
+
+  .tabs-wrapper {
+    padding-bottom: 13.4rem;
   }
   
 </style>

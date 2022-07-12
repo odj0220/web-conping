@@ -10,25 +10,40 @@
 
   export let items: tabItem[];
   export let activeTabValue = 1;
+  let selectedComponent: SvelteComponent = items[0].component;
+  let selectedProps = items[0].props;
 
-  const handleClick = (tabValue : number) => () => (activeTabValue = tabValue);
+  async function onActiveTabitem(tabItem: tabItem) {
+    onUpdateActiveTabValue(tabItem.value);
+    onUpdateSelectedComponent(tabItem.component);
+    onUpdateSelectedProps(tabItem.props);
+  }
+
+  function onUpdateActiveTabValue(tabValue: number) {
+    activeTabValue = tabValue;
+  }
+
+  function onUpdateSelectedComponent(component: SvelteComponent) {
+    selectedComponent = component;
+  }
+
+  function onUpdateSelectedProps(props: any) {
+    selectedProps = props;
+  }
+
 </script>
 
 <ul class="tab-conatainer">
   {#each items as item}
     <li class={activeTabValue === item.value ? 'active' : ''}>
-      <span class="tab-item" on:click={handleClick(item.value)}>{item.label}</span>
+      <span class="tab-item" on:click={onActiveTabitem(item)}>{item.label}</span>
     </li>
   {/each}
 </ul>
 
-{#each items as item}
-	{#if activeTabValue === item.value}
-    <div class="contents-container">
-      <svelte:component this={item.component} {...item.props}/>
-    </div>
-	{/if}
-{/each}
+<div class="contents-container">
+      <svelte:component this={selectedComponent} {...selectedProps}/>
+</div>
 
 <style lang="scss">
   .tab-conatainer {
