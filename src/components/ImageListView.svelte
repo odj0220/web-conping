@@ -1,26 +1,26 @@
 <script>
-  import GridItem from './GridItem.svelte';
+  import ListViewItem from './ListViewItem.svelte';
 
   export let contents;
   export let onClick;
 </script>
 
-<section class="grid-view-section">
-  <ul class="grid-list">
+<section>
+  <ul>
     {#each contents as content, index }
-      <GridItem {content} {onClick} />
+      <ListViewItem {content} {onClick} />
     {/each}
   </ul>
 </section>
 
 <style lang="scss">
-  .grid-view-section {
-    .grid-list {
+  section {
+    ul {
       display: flex;
-      flex-wrap: 'wrap';
       flex-direction: column;
-      gap: 1.2rem;
+      flex-wrap: 'wrap';
       justify-content: 'space-between';
+      gap: 1.2rem;
     }
   }
   

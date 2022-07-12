@@ -1,10 +1,17 @@
 <script lang="ts">
 import CenterSection from '../styles/CenterSection.svelte';
-import contents from '../fixtures/contents';
-import Videos from './Videos.svelte';
+import videos from '../fixtures/contents';
+import PreviewVideos from './PreviewVideos.svelte';
 import Title from './Title.svelte';
+import { onMount } from 'svelte';
 
-const popularVideos = contents.splice(0, 2);
+
+let contents: {data: any[]; end: boolean; cursor:string} = {
+  data: videos.splice(0, 2),
+  end: false,
+  cursor: '',
+};
+
 const handleClick = (id) => {
   //TODO: click 이벤트
   console.log('click : ', id);
@@ -24,7 +31,7 @@ const title: any[] = [
     type: 'primary-40',
   },
   {
-    text: '영상',
+    text: '콘텐츠',
   },
 ];
 
@@ -35,8 +42,10 @@ const title: any[] = [
     {title}
     onClick={handleTitleClick}
   />
-  <Videos
-    contents={popularVideos}
+  <PreviewVideos
+    contents={contents}
     onClick={handleClick}
+    infinite={false}
+    autoPlay={true}
   />
 </CenterSection>

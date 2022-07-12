@@ -48,8 +48,11 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@types/javascript-time-ago": "^2.0.3",
 		"@types/youtube-player": "^5.5.6",
+		"dayjs": "^1.11.3",
 		"graphql": "^16.5.0",
+		"javascript-time-ago": "^2.5.6",
 		"svelte-device-info": "^1.0.0",
 		"svelte-navigator": "^3.1.6",
 		"swiper": "^8.2.6",
