@@ -7,13 +7,16 @@
   import SeriesVideoContainer from '$component/SeriesVideoContainer.svelte';
 
   import GlobalBlock from '$styles/GlobalBlock.svelte';
+  import MainVideosContainer from '../components/MainVideosContainer.svelte';
 </script>
 
 <MainHeaderContainer />
+
 <GlobalBlock>
   <MainBannerContainer/>
   <MainViewingVideosContainer/>
   <PopularVideoContainer/>
   <SeriesVideoContainer />
   <MainShortsContainer/>
+  <MainVideosContainer/>
 </GlobalBlock>
