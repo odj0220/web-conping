@@ -4,53 +4,102 @@ import { graphqlApi } from '$lib/_api_graphql';
 import { onMount } from 'svelte';
 import YP from 'youtube-player';
 import type { YouTubePlayer } from 'youtube-player/dist/types';
-
 import Metadata from './Metadata.svelte';
 import Player from './Player.svelte';
 import RelationProduct from './RelatedProduct.svelte';
+import { setContents, getList } from '$lib/_continue_watching';
 
 export let id: string;
 
-let player: YouTubePlayer;
-
 const playerId = guid();
+let player: YouTubePlayer;
+let productList: any[] = [];
+let content: any;
+let continueInterval;
+let continueIntervalTime = 10000;
 
-const loadYoutubePlayer = () => {
+const loadYoutubePlayer = async () => {
   const playerVars = {
     controls: 1, //플레이어 컨드롤러 표시여부
     rel: 0, //연관동영상 표시여부
-    mute: 1,
-    playsinline: 1, //ios환경에서 전체화면으로 재생하지 않게하는 옵션
-    autoplay: 1, //자동재생 여부(모바일에서 작동하지 않습니다. mute설정을 하면 작동합니다.)
     loop: 0,
-    modestbranding: 1,
-    disablekb: 1,
-    enablejsapi: 1,
   };
 
   const option: any = {
-    videoId: 'pb3bt3MBHk0',
+    videoId: content.videoId,
     playerVars,
   };
 
-  player = YP(playerId, option);
+  player = await YP(playerId, option);
+  const continueItem = getList().find(contentItem => contentItem.id === content.id);
+  const continueCurrentTime = continueItem ? continueItem.currentTime : 0;
+  setCurrentTime(continueCurrentTime);
 };
 
-let productList: any[] = [];
+
 const getData = async () => {
-  const query = `{getProductsByContentId(id:"${id}"){id name price exposed}}`;
+  const query = `{getProductsByContentId(id:"${id}"){id name price exposed} content(id:"${id}"){id contentType createDt description program { id name} programId round thumb videoId duration currentTime}}`;
   const result = await graphqlApi(query);
   productList = result?.data?.getProductsByContentId;
+  content = result?.data?.content;
 };
 
 onMount(async () => {
-  loadYoutubePlayer();
-  getData();
+  await getData();
+  await loadYoutubePlayer();
+  onPlayerStateChange();
 });
+
+const onPlayerStateChange = () => {
+  const PLAYER_STATE = {
+    NOT_STARTED: -1,
+    ENDED: 0,
+    PLAYING: 1,
+    PAUSED: 2,
+    BUFFERING: 3,
+  };
+
+  player.on('stateChange', event => {
+    const status = event.data;
+    console.log(event);
+
+    if (status === PLAYER_STATE.PLAYING) {
+      setContinueWatching();
+      return;
+    }
+
+    if (status === PLAYER_STATE.PAUSED) {
+      clearInterval(continueInterval);
+      return;
+    }
+
+    if (status === PLAYER_STATE.ENDED) {
+      clearInterval(continueInterval);
+      return;
+    }
+  });
+};
 
 const setCurrentTime = (num: number) => {
   player.seekTo(num, true);
   console.log('currentTime', num);
+};
+
+const setContinueWatching = () => {
+  clearInterval(continueInterval);
+  setContinueTime();
+  continueInterval = setInterval(() => {
+    setContinueTime();
+  }, continueIntervalTime);
+};
+
+const setContinueTime = () => {
+  player.getCurrentTime().then(currentTime => {
+    setContents({
+      ...content,
+      currentTime,
+    });
+  });
 };
 
 </script>
