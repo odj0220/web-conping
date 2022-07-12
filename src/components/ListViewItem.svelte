@@ -1,22 +1,22 @@
 <script lang="ts">
-  export let onClick: () => void;
-  export let content;
+  import type { Content } from 'src/global/types';
+
+  export let onClick: (id: string) => void;
+  export let content: Content;
 </script>
 
-<li
-  class="grid-item"
->
-<div class="left">
-  <img
-    src={content.thumb}
-    alt="방송이미지"
-    on:click={() => onClick(content.program.id)}
-  > 
-</div>
+<li class="grid-item">
+  <div class="left">
+    <img
+      src={content.thumb}
+      alt="방송이미지"
+      on:click={() => onClick(content.videoId)}
+    > 
+  </div>
 
   <div
     class="right"
-    on:click={() => onClick(content.program.id)}
+    on:click={() => onClick(content.videoId)}
   >
     <span class="title">{content.program.name}</span>
     <span class="sub-title">{content.name}</span>

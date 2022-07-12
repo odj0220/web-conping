@@ -3,10 +3,11 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 dayjs.locale('ko');
 
+export let timelineButtonVisible: boolean;
 export let name:string;
 export let price: number;
 export let exposed: any[] = [];
-export let setCurrentTime : (num: number) => void;
+export let onClickTimeButton : (num: number) => void;
 
 const timelines = () => {
   let arr: any[] = [];
@@ -22,13 +23,16 @@ const timelines = () => {
     <div class="contents">
         <h6 class="name">{name}</h6>
         <span class="price">{price.toLocaleString()}원</span>
+        
+        {#if timelineButtonVisible }
         <ul class="time-stamps">
             {#each timelines() as timeline}
-                <li on:click="{() => setCurrentTime(timeline)}" class="time-stamp">
-                    {timeline}
-                </li>
+            <li on:click="{() => onClickTimeButton(timeline)}" class="time-stamp">
+                {timeline}
+            </li>
             {/each}
         </ul>
+        {/if}
     </div>
 </li>
 
