@@ -1,9 +1,9 @@
 <script type="ts">
-    import { guid, toHHMMSS } from '$lib/util';
-    export { toHHMMSS } from '$lib/util';
+    import { guid } from '$lib/util';
     import { onMount } from 'svelte';
     import YP from 'youtube-player';
     import type { YouTubePlayer } from 'youtube-player/dist/types';
+import Icon from './icons/Icon.svelte';
 
     export let videoId: string;
     export let width: number;
@@ -13,10 +13,14 @@
 
     let clientWidth;
     let clientHeight;
-
-
-    let playTime;
     let displayLogo = true;
+    let displayToast = true;
+    let displayControls = false;
+    let player: YouTubePlayer;
+    let firstLoaded = false;
+    let muted: boolean;
+    let displayControlsDebounce : any;
+
     const playerId = guid();
     const defaultPlayerVars = {
       controls: 0, //플레이어 컨드롤러 표시여부
@@ -25,17 +29,38 @@
       playsinline: 1, //ios환경에서 전체화면으로 재생하지 않게하는 옵션
       autoplay: 1, //자동재생 여부(모바일에서 작동하지 않습니다. mute설정을 하면 작동합니다.)
       loop: 1,
-      modestbranding: 1,
+      playlist: videoId,
     };
 
-    let player: YouTubePlayer;
+    function hideLogo() {
+      displayLogo = false;
+      if (!firstLoaded) {
+        player.playVideoAt(0);
+      }
+    }
 
+    const toggleMuted = () => {
+      if (muted) {
+        player.unMute();
+      } else {
+        player.mute();
+      }
+    
+      displayControls = true;
+      muted = !muted;
+    
+      clearTimeout(displayControlsDebounce);
+      displayControlsDebounce = setTimeout(() => {
+        displayControls = false;
+      }, 1500);
+    };
+    
     onMount(async () => {
       clientWidth = screen.width;
       clientHeight = screen.height;
       height = screen.height;
       width = screen.width;
-
+    
     
       const option = {
         ...(videoId && { videoId }),
@@ -46,154 +71,135 @@
       };
 
       player = YP(playerId, option);
-      player.on('ready', (event) => {
-        const target: any = event.target;
-        const element = target.i;
-
-        // player.playVideo();
-        const io = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              player.playVideo();
-            } else {
-              // 최초 로딩시 검은화면을 방지하기 위해 1초뒤 일시정지
-              setTimeout(() => {
-                player.pauseVideo();
-              }, 1000);
-            }
-          });
-        }, {
-          threshold: 1,
-        });
-        io.observe(element);
-
+      player.on('ready', () => {
+        player.playVideo();
       });
 
       let displayLogDebounce;
-      let firstLoad = true;
       player.on('stateChange', event => {
-        // playing
-        if (event.data === 1) {
+        switch (event.data) {
+        // 영상 중지
+        case -1:
+          displayLogo = true;
+          break;
+          // playing
+        case 1:
           displayLogDebounce = setTimeout(() => {
-            displayLogo = false;
-            firstLoad = false;
-          }, firstLoad ? 3200 : 100);
-        }
-        // paused
-        if (event.data === 2) {
+            hideLogo();
+            firstLoaded = true;
+          }, firstLoaded ? 100 : 3200);
+          break;
+        case 2:
           if (displayLogDebounce) {
             window.clearTimeout(displayLogDebounce);
           }
           displayLogo = true;
-        }
-
-        // buffer
-        if (event.data === 3) {
+          break;
+        case 3:
           setTimeout(() => {
-            firstLoad = false;
+            firstLoaded = true;
           }, 4000);
+          break;
+        default:
         }
       });
 
-      setInterval(() => {
-        playTime = player.getCurrentTime();
-      }, 1000);
+      setTimeout(() => {
+        displayToast = false;
+      }, 1500);
+
+      muted = player.isMuted();
     });
+
+
+
+
 </script>
-<div class="player-wrap" style="height: {clientHeight}px; width: {clientWidth}px">
-    <div id='{playerId}' class="youtube-player"></div>
+<div class="player-wrap" style="height: {clientHeight}px; width: {clientWidth}px"  on:click="{() => toggleMuted()}">
+    <div id='{playerId}' class="youtube-player" allow="autoplay"></div>
     <div class="overlay-wrap">
         {#if player}
-            <div class="logo overlay {displayLogo ? '' : 'hide'}"></div>
-            <div class="running-time overlay">
-                {#await playTime}
-                    ...waiting
-                {:then number}
-                    {toHHMMSS(number)}
-                {:catch error}
-                    {error.message}
-                {/await}
-            </div>
+            <img class="thumb {displayLogo ? '' : 'hide'}" src="https://i.ytimg.com/vi/{videoId}/hqdefault.jpg" alt="thumbnail"/>
         {/if}
     </div>
-    <div class="over">
-        sdfjlkasfjdklsafjaskl
-    </div>
+    <slot></slot>
+    <span class="toast" class:on={displayToast}>화면 터치하여 음소거 해제</span>
+    {#if displayControls}
+      <span class="controls">
+        {#if muted}
+          <Icon name="mute" /> 
+        {:else}
+          <Icon name="voice" />
+        {/if}
+      </span>  
+    {/if}
+    
+    
 </div>
 
 
-<style>
+<style lang="scss">
+  @import '../styles/variables.scss';
+
     .player-wrap {
-        position: fixed;
-        top: 0;
-        display: block;
-        overflow: hidden;
-    }
-    .player-wrap .youtube-player {
-        z-index: 1;
+      position: fixed;
+      top: 0;
+      display: block;
+      overflow: hidden;
+
+      .youtube-player {
+        z-index: -1;
         top: 0;
         left: 0;
         position: absolute;
-    }
+      }
 
-    .player-wrap .overlay {
-        position: absolute;
-    }
-
-    .player-wrap .overlay-wrap {
+      .overlay-wrap {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: 2;
-    }
+        z-index: 1;
 
-    .player-wrap .logo {
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 60px;
-        background: #000;
-        background-size: cover;
-        z-index: 3;
-    }
+        .thumb {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
 
-    .player-wrap .hide {
-        opacity: 0;
-        transition: opacity 0.3s;
-    }
-
-    .player-wrap .running-time {
-        bottom: 15px;
-        right: 16px;
-        z-index: 3;
-        display: flex;
-        width: 110px;
-        height: 26px;
-        background: #323232;
-        border-radius: 5px;
-        color: #fff;
-        align-items: center;
-        justify-content: center;
-        font-family: system-ui;
-    }
-
-    .over {
-        width: 200px;
-        height: 200px;
-        background: red;
-        position: fixed;
-        top: 10px;
-        z-index: 2;
-        opacity: .2;
-    }
-    
-    @media (max-width: 495px) {
-        .player-wrap .running-time {
-            width: 85px;
-            height: 20px;
-            font-size: 12px;
+          &.hide {
+            display: none;
+          }
         }
+      }
+      .toast {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 3;
+        padding: 0.6rem 1.2rem;
+        background: rgba(80, 80, 80, 0.8);
+        border-radius: 0.4rem;
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.3s;
+        pointer-events: none;
+        @include caption1-700;
+
+        &.on {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+      .controls {
+        display: block;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 4;
+      }
+    
     }
 </style>

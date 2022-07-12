@@ -1,24 +1,30 @@
 <script lang="ts">
-  import ProgramListContainer from './ProgramListContainer.svelte';
-  import ShortsDetailInfo from './ShortsDetailContents.svelte';
-  import ShortsFullScreen from './ShortsFullScreen.svelte';
-  import LayoutPopup from './LayoutPopup.svelte';
-  import Title from './Title.svelte';
-import EpisodeContainer from './EpisodeContainer.svelte';
+import ShortsDetailInfo from './ShortsDetailInfo.svelte';
+import ShortsFullScreen from './ShortsFullScreen.svelte';
 
-  export let id: string;
-  let visible = false;
+export let id: string;
 
-  const handleClickCart = () => {
-    visible = !visible;
-  };
+const onClickClose = (e) => {
+  e.stopPropagation();
+  history.back();
+};
+
+const onClickShare = (e) => {
+  e.stopPropagation();
+};
+
+const onClickCart = (e) => {
+  e.stopPropagation();
+};
+
+const onClickProfile = (e) => {
+  e.stopPropagation();
+};
 
 </script>
 
-<ShortsFullScreen videoId="8XZe5aX5Ruk" />
-<ShortsDetailInfo onClickCart={handleClickCart} />
+<ShortsFullScreen videoId="8XZe5aX5Ruk">
+    <ShortsDetailInfo onClickClose={onClickClose} onClickShare={onClickShare} onClickCart={onClickCart} onClickProfile={onClickProfile} />
+</ShortsFullScreen>
 
-<LayoutPopup {visible}>
-  <Title title={[{ text: '관련 상품' }]} />
-  <EpisodeContainer {id} />
-</LayoutPopup>
+
