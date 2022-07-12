@@ -13,13 +13,16 @@
   import Player from './Player.svelte';
   import RelatedProductContainer from './RelatedProductContainer.svelte';
 
-const playerId = guid();
-let player: YouTubePlayer;
-let content: any;
-let continueInterval;
-let continueIntervalTime = 10000;
+  const playerId = guid();
 
-const loadYoutubePlayer = async () => {
+  export let id: string;
+  
+  let player: YouTubePlayer;
+  let content: any;
+  let continueInterval;
+  let continueIntervalTime = 10000;
+
+  const loadYoutubePlayer = async () => {
     const playerVars = {
       controls: 1, //플레이어 컨드롤러 표시여부
       rel: 0, //연관동영상 표시여부
@@ -32,26 +35,51 @@ const loadYoutubePlayer = async () => {
     };
 
     player = await YP(playerId, option);
+  
     const continueItem = (await getList() || []).find(contentItem => contentItem.id === content.id);
+  
     const continueCurrentTime = continueItem ? continueItem.currentTime : 0;
+  
     setCurrentTime(continueCurrentTime);
-};
+  };
 
 
-const getData = async () => {
-    const query = `{getProductsByContentId(id:"${id}"){id name price exposed} content(id:"${id}"){id contentType createDt description program { id name} programId round thumb videoId duration currentTime}}`;
+  const getData = async () => {
+    const query = `
+      {
+        content(id:"${id}"){
+          id 
+          contentType 
+          createDt 
+          description 
+          program { 
+            id 
+            name
+          } 
+          programId 
+          round 
+          thumb 
+          videoId 
+          duration 
+          currentTime
+        }
+      }
+    `;
+  
     const result = await graphqlApi(query);
-    productList = result?.data?.getProductsByContentId;
+  
     content = result?.data?.content;
-};
+  };
 
-onMount(async () => {
+  onMount(async () => {
     await getData();
-    await loadYoutubePlayer();
-    onPlayerStateChange();
-});
 
-const onPlayerStateChange = () => {
+    await loadYoutubePlayer();
+  
+    onPlayerStateChange();
+  });
+
+  const onPlayerStateChange = () => {
     const PLAYER_STATE = {
       NOT_STARTED: -1,
       ENDED: 0,
@@ -79,30 +107,30 @@ const onPlayerStateChange = () => {
         return;
       }
     });
-};
+  };
 
-const setCurrentTime = (num: number) => {
+  const setCurrentTime = (num: number) => {
     player.seekTo(num, true);
-    console.log('currentTime', num);
-};
+  };
 
-const setContinueWatching = () => {
+  const setContinueWatching = () => {
     clearInterval(continueInterval);
+  
     setContinueTime();
+  
     continueInterval = setInterval(() => {
       setContinueTime();
     }, continueIntervalTime);
-};
+  };
 
-const setContinueTime = () => {
+  const setContinueTime = () => {
     player.getCurrentTime().then(async currentTime => {
       await setContents({
         ...content,
         currentTime,
       });
     });
-};
-
+  };
 </script>
 
 <div class="container">
