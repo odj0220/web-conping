@@ -67,16 +67,22 @@
   }
 </script>
 
-<CenterSection>
-    <PreviewVideos
-            contents={contents}
-            infiniteScroll={true}
-            autoPlay={true}
-            onClick={handleClick}
-            on:request-more={runInfiniteScrolling}
-    />
-</CenterSection>
+<section class="section">
+  <!-- <CenterSection> -->
+      <PreviewVideos
+              contents={contents}
+              infiniteScroll={true}
+              autoPlay={true}
+              onClick={handleClick}
+              on:request-more={runInfiniteScrolling}
+      />
+  <!-- </CenterSection> -->
+
+</section>
 
 <style lang="scss">
-
+  .section {
+    padding: 0 1.6rem;
+    margin-top: 5.6rem;
+  }
 </style>

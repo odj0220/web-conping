@@ -38,34 +38,37 @@
       padding: 0 1.6rem;
       border-radius: 0.4rem;
       overflow: hidden;
-
       :global(.swiper-pagination ) {
         display: flex;
-        justify-content: flex-end;
         align-items: center;
-        left: -1rem;
+        left: 1.6rem;
+        bottom: 1.6rem;
       }
 
       :global(.swiper-pagination-bullet) {
         width: 0.6rem;
         height: 0.6rem;
         background: #fff;
-        border: 1px solid pink;
         opacity: 0.5;
+        margin: 0;
+        border-radius: 0.3rem;
+        &:not(:last-child) {
+          margin-right: 6px;
+        }
       }
       :global(.swiper-pagination-bullet-active) {
         width: 2rem;
         transition: width .5s;
-        border-radius: 0.3rem;
         background: #fff;
-        border: 1px solid transparent;
         opacity: 1;
       }
 
       .banner-wrapper {
+        position: relative;
         width: 100%;
         padding-bottom: 100%;
-        position: relative;
+        border-radius: 4px;
+        overflow: hidden;
 
         img {
           position: absolute;
@@ -73,6 +76,7 @@
           left: 0;
           width: 100%;
           height: 100%;
+          object-fit: cover;
         }
       }
     }

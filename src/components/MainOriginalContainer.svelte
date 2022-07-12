@@ -21,13 +21,14 @@ const getData = async () => {
 
 <section class="section">
     <h3 class="title">골라라 오리지널</h3>
-    <ProgramList data={programs}/>
+    <ProgramList data={programs} type="horizontal"/>
 </section>
 
 <style lang="scss">
     @import "../styles/variables.scss";
 
     .section {
+      margin-top: 5.6rem;
         .title {
             @include body1-700; 
             padding-left: 1.6rem;

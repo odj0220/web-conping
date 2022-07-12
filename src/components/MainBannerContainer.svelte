@@ -28,7 +28,6 @@
 
 <style lang="scss">
     section {
-      margin-bottom: 2rem;
       min-height: 32.8rem;
     }
 </style>

@@ -1,20 +1,20 @@
 <script lang="ts">
+import Title from './Title.svelte';
 export let title: string;
+export let type: string;
 
 </script>
 
-<div class="container">
+<section class={`section ${type}`}>
     <h4 class="title">{title}</h4>
     <slot></slot>
-</div>
+</section>
 
 <style lang="scss">
 @import  '../styles/variables.scss';
 
-.container {
-    border-radius: 4px;
-    background-color: $bg-black-21;
-    padding: 1.6rem 1.2rem;
+.section {
+
 }
 .title {
     @include body1-700;

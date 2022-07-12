@@ -8,6 +8,8 @@
   import ImageListView from './ImageListView.svelte';
   import Button from './Button.svelte';
   import Title from './Title.svelte';
+import GrayBox from './CenterSection.svelte';
+import MoreButton from './common/shared/MoreButton.svelte';
   
   const move = (targetUrl) => {
     goto(targetUrl);
@@ -56,13 +58,13 @@
       const { title: titleArray, series, contents: contentList } = response.data.getMainSeries;
       title = titleArray;
       seriesId = series.id;
-      contents = contentList;
+      contents = contentList.slice(0, 5);
       seriesName = series.name;
     });
   });
 </script>
 
-<CenterSection>
+<section class="section">
   <Title
     onClick={handleTitleClick}
     {title}
@@ -72,9 +74,11 @@
     {contents}
     onClick={handleItemClick}
   />
+  <MoreButton value="{seriesName} 시리즈 보러가기" onClick={handleButtonClick} />
+</section>
 
-  <Button
-    buttonName={`${seriesName} 시리즈 보러가기`}
-    onClick={handleButtonClick}
-  />
-</CenterSection>
+<style lang="scss">
+  .section {
+    margin-top: 5.6rem;
+  }
+</style>
