@@ -1,52 +1,36 @@
 <script lang="ts">
-    import Hscroller from './HorizontalScroller.svelte';
-    import ShortVodList from './ShortVodList.svelte';
-    import Title from './Title.svelte';
-    import { onMount } from 'svelte';
-    import { graphqlApi } from '$lib/_api_graphql';
-
-    let contents: any[] = [];
-    let title = [];
-
-    onMount(() => {
-      getShorts();
-    });
-
-    function getShorts() {
-      const query = '{getMainShorts{title {text type} contents {thumb name videoId}}}';
-      graphqlApi(query).then(response => {
-        const { title: titleArray, contents: contentList } = response.data.getMainShorts;
-        title = titleArray;
-        contents = contentList;
-      });
-    }
+  import Hscroller from './HorizontalScroller.svelte';
+  import ShortVodList from './ShortVodList.svelte';
+  import Title from './Title.svelte';
+  import { onMount } from 'svelte';
+  import { graphqlApi } from '$lib/_api_graphql';
+  let contents: any[] = [];
+  let title = [];
+  onMount(async () => {
+    getShorts();
+  });
+  async function getShorts() {
+    const query = '{getMainShorts{title {text type} contents {thumb name videoId}}}';
+    const result = await graphqlApi(query);
+    console.log('result', result);
+    title = result?.data?.getMainShorts?.title;
+    contents = result?.data?.getMainShorts?.contents;
+  }
 
 </script>
-
-<header>
-    <Title {title}></Title>
-</header>
-
-<main>
+<section class="section">
+    <div class="title">
+        <Title {title}></Title>
+    </div>
     <Hscroller>
         <ShortVodList contents={contents}></ShortVodList>
     </Hscroller>
-</main>
-
+</section>
 <style lang="scss">
-    header {
-      margin-bottom: 1.2rem;
-      padding: 0 1.6rem;
-      h1 {
-        font-size: 1.6rem;
-        line-height: 1.997rem;
-        font-weight: bold;
-        letter-spacing: -0.01rem;
-      }
+  .section {
+    margin-top: 5.6rem;
+    .title {
+      padding-left: 1.6rem;
     }
-
-    main {
-      padding: 0 1.6rem;
-      margin-bottom: 4rem;
-    }
+  }
 </style>
