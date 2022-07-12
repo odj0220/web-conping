@@ -17,6 +17,7 @@
 
 <style lang="scss">
     section {
+      padding: 0 1.6rem;
       display: flex;
       & > :global(*) {
         &:first-child {

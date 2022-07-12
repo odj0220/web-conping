@@ -50,6 +50,7 @@
   import { onMount, SvelteComponent } from 'svelte';
   import YP from 'youtube-player';
   import type { YouTubePlayer } from 'youtube-player/dist/types';
+import Avatar from './Avatar.svelte';
 
   export let content: any;
   export let order = 0;
@@ -203,7 +204,7 @@
   });
 </script>
 
-<section class="preview-layout" bind:this={container}>
+<li class="preview-layout" bind:this={container}>
     <section class="preview-container">
         <section class="player-wrap" on:click={onClick}>
             <div id='{playerId}' class="youtube-player"></div>
@@ -232,22 +233,26 @@
             </span>
             </div>
             <div class="rest">
+              <Avatar size="24px" src="" />
+              <div class="info">
                 <span class="program-name">{programName}</span>
                 <span class="divider">・</span>
                 <span calss="round">{round}</span>
                 <span class="divider">・</span>
                 <svelte:component this={PastTimeDelta} pastTime={createdAt}></svelte:component>
+
+              </div>
             </div>
         </section>
     </section>
-</section>
+  </li>
 
 <style lang="scss">
   @import '../styles/modules.scss';
   @import '../styles/variables.scss';
     .preview-layout {
       /* 유튜브 플레이어 영역 */
-      border-radius: 0rem 0rem 0.4rem 0.4rem;
+      border-radius: 0.4rem;
       overflow: hidden;
       height: 0;
       padding-top: 78.35%;
@@ -340,6 +345,11 @@
 
           .rest {
             @include caption2-400;
+            display: flex;
+            align-items: center;
+            .info {
+              margin-left: 0.8rem;
+            }
           }
         }
       }

@@ -17,27 +17,27 @@
 
 </script>
 
-<section>
-    <div class="container" on:click={onClick}>
-        <img src={content.thumb} alt="shorts-preview">
-        <div class="overlay"></div>
-        <div class="data">
-            <h6 class="title">
-                {content.name}
-            </h6>
-        </div>
+<div class="container" on:click={onClick}>
+    <img src={content.thumb} alt="shorts-preview">
+    <div class="overlay"></div>
+    <div class="data">
+        <h6 class="title">
+            {content.name}
+        </h6>
     </div>
-</section>
+</div>
 
 <style lang="scss">
-    section {
-      width: 14rem;
-      margin-left: 1.2rem;
-      border-radius: 0.4rem;
-      overflow: hidden;
+
       .container {
+        width: 14rem;
+        height: 24rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
         position: relative;
-        padding-bottom: 171.42%;
+        &:not(:last-child) {
+          margin-right: 1.2rem;
+        }
         .overlay {
             position: absolute;
             top: 0;
@@ -92,5 +92,4 @@
           }
         }
       }
-    }
 </style>

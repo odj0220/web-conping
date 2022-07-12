@@ -8,45 +8,36 @@
     let contents: any[] = [];
     let title = [];
 
-    onMount(() => {
+    onMount(async () => {
       getShorts();
     });
 
-    function getShorts() {
+    async function getShorts() {
       const query = '{getMainShorts{title {text type} contents {thumb name videoId}}}';
-      graphqlApi(query).then(response => {
-        const { title: titleArray, contents: contentList } = response.data.getMainShorts;
-        title = titleArray;
-        contents = contentList;
-      });
+      const result = await graphqlApi(query);
+      console.log('result', result);
+      title = result?.data?.getMainShorts?.title;
+      contents = result?.data?.getMainShorts?.contents;
     }
+
+    
 
 </script>
 
-<header>
+<section class="section">
+  <div class="title">
     <Title {title}></Title>
-</header>
-
-<main>
-    <Hscroller>
-        <ShortVodList contents={contents}></ShortVodList>
-    </Hscroller>
-</main>
+  </div>
+  <Hscroller>
+    <ShortVodList contents={contents}></ShortVodList>
+  </Hscroller>
+</section>
 
 <style lang="scss">
-    header {
-      margin-bottom: 1.2rem;
-      padding: 0 1.6rem;
-      h1 {
-        font-size: 1.6rem;
-        line-height: 1.997rem;
-        font-weight: bold;
-        letter-spacing: -0.01rem;
+    .section {
+      margin-top: 5.6rem;
+      .title {
+        padding-left: 1.6rem;
       }
-    }
-
-    main {
-      padding: 0 1.6rem;
-      margin-bottom: 4rem;
     }
 </style>

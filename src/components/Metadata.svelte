@@ -1,6 +1,6 @@
 <script lang="ts">
 import Avatar from './Avatar.svelte';
-import GrayBox from './GrayBox.svelte';
+import GrayBox from './CenterSection.svelte';
 import Hscroller from './HorizontalScroller.svelte';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';

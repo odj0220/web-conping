@@ -8,6 +8,8 @@
   import ImageListView from './ImageListView.svelte';
   import Button from './Button.svelte';
   import Title from './Title.svelte';
+import GrayBox from './CenterSection.svelte';
+import MoreButton from './common/shared/MoreButton.svelte';
 
   import type { Content, TitleElement } from 'src/global/types';
   
@@ -51,23 +53,45 @@
   let seriesId: string;
   let seriesName: string;
 
+  onMount(async () => {
+    const body = {
+      query: '{getMainSeries{title {text type} series {name id} contents {thumb name videoId programId program {name id}}}}',
+    };
+    fetch('/api/graphql', {
+      method: 'POST',
+      body: JSON.stringify(body),
+    }).then(response => {
+      return response.json();
+    }).then(response => {
+      const { title: titleArray, series, contents: contentList } = response.data.getMainSeries;
+      title = titleArray;
+      seriesId = series.id;
+      contents = contentList.slice(0, 5);
+      seriesName = series.name;
+    });
+  });
 </script>
 
-<CenterSection type="default">
-  {#if title?.length }
-    <Title
-      onClick={handleTitleClick}
-      {title}
-    />
-  {/if}
+<section class="section">
+  <Title
+    onClick={handleTitleClick}
+    {title}
+  />
   
   <ImageListView
     {contents}
     onClick={handleItemClick}
   />
+  <MoreButton value="{seriesName} 시리즈 보러가기" onClick={handleButtonClick} />
+</section>
 
-  <Button
-    buttonName={`${seriesName} 시리즈 보러가기`}
-    onClick={handleButtonClick}
-  />
-</CenterSection>
+<style lang="scss">
+  @import "../styles/variables.scss";
+  .section {
+    margin: 5.6rem 1.6rem 0 1.6rem;
+    padding: 1.6rem 1.2rem;
+    background-color: $bg-black-21;
+    border-radius: 0.4rem;
+  }
+
+</style>

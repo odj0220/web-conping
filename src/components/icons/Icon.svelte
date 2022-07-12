@@ -135,3 +135,12 @@
 <span class='icon'>
     {@html icon?.svg}
 </span>
+
+<style lang="scss">
+  .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+</style>
+

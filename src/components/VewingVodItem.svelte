@@ -52,6 +52,9 @@
 </section>
 
 <style lang="scss">
+  @import "../styles/variables.scss";
+  @import "../styles/modules.scss";
+
     .viewing-vod-item {
       width: 8rem;
       margin-left: 2rem;
@@ -124,15 +127,8 @@
       }
 
       .name {
-        font-size: 1.1rem;
-        line-height: 1.373rem;
-        color: #fff;
-        word-break: break-all;
-        text-overflow: ellipsis;
-
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
+        @include caption3;
+        @include ellipsis(2)
       }
     }
 </style>

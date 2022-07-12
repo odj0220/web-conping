@@ -29,11 +29,8 @@
     flex-direction: row;
     gap: 0.4rem;
     align-items: center;
-    height: 4.5rem;
-    font-size: 1.6rem;
-    line-height: 2rem;
-    font-weight: 700;
-    color: #fff;
+    margin-bottom: 12px;
+    @include body1-700;
 
     &:active {
       transform: scale(1.05);

@@ -3,7 +3,6 @@ import CenterSection from '../styles/CenterSection.svelte';
 import videos from '../fixtures/contents';
 import PreviewVideos from './PreviewVideos.svelte';
 import Title from './Title.svelte';
-import { onMount } from 'svelte';
 
 
 let contents: {data: any[]; end: boolean; cursor:string} = {
@@ -37,7 +36,7 @@ const title: any[] = [
 
 </script>
 
-<CenterSection type="transparency">
+<section class="section">
   <Title
     {title}
     onClick={handleTitleClick}
@@ -48,4 +47,11 @@ const title: any[] = [
     infinite={false}
     autoPlay={true}
   />
-</CenterSection>
+</section>
+
+<style lang="scss">
+  .section {
+    padding: 0 1.6rem;
+    margin: 4rem 0 0 0;
+  }
+</style>
