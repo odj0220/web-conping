@@ -12,10 +12,8 @@
 
   section {
     margin: 2rem 1.6rem;
-    padding: 1.6rem 0;
     display: flex;
     flex-direction: column;
-    gap: 1.6rem;
     border-radius: 0.4rem;
     background-color: $bg-black-21;
 

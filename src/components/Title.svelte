@@ -1,31 +1,36 @@
 <script lang="ts">
-  interface TitleElement {
-    text : string,
-    type?: string
-  }
+  import type { TitleElement } from 'src/global/types';
+  
+  export let onClick: () => void;
+  export let title: TitleElement[];
 
-  export let onClick : () => void;
-  export let title : TitleElement[];
+  function clickTitle() {
+    if (!onClick) {
+      return;
+    }
+  
+    onClick();
+  }
 </script>
 
-<h1 on:click={onClick ? () => onClick() : null}>
-  {#each title as element }
+{#if title?.length }
+  <h1 on:click={() => clickTitle()}>
+    {#each title as element }
     <span class={element?.type}>{element.text} </span>
-  {/each}
-</h1>
+    {/each}
+  </h1>
+{/if}
 
 <style lang="scss">
   @import '../styles/variables.scss';
 
   h1 {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 4.5rem;
-    font-size: 1.6rem;
-    line-height: 2rem;
-    font-weight: 700;
-    color: #fff;
+    flex-direction: row;
+    gap: 0.4rem;
+    align-items: center;
+    margin-bottom: 12px;
+    @include body1-700;
 
     &:active {
       transform: scale(1.05);

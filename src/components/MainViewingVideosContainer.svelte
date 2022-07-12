@@ -2,48 +2,39 @@
     import Hscroller from './HorizontalScroller.svelte';
     import ViewingVodList from './ViewingVodList.svelte';
     import { onMount } from 'svelte';
-    import { graphqlApi } from '$lib/_api_graphql';
+    import { getList } from '$lib/_continue_watching';
 
     let contents = [];
 
     onMount(async () => {
-      const query = '{getContinueWatching{thumb name program {name}}}';
-      graphqlApi(query).then(response => {
-        contents = response.data.getContinueWatching;
-      });
+      contents = await getList();
     });
 
 </script>
 
-<section>
-    <header>
-        <h1>시청중인 영상</h1>
-    </header>
-
-    <main>
-        <Hscroller>
-            <ViewingVodList contents={contents}></ViewingVodList>
-        </Hscroller>
-    </main>
-</section>
+{#if contents.length > 0}
+  <section>
+    <h3 class="title">시청중인 영상</h3>
+    <Hscroller>
+        <ViewingVodList contents={contents}></ViewingVodList>
+    </Hscroller>
+  </section>
+{/if}
 
 
 <style lang="scss">
+  @import "../styles/variables.scss";
+  
     section {
       background-color: #212121;
       border-radius: 0.4rem;
-      margin: 0 1.6rem;
-      padding: 1.6rem 1.2rem 2.6rem 1.2rem;
-      margin-bottom: 4rem;
-
-      header {
+      margin: 2rem 1.6rem 0 1.6rem;
+      padding: 1.6rem 0 2.6rem;
+      .title {
+        @include body1-700;
+        color: #fff;
+        padding-left: 1.2rem;
         margin-bottom: 1.6rem;
-        h1 {
-          font-size: 1.6rem;
-          line-height: 1.997rem;
-          font-weight: 700;
-          color: #fff;
-        }
       }
     }
 </style>
