@@ -3,7 +3,8 @@ import IconArrow from './icons/IconArrow.svelte';
 import ProductItem from './ProductItem.svelte';
 
 export let data: any[] = [];
-export let setCurrentTime : (num: number) => void;
+export let onClickTimeButton : (num: number) => void;
+export let timelineButtonVisible: boolean;
 
 let list: any[] = [];
 let displayMore = true;
@@ -13,8 +14,6 @@ $: if (data.length > 5) {
 } else {
   list = [...data];
 }
-
-console.log('data', data);
 
 const onClickMore = () => {
   displayMore = false;
@@ -28,7 +27,7 @@ const onClickMore = () => {
     <div class="contents">
         <ul class="list">
             {#each list as el}
-                <ProductItem {...el} setCurrentTime={setCurrentTime}/>
+                <ProductItem {...el} {onClickTimeButton} {timelineButtonVisible}/>
             {/each}
         </ul>
         {#if data?.length > 5 && displayMore}
