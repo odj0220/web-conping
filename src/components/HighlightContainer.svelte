@@ -1,5 +1,4 @@
 <script lang=ts>
-  import Videos from './Videos.svelte';
   import { onMount } from 'svelte';
   import { graphqlApi } from '../lib/_api_graphql';
   
@@ -16,13 +15,7 @@
     contents = result.data.getContentsByProgramId;
   });
 </script>
-  
-  <Videos
-    {contents}
-    onClick={handleClick}
-  />
-  
-  
-  <style>
-  
-  </style>
+
+<style>
+
+</style>
