@@ -22,7 +22,7 @@
 </ul>
 
 {#each items as item}
-	{#if activeTabValue == item.value}
+	{#if activeTabValue === item.value}
     <div class="contents-container">
       <svelte:component this={item.component} id={item.id}/>
     </div>
