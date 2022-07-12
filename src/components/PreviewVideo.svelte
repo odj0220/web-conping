@@ -255,7 +255,7 @@ import Avatar from './Avatar.svelte';
       border-radius: 0.4rem;
       overflow: hidden;
       height: 0;
-      padding-top: 78.35%;
+      padding-top: 82.35%;
       position: relative;
 
       .preview-container {
@@ -287,6 +287,7 @@ import Avatar from './Avatar.svelte';
             img {
                 width: 100%;
                 height: 100%;
+                object-fit: cover;
             }
           }
 

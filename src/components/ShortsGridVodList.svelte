@@ -18,5 +18,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     row-gap: 2.4rem;
+    column-gap: 1.2rem;
   }
 </style>

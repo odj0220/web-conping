@@ -14,30 +14,28 @@
         videoId: string;
     };
     export let onClick: () => void;
-
 </script>
 
-<div class="container" on:click={onClick}>
-    <img src={content.thumb} alt="shorts-preview">
-    <div class="overlay"></div>
-    <div class="data">
-        <h6 class="title">
-            {content.name}
-        </h6>
+<section>
+    <div class="container" on:click={onClick}>
+        <img src={content.thumb} alt="shorts-preview">
+        <div class="overlay"></div>
+        <div class="data">
+            <h6 class="title">
+                {content.name}
+            </h6>
+        </div>
     </div>
-</div>
+</section>
 
 <style lang="scss">
-
+    section {
+      width: 100%;
+      border-radius: 0.4rem;
+      overflow: hidden;
       .container {
-        width: 14rem;
-        height: 24rem;
-        border-radius: 0.4rem;
-        overflow: hidden;
         position: relative;
-        &:not(:last-child) {
-          margin-right: 1.2rem;
-        }
+        padding-bottom: 171.42%;
         .overlay {
             position: absolute;
             top: 0;
@@ -92,4 +90,5 @@
           }
         }
       }
+    }
 </style>
