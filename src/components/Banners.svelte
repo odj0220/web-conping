@@ -36,6 +36,8 @@
 <style lang="scss">
     .swiper-container {
       padding: 0 1.6rem;
+      border-radius: 0.4rem;
+      overflow: hidden;
 
       :global(.swiper-pagination ) {
         display: flex;

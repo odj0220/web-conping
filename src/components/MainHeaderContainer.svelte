@@ -5,6 +5,7 @@
     // TODO: click 이벤트
     console.log(type, 'button clicked');
   }
+  const BUTTONS = ['noti', 'setting'];
 </script>
 
-<Header onClick={handleClickButton}/>
+<Header onClick={handleClickButton} buttons={BUTTONS}/>
