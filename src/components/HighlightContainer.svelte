@@ -1,21 +1,35 @@
 <script lang=ts>
-  import { onMount } from 'svelte';
   import { graphqlApi } from '../lib/_api_graphql';
+  import PreviewVideos from './PreviewVideos.svelte';
   
   export let id;
-  let contents = [];
+  let contents: {data: any[]; end: boolean; cursor:string} = {
+    data: [],
+    end: false,
+    cursor: '',
+  };
   
   const handleClick = (id) => {
     console.log('TODO: click 이벤트', id);
   };
 
-  onMount(async () => {
-    const query = `{getContentsByProgramId(id:"${id}", type:HIGHLIGHT){id name videoId thumb program {name}}}`;
+  async function loadHighlight() {
+    const query = `{getContentsByProgramId(id:"${id}", type:HIGHLIGHT){id name programId videoId thumb createDt round program {id name}}}`;
     const result = await graphqlApi(query);
-    contents = result.data.getContentsByProgramId;
-  });
+    contents.data = result.data.getContentsByProgramId;
+    return contents;
+  }
 </script>
 
-<style>
+{#await loadHighlight()}
+    <p>loading...</p>
+{:then data}
+    <PreviewVideos
+            contents={data}
+            onClick={handleClick}
+    />
+{/await}
+
+<style lang="scss">
 
 </style>
