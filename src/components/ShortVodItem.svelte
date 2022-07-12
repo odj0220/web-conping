@@ -14,7 +14,6 @@
         videoId: string;
     };
     export let onClick: () => void;
-
 </script>
 
 <section>
@@ -31,8 +30,7 @@
 
 <style lang="scss">
     section {
-      width: 14rem;
-      margin-left: 1.2rem;
+      width: 100%;
       border-radius: 0.4rem;
       overflow: hidden;
       .container {
