@@ -3,6 +3,7 @@
     import { onMount } from 'svelte';
     import YP from 'youtube-player';
     import type { YouTubePlayer } from 'youtube-player/dist/types';
+import Icon from './icons/Icon.svelte';
 
     export let videoId: string;
     export let width: number;
@@ -12,8 +13,14 @@
 
     let clientWidth;
     let clientHeight;
-
     let displayLogo = true;
+    let displayToast = true;
+    let displayControls = false;
+    let player: YouTubePlayer;
+    let firstLoaded = false;
+    let muted: boolean;
+    let displayControlsDebounce : any;
+
     const playerId = guid();
     const defaultPlayerVars = {
       controls: 0, //플레이어 컨드롤러 표시여부
@@ -25,15 +32,35 @@
       playlist: videoId,
     };
 
-    let player: YouTubePlayer;
-    let firstLoaded = false;
+    function hideLogo() {
+      displayLogo = false;
+      if (!firstLoaded) {
+        player.playVideoAt(0);
+      }
+    }
 
+    const toggleMuted = () => {
+      if (muted) {
+        player.unMute();
+      } else {
+        player.mute();
+      }
+    
+      displayControls = true;
+      muted = !muted;
+    
+      clearTimeout(displayControlsDebounce);
+      displayControlsDebounce = setTimeout(() => {
+        displayControls = false;
+      }, 1500);
+    };
+    
     onMount(async () => {
       clientWidth = screen.width;
       clientHeight = screen.height;
       height = screen.height;
       width = screen.width;
-
+    
     
       const option = {
         ...(videoId && { videoId }),
@@ -75,18 +102,20 @@
           break;
         default:
         }
-    
       });
+
+      setTimeout(() => {
+        displayToast = false;
+      }, 1500);
+
+      muted = player.isMuted();
     });
 
-    function hideLogo() {
-      displayLogo = false;
-      if (!firstLoaded) {
-        player.playVideoAt(0);
-      }
-    }
+
+
+
 </script>
-<div class="player-wrap" style="height: {clientHeight}px; width: {clientWidth}px">
+<div class="player-wrap" style="height: {clientHeight}px; width: {clientWidth}px"  on:click="{() => toggleMuted()}">
     <div id='{playerId}' class="youtube-player" allow="autoplay"></div>
     <div class="overlay-wrap">
         {#if player}
@@ -94,10 +123,24 @@
         {/if}
     </div>
     <slot></slot>
+    <span class="toast" class:on={displayToast}>화면 터치하여 음소거 해제</span>
+    {#if displayControls}
+      <span class="controls">
+        {#if muted}
+          <Icon name="mute" /> 
+        {:else}
+          <Icon name="voice" />
+        {/if}
+      </span>  
+    {/if}
+    
+    
 </div>
 
 
 <style lang="scss">
+  @import '../styles/variables.scss';
+
     .player-wrap {
       position: fixed;
       top: 0;
@@ -105,7 +148,7 @@
       overflow: hidden;
 
       .youtube-player {
-        z-index: 1;
+        z-index: -1;
         top: 0;
         left: 0;
         position: absolute;
@@ -117,7 +160,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: 2;
+        z-index: 1;
 
         .thumb {
           width: 100%;
@@ -129,5 +172,34 @@
           }
         }
       }
+      .toast {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 3;
+        padding: 0.6rem 1.2rem;
+        background: rgba(80, 80, 80, 0.8);
+        border-radius: 0.4rem;
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.3s;
+        pointer-events: none;
+        @include caption1-700;
+
+        &.on {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+      .controls {
+        display: block;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 4;
+      }
+    
     }
 </style>
