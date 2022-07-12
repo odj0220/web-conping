@@ -31,7 +31,7 @@ const loadYoutubePlayer = async () => {
   };
 
   player = await YP(playerId, option);
-  const continueItem = getList().find(contentItem => contentItem.id === content.id);
+  const continueItem = (await getList() || []).find(contentItem => contentItem.id === content.id);
   const continueCurrentTime = continueItem ? continueItem.currentTime : 0;
   setCurrentTime(continueCurrentTime);
 };
@@ -94,8 +94,8 @@ const setContinueWatching = () => {
 };
 
 const setContinueTime = () => {
-  player.getCurrentTime().then(currentTime => {
-    setContents({
+  player.getCurrentTime().then(async currentTime => {
+    await setContents({
       ...content,
       currentTime,
     });

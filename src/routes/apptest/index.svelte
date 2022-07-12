@@ -1,5 +1,4 @@
 <script type="ts">
-  import { onMount } from 'svelte';
   import { callToast, callShare, callConfirm } from '$lib/_app_communication';
   import { getList, setContents } from '$lib/_continue_watching';
 
@@ -17,8 +16,8 @@
       alert(boolean);
     });
   }
-  function getStorage() {
-    const contents = getList();
+  async function getStorage() {
+    const contents = await getList();
     contentList = JSON.stringify(contents);
   }
   function setStorage() {
@@ -28,7 +27,7 @@
 
 <button on:click={sendTost}>callToast</button>
 <button on:click={sendShare}>callShare</button>
-<button on:click={callConfirm}>sendConfirm</button>
+<button on:click={sendConfirm}>callConfirm</button>
 <button on:click={getStorage}>getStorage</button>
 <button on:click={setStorage}>setStorage</button>
 
