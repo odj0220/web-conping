@@ -2,15 +2,12 @@
     import Hscroller from './HorizontalScroller.svelte';
     import ViewingVodList from './ViewingVodList.svelte';
     import { onMount } from 'svelte';
-    import { graphqlApi } from '$lib/_api_graphql';
+    import { getList } from '$lib/_continue_watching';
 
     let contents = [];
 
     onMount(async () => {
-      const query = '{getContinueWatching{thumb name program {name}}}';
-      graphqlApi(query).then(response => {
-        contents = response.data.getContinueWatching;
-      });
+      contents = getList();
     });
 
 </script>
