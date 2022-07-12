@@ -18,7 +18,6 @@
     const result = await graphqlApi(query);
     data = result?.data?.program;
     celebs = result?.data?.getCelebsByProgramId;
-    console.log(celebs);
   });
 
   export let id: string;
@@ -59,8 +58,17 @@
       border-radius: 4px;
       overflow: hidden;
       margin: 0.8rem 1.6rem;
+      height: 0;
+      padding-bottom: 141%;
+      position: relative;
       img {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
       }
     }
   }
