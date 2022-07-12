@@ -36,7 +36,6 @@
     const result = await graphqlApi(query);
     data = result?.data?.program;
     celebs = result?.data?.getCelebsByProgramId;
-    console.log('프로그램 아이디:', id);
   });
 </script>
 
