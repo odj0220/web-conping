@@ -47,10 +47,9 @@
 <script type="ts">
   import { guid, toHHMMSS } from '$lib/util';
   export { toHHMMSS } from '$lib/util';
-  import { onMount } from 'svelte';
+  import { onMount, SvelteComponent } from 'svelte';
   import YP from 'youtube-player';
   import type { YouTubePlayer } from 'youtube-player/dist/types';
-  import PastTimeDelta from './PastTimeDelta.svelte';
 
   export let content: any;
   export let order = 0;
@@ -67,6 +66,7 @@
   let firstLoad = true;
   let pauseTimer: any = null;
   let interval: any = null;
+  let PastTimeDelta: SvelteComponent;
 
   const PLAYER_STATE = {
     NOT_STARTED: -1,
@@ -94,7 +94,7 @@
       enablejsapi: 1,
     };
 
-    const option = {
+    const option: any = {
       videoId: content.videoId,
       playerVars,
     };
@@ -190,6 +190,8 @@
   }
 
   onMount(async () => {
+    const module = await import('./PastTimeDelta.svelte');
+    PastTimeDelta = module.default;
     loadYoutubePlayer();
     onPlayerReady();
     onPlayerStateChange();
@@ -234,7 +236,7 @@
                 <span class="divider">・</span>
                 <span calss="round">{round}</span>
                 <span class="divider">・</span>
-                <PastTimeDelta className="createdAt" pastTime={createdAt} />
+                <svelte:component this={PastTimeDelta} pastTime={createdAt}></svelte:component>
             </div>
         </section>
     </section>
