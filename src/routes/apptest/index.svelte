@@ -3,10 +3,8 @@
   import { callToast, callShare, callConfirm } from '$lib/_app_communication';
   import { getList, setContents } from '$lib/_continue_watching';
 
+  let contentList: string;
 
-  onMount(() => {
-
-  });
 
   function sendTost() {
     callToast('토스트 전송');
@@ -20,7 +18,8 @@
     });
   }
   function getStorage() {
-    getList();
+    const contents = getList();
+    contentList = JSON.stringify(contents);
   }
   function setStorage() {
     setContents({ id: '123', name: 'test' });
@@ -33,3 +32,15 @@
 <button on:click={getStorage}>getStorage</button>
 <button on:click={setStorage}>setStorage</button>
 
+<textarea>
+    {contentList}
+</textarea>
+
+<style>
+    button {
+        background: #ccc;
+    }
+    textarea {
+        background: #fff;
+    }
+</style>
