@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   
@@ -8,8 +8,11 @@
   import ImageListView from './ImageListView.svelte';
   import Button from './Button.svelte';
   import Title from './Title.svelte';
+
+  import type { Content, TitleElement } from 'src/global/types';
   
-  const move = (targetUrl) => {
+  const move = (targetUrl: string) => {
+    //TODO: 공통함수로 정리
     goto(targetUrl);
   };
 
@@ -17,9 +20,8 @@
     move(`/programs/${seriesId}`);
   };
 
-  const handleItemClick = (id) => {
-    //TODO: 상세 화면으로 이동
-    console.log('TODO: click 이벤트', id);
+  const handleItemClick = (id: string) => {
+    move(`/contents/${id}`);
   };
 
   const handleButtonClick = () => {
@@ -29,8 +31,14 @@
 
   onMount(async () => {
     const query = '{getMainSeries{title {text type} series {name id} contents {thumb name videoId program {name}}}}';
+  
     graphqlApi(query).then(response => {
-      const { title: titleArray, series, contents: contentList } = response.data.getMainSeries;
+      const {
+        title: titleArray,
+        series,
+        contents: contentList,
+      } = response.data.getMainSeries;
+  
       title = titleArray;
       seriesId = series.id;
       seriesName = series.name;
@@ -38,35 +46,20 @@
     });
   });
 
-  let contents = [];
-  let title = [];
-  let seriesId;
-  let seriesName;
+  let contents: Content[];
+  let title: TitleElement[] | null = null;
+  let seriesId: string;
+  let seriesName: string;
 
-  onMount(async () => {
-    const body = {
-      query: '{getMainSeries{title {text type} series {name id} contents {thumb name videoId programId program {name id}}}}',
-    };
-    fetch('/api/graphql', {
-      method: 'POST',
-      body: JSON.stringify(body),
-    }).then(response => {
-      return response.json();
-    }).then(response => {
-      const { title: titleArray, series, contents: contentList } = response.data.getMainSeries;
-      title = titleArray;
-      seriesId = series.id;
-      contents = contentList;
-      seriesName = series.name;
-    });
-  });
 </script>
 
-<CenterSection>
-  <Title
-    onClick={handleTitleClick}
-    {title}
-  />
+<CenterSection type="default">
+  {#if title?.length }
+    <Title
+      onClick={handleTitleClick}
+      {title}
+    />
+  {/if}
   
   <ImageListView
     {contents}
