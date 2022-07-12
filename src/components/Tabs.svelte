@@ -5,6 +5,7 @@
     label: string,
     value: number,
     component: SvelteComponent,
+    props: any,
   }
 
   export let items: tabItem[];
@@ -24,7 +25,7 @@
 {#each items as item}
 	{#if activeTabValue === item.value}
     <div class="contents-container">
-      <svelte:component this={item.component} id={item.id}/>
+      <svelte:component this={item.component} {...item.props}/>
     </div>
 	{/if}
 {/each}
