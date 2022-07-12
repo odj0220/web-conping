@@ -30,8 +30,8 @@
   .grid-item {
     display: grid;
     grid-template-columns: 1fr 2fr;
-    height: 6.8rem;
-    
+    min-height: 6.8rem;
+
     .left {
       border-radius: 2px;
       overflow: hidden;

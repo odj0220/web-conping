@@ -1,9 +1,12 @@
 <script lang=ts>
-  import GridViewList from './GridViewList.svelte';
   import { onMount } from 'svelte';
+  
   import { graphqlApi } from '../lib/_api_graphql';
+  
+  import ImageListView from './ImageListView.svelte';
 
-  export let id; //TODO: data get
+  export let id;
+
   let contents = [];
 
   onMount(async () => {
@@ -17,7 +20,7 @@
   };
 </script>
 
-<GridViewList
+<ImageListView
   {contents}
   onClick={handleClick}
 />

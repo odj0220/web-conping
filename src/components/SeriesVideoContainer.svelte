@@ -5,7 +5,7 @@
   import { graphqlApi } from '$lib/_api_graphql';
   
   import CenterSection from '../styles/CenterSection.svelte';
-  import GridViewList from './GridViewList.svelte';
+  import ImageListView from './ImageListView.svelte';
   import Button from './Button.svelte';
   import Title from './Title.svelte';
   
@@ -68,7 +68,7 @@
     {title}
   />
   
-  <GridViewList
+  <ImageListView
     {contents}
     onClick={handleItemClick}
   />

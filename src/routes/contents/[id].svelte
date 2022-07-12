@@ -1,4 +1,3 @@
-
 <script>
     import { page } from '$app/stores';
     
@@ -8,4 +7,3 @@
 </script>
   
 <ContentsDetailContainer {id} />
-  

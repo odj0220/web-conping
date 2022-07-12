@@ -1,70 +1,72 @@
 <script lang="ts">
-  import { pannable } from '../util/pannable';
+import { fly } from 'svelte/transition';
 
-  export let visible = false;
+import { pannable } from '../util/pannable';
 
-  let min = 0;
-  let max = 100;
-  let pos = 50;
-  let wall;
-  
-  function clamp(min: number, max: number, value: number) {
-    if (min > value) {
-      return min;
-    }
-  
-    if (max < value) {
-      return max;
-    }
-  
-    return value;
+export let visible = false;
+
+let min = 0;
+let max = 100;
+let pos = 50;
+let wall;
+
+function clamp(min: number, max: number, value: number) {
+  if (min > value) {
+    return min;
   }
 
-
-  function fixLimits() {
-    if (min > max) {
-      [min, max] = [max, min];
-    }
-  
-    max = clamp(0, 100, max);
-    min = clamp(0, 100, min);
-    pos = clamp(min, max, pos);
+  if (max < value) {
+    return max;
   }
 
-  function handlePanMove(event) {
-    const { top, bottom, left, right } = wall.parentElement.getBoundingClientRect();
+  return value;
+}
 
-    const extents = [top, bottom];
-  
-    let px = clamp(
-      extents[0],
-      extents[1],
-      event.detail.y,
-    );
-  
-    pos = clamp(
-      min,
-      max,
-      (100 * (px - extents[0])) / (extents[1] - extents[0]),
-    );
+function fixLimits() {
+  if (min > max) {
+    [min, max] = [max, min];
   }
 
-  $: fixLimits();
+  max = clamp(0, 100, max);
+  min = clamp(0, 100, min);
+  pos = clamp(min, max, pos);
+}
+
+function handlePanMove(event) {
+  const { top, bottom, left, right } = wall.parentElement.getBoundingClientRect();
+
+  const extents = [top, bottom];
+
+  let px = clamp(
+    extents[0],
+    extents[1],
+    event.detail.y,
+  );
+
+  pos = clamp(
+    min,
+    max,
+    (100 * (px - extents[0])) / (extents[1] - extents[0]),
+  );
+}
+
+$: fixLimits();
 </script>
 
 {#if visible}
   <div
+    transition:fly="{{ y: 200, duration: 400 }}"
     bind:this={wall}
 		class="wall"
 		use:pannable
 		on:panmove={handlePanMove}
 		style="top: calc({pos}% - 8px)"
   >
-  <slot name="title"/>
-	<div>
-		<slot />
-	</div>
-</div>
+    <slot name="title"/>
+    <div>
+      <slot />
+    </div>
+  </div>
 {/if}
 
 <style lang="scss">

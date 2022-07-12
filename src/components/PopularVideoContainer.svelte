@@ -31,7 +31,7 @@ const title: any[] = [
     type: 'primary-40',
   },
   {
-    text: '영상',
+    text: '콘텐츠',
   },
 ];
 
