@@ -10,9 +10,7 @@ const onClickShare = () => {
   console.log('onClickShare');
 };
 
-const onClickCart = () => {
-  console.log('onClickCart');
-};
+export let onClickCart;
 
 const BUTTONS = [
   {
