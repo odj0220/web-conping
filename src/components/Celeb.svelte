@@ -4,18 +4,30 @@ import Avatar from './Avatar.svelte';
 export let id: string;
 export let name: string;
 export let thumbnail: string;
+export let categories: any[] = [];
 
 console.log('data', id, name, thumbnail);
+
+const returnColor = (category: string) => {
+  switch (category) {
+  case '뷰티': return '#FF70E2';
+  case '먹방': return '#FFA370';
+  case 'IT': return '#BE65F2';
+  case '기획': return '#4FBF69';
+  }
+};
 
 </script>
 <li class="item">
     <Avatar size="72px" src={thumbnail}/>
     <div class="info">
-        <div class="info-top">
+        <div class="info-top"> 
             <h6 class="name">{name}</h6>
-            <ul class="tags">
-                <li class="tag">뷰티</li>
-                <li class="tag">IT</li>
+            <ul class="categories">
+              {#each categories as category} 
+                <li class="category" style="background-color: {returnColor(category)}">{category}</li>
+              {/each}
+                
             </ul>
         </div>
         <ul class="info-list">
@@ -57,11 +69,11 @@ console.log('data', id, name, thumbnail);
                     @include body1-700;
                     
                 }
-                .tags {
+                .categories {
                     margin-left: 8px;
                     display: flex;
                     align-items: center;
-                    .tag {
+                    .category {
                         padding: 0.2rem 0.6rem;
                         border-radius: 0.2rem;
                         font-size: 11px;
