@@ -1,23 +1,27 @@
 <script lang="ts">
-import Avatar from './Avatar.svelte';
+  import type { ICeleb } from 'src/global/types';
 
-export let id: string;
-export let name: string;
-export let thumbnail: string;
+// export let id: string;
+// export let name: string;
+// export let thumbnail: string;
 export let categories: any[] = [];
+  import Avatar from './Avatar.svelte';
 
-console.log('data', id, name, thumbnail);
+  export let celeb: ICeleb;
+
+  const { id, name, thumbnail } = celeb;
 
 const returnColor = (category: string) => {
-  switch (category) {
-  case '뷰티': return '#FF70E2';
-  case '먹방': return '#FFA370';
-  case 'IT': return '#BE65F2';
-  case '기획': return '#4FBF69';
-  }
+    switch (category) {
+    case '뷰티': return '#FF70E2';
+    case '먹방': return '#FFA370';
+    case 'IT': return '#BE65F2';
+    case '기획': return '#4FBF69';
+    }
 };
 
 </script>
+
 <li class="item">
     <Avatar size="72px" src={thumbnail}/>
     <div class="info">
@@ -45,6 +49,20 @@ const returnColor = (category: string) => {
             </li>
         </ul>
     </div>
+    <ul class="info-list">
+      <li class="info-item">
+        <span class="key">팔로워</span>
+        <span class="value">60.2만명</span>
+      </li>
+      <li class="info-item">
+        <span class="key">콘텐츠</span>
+        <span class="value">2</span>
+      </li>
+      <li class="info-item">
+        <span class="key">상품</span>
+        <span class="value">9</span>
+      </li>
+    </ul>
 </li>
 
 <style lang="scss">

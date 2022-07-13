@@ -1,27 +1,31 @@
 <script lang="ts">
-    import ViewingVodItem from './VewingVodItem.svelte';
-    export let contents: any[] = [];
+  import type { Content } from 'src/global/types';
 
-    function onClick() {
-      console.log('클릭!');
-    }
+  import ViewingVodItem from './VewingVodItem.svelte';
+
+  export let contents: Content[];
+
+  export let onClick: (id: string) => void;
 </script>
 
 <section>
-    {#each contents as content}
-        <ViewingVodItem content={content} onClick={onClick}></ViewingVodItem>
-    {/each}
+  {#each contents as content}
+    <ViewingVodItem
+      {content}
+      {onClick}
+    />
+  {/each}
 </section>
 
 
 <style lang="scss">
-    section {
-      display: flex;
-      padding: 0 1.2rem;
-      & > :global(*) {
-        &:first-child {
-          margin-left: 0 !important;
-        }
+  section {
+    display: flex;
+    padding: 0 1.2rem;
+    & > :global(*) {
+      &:first-child {
+        margin-left: 0 !important;
       }
     }
+  }
 </style>

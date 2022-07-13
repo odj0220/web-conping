@@ -1,43 +1,44 @@
 <script lang="ts">
-    import Hscroller from './HorizontalScroller.svelte';
-    import ShortVodList from './ShortVodList.svelte';
-    import Title from './Title.svelte';
-    import { onMount } from 'svelte';
-    import { graphqlApi } from '$lib/_api_graphql';
+  import { onMount } from 'svelte';
 
-    let contents: any[] = [];
-    let title = [];
+  import { graphqlApi } from '$lib/_api_graphql';
+  
+  import { goto } from '$app/navigation';
 
-    onMount(async () => {
-      getShorts();
-    });
+  import type { Content, TitleElement } from 'src/global/types';
 
-    async function getShorts() {
-      const query = '{getMainShorts{title {text type} contents {thumb name videoId}}}';
-      const result = await graphqlApi(query);
-      console.log('result', result);
-      title = result?.data?.getMainShorts?.title;
-      contents = result?.data?.getMainShorts?.contents;
-    }
+  import CenterSection from '$styles/CenterSection.svelte';
+  import Hscroller from './HorizontalScroller.svelte';
 
+  import Title from './Title.svelte';
+  import ShortVodList from './ShortVodList.svelte';
 
+  let contents: Content[];
+  let title: TitleElement;
 
+  onMount(async () => {
+    getShorts();
+  });
+
+  function handleClickShorts(id:string) {
+    goto(`/shorts/${id}`);
+  }
+
+  async function getShorts() {
+    const query = '{getMainShorts{title {text type} contents {thumb name videoId}}}';
+    const result = await graphqlApi(query);
+    title = result?.data?.getMainShorts?.title;
+    contents = result?.data?.getMainShorts?.contents;
+  }
 </script>
 
-<section class="section">
-  <div class="title">
-    <Title {title}></Title>
-  </div>
-  <Hscroller>
-    <ShortVodList contents={contents}></ShortVodList>
-  </Hscroller>
-</section>
+<CenterSection type="transparency">
+  <Title {title}></Title>
 
-<style lang="scss">
-    .section {
-      margin-top: 5.6rem;
-      .title {
-        padding-left: 1.6rem;
-      }
-    }
-</style>
+  <Hscroller>
+    <ShortVodList
+      {contents}
+      onClick={handleClickShorts}
+    />
+  </Hscroller>
+</CenterSection>
