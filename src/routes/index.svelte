@@ -8,8 +8,8 @@
     import GlobalBlock from '$styles/GlobalBlock.svelte';
     import MainVideosContainer from '$component/MainVideosContainer.svelte';
     import MainCelebsContainer from '$component/MainCelebsContainer.svelte';
-import MainOriginalContainer from '$component/MainOriginalContainer.svelte';
-    </script>
+    import MainOriginalContainer from '$component/MainOriginalContainer.svelte';
+</script>
     
     <MainHeaderContainer />
     
@@ -23,4 +23,3 @@ import MainOriginalContainer from '$component/MainOriginalContainer.svelte';
       <MainShortsContainer/>
       <MainVideosContainer/>
     </GlobalBlock>
-    

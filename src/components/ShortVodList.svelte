@@ -17,12 +17,13 @@
 
 <style lang="scss">
     section {
-      padding: 0 1.6rem;
+      min-width: 100%;
       display: flex;
+      gap: 1.2rem;
+      padding: 0 1.6rem;
       & > :global(*) {
-        &:first-child {
-          margin-left: 0 !important;
-        }
+        min-width: 14rem !important;
+        max-width: 14rem !important;
       }
     }
 </style>
