@@ -1,29 +1,33 @@
 <script lang="ts">
-import LayoutPopup from './LayoutPopup.svelte';
+import BottomSheet from './common/layout/BottomSheet.svelte';
 import RelatedProductContainer from './RelatedProductContainer.svelte';
 import ShortsDetailInfo from './ShortsDetailInfo.svelte';
 import ShortsFullScreen from './ShortsFullScreen.svelte';
 
 export let id: string;
-let visible = false;
 
-const onClickClose = (e) => {
+let offsetTop = 0;
+const setOffsetTop = (num: number) => {
+  offsetTop = num;
+};
+
+const onClickClose = (e: TouchEvent) => {
   e.stopPropagation();
   history.back();
 };
 
-const onClickShare = (e) => {
+const onClickShare = (e: TouchEvent) => {
   e.stopPropagation();
 };
 
-const onClickCart = () => {
-  visible = !visible;
+const onClickCart = (e: TouchEvent) => {
+  e.stopPropagation();
+  setOffsetTop(176);
 };
 
-const onClickProfile = (e) => {
+const onClickProfile = (e: TouchEvent) => {
   e.stopPropagation();
 };
-
 </script>
 
 <ShortsFullScreen videoId="8XZe5aX5Ruk">
@@ -35,9 +39,6 @@ const onClickProfile = (e) => {
   />
 </ShortsFullScreen>
 
-<LayoutPopup {visible}>
-  <RelatedProductContainer
-    {id}
-    timelineButtonVisible={false}
-  />
-</LayoutPopup>
+<BottomSheet height={560} offsetTop={offsetTop} setOffsetTop={setOffsetTop}>
+  <RelatedProductContainer {id} moreButton={false}/>
+</BottomSheet>

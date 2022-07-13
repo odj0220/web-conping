@@ -97,14 +97,26 @@
         />
       {/each}
     {/if}
-  </ul>
 
-  {#if infiniteScroll}
-    <section class="infinite-scroll" bind:this={infiniteScrollArea}></section>
-    {#if $scrolling}
-      <div class="spinner-wrapper">
-        <div class="spinner"></div>
-      </div>
+    <ul class="contents-container">
+        {#if videos.length > 0}
+            {#each videos as video, order (video.id)}
+                <PreviewVideo content={video} order={order + 1} autoPlay={autoPlay}/>
+            {/each}
+        {/if}
+    </ul>
+
+    {#if infiniteScroll}
+      <section class="infinite-scroll"
+               class:done={contents.end}
+               bind:this={infiniteScrollArea}
+
+      ></section>
+      {#if $scrolling}
+        <div class="spinner-wrapper">
+          <div class="spinner"></div>
+        </div>
+      {/if}
     {/if}
   {/if}
 </section>
@@ -118,6 +130,10 @@
     .title {
       @include body3-700;
       margin-bottom: 1.2rem;
+    }
+
+    .infinite-scroll {
+      padding-bottom: 2rem;
     }
     
     .contents-container {

@@ -49,6 +49,7 @@
       {
         content(id:"${id}"){
           id 
+          name
           contentType 
           createDt 
           description 

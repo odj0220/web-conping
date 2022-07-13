@@ -2,6 +2,7 @@
 import IconArrow from './icons/IconArrow.svelte';
 import ProductItem from './ProductItem.svelte';
 
+export let moreButton: boolean;
 export let data: any[] = [];
 export let onClickTimeButton : (num: number) => void;
 export let timelineButtonVisible: boolean;
@@ -29,8 +30,11 @@ const onClickMore = () => {
             {#each list as el}
                 <ProductItem {...el} {onClickTimeButton} {timelineButtonVisible}/>
             {/each}
+            {#each list as el}
+                <ProductItem {...el} {onClickTimeButton} {timelineButtonVisible}/>
+            {/each}
         </ul>
-        {#if data?.length > 5 && displayMore}
+        {#if data?.length > 5 && displayMore && moreButton}
             <button class="more" on:click={onClickMore}>
                 <span class="value">관련 상품 더보기</span>
                 <IconArrow name="small-down" />
@@ -45,7 +49,7 @@ const onClickMore = () => {
     
     .container {
         position: relative;
-        padding: 2.4rem 1.6rem;
+        padding: 0 1.6rem 2.4rem;
         .title {
             @include body1-700;
             margin-bottom: 12px;
