@@ -216,7 +216,7 @@
             </section>
             <div class="overlay-wrap">
                 {#if player}
-                    <div class="running-time overlay">
+                    <div class="running-time overlay" class:hide={!autoPlay}>
                         {#await playTime}
                             ...waiting
                         {:then number}
@@ -328,6 +328,10 @@
             color: #fff;
             font-family: system-ui;
             padding: 0.2rem 0.6rem;
+
+            &.hide {
+              display: none !important;
+            }
           }
         }
 
