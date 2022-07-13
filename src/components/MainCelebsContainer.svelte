@@ -3,31 +3,24 @@
 
   import { graphqlApi } from '$lib/_api_graphql';
   
-  import type { Celeb } from 'src/global/types';
+  import type { ICeleb } from 'src/global/types';
 
   import Title from './Title.svelte';
   import Celebs from './Celebs.svelte';
   import MoreButton from './common/shared/MoreButton.svelte';
 
-  let celebs: Celeb[] = [];
+  let celebs: ICeleb[] = [];
 
   onMount(() => {
     getData();
   });
 
-  const getData = async () => {
-    const query = `{
-      celebs {
-        id
-        name
-        thumbnail
-      }
-    }`;
-
+const getData = async () => {
+    const query = '{celebs{id name thumbnail categories}}';
     const result = await graphqlApi(query);
-  
     celebs = result?.data?.celebs?.slice(0, 3);
-  };
+    console.log('celebs', celebs);
+};
 
   const onClickMore = () => {
     console.log(
