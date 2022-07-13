@@ -252,23 +252,20 @@
       /* 유튜브 플레이어 영역 */
       border-radius: 0.4rem;
       overflow: hidden;
-      height: 0;
-      padding-top: 82.35%;
-      position: relative;
+      display: flex;
+      flex-direction: column;
 
       .preview-container {
-        position: absolute;
-        top: 0;
-        left: 0;
+        position: relative;
         width: 100%;
-        height: 100%;
+        height: calc((100vw - 3.2rem) * 0.83);
         display: flex;
         flex-direction: column;
 
         .player-wrap {
           display: inline-block;
           width: 100%;
-          height: 0;
+          height: auto;
           padding-bottom: 56.25%;
           position: relative;
           overflow: hidden;
