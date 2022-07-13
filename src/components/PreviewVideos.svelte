@@ -95,7 +95,11 @@
     </ul>
 
     {#if infiniteScroll}
-      <section class="infinite-scroll" bind:this={infiniteScrollArea}></section>
+      <section class="infinite-scroll"
+               class:done={contents.end}
+               bind:this={infiniteScrollArea}
+
+      ></section>
       {#if $scrolling}
         <div class="spinner-wrapper">
           <div class="spinner"></div>
@@ -113,6 +117,10 @@
     .title {
       @include body3-700;
       margin-bottom: 1.2rem;
+    }
+
+    .infinite-scroll {
+      padding-bottom: 2rem;
     }
     
     .contents-container {
