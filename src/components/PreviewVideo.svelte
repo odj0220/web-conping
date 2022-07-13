@@ -9,6 +9,12 @@
       }
     },
     remove: function(key: string) {
+      const removedElement = this.map.get(key);
+  
+      if (removedElement && removedElement.player) {
+        removedElement.player.pauseVideo();
+      }
+  
       this.map.delete(key);
     },
     sort: function() {
@@ -112,7 +118,6 @@
           observers.add(playerId, value);
           observers.playOnlyFirst();
         } else {
-          pause();
           observers.remove(playerId);
           observers.playOnlyFirst();
         }
