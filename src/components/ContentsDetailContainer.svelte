@@ -49,35 +49,33 @@
       {
         content(id:"${id}"){
           id 
-          name
-          contentType 
+          title
           createDt 
-          description 
-          program { 
-            id 
-            name
-          } 
+          description
           programId 
-          round 
+          episode
           thumb 
           videoId 
           duration 
           currentTime
+          program {
+            id
+            title
+          }
         }
       }
     `;
   
     const result = await graphqlApi(query);
-  
     content = result?.data?.content;
   };
 
   onMount(async () => {
     await getData();
-
     await loadYoutubePlayer();
+    await loadAnotherContents();
   
-    onPlayerStateChange();
+    // onPlayerStateChange();
   });
 
   const onPlayerStateChange = () => {
@@ -132,6 +130,13 @@
       });
     });
   };
+
+  async function loadAnotherContents() {
+    console.log(id);
+    const query = `{getProgramContentsByContentId(id:"${id}"){id title programId createDt episode description program {id title}}}`;
+    const result = await graphqlApi(query);
+    console.log(result);
+  }
 </script>
 
 <div class="container">
