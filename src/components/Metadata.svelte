@@ -2,9 +2,6 @@
 import Avatar from './Avatar.svelte';
 import GrayBox from './CenterSection.svelte';
 import Hscroller from './HorizontalScroller.svelte';
-// import dayjs from 'dayjs';
-// import 'dayjs/locale/ko';
-// dayjs.locale('ko');
 
 export let name: string;
 export let title: string;
@@ -13,19 +10,6 @@ export let airingBeginAt: number;
 export let airingEndAt: number;
 export let airingAt: number;
 export let celebs: any;
-
-// const dateFormat = (date: number) => {
-//   return dayjs(date).format('YYYY.MM.DD');
-// };
-
-// const timeFormat = (date: number) => {
-//   return dayjs(date).format('(ddd) A HH:mm');
-// };
-
-// const beginAt = dateFormat(airingBeginAt);
-// const endAt = dateFormat(airingEndAt);
-// const airingTime = timeFormat(airingAt);
-// console.log('celebs', celebs);
 
 </script>
 
