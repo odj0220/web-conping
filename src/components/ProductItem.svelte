@@ -39,6 +39,7 @@ const timelines = () => {
 .container {
     position: relative;
     display: flex;
+    align-items: center;
     &:not(:last-child) {
         margin-bottom: 16px;
     }
@@ -55,7 +56,6 @@ const timelines = () => {
 .contents {
     display: flex;
     flex-direction: column;
-    padding-top: 0.4rem;
     .name {
         @include caption2-400;
         @include ellipsis(1);
@@ -63,11 +63,12 @@ const timelines = () => {
     .price {
         @include body2-700;
         display: block;
-        margin: 0.4rem 0 1.6rem;
+        margin: 0.4rem 0 0;
     }
 }
 .time-stamps {
     display: flex;
+    margin: 1.6rem 0 0;
 }
 .time-stamp {
     @include caption3;
