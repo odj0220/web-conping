@@ -16,19 +16,19 @@ export async function Graphql(query: string) {
       name: String!
       brand: String
       price: Int
-      discount: Int
+      discountRate: Int
+      image: String
       category: String
       exposed: [[Int]]
 		}
 		
     type Program {
       id: String!
-      name: String!
+      title: String!
       description: String,
-      bannerImg: String
-      profileImg: String
-      releasedAt: Float
-      airingAt: Float
+      banner: String
+      thumbnail: String
+      regularAiringAt: Float
       airingBeginAt: Float
       airingEndAt: Float 
 		}
