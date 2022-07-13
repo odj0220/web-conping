@@ -35,11 +35,12 @@ export async function Graphql(query: string) {
 		
 		type Content {
 		  id: ID!
-      name: String!
+      title: String!
+      subtitle: String
       programId: String
       contentType: ContentType
       createDt: Float!
-      round: Int
+      episode: Int
       description: String
       url: String
       videoId: String
@@ -67,10 +68,10 @@ export async function Graphql(query: string) {
 		}
 		
 		enum ContentType {
-		  EPISODE
-		  HIGHLIGHT
-		  SHORTS
-		  ORIGIN
+		  Full
+		  Highlight
+		  Shorts
+		  Origin
 		}
 		
 		type Banner {
@@ -335,7 +336,7 @@ export async function Graphql(query: string) {
           },
         ],
         contents: contentJson
-          .filter((content) => content.contentType === 'SHORTS')
+          .filter((content) => content.contentType === 'Shorts')
           .slice(0, 6),
       };
     },
