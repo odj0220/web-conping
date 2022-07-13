@@ -118,7 +118,6 @@
         </div>
       {/if}
     {/if}
-  {/if}
 </section>
 
 <style lang="scss">
