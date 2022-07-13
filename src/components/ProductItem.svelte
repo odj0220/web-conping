@@ -1,8 +1,4 @@
 <script lang="ts">
-import dayjs from 'dayjs';
-import 'dayjs/locale/ko';
-dayjs.locale('ko');
-
 export let timelineButtonVisible: boolean;
 export let name:string;
 export let price: number;

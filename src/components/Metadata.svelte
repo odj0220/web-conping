@@ -2,9 +2,6 @@
 import Avatar from './Avatar.svelte';
 import GrayBox from './CenterSection.svelte';
 import Hscroller from './HorizontalScroller.svelte';
-import dayjs from 'dayjs';
-import 'dayjs/locale/ko';
-dayjs.locale('ko');
 
 export let name: string;
 export let title: string;
@@ -14,27 +11,14 @@ export let airingEndAt: number;
 export let airingAt: number;
 export let celebs: any;
 
-const dateFormat = (date: number) => {
-  return dayjs(date).format('YYYY.MM.DD');
-};
-
-const timeFormat = (date: number) => {
-  return dayjs(date).format('(ddd) A HH:mm');
-};
-
-const beginAt = dateFormat(airingBeginAt);
-const endAt = dateFormat(airingEndAt);
-const airingTime = timeFormat(airingAt);
-console.log('celebs', celebs);
-
 </script>
 
 <section class="container">
     {#if name}<h4 class="name">{name}</h4>{/if}
     <span class="info">
-      {#if airingBeginAt && airingEndAt}{beginAt}~{endAt} &middot{/if}
+      {#if airingBeginAt && airingEndAt}{airingBeginAt}~{airingEndAt} &middot{/if}
       8부작 &middot 
-      {airingTime}</span>
+      {airingAt}</span>
     {#if title}<h5 class="title">{title}</h5>{/if}
     {#if description}<div class="description">{description}</div>{/if}
 
