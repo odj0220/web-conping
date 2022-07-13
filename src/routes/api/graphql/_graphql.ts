@@ -55,6 +55,7 @@ export async function Graphql(query: string) {
       name: String!
       description: String
       categories: [String]
+      banner: String
       thumbnail: String
       follows: [Celeb]
       programs: [Program]
