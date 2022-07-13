@@ -1,9 +1,11 @@
 <script lang="ts">
 import { onMount } from 'svelte';
 
+// export let state: {offsetTop: number};
 export let height: number;
 export let offsetTop: number;
 export let setOffsetTop: (num: number) => void;
+
 
 interface BottomSheetMetrics {
   touchStart: {
@@ -103,7 +105,7 @@ onMount(() => {
         setOffsetTop(0);
       }
       if (movingDirection === 'up') {
-        setOffsetTop(height);
+        setOffsetTop(560);
       }
 
     }

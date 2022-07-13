@@ -39,6 +39,6 @@ const onClickProfile = (e: TouchEvent) => {
   />
 </ShortsFullScreen>
 
-<BottomSheet height={560} setOffsetTop={setOffsetTop} offsetTop={offsetTop}>
+<BottomSheet height={560} offsetTop={offsetTop} setOffsetTop={setOffsetTop}>
   <RelatedProductContainer {id} moreButton={false}/>
 </BottomSheet>
