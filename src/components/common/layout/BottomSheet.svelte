@@ -3,6 +3,7 @@ import { onMount } from 'svelte';
 
 export let height: number;
 export let offsetTop: number;
+export let setOffsetTop: (num: number) => void;
 
 interface BottomSheetMetrics {
   touchStart: {
@@ -32,8 +33,8 @@ let sheet: HTMLDivElement;
 let contents: HTMLDivElement;
 
 onMount(() => {
-  let MIN_Y = window.innerHeight - height; // 바텀시트가 최대로 높이 올라갔을 때의 y 값
-  let MAX_Y = 0; // 바텀시트가 최소로 내려갔을 때의 y 값
+  let MIN_Y = window.innerHeight - height;
+  let MAX_Y = 0;
 
   const canUserMoveBottomSheet = () => {
     const { touchMove, isContentAreaTouched } = metrics;
@@ -99,19 +100,18 @@ onMount(() => {
     const { touchMove: { movingDirection } } = metrics;
     if (canUserMoveBottomSheet()) {
       if (movingDirection === 'down') {
-        offsetTop = 0;
+        setOffsetTop(0);
       }
       if (movingDirection === 'up') {
-        offsetTop = height;
+        setOffsetTop(height);
       }
+
     }
   };
   sheet.addEventListener('touchstart', handleTouchStart);
   sheet.addEventListener('touchmove', handleTouchMove);
   sheet.addEventListener('touchend', handleTouchEnd);
 });
-
-
 
 onMount(() => {
   const handleTouchStart = (e: TouchEvent) => {
@@ -125,12 +125,12 @@ onMount(() => {
 </script>
 
 <div bind:this={sheet} class="container" style="height: {height}px; top: calc(100vh - {offsetTop}px);">
-<div class="header">
+  <div class="header">
     <div class="handle"></div>
-</div>
-<div bind:this={contents} class="contents">
+  </div>
+  <div bind:this={contents} class="contents">
     <slot></slot>
-</div>
+  </div>
 </div>
 
 <style lang="scss">
