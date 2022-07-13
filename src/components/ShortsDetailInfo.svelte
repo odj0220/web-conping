@@ -2,10 +2,10 @@
 import Avatar from './Avatar.svelte';
 import Icon from './icons/Icon.svelte';
 
-export let onClickClose: () => void;
-export let onClickShare: () => void;
-export let onClickCart: () => void;
-export let onClickProfile: () => void;
+export let onClickClose: (e: TouchEvent) => void;
+export let onClickShare: (e: TouchEvent) => void;
+export let onClickCart: (e: TouchEvent) => void;
+export let onClickProfile: (e: TouchEvent) => void;
 
 
 const BUTTONS = [
