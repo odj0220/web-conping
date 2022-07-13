@@ -69,10 +69,9 @@ export async function Graphql(query: string) {
 		}
 		
 		enum ContentType {
-		  Full
-		  Highlight
-		  Shorts
-		  Origin
+		  FULL
+		  HIGHLIGHT
+		  SHORTS
 		}
 		
 		type Banner {
