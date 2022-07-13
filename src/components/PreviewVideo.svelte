@@ -1,47 +1,47 @@
 <script lang="ts" context="module">
-    let current;
-    const observers = {
-      map: new Map([]),
-      add: function (key: string, value: {order: number; entry: any}) {
-        if (!this.map.has(key)) {
-          this.map.set(key, value);
-          this.sort();
-        }
-      },
-      remove: function(key: string) {
-        this.map.delete(key);
-      },
-      sort: function() {
-        const arrayFromMap = [...this.map];
-        arrayFromMap.sort((entryA, entryB) => {
-          const { order: orderA } = entryA[1];
-          const { order: orderB } = entryB[1];
+  import type { YouTubePlayer } from 'youtube-player/dist/types';
+  const observers = {
+    map: new Map([]),
+    add: function (key: string, value: {order: number; player: YouTubePlayer}) {
+      if (!this.map.has(key)) {
+        this.map.set(key, value);
+        this.sort();
+      }
+    },
+    remove: function(key: string) {
+      this.map.delete(key);
+    },
+    sort: function() {
+      const arrayFromMap = [...this.map];
+      arrayFromMap.sort((entryA, entryB) => {
+        const { order: orderA } = entryA[1];
+        const { order: orderB } = entryB[1];
 
-          if (orderA > orderB) {
-            return 1;
-          }
-          if (orderA < orderB) {
-            return -1;
-          }
-          return 0;
-        });
-        this.map = new Map(arrayFromMap);
-      },
-      playOnlyFirst: function() {
-        const players = [...this.map].map(((player) => player[1]));
-
-        for (let i = 0; i < players.length; i++) {
-          const player = players[i];
-    
-          if (i === 0) {
-            player.play();
-            continue;
-          }
-    
-          player.pause();
+        if (orderA > orderB) {
+          return 1;
         }
-      },
-    };
+        if (orderA < orderB) {
+          return -1;
+        }
+        return 0;
+      });
+      this.map = new Map(arrayFromMap);
+    },
+    playOnlyFirst: function() {
+      const players = [...this.map].map(((player) => player[1].player));
+
+      for (let i = 0; i < players.length; i++) {
+        const player = players[i];
+
+        if (i === 0) {
+          player.playVideo();
+          continue;
+        }
+
+        player.pauseVideo();
+      }
+    },
+  };
 </script>
 
 <script type="ts">
@@ -49,8 +49,7 @@
   export { toHHMMSS } from '$lib/util';
   import { onMount, SvelteComponent } from 'svelte';
   import YP from 'youtube-player';
-  import type { YouTubePlayer } from 'youtube-player/dist/types';
-import Avatar from './Avatar.svelte';
+  import Avatar from './Avatar.svelte';
 
   export let content: any;
   export let order = 0;
@@ -64,7 +63,6 @@ import Avatar from './Avatar.svelte';
   let container: HTMLElement | null = null;
   let videoElement: HTMLElement | null = null;
   let thumbnailElement: HTMLElement | null = null;
-  let firstLoad = true;
   let pauseTimer: any = null;
   let interval: any = null;
   let PastTimeDelta: SvelteComponent;
@@ -107,11 +105,9 @@ import Avatar from './Avatar.svelte';
     const io = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting && entry.intersectionRatio === 1) {
-          const value = {
+          const value: any = {
             order,
-            entry,
-            play,
-            pause,
+            player,
           };
           observers.add(playerId, value);
           observers.playOnlyFirst();
@@ -131,8 +127,9 @@ import Avatar from './Avatar.svelte';
     player.on('ready', (event) => {
       const target = event.target;
       videoElement = target.i;
-      player.playVideo();
-      pause();
+      if (autoPlay) {
+        setIntersectionObserver(container);
+      }
     });
   }
 
@@ -145,6 +142,8 @@ import Avatar from './Avatar.svelte';
       }
 
       if (status === PLAYER_STATE.PLAYING) {
+        hideThumbnail();
+        clearInterval(interval);
         interval = setInterval(() => {
           playTime = player.getCurrentTime();
         }, 1000);
@@ -152,22 +151,17 @@ import Avatar from './Avatar.svelte';
       }
 
       if (status === PLAYER_STATE.PAUSED) {
+        showThumbnail();
         clearInterval(interval);
         return;
       }
 
       if (status === PLAYER_STATE.BUFFERING) {
-        if (firstLoad) {
-          if (autoPlay) {
-            hideThumbnail();
-            setIntersectionObserver(container);
-          }
-          firstLoad = false;
-        }
         return;
       }
 
       if (status === PLAYER_STATE.ENDED) {
+        hideThumbnail();
         clearInterval(interval);
         player.seekTo(0, true);
         return;
@@ -184,6 +178,10 @@ import Avatar from './Avatar.svelte';
 
   function play() {
     player.playVideo();
+  }
+
+  function showThumbnail() {
+    thumbnailElement.style.display = 'block';
   }
 
   function hideThumbnail() {
