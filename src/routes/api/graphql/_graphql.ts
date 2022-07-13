@@ -132,6 +132,7 @@ export async function Graphql(query: string) {
       getContentsByCelebId(id:ID!): [Content]
       getProductsByCategory(category:String!): [Product]
       getContinueWatching: [Content]
+      getProgramContentsByContentId(id:ID!): [Content]
        
       getBanners: [Banner]
       getMainContents: MainContent
@@ -257,6 +258,10 @@ export async function Graphql(query: string) {
             ),
           };
         });
+    },
+    getProgramContentsByContentId: ({ contentId }: {contentId: string}) => {
+      const content: any = contentJson.find(contentItem => contentItem.id === contentId);
+      return contentJson.filter(contentItem => (contentItem.programId === content.programId && contentItem.id !== contentId));
     },
     getProductsByCategory: ({ category }: { category: string }) => {
       return productJson.filter((product) => product.category === category);
