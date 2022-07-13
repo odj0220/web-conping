@@ -16,30 +16,31 @@ export async function Graphql(query: string) {
       name: String!
       brand: String
       price: Int
-      discount: Int
+      discountRate: Int
+      image: String
       category: String
       exposed: [[Int]]
 		}
 		
     type Program {
       id: String!
-      name: String!
+      title: String!
       description: String,
-      bannerImg: String
-      profileImg: String
-      releasedAt: Float
-      airingAt: Float
+      banner: String
+      thumbnail: String
+      regularAiringAt: Float
       airingBeginAt: Float
       airingEndAt: Float 
 		}
 		
 		type Content {
 		  id: ID!
-      name: String!
+      title: String!
+      subtitle: String
       programId: String
       contentType: ContentType
       createDt: Float!
-      round: Int
+      episode: Int
       description: String
       url: String
       videoId: String
@@ -54,6 +55,7 @@ export async function Graphql(query: string) {
       name: String!
       description: String
       categories: [String]
+      banner: String
       thumbnail: String
       follows: [Celeb]
       programs: [Program]
@@ -67,10 +69,9 @@ export async function Graphql(query: string) {
 		}
 		
 		enum ContentType {
-		  EPISODE
+		  FULL
 		  HIGHLIGHT
 		  SHORTS
-		  ORIGIN
 		}
 		
 		type Banner {
@@ -131,6 +132,7 @@ export async function Graphql(query: string) {
       getContentsByCelebId(id:ID!): [Content]
       getProductsByCategory(category:String!): [Product]
       getContinueWatching: [Content]
+      getProgramContentsByContentId(id:ID!): [Content]
        
       getBanners: [Banner]
       getMainContents: MainContent
@@ -257,6 +259,10 @@ export async function Graphql(query: string) {
           };
         });
     },
+    getProgramContentsByContentId: ({ contentId }: {contentId: string}) => {
+      const content: any = contentJson.find(contentItem => contentItem.id === contentId);
+      return contentJson.filter(contentItem => (contentItem.programId === content.programId && contentItem.id !== contentId));
+    },
     getProductsByCategory: ({ category }: { category: string }) => {
       return productJson.filter((product) => product.category === category);
     },
@@ -335,7 +341,7 @@ export async function Graphql(query: string) {
           },
         ],
         contents: contentJson
-          .filter((content) => content.contentType === 'SHORTS')
+          .filter((content) => content.contentType === 'Shorts')
           .slice(0, 6),
       };
     },
