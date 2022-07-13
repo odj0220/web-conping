@@ -5,8 +5,7 @@ import ShortsDetailInfo from '$component/ShortsDetailInfo.svelte';
 import ShortsFullScreen from '$component/ShortsFullScreen.svelte';
 
 export let id = 'content3';
-let visible = false;
-let sheetHeight = 0;
+let offsetTop = 0;
 
 const onClickClose = (e: TouchEvent) => {
   e.stopPropagation();
@@ -18,15 +17,14 @@ const onClickShare = (e: TouchEvent) => {
 };
 
 const onClickCart = (e: TouchEvent) => {
-  visible = !visible;
   e.stopPropagation();
-  sheetHeight = 176;
+  offsetTop = 176;
+  console.log('click cart offsetTop', offsetTop);
 };
 
 const onClickProfile = (e: TouchEvent) => {
   e.stopPropagation();
 };
-
 </script>
 
 <ShortsFullScreen videoId="8XZe5aX5Ruk">
@@ -38,14 +36,6 @@ const onClickProfile = (e: TouchEvent) => {
   />
 </ShortsFullScreen>
 
-<BottomSheet state={visible} height={sheetHeight} maxHeight={560}>
-  <RelatedProductContainer {id} />
+<BottomSheet height={560} offsetTop={offsetTop}>
+  <RelatedProductContainer {id} moreButton={false}/>
 </BottomSheet>
-
-<!-- <LayoutPopup {visible}>
-    <RelatedProductContainer
-    {id}
-    timelineButtonVisible={false}
-    />
-</LayoutPopup> -->
-    

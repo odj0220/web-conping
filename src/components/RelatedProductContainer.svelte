@@ -6,6 +6,7 @@
   import RelatedProduct from './RelatedProduct.svelte';
 
   export let id: string;
+  export let moreButton = true;
   export let timelineButtonVisible: boolean;
   export let onClickTimeButton: (num: number) => void;
 
@@ -35,6 +36,7 @@
 
 <RelatedProduct
   data={productList}
+  {moreButton}
   {onClickTimeButton}
   {timelineButtonVisible}
 />
