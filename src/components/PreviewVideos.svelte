@@ -20,7 +20,7 @@
   export let contents!: {data: any[]; end: boolean; cursor: string};
   export let onClick: () => void;
   export let infiniteScroll = false;
-  export let autoPlay = true;
+  export let autoPlay = false;
 
   let infiniteScrollArea: HTMLElement | null = null;
   let scrollTimer: any = null;
@@ -108,6 +108,8 @@
   @import '../styles/variables.scss';
 
   .videos-wrapper {
+    width: 100%;
+
     .title {
       @include body3-700;
       margin-bottom: 1.2rem;

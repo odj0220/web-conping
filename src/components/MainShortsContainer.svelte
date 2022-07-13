@@ -20,7 +20,7 @@
       contents = result?.data?.getMainShorts?.contents;
     }
 
-    
+
 
 </script>
 
