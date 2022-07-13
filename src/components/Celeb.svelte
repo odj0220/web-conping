@@ -1,38 +1,39 @@
 <script lang="ts">
-import Avatar from './Avatar.svelte';
+  import type { ICeleb } from 'src/global/types';
 
-export let id: string;
-export let name: string;
-export let thumbnail: string;
+  import Avatar from './Avatar.svelte';
 
-console.log('data', id, name, thumbnail);
+  export let celeb: ICeleb;
+
+  const { id, name, thumbnail } = celeb;
 
 </script>
+
 <li class="item">
-    <Avatar size="72px" src={thumbnail}/>
-    <div class="info">
-        <div class="info-top">
-            <h6 class="name">{name}</h6>
-            <ul class="tags">
-                <li class="tag">뷰티</li>
-                <li class="tag">IT</li>
-            </ul>
-        </div>
-        <ul class="info-list">
-            <li class="info-item">
-                <span class="key">팔로워</span>
-                <span class="value">60.2만명</span>
-            </li>
-            <li class="info-item">
-                <span class="key">콘텐츠</span>
-                <span class="value">2</span>
-            </li>
-            <li class="info-item">
-                <span class="key">상품</span>
-                <span class="value">9</span>
-            </li>
-        </ul>
+  <Avatar size="72px" src={thumbnail}/>
+  <div class="info">
+    <div class="info-top">
+      <h6 class="name">{name}</h6>
+      <ul class="tags">
+        <li class="tag">뷰티</li>
+        <li class="tag">IT</li>
+      </ul>
     </div>
+    <ul class="info-list">
+      <li class="info-item">
+        <span class="key">팔로워</span>
+        <span class="value">60.2만명</span>
+      </li>
+      <li class="info-item">
+        <span class="key">콘텐츠</span>
+        <span class="value">2</span>
+      </li>
+      <li class="info-item">
+        <span class="key">상품</span>
+        <span class="value">9</span>
+      </li>
+    </ul>
+  </div>
 </li>
 
 <style lang="scss">

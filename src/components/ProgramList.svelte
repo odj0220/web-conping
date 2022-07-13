@@ -1,24 +1,21 @@
 <script lang="ts">
-import Hscroller from './HorizontalScroller.svelte';
-import ProgramItem from './ProgramItem.svelte';
+  import type { Program } from 'src/global/types';
 
-export let data: any[] = [];
-export let type: string;
+  import ProgramItem from './ProgramItem.svelte';
+
+  export let programs: Program[] = [];
+  export let type: string;
+  export let onClick: (id: string) => void;
 </script>
 
-<Hscroller>
-    <ul class="list" class:horizontal={type === 'horizontal'}>
-        {#each data as el}
-            <ProgramItem {...el}/>
-        {/each}
-    </ul>
-</Hscroller>
+<ul class="list" class:horizontal={type === 'horizontal'}>
+  {#each programs as program}
+    <ProgramItem {program} {onClick} />
+  {/each}
+</ul>
 
 <style lang="scss">
-    .list {
-        display: flex;
-        &.horizontal {
-            padding: 0 1.6rem;
-        }
-    }
+  .list {
+    display: flex;
+  }
 </style>

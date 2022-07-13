@@ -1,8 +1,12 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+  
+  import { graphqlApi } from '../lib/_api_graphql';
+  
+  import { goto } from '$app/navigation';
+  
   import CenterSection from '../styles/CenterSection.svelte';
   import PreviewVideos from './PreviewVideos.svelte';
-  import { onMount, tick } from 'svelte';
-  import { graphqlApi } from '../lib/_api_graphql';
 
   let contents: {data: any[]; end: boolean; cursor:string} = {
     data: [],
@@ -46,8 +50,11 @@
 
     try {
       const { data: { getMainInfiniteContents } } = await graphqlApi(query);
+  
       const newContents = getMainInfiniteContents.edges.map((edge) => edge.node);
+  
       const videos = [...contents.data, ...newContents];
+  
       contents.data = videos;
       contents.end = !getMainInfiniteContents.pageInfo.hasNextPage;
       contents.cursor = getMainInfiniteContents.pageInfo.startCursor;
@@ -56,8 +63,8 @@
     }
   }
 
-  function handleClick() {
-    console.log('click');
+  function handleClickContents(id: string) {
+    goto(`/contents/${id}`);
   }
 
   async function runInfiniteScrolling(event) {
@@ -67,22 +74,12 @@
   }
 </script>
 
-<section class="section">
-  <!-- <CenterSection> -->
-      <PreviewVideos
-              contents={contents}
-              infiniteScroll={true}
-              autoPlay={true}
-              onClick={handleClick}
-              on:request-more={runInfiniteScrolling}
-      />
-  <!-- </CenterSection> -->
-
-</section>
-
-<style lang="scss">
-  .section {
-    padding: 0 1.6rem;
-    margin-top: 5.6rem;
-  }
-</style>
+<CenterSection type="transparency">
+  <PreviewVideos
+    {contents}
+    infiniteScroll={true}
+    autoPlay={true}
+    onClickContents={handleClickContents}
+    on:request-more={runInfiniteScrolling}
+  />
+</CenterSection>

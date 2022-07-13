@@ -1,39 +1,50 @@
 <script lang="ts">
-import { graphqlApi } from '$lib/_api_graphql';
+  import { onMount } from 'svelte';
+  
+  import { graphqlApi } from '$lib/_api_graphql';
+  
+  import { goto } from '$app/navigation';
 
-import { onMount } from 'svelte';
+  import type { Program } from 'src/global/types';
+  
+  import CenterSection from '$styles/CenterSection.svelte';
+  import HorizontalScroller from './HorizontalScroller.svelte';
+  
+  import Title from './Title.svelte';
+  import ProgramList from './ProgramList.svelte';
 
-import ProgramList from './ProgramList.svelte';
+  let programs: Program[] = [];
 
-let programs: any[] = [];
+  function handleClickContents(id: string) {
+    goto(`/programs/${id}`);
+  }
 
-onMount(() => {
-  getData();
-});
+  const getData = async () => {
+    const query = `
+      {
+        programs {
+          id
+          name
+          bannerImg
+        }
+      }
+    `;
 
-const getData = async () => {
-  const query = '{programs{id name bannerImg}}';
-  const result = await graphqlApi(query);
-  programs = result?.data?.programs;
-  console.log('result', result);
-};
+    const result = await graphqlApi(query);
+
+    programs = result?.data?.programs;
+  };
+
+  onMount(() => {
+    getData();
+  });
+
 </script>
 
-<section class="section">
-    <h3 class="title">골라라 오리지널</h3>
-    <ProgramList data={programs} type="horizontal"/>
-</section>
+<CenterSection type="inner transparency">
+  <Title title={[{ text: '골라라 오리지널' }]} />
 
-<style lang="scss">
-    @import "../styles/variables.scss";
-
-    .section {
-      margin-top: 5.6rem;
-        .title {
-            @include body1-700; 
-            padding-left: 1.6rem;
-            margin-bottom: 12px;     
-        }
-    }
-    
-</style>
+  <HorizontalScroller>
+    <ProgramList {programs} type="horizontal" onClick={handleClickContents} />
+  </HorizontalScroller>
+</CenterSection>
