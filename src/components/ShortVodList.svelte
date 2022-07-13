@@ -1,28 +1,28 @@
 <script lang="ts">
-    import ShortVodItem from './ShortVodItem.svelte';
+  import type { Content } from 'src/global/types';
 
-    export let contents: any[] = [];
+  import ShortVodItem from './ShortVodItem.svelte';
 
-    function onClick() {
-      console.log('onClick');
-    }
+  export let contents: Content[] = [];
+  export let onClick: (id: string) => void;
 
 </script>
 
 <section>
-    {#each contents as content}
-        <ShortVodItem content={content} onClick={onClick}></ShortVodItem>
-    {/each}
+  {#each contents as content}
+    <ShortVodItem {content} {onClick} />
+  {/each}
 </section>
 
 <style lang="scss">
-    section {
-      padding: 0 1.6rem;
-      display: flex;
-      & > :global(*) {
-        &:first-child {
-          margin-left: 0 !important;
-        }
-      }
+  section {
+    min-width: 100%;
+    display: flex;
+    gap: 1.2rem;
+    padding: 0 1.6rem;
+    & > :global(*) {
+      min-width: 14rem !important;
+      max-width: 14rem !important;
     }
+  }
 </style>

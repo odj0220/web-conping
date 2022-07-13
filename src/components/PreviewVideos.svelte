@@ -18,7 +18,7 @@
 
   export let title: string;
   export let contents!: {data: any[]; end: boolean; cursor: string};
-  export let onClick: () => void;
+  export let onClickContents: (id: string) => void;
   export let infiniteScroll = false;
   export let autoPlay = false;
 
@@ -80,10 +80,22 @@
 </script>
 
 <section class="videos-wrapper">
-    {#if title}
-      <h2 class="title">
-        {title}
-      </h2>
+  {#if title}
+    <h2 class="title">
+      {title}
+    </h2>
+  {/if}
+
+  <ul class="contents-container">
+    {#if videos.length > 0}
+      {#each videos as video, order (video.id)}
+        <PreviewVideo
+          {onClickContents}
+          content={video}
+          order={order + 1}
+          autoPlay={autoPlay}
+        />
+      {/each}
     {/if}
 
     <ul class="contents-container">
@@ -95,13 +107,18 @@
     </ul>
 
     {#if infiniteScroll}
-      <section class="infinite-scroll" bind:this={infiniteScrollArea}></section>
+      <section class="infinite-scroll"
+               class:done={contents.end}
+               bind:this={infiniteScrollArea}
+
+      ></section>
       {#if $scrolling}
         <div class="spinner-wrapper">
           <div class="spinner"></div>
         </div>
       {/if}
     {/if}
+  {/if}
 </section>
 
 <style lang="scss">
@@ -113,6 +130,10 @@
     .title {
       @include body3-700;
       margin-bottom: 1.2rem;
+    }
+
+    .infinite-scroll {
+      padding-bottom: 2rem;
     }
     
     .contents-container {

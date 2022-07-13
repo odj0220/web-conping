@@ -11,7 +11,7 @@
   @import '../styles/variables.scss';
 
   section {
-    margin: 2rem 1.6rem;
+    margin: 2rem 1.6rem 0 1.6rem;
     display: flex;
     flex-direction: column;
     border-radius: 0.4rem;
@@ -20,6 +20,9 @@
     &.transparency {
       background-color: transparent;
     }
-  }
 
+    &.inner {
+      padding: 1.6rem 0 2.6rem 1.2rem;
+    }
+  }
 </style>
