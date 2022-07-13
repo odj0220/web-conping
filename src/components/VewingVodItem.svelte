@@ -1,54 +1,40 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
+  import { onMount } from 'svelte';
+  
+  import type { Content } from 'src/global/types';
 
-    export let content!: {
-        contentType: string;
-        createDt: number;
-        description: string;
-        id: string;
-        program: {
-            id: string;
-            name: string;
-        };
-        programId: string;
-        round: number;
-        thumb: string;
-        url: string;
-        videoId: string;
-    };
+  export let content!: Content;
+  export let percent = 24;
+  export let onClick: (id: string) => void;
 
-    export let percent = 24;
-    export let onClick: () => void;
-    let ratio = 0;
+  let ratio = 0;
 
-    onMount(() => {
-      ratio = ((360 / 100) * percent) / 2;
-    });
+  onMount(() => {
+    ratio = ((360 / 100) * percent) / 2;
+  });
 </script>
 
-
 <section class="viewing-vod-item">
-    <div class="thumb-wrapper">
-        <div class="circle">
-            <!-- 원 테두리 -->
-            <div class="mask half">
-                <div class="fill" style="transform: rotate({ratio}deg)"></div>
-            </div>
-            <div class="mask full" style="transform: rotate({ratio}deg)">
-                <div class="fill" style="transform: rotate({ratio}deg)"></div>
-            </div>
-        </div>
-        <img class="thumbnail" src={content.thumb} alt="thubnail"/>
-        <div class="play-btn-wrapper">
-            <button on:click={onClick}>
-                <img class="play-btn" src="/images/icons/ic_play.svg" alt="play-btn"/>
-            </button>
-        </div>
+  <div class="thumb-wrapper">
+    <div class="circle">
+      <div class="mask half">
+        <div class="fill" style="transform: rotate({ratio}deg)"></div>
+      </div>
+      <div class="mask full" style="transform: rotate({ratio}deg)">
+        <div class="fill" style="transform: rotate({ratio}deg)"></div>
+      </div>
     </div>
+    <img class="thumbnail" src={content.thumb} alt="thubnail"/>
+    <div class="play-btn-wrapper">
+      <button on:click={() => onClick(`${content.videoId}`)}>
+        <img class="play-btn" src="/images/icons/ic_play.svg" alt="play-btn"/>
+      </button>
+    </div>
+  </div>
 
-    <p class="name">
-        {content.name}asjkfbasjkfbfklbanklfbalkfbaklfkb
-    </p>
+  <p class="name">
+    {content?.name}
+  </p>
 </section>
 
 <style lang="scss">

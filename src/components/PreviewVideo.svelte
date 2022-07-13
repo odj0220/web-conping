@@ -50,11 +50,11 @@
   import { onMount, SvelteComponent } from 'svelte';
   import YP from 'youtube-player';
   import type { YouTubePlayer } from 'youtube-player/dist/types';
-import Avatar from './Avatar.svelte';
+  import Avatar from './Avatar.svelte';
 
   export let content: any;
   export let order = 0;
-  export let onClick: () => void;
+  export let onClickContents: (id: string) => void;
   export let autoPlay: boolean;
 
   let playTime;
@@ -204,9 +204,9 @@ import Avatar from './Avatar.svelte';
   });
 </script>
 
-<li class="preview-layout" bind:this={container}>
+<li class="preview-layout" bind:this ={container} on:click={() => onClickContents(`${content.programId}`)}>
     <section class="preview-container">
-        <section class="player-wrap" on:click={onClick}>
+        <section class="player-wrap">
             <div id='{playerId}' class="youtube-player"></div>
             <section class="thumb-wrap" bind:this={thumbnailElement}>
                 <img src={content.thumb} alt={content.name + '의 썸네일'}>

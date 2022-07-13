@@ -1,15 +1,13 @@
 <script lang="ts">
-import Celeb from './Celeb.svelte';
+  import type { ICeleb } from 'src/global/types';
+  
+  import Celeb from './Celeb.svelte';
 
-export let data: any[] = [];
-
-console.log('celebs data', data);
+  export let celebs: ICeleb[] = [];
 </script>
 
 <ul class="celebs">
-    {#if data}
-        {#each data as celeb}
-            <Celeb {...celeb} />
-        {/each}
-    {/if}
+  {#each celebs as celeb}
+    <Celeb {celeb} />
+  {/each}
 </ul>
