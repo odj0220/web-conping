@@ -28,8 +28,8 @@ export interface Content {
 }
 
 export interface TitleElement {
-  text: string,
-  type?: string,
+  text: string;
+  type?: string;
 }
 
 export interface Program {
@@ -63,5 +63,6 @@ export interface IProduct {
   discount: number;
   category: string;
   exposed: [[number]];
+  image: string;
   views: number;
 }
