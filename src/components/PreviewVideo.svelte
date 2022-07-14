@@ -51,20 +51,22 @@
 </script>
 
 <script type="ts">
+  import { onMount, SvelteComponent } from 'svelte';
+
+  import YP from 'youtube-player';
+  
   import { guid, toHHMMSS } from '$lib/util';
   export { toHHMMSS } from '$lib/util';
-  import { onMount, SvelteComponent } from 'svelte';
-  import YP from 'youtube-player';
+
   import Avatar from './Avatar.svelte';
 
   export let content: any;
   export let order = 0;
   export let onClickContents: (id: string) => void;
   export let autoPlay: boolean;
-
-  let playTime;
+  
   const playerId = guid();
-
+  let playTime;
   let player: YouTubePlayer;
   let container: HTMLElement | null = null;
   let videoElement: HTMLElement | null = null;
@@ -81,8 +83,8 @@
     BUFFERING: 3,
   };
 
-  $: videoName = content.name;
-  $: programName = content.program.name;
+  $: videoName = content.title;
+  $: programName = content.program?.title;
   $: round = `${content.round && `${content.round}화`}`;
   $: createdAt = content.createDt;
 
@@ -212,7 +214,7 @@
         <section class="player-wrap">
             <div id='{playerId}' class="youtube-player"></div>
             <section class="thumb-wrap" bind:this={thumbnailElement}>
-                <img src={content.thumb} alt={content.name + '의 썸네일'}>
+                <img src={content.thumb} alt={content.title + '의 썸네일'}>
             </section>
             <div class="overlay-wrap">
                 {#if player}

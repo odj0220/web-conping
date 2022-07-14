@@ -91,7 +91,6 @@
 
     player.on('stateChange', event => {
       const status = event.data;
-      console.log(event);
 
       if (status === PLAYER_STATE.PLAYING) {
         setContinueWatching();
