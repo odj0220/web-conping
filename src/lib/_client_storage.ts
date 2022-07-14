@@ -1,3 +1,5 @@
+import { getStorage, setStorage } from './_app_communication';
+
 const localstorage = () => {
   const get = (key:string) => window.localStorage.getItem(key);
   const set = (key: string, value: string) => window.localStorage.setItem(key, value);
@@ -5,9 +7,8 @@ const localstorage = () => {
 };
 
 const appStorage = () => {
-  const win: any = window;
-  const get = async (key:string) => await win['flutter_inappwebview'].callHandler('getStorage', key);
-  const set = (key: string, value: string) => win['flutter_inappwebview'].callHandler('setStorage', JSON.stringify({ key, value }));
+  const get = async (key:string) => await getStorage(key);
+  const set = (key: string, value: string) => setStorage(key, value);
   return { get, set };
 };
 

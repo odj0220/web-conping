@@ -29,17 +29,46 @@ export const onMessageFromApp = (event: string) => {
 
 export const callToast = (message: string) => {
   const win: any = window;
-  win['flutter_inappwebview'].callHandler('callToast', message);
+  return win['flutter_inappwebview'].callHandler('callToast', message);
 };
 
-export const callShare = () => {
+export const callShare = async (text: string[]) => {
   const win: any = window;
-  win['flutter_inappwebview'].callHandler('callShare');
+  return await win['flutter_inappwebview'].callHandler('callShare', JSON.stringify(text));
 };
 
 
-export const callConfirm = (message: string, callback: any) => {
+export const callConfirm = async (message: string) => {
   const win: any = window;
-  win['flutter_inappwebview'].callHandler('callConfirm')
-    .then((boolean: boolean) => callback(boolean));
+  return await win['flutter_inappwebview'].callHandler('callConfirm', message);
+};
+
+export const getStorage = async (key: string) => {
+  const win: any = window;
+  return await win['flutter_inappwebview'].callHandler('getStorage', key);
+};
+
+export const setStorage = (key: string, value: string) => {
+  const win: any = window;
+  return win['flutter_inappwebview'].callHandler('setStorage', JSON.stringify({ key, value }));
+};
+
+export const getVersion = async (): Promise<string> => {
+  const win: any = window;
+  return await win['flutter_inappwebview'].callHandler('getVersion');
+};
+
+export const copyToClipboard = (text: string) => {
+  const win: any = window;
+  return win['flutter_inappwebview'].callHandler('copyToClipboard', text);
+};
+
+export const launchTel = async (phoneNumber: string): Promise<boolean> => {
+  const win: any = window;
+  return await win['flutter_inappwebview'].callHandler('launchTel', phoneNumber);
+};
+
+export const launchWeb = async (url: string, headers?: string): Promise<boolean> => {
+  const win: any = window;
+  return await win['flutter_inappwebview'].callHandler('launchWeb', JSON.stringify({ url, headers }));
 };
