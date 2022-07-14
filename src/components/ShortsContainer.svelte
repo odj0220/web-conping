@@ -1,22 +1,30 @@
 <script lang=ts>
   import ShortsGridVodList from './ShortsGridVodList.svelte';
   import { graphqlApi } from '../lib/_api_graphql';
-  import { onMount } from 'svelte';
-  
+
   export let id;
-  let contents = [];
   
   const handleClick = (id) => {
     console.log('TODO: click 이벤트', id);
   };
-  onMount(async () => {
-    const query = `{getContentsByProgramId(id:"${id}", type:SHORTS){id name videoId thumb program {name}}}`;
+
+  async function loadData() {
+    const query = `{getContentsByProgramId(id:"${id}", type:SHORTS){id title videoId thumb program {title}}}`;
     const result = await graphqlApi(query);
-    contents = result.data.getContentsByProgramId;
-  });
+    const contents = result.data.getContentsByProgramId;
+    return contents;
+  }
 </script>
-  
-  <ShortsGridVodList
-    {contents}
-    onClick={handleClick}
-  />
+
+{#await loadData()}
+{:then contents}
+  {#if contents.length}
+    <ShortsGridVodList
+            {contents}
+            onClick={handleClick}
+    />
+    {:else}
+    <p>쇼츠가 없습니다.</p>
+  {/if}
+
+{/await}
