@@ -4,9 +4,6 @@
   import SubHeader from './SubHeader.svelte';
 
   function handleClickButton(type: string) {
-    // TODO: click 이벤트
-    console.log(type, 'button clicked');
-
     switch (type) {
     case 'back':
       navigate(-1);
@@ -17,7 +14,7 @@
     }
   }
 
-  export let title;
+  export let title: string;
 </script>
 
 <SubHeader {title} onClick={handleClickButton}/>
