@@ -45,8 +45,6 @@ const onClickMore = () => {
 </section>
 
 <style lang="scss">
-    @import "../styles/variables.scss";
-    
     .container {
         position: relative;
         padding: 0 1.6rem 2.4rem;

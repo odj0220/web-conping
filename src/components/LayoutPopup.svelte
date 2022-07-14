@@ -70,9 +70,6 @@ $: fixLimits();
 {/if}
 
 <style lang="scss">
-  @import '../styles/modules.scss';
-  @import '../styles/variables.scss';
-
 	.wall {
     position: absolute;
 		z-index: 10;

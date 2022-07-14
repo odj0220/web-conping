@@ -28,8 +28,6 @@
 </div>
 
 <style lang="scss">
-  @import '../styles/variables.scss';
-
   .header-wrapper {
     display: flex;
     justify-content: space-between;

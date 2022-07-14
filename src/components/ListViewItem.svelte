@@ -24,9 +24,6 @@
 </li>
 
 <style lang="scss">
-  @import '../styles/modules.scss';
-  @import '../styles/variables.scss';
-
   .grid-item {
     display: grid;
     grid-template-columns: 1fr 2fr;

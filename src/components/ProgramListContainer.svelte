@@ -52,8 +52,6 @@
 </section>
 
 <style lang="scss">
-  @import '../styles/variables.scss';
-
   .container {
     .visual {
       border-radius: 4px;

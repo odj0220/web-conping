@@ -251,8 +251,6 @@
   </li>
 
 <style lang="scss">
-  @import '../styles/modules.scss';
-  @import '../styles/variables.scss';
     .preview-layout {
       /* 유튜브 플레이어 영역 */
       border-radius: 0.4rem;

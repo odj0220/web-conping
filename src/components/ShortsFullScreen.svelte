@@ -139,8 +139,6 @@ import Icon from './icons/Icon.svelte';
 
 
 <style lang="scss">
-  @import '../styles/variables.scss';
-
     .player-wrap {
       position: fixed;
       top: 0;

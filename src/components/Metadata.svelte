@@ -40,8 +40,6 @@ export let celebs: any;
 
 
   <style lang="scss">
-    @import '../styles/variables.scss';
-
     .container {
       padding: 1.6rem;
       .name {

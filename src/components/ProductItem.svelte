@@ -33,9 +33,6 @@ const timelines = () => {
 </li>
 
 <style lang="scss">
-@import "../styles/variables.scss";
-@import "../styles/modules.scss";
-
 .container {
     position: relative;
     display: flex;

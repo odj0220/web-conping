@@ -22,8 +22,6 @@
 {/if}
 
 <style lang="scss">
-  @import '../styles/variables.scss';
-
   h1 {
     display: flex;
     flex-direction: row;

@@ -110,8 +110,6 @@
 </section>
 
 <style lang="scss">
-  @import '../styles/variables.scss';
-
   .videos-wrapper {
     width: 100%;
 
