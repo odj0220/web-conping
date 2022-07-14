@@ -24,8 +24,8 @@
       {
         programs {
           id
-          name
-          bannerImg
+          title
+          thumbnail
         }
       }
     `;
@@ -41,10 +41,16 @@
 
 </script>
 
-<CenterSection type="inner transparency">
-  <Title title={[{ text: '골라라 오리지널' }]} />
-
-  <HorizontalScroller>
-    <ProgramList {programs} type="horizontal" onClick={handleClickContents} />
-  </HorizontalScroller>
-</CenterSection>
+{#if programs?.length }
+  <CenterSection type="inner transparency">
+    <Title title={[{ text: '골라라 오리지널' }]} />
+    
+    <HorizontalScroller>
+      <ProgramList
+      {programs}
+      type="horizontal"
+      onClick={handleClickContents}
+      />
+    </HorizontalScroller>
+  </CenterSection>
+{/if}

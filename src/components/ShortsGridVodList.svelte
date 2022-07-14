@@ -1,14 +1,19 @@
 <script lang="ts">
+  import type { Content } from 'src/global/types';
+
   import ShortVodItem from './ShortVodItem.svelte';
 
-  export let contents: any[] = [];
+  export let contents: Content[] = [];
 
-  export let onClick;
+  export let onClick: (id: string) => void;
 </script>
 
 <section>
   {#each contents as content}
-    <ShortVodItem content={content} {onClick}></ShortVodItem>
+    <ShortVodItem
+      {content}
+      {onClick}
+    />
   {/each}
 </section>
 

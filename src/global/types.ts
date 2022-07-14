@@ -1,20 +1,29 @@
-export interface Content {
-  videoId: string
-  name: string,
-  contentType: string;
-  createDt: number;
-  description: string;
-  id: string;
-  program: Program,
-  programId: string;
-  round: number;
-  thumb: string;
-  url: string;
-}
-
 export interface Program {
   id: string;
-  name: string;
+  title: string;
+  description: string;
+  banner: string;
+  thumbnail: string;
+  regularAiringAt: number;
+  airingBeginAt: number;
+  airingEndAt: number;
+}
+
+export interface Content {
+  id: string;
+  title: string;
+  subtitle: string;
+  programId: string;
+  contentType: string;
+  createDt: number;
+  episode: number;
+  description: string;
+  url: string;
+  videoId: string;
+  thumb: string;
+  program: Program;
+  currentTime: number;
+  duration: number;
 }
 
 export interface TitleElement {
