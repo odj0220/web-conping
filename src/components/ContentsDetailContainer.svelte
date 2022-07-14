@@ -3,7 +3,7 @@
 
   import { guid } from '$lib/util';
   import { graphqlApi } from '$lib/_api_graphql';
-  import { setContents, getList } from '$lib/_continue_watching';
+  import { setContents, getContinueWatchingList } from '$lib/_continue_watching';
 
   import YP from 'youtube-player';
 
@@ -39,7 +39,7 @@
 
     player = await YP(playerId, option);
   
-    const continueItem = (await getList() || []).find(contentItem => contentItem.id === content.id);
+    const continueItem = (await getContinueWatchingList() || []).find(contentItem => contentItem.id === content.id);
   
     const continueCurrentTime = continueItem ? continueItem.currentTime : 0;
   
