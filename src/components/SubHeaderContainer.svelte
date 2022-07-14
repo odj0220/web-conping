@@ -1,20 +1,20 @@
 <script lang="ts">
-  import { navigate } from 'svelte-navigator';
+import { navigate } from 'svelte-navigator';
+import SubHeader from './SubHeader.svelte';
 
-  import SubHeader from './SubHeader.svelte';
+function handleClickButton(type: string) {
+  switch (type) {
+  case 'back':
+    navigate(-1);
+    break;
 
-  function handleClickButton(type: string) {
-    switch (type) {
-    case 'back':
-      navigate(-1);
-      break;
-  
-    default:
-      break;
-    }
+  default:
+    break;
   }
+}
 
-  export let title: string;
+export let title = '';
+export let share = true;
 </script>
 
-<SubHeader {title} onClick={handleClickButton}/>
+<SubHeader {title} {share} onClick={handleClickButton}/>
