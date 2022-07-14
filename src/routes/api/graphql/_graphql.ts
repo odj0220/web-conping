@@ -20,6 +20,7 @@ export async function Graphql(query: string) {
       image: String
       category: String
       exposed: [[Int]]
+      storeUrl: String
 		}
 		
     type Program {
