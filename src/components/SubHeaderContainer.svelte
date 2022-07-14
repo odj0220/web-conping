@@ -8,6 +8,10 @@
     case 'back':
       navigate(-1);
       break;
+    case 'share':
+  
+      console.log('TODO: 공유하기');
+      break;
   
     default:
       break;

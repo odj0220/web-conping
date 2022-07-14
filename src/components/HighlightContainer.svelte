@@ -9,11 +9,9 @@
 
   export let id: string;
 
-  let contents: {data: Content[]; end: boolean; cursor:string} = {
-    data: [],
-    end: false,
-    cursor: '',
-  };
+  let contents: Content[];
+  let end = false;
+  let cursor = '';
 
   const handleClickContents = (contentsId: string) => {
     goto(`/contents/${contentsId}`);
@@ -23,35 +21,28 @@
     const query = `{
       getContentsByProgramId(id:"${id}", type:HIGHLIGHT){
         id
-        name
+        title
         programId
         videoId
         thumb
         createDt
-        round
+        episode
         program{
           id
-          name
+          title
         }
       }
     }`;
 
     const result = await graphqlApi(query);
 
-    const data = result.data.getContentsByProgramId;
-
-    return {
-      ...contents,
-      data,
-    };
+    contents = result.data.getContentsByProgramId;
   }
 </script>
 
-{#await loadHighlight()}
-  <p>loading...</p>
-{:then contents}
   <PreviewVideos
     {contents}
+    {end}
+    {cursor}
     onClickContents={handleClickContents}
   />
-{/await}

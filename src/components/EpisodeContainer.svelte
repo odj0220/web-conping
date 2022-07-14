@@ -13,13 +13,13 @@
 
   onMount(async () => {
     const query = `{
-      getContentsByProgramId(id:"${id}", type:EPISODE){
+      getContentsByProgramId(id:"${id}", type:FULL){
         id
-        name
+        title
         videoId
         thumb
         program{
-          name
+          title
         }
       }
     }`;

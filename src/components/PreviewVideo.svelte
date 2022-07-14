@@ -90,6 +90,7 @@
   $: episode = `${content.episode && `${content.episode}화`}`;
   $: createdAt = content.createDt;
 
+
   function loadYoutubePlayer() {
     const playerVars = {
       controls: 0, //플레이어 컨드롤러 표시여부
@@ -211,7 +212,7 @@
   });
 </script>
 
-<li class="preview-layout" bind:this ={container} on:click={() => onClickContents(`${content.videoId}`)}>
+<li class="preview-layout" bind:this ={container} on:click={() => onClickContents(`${content.id}`)}>
     <section class="preview-container">
         <section class="player-wrap">
             <div id='{playerId}' class="youtube-player"></div>

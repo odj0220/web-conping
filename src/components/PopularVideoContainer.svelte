@@ -35,6 +35,7 @@
           thumb
           title
           videoId
+          episode
           id
           program {
             title

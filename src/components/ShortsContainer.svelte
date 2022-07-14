@@ -20,11 +20,11 @@
     const query = `{
       getContentsByProgramId(id:"${id}", type:SHORTS){
         id
-        name
+        title
         videoId
         thumb
         program{
-          name
+          title
         }
       }
     }`;

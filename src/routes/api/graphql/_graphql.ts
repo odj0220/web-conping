@@ -319,9 +319,7 @@ export async function Graphql(query: string) {
         .map((content) => {
           return {
             ...content,
-            program: programJson.find(
-              (program) => program.id === content.programId,
-            ),
+            program: programJson.find((program) => program.id === content.programId),
           };
         });
       const series = programJson.find((program) => program.id === programId);
