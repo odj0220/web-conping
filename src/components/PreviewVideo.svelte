@@ -87,8 +87,10 @@
 
   $: videoName = content.title;
   $: programName = content.program?.title;
+  $: programThumbnail = content.program?.thumbnail;
   $: episode = `${content.episode && `${content.episode}화`}`;
   $: createdAt = content.createDt;
+  $: views = content.views ? `조회수 ${content.views}회` : '';
 
   function loadYoutubePlayer() {
     const playerVars = {
@@ -198,6 +200,7 @@
   }
 
   onMount(async () => {
+    console.log(content);
     const module = await import('./PastTimeDelta.svelte');
     PastTimeDelta = module.default;
     loadYoutubePlayer();
@@ -211,7 +214,7 @@
   });
 </script>
 
-<li class="preview-layout" bind:this ={container} on:click={() => onClickContents(`${content.videoId}`)}>
+<li class="preview-layout" bind:this ={container} on:click={() => onClickContents(`${content.id}`)}>
     <section class="preview-container">
         <section class="player-wrap">
             <div id='{playerId}' class="youtube-player"></div>
@@ -240,11 +243,14 @@
             </span>
             </div>
             <div class="rest">
-              <Avatar size="24px" src="" />
+              <Avatar size="24px" src="{programThumbnail}" />
               <div class="info">
                 <span class="program-name">{programName}</span>
-                <span class="divider">・</span>
                 <span class="episode">{episode}</span>
+                {#if views}
+                  <span class="divider">・</span>
+                  <span class="views">{views}</span>
+                {/if}
                 <span class="divider">・</span>
                 <svelte:component this={PastTimeDelta} pastTime={createdAt}></svelte:component>
 
