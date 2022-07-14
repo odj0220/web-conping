@@ -11,7 +11,7 @@
     <div class="overlay"></div>
     <div class="data">
       <h6 class="title">
-        {content.name}
+        {content.title}
       </h6>
     </div>
   </div>
