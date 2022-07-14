@@ -10,7 +10,7 @@
 
 <section>
   <ul>
-    {#each contents as content, index }
+    {#each contents as content}
       <ListViewItem {content} {onClick} />
     {/each}
   </ul>

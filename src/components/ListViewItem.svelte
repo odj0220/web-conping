@@ -18,8 +18,8 @@
     class="right"
     on:click={() => onClick(content.videoId)}
   >
-    <span class="title">{content.program.name}</span>
-    <span class="sub-title">{content.name}</span>
+    <span class="title">{content.title}</span>
+    <span class="sub-title">{content.subtitle}</span>
   </div>
 </li>
 

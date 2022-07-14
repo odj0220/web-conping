@@ -1,22 +1,41 @@
 <script lang=ts>
-  import ShortsGridVodList from './ShortsGridVodList.svelte';
-  import { graphqlApi } from '../lib/_api_graphql';
   import { onMount } from 'svelte';
   
-  export let id;
-  let contents = [];
+  import { graphqlApi } from '../lib/_api_graphql';
   
-  const handleClick = (id) => {
-    console.log('TODO: click 이벤트', id);
+  import { goto } from '$app/navigation';
+  
+  import type { Content } from 'src/global/types';
+
+  import ShortsGridVodList from './ShortsGridVodList.svelte';
+
+  export let id: string;
+  let contents:Content[];
+
+  const handleClickShorts = (id: string) => {
+    goto(`/contents/${id}`);
   };
+
   onMount(async () => {
-    const query = `{getContentsByProgramId(id:"${id}", type:SHORTS){id name videoId thumb program {name}}}`;
+    const query = `{
+      getContentsByProgramId(id:"${id}", type:SHORTS){
+        id
+        name
+        videoId
+        thumb
+        program{
+          name
+        }
+      }
+    }`;
+
     const result = await graphqlApi(query);
+
     contents = result.data.getContentsByProgramId;
   });
 </script>
   
-  <ShortsGridVodList
-    {contents}
-    onClick={handleClick}
-  />
+<ShortsGridVodList
+  {contents}
+  onClick={handleClickShorts}
+/>

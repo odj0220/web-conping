@@ -14,7 +14,7 @@
   import ShortVodList from './ShortVodList.svelte';
 
   let contents: Content[];
-  let title: TitleElement;
+  let title: TitleElement[];
 
   onMount(async () => {
     getShorts();
@@ -25,20 +25,36 @@
   }
 
   async function getShorts() {
-    const query = '{getMainShorts{title {text type} contents {thumb name videoId}}}';
+    const query = `{
+      getMainShorts{
+        title {
+          text
+          type
+        } 
+        contents {
+          thumb
+          title
+          videoId
+        }
+      }
+    }`;
+  
     const result = await graphqlApi(query);
+
     title = result?.data?.getMainShorts?.title;
     contents = result?.data?.getMainShorts?.contents;
   }
 </script>
 
-<CenterSection type="transparency">
-  <Title {title}></Title>
-
-  <Hscroller>
-    <ShortVodList
+{#if contents?.length }
+  <CenterSection type="transparency">
+    <Title {title}></Title>
+    
+    <Hscroller>
+      <ShortVodList
       {contents}
       onClick={handleClickShorts}
-    />
-  </Hscroller>
-</CenterSection>
+      />
+    </Hscroller>
+  </CenterSection>
+{/if}

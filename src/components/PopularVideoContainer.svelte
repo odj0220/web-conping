@@ -16,7 +16,7 @@ import CenterSection from '$styles/CenterSection.svelte';
     cursor: '',
   };
 
-  const handleClickContent = (id: string) => {
+  const handleClickContents = (id: string) => {
     goto(`contents/${id}`);
   };
 
@@ -40,7 +40,7 @@ import CenterSection from '$styles/CenterSection.svelte';
   />
   <PreviewVideos
     contents={contents}
-    onClickContents={handleClickContent}
+    onClickContents={handleClickContents}
     infinite={false}
     autoPlay={true}
   />
