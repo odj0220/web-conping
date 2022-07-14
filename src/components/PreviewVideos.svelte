@@ -87,17 +87,6 @@
   {/if}
 
   <ul class="contents-container">
-    {#if videos.length > 0}
-      {#each videos as video, order (video.id)}
-        <PreviewVideo
-          {onClickContents}
-          content={video}
-          order={order + 1}
-          autoPlay={autoPlay}
-        />
-      {/each}
-    {/if}
-
     <ul class="contents-container">
         {#if videos.length > 0}
             {#each videos as video, order (video.id)}
