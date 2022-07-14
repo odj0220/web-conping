@@ -113,9 +113,11 @@ const getInformation = async () => {
                       <ul class="profile-list">
                           {#each option.contentDetail.celebs as celeb (celeb.id)}
                               <li class="profile-item">
-                                  <Avatar size="8rem" src={celeb.thumbnail} alt="{celeb.name + '의 사진'}"/>
-                                  <span class="profile-name">{celeb.name}</span>
-                                  <span class="profile-role">{celeb.categories[0]}</span>
+                                  <a sveltekit:prefetch href={'/celobs/' + celeb.id}>
+                                      <Avatar size="8rem" src={celeb.thumbnail} alt="{celeb.name + '의 사진'}"/>
+                                      <span class="profile-name">{celeb.name}</span>
+                                      <span class="profile-role">{celeb.categories[0]}</span>
+                                  </a>
                               </li>
                           {/each}
                       </ul>
@@ -196,21 +198,28 @@ const getInformation = async () => {
         .profile-list {
           display: flex;
           .profile-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            @include caption3;
 
             &:not(:last-child) {
               margin-right: 12px;
             }
 
-            .profile-name {
-              display: block;
-              margin: 0.4rem 0 0.2rem;
-            }
-            .profile-role {
-              color: $disabled-8a;
+            a {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              @include caption3;
+              text-decoration: none;
+
+              .profile-name {
+                display: block;
+                margin: 0.4rem 0 0.2rem;
+                color: $all-white;
+                cursor: pointer;
+              }
+
+              .profile-role {
+                color: $disabled-8a;
+              }
             }
           }
         }
