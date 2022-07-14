@@ -1,10 +1,11 @@
 <script lang="ts">
     export let size: string;
     export let src: string;
+    export let alt: string;
 </script>
 
 <div class="container" style="width: {size}; height: {size}">
-    <img src=""  alt="유저 프로필 이미지"/>
+    <img src={src}  alt={alt}/>
 </div>
 
 <style lang="scss">
