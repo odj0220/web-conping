@@ -9,16 +9,19 @@
 
   import type { YouTubePlayer } from 'youtube-player/dist/types';
   
+  import type { Content } from 'src/global/types';
+  
   import Metadata from './Metadata.svelte';
   import Player from './Player.svelte';
   import RelatedProductContainer from './RelatedProductContainer.svelte';
+  import SubHeaderContainer from './SubHeaderContainer.svelte';
 
   const playerId = guid();
 
   export let id: string;
   
   let player: YouTubePlayer;
-  let content: any;
+  let content: Content;
   let continueInterval;
   let continueIntervalTime = 10000;
 
@@ -49,16 +52,16 @@
       {
         content(id:"${id}"){
           id 
-          name
+          title
           contentType 
           createDt 
           description 
           program { 
-            id 
-            name
+            id
+            title
           } 
           programId 
-          round 
+          episode 
           thumb 
           videoId 
           duration 
@@ -133,6 +136,7 @@
   };
 </script>
 
+<SubHeaderContainer title={content?.title} />
 <div class="container">
   <Player
     {player}

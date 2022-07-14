@@ -60,7 +60,9 @@
 
   import Avatar from './Avatar.svelte';
 
-  export let content: any;
+  import type { Content } from 'src/global/types';
+
+  export let content: Content;
   export let order = 0;
   export let onClickContents: (id: string) => void;
   export let autoPlay: boolean;
@@ -85,7 +87,7 @@
 
   $: videoName = content.title;
   $: programName = content.program?.title;
-  $: round = `${content.round && `${content.round}화`}`;
+  $: episode = `${content.episode && `${content.episode}화`}`;
   $: createdAt = content.createDt;
 
   function loadYoutubePlayer() {
@@ -209,7 +211,7 @@
   });
 </script>
 
-<li class="preview-layout" bind:this ={container} on:click={() => onClickContents(`${content.programId}`)}>
+<li class="preview-layout" bind:this ={container} on:click={() => onClickContents(`${content.videoId}`)}>
     <section class="preview-container">
         <section class="player-wrap">
             <div id='{playerId}' class="youtube-player"></div>
@@ -242,7 +244,7 @@
               <div class="info">
                 <span class="program-name">{programName}</span>
                 <span class="divider">・</span>
-                <span calss="round">{round}</span>
+                <span class="episode">{episode}</span>
                 <span class="divider">・</span>
                 <svelte:component this={PastTimeDelta} pastTime={createdAt}></svelte:component>
 
