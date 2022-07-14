@@ -81,9 +81,9 @@
     BUFFERING: 3,
   };
 
-  $: videoName = content.name;
-  $: programName = content.program.name;
-  $: round = `${content.round && `${content.round}화`}`;
+  $: videoName = content.title;
+  $: programName = content.program.title;
+  $: round = `${content.episode && `${content.episode}화`}`;
   $: createdAt = content.createDt;
 
   function loadYoutubePlayer() {
