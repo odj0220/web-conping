@@ -33,6 +33,7 @@ export let option: {
         info?: {
           programTitle?: string;
           episode?: number;
+          view: number;
           createDt?: string;
         };
     }
@@ -53,7 +54,7 @@ onMount(async () => {
 
 const getInformation = async () => {
     if (isContentDetail) {
-      const { contentDetail: { info: { programTitle, episode, createDt } } } = option;
+      const { contentDetail: { info: { programTitle, episode, createDt, view } } } = option;
       let result = '';
 
       if (programTitle) {
@@ -62,6 +63,10 @@ const getInformation = async () => {
 
       if (episode) {
         information = [...information, `${episode}화`];
+      }
+
+      if (view) {
+        information = [...information, `조회수 ${view}회`];
       }
 
       if (createDt) {
