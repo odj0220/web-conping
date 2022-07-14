@@ -5,5 +5,5 @@
 
   const id = $page.params.id;
 </script>
-  
+
 <ContentsDetailContainer {id} />

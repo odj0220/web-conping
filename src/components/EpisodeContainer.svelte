@@ -26,8 +26,6 @@
 
     const result = await graphqlApi(query);
 
-    console.log(result);
-
     contents = result.data.getContentsByProgramId;
   });
 
