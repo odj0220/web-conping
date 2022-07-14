@@ -26,7 +26,7 @@
     </div>
     <img class="thumbnail" src={content.thumb} alt="thubnail"/>
     <div class="play-btn-wrapper">
-      <button on:click={() => onClick(`${content.videoId}`)}>
+      <button on:click={() => onClick(`${content.id}`)}>
         <img class="play-btn" src="/images/icons/ic_play.svg" alt="play-btn"/>
       </button>
     </div>
