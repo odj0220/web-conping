@@ -24,6 +24,7 @@ export interface Content {
   program: Program;
   currentTime: number;
   duration: number;
+  views: number;
 }
 
 export interface TitleElement {
@@ -49,12 +50,12 @@ export interface ICeleb {
   description: string;
   categories: string[];
   thumbnail: string;
-  follows: Celeb[];
+  follows: ICeleb[];
   programs: Program[];
-  products: Product[];
+  products: IProduct[];
 }
 
-export interface Product {
+export interface IProduct {
   id: string;
   name: string;
   brand: string;
@@ -62,4 +63,5 @@ export interface Product {
   discount: number;
   category: string;
   exposed: [[number]];
+  views: number;
 }

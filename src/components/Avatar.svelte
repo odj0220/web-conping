@@ -4,7 +4,7 @@
 </script>
 
 <div class="container" style="width: {size}; height: {size}">
-    <img src=""  alt="유저 프로필 이미지"/>
+    <img src="{src}"  alt="유저 프로필 이미지"/>
 </div>
 
 <style lang="scss">

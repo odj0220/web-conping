@@ -34,11 +34,13 @@
                    program {
                       id
                       title
+                      thumbnail
                    }
                    createDt
                    episode
                    videoId
                    thumb
+                   views
                 }
             }
             pageInfo {
