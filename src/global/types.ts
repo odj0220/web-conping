@@ -24,6 +24,7 @@ export interface Content {
   program: Program;
   currentTime: number;
   duration: number;
+  views: number;
 }
 
 export interface TitleElement {
@@ -63,4 +64,5 @@ export interface IProduct {
   category: string;
   exposed: [[number]];
   image: string;
+  views: number;
 }
