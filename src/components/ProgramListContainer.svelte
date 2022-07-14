@@ -1,6 +1,4 @@
 <script lang=ts>
-  import { onMount } from 'svelte';
-
   import { graphqlApi } from '$lib/_api_graphql';
 
   import Metadata from './Metadata.svelte';
@@ -31,36 +29,68 @@
     },
   ];
 
-  onMount(async () => {
-    const query = `{program(id:"${id}"){id name description bannerImg} getCelebsByProgramId(id:"${id}"){thumbnail name categories}}`;
+  async function loadData() {
+    const query = `{program(id:"${id}"){id title description banner regularAiringAt airingBeginAt airingEndAt} getCelebsByProgramId(id:"${id}"){thumbnail name categories}}`;
     const result = await graphqlApi(query);
-    data = result?.data?.program;
-    celebs = result?.data?.getCelebsByProgramId;
-  });
+    const program = result?.data?.program;
+    const celobs = result?.data.getCelebsByProgramId;
+    const metaDataOption = setMetadataOption(program, celobs);
+
+    return new Promise((resolve, reject) => {
+      resolve({
+        program,
+        celobs,
+        metaDataOption,
+      });
+    });
+  }
+
+  function setMetadataOption (program: any, celebs: any[]) {
+    const newData = {
+      programDetail: {
+        title: program.title,
+        description: program.description,
+        celebs,
+        info: {
+          airingBeginAt: program.airingBeginAt,
+          airingEndAt: program.airingEndAt,
+          regularAiringAt: program.regularAiringAt,
+        },
+      },
+    };
+
+    return newData;
+  }
 </script>
 
-<SubHeaderContainer title={data?.name} />
-<div class="container">                             
-  <div class="visual">
-    <img src={data?.bannerImg} alt=""/>
-  </div>
-  <Metadata name={data?.name} description={data?.description} celebs={celebs}/>
-</div>
+{#await loadData()}
+{:then {program, celobs, metaDataOption}}
+  <header>
+    <SubHeaderContainer title={program.title} />
+  </header>
+  <main class="container">
+      <section class="thumbnail-wrapper">
+        <img class="thumbnail" src={program.banner} alt=""/>
+      </section>
 
-<section class="tabs-wrapper">
-  <Tabs {items} />
-</section>
+      <Metadata option={metaDataOption}/>
+
+      <section class="tabs-wrapper">
+        <Tabs {items} />
+      </section>
+  </main>
+{/await}
 
 <style lang="scss">
   .container {
-    .visual {
+    .thumbnail-wrapper {
       border-radius: 4px;
       overflow: hidden;
       margin: 0.8rem 1.6rem;
       height: 0;
       padding-bottom: 141%;
       position: relative;
-      img {
+      img.thumbnail {
         position: absolute;
         top: 0;
         left: 0;
