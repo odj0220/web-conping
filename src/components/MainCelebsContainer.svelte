@@ -1,45 +1,45 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+import { onMount } from 'svelte';
 
-  import { graphqlApi } from '$lib/_api_graphql';
-  
-  import type { ICeleb } from 'src/global/types';
+import { graphqlApi } from '$lib/_api_graphql';
 
-  import Title from './Title.svelte';
-  import Celebs from './Celebs.svelte';
-  import MoreButton from './common/shared/MoreButton.svelte';
+import type { ICeleb } from 'src/global/types';
 
-  let celebs: ICeleb[] = [];
+import Title from './Title.svelte';
+import Celebs from './Celebs.svelte';
+import MoreButton from './common/shared/MoreButton.svelte';
 
-  onMount(() => {
-    getData();
-  });
+let celebs: ICeleb[] = [];
+
+onMount(() => {
+  getData();
+});
 
 const getData = async () => {
-    const query = '{celebs{id name thumbnail categories}}';
-    const result = await graphqlApi(query);
-    celebs = result?.data?.celebs?.slice(0, 3);
-    console.log('celebs', celebs);
+  const query = '{celebs{id name thumbnail categories}}';
+  const result = await graphqlApi(query);
+  celebs = result?.data?.celebs?.slice(0, 3);
+  console.log('celebs', celebs);
 };
 
-  const onClickMore = () => {
-    console.log(
-      '이동',
-    );
-  };
+const onClickMore = () => {
+  console.log(
+    '이동',
+  );
+};
 
-  const title = [
-    {
-      text: '지금 가장',
-    },
-    {
-      text: '핫한',
-      type: 'primary-20',
-    },
-    {
-      text: '셀럽',
-    },
-  ];
+const title = [
+  {
+    text: '지금 가장',
+  },
+  {
+    text: '핫한',
+    type: 'primary-20',
+  },
+  {
+    text: '셀럽',
+  },
+];
 </script>
 
 <section class="section">
