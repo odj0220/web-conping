@@ -36,14 +36,29 @@
 
   const getData = async () => {
     const query = `{
-      getMainSeries{
+      getMainSeries {
         title{
           text
           type
         }
-        contents{
-          thumb
+        contents {
+          id
+          title
+          subtitle
+          programId
+          createDt
+          episode
+          description
+          url
           videoId
+          thumb
+          program {
+            id
+            title
+            description
+          }
+          currentTime
+          duration
         }
         series {
           title

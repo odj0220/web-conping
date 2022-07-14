@@ -3,6 +3,8 @@
 
   import { graphqlApi } from '$lib/_api_graphql';
 
+  import type { Program } from 'src/global/types';
+  
   import Metadata from './Metadata.svelte';
   import Tabs from './Tabs.svelte';
   import EpisodeContainer from './EpisodeContainer.svelte';
@@ -11,7 +13,7 @@
   import SubHeaderContainer from './SubHeaderContainer.svelte';
 
   export let id: string;
-  let data = {};
+  let program: Program;
   let celebs = [];
   let items = [
     { label: '에피소드',
@@ -32,19 +34,36 @@
   ];
 
   onMount(async () => {
-    const query = `{program(id:"${id}"){id name description bannerImg} getCelebsByProgramId(id:"${id}"){thumbnail name categories}}`;
-    const result = await graphqlApi(query);
-    data = result?.data?.program;
-    celebs = result?.data?.getCelebsByProgramId;
+    const query = `{
+      program(id:"${id}"){
+        id
+        title
+        description
+        thumbnail
+        banner
+      } 
+      getCelebsByProgramId(id:"${id}"){
+        thumbnail
+        name
+        categories
+      }
+    }`;
+  
+    const { data } = await graphqlApi(query);
+
+    program = data?.program;
+    celebs = data?.getCelebsByProgramId;
   });
 </script>
 
-<SubHeaderContainer title={data?.name} />
-<div class="container">                             
-  <div class="visual">
-    <img src={data?.bannerImg} alt=""/>
-  </div>
-  <Metadata name={data?.name} description={data?.description} celebs={celebs}/>
+<SubHeaderContainer title={program?.name} />
+<div class="container">
+  {#if program?.banner }
+    <div class="visual">
+      <img src={program?.banner} alt="banner 이미지"/>
+    </div>
+  {/if}                             
+  <Metadata name={program?.name} description={program?.description} {celebs} />
 </div>
 
 <section class="tabs-wrapper">

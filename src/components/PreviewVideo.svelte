@@ -92,6 +92,7 @@
   $: createdAt = content.createDt;
   $: views = content.views ? `조회수 ${content.views}회` : '';
 
+
   function loadYoutubePlayer() {
     const playerVars = {
       controls: 0, //플레이어 컨드롤러 표시여부

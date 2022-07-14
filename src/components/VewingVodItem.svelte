@@ -32,8 +32,8 @@
     </div>
   </div>
 
-  <p class="name">
-    {content?.name}
+  <p class="title">
+    {content?.title}
   </p>
 </section>
 
@@ -112,7 +112,7 @@
         }
       }
 
-      .name {
+      .title {
         @include caption3;
         @include ellipsis(2)
       }

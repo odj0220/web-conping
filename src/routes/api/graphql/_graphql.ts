@@ -325,12 +325,11 @@ export async function Graphql(query: string) {
       const programId = 'programId4';
       const contents = contentJson
         .filter((content) => content.programId === programId)
+        .filter((_, index) => index < 5)
         .map((content) => {
           return {
             ...content,
-            program: programJson.find(
-              (program) => program.id === content.programId,
-            ),
+            program: programJson.find((program) => program.id === content.programId),
           };
         });
       const series = programJson.find((program) => program.id === programId);

@@ -5,7 +5,6 @@
 
   export let contents: Content[] = [];
   export let onClick: (id: string) => void;
-
 </script>
 
 <section>

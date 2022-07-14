@@ -32,11 +32,6 @@
     margin-bottom: 12px;
     @include body1-700;
 
-    &:active {
-      transform: scale(1.05);
-      //TODO: 클릭할 때 효과 정의 필요
-    }
-    
     .primary-90 {
       color: $primary-90; 
     }
