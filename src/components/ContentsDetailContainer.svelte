@@ -12,6 +12,7 @@
   import Metadata from './Metadata.svelte';
   import Player from './Player.svelte';
   import RelatedProductContainer from './RelatedProductContainer.svelte';
+  import ContentDetailAnotherVideosContainer from './ContentDetailAnotherVideosContainer.svelte';
 
   const playerId = guid();
 
@@ -21,6 +22,65 @@
   let content: any;
   let continueInterval;
   let continueIntervalTime = 10000;
+  let metaDataOption: any = {};
+
+  onMount(async () => {
+    await getData();
+    await loadYoutubePlayer();
+  });
+
+  const getData = async () => {
+    const query = `
+      {
+        content(id:"${id}"){
+          id
+          title
+          createDt
+          description
+          programId
+          episode
+          thumb
+          videoId
+          duration
+          currentTime
+          program {
+            id
+            title
+          }
+        }
+
+        getCelebsByContentId(id: "${id}") {
+          id
+          name
+          description
+          categories
+          banner
+          thumbnail
+        }
+      }
+    `;
+
+    const result = await graphqlApi(query);
+    const celobs = result.data.getCelebsByContentId;
+    content = result?.data?.content;
+    metaDataOption = setMetadataOption(content, celobs);
+  };
+
+  const setMetadataOption = (content: any, celebs: any[]) => {
+    const newData = {
+      contentDetail: {
+        title: content.title,
+        celebs,
+        info: {
+          programTitle: content.program.title,
+          episode: content.episode,
+          createDt: content.createDt,
+        },
+      },
+    };
+  
+    return newData;
+  };
 
   const loadYoutubePlayer = async () => {
     const playerVars = {
@@ -28,7 +88,7 @@
       rel: 0, //연관동영상 표시여부
       loop: 0,
     };
-
+  
     const option: any = {
       videoId: content.videoId,
       playerVars,
@@ -37,46 +97,12 @@
     player = await YP(playerId, option);
   
     const continueItem = (await getList() || []).find(contentItem => contentItem.id === content.id);
-  
     const continueCurrentTime = continueItem ? continueItem.currentTime : 0;
   
     setCurrentTime(continueCurrentTime);
+    onPlayerStateChange();
   };
 
-
-  const getData = async () => {
-    const query = `
-      {
-        content(id:"${id}"){
-          id 
-          title
-          createDt 
-          description
-          programId 
-          episode
-          thumb 
-          videoId 
-          duration 
-          currentTime
-          program {
-            id
-            title
-          }
-        }
-      }
-    `;
-  
-    const result = await graphqlApi(query);
-    content = result?.data?.content;
-  };
-
-  onMount(async () => {
-    await getData();
-    await loadYoutubePlayer();
-    await loadAnotherContents();
-  
-    // onPlayerStateChange();
-  });
 
   const onPlayerStateChange = () => {
     const PLAYER_STATE = {
@@ -89,7 +115,6 @@
 
     player.on('stateChange', event => {
       const status = event.data;
-      console.log(event);
 
       if (status === PLAYER_STATE.PLAYING) {
         setContinueWatching();
@@ -130,30 +155,21 @@
       });
     });
   };
-
-  async function loadAnotherContents() {
-    console.log(id);
-    const query = `{getProgramContentsByContentId(id:"${id}"){id title programId createDt episode description program {id title}}}`;
-    const result = await graphqlApi(query);
-    console.log(result);
-  }
 </script>
 
 <div class="container">
   <Player
-    {player}
-    {playerId}
+          {player}
+          {playerId}
   />
 
-  <Metadata
-    title="MZ세대의 트렌드 Y2K, 트렌드에 맞는 핵심 메이크업 비결을 알아보자!!??"
-    airingBeginAt={1655045914850}
-    airingEndAt={1655045914850}
-  />
-  
+  <Metadata option={metaDataOption}/>
+
   <RelatedProductContainer
-    {id}
-    onClickTimeButton={setCurrentTime}
-    timelineButtonVisible={true}
+          {id}
+          onClickTimeButton={setCurrentTime}
+          timelineButtonVisible={true}
   />
+
+  <ContentDetailAnotherVideosContainer contentId={id}/>
 </div>
