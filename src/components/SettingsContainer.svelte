@@ -1,8 +1,13 @@
 <script lang="ts">
+import { appCheck, openBrowser } from '$lib/util';
+import { copyToClipboard, getVersion, launchTel } from '$lib/_app_communication';
+import { onMount } from 'svelte';
 import SettingsCS from './SettingsCS.svelte';
 import SettingsMenuList from './SettingsMenuList.svelte';
 import SubHeader from './SubHeader.svelte';
 
+let isApp: boolean;
+let appVersion = '알 수 없음';
 let csState = false;
 const setCSState = (bool: boolean) => {
   csState = bool;
@@ -13,11 +18,11 @@ const onClickPush = () => {
 };
 
 const onClickNotice = () => {
-  console.log('onClickNotice');
+  openBrowser('https://naver.com');
 };
 
-const onClicFAQ = () => {
-  console.log('onClicFAQ');
+const onClickFAQ = () => {
+  openBrowser('https://naver.com');
 };
 
 const onClickCS = () => {
@@ -25,19 +30,23 @@ const onClickCS = () => {
 };
 
 const onClickPartnership = () => {
-  console.log('onClickPartnership');
+  copyToClipboard('cs@gollala.com');
 };
 
 const onClickTerms = () => {
-  console.log('onClickTerms');
+  openBrowser('https://naver.com');
 };
 
 const onClickPrivate = () => {
-  console.log('onClickPrivate');
+  openBrowser('https://naver.com');
 };
 
 const onClickCScenter = () => {
-  console.log('onClickCScenter');
+  const win: any = window;
+  if (win['flutter_inappwebview']) {
+    return launchTel('02-6245-1111');
+  }
+  window.location.href = 'tel://02-6245-1111';
 };
 
 const onClickCSKakao = () => {
@@ -55,7 +64,7 @@ const menuList = [
     depth1: '고객센터',
     depth2: [
       { title: '공지사항', handler: onClickNotice },
-      { title: 'FAQ', handler: onClicFAQ },
+      { title: 'FAQ', handler: onClickFAQ },
       { title: '문의하기', handler: onClickCS },
       { title: '브랜드/셀럽 제휴 문의', handler: onClickPartnership, link: 'cs@gollala.com' },
       { title: '서비스 이용약관', handler: onClickTerms },
@@ -64,7 +73,7 @@ const menuList = [
   {
     depth1: '기타',
     depth2: [
-      { title: '버전 정보', desc: '최신 버전' },
+      { title: '버전 정보', desc: appVersion },
     ],
   },
 ];
@@ -84,8 +93,20 @@ const csList = [
   },
 ];
 
+onMount(async () => {
+  if (appCheck()) {
+    isApp = true;
+    const version = await getVersion();
+    if (version) {
+      const { major, minor, build } = JSON.parse(version);
+      appVersion = `${major}.${minor}.${build}`;
+    }
+  }
+});
+
+
 </script>
 
 <SubHeader title="설정" share={false} />
 <SettingsMenuList {menuList} />
-<SettingsCS {csState} {setCSState} {csList}/>
+<SettingsCS {csState} {setCSState} {csList} appCheck={isApp}/>

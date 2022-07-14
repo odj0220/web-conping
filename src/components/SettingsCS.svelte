@@ -14,8 +14,8 @@ export let csList: any[] = [];
     <p class="desc">궁금한 점이 있다면 편하게 연락주세요</p>
     <div class="buttons">
       {#each csList as csItem}
-        <button on:click="{() => csItem.handler}">
-          <Icon name={csItem.icon}/>
+        <button on:click="{() => csItem.handler()}">
+          <Icon name={csItem.icon} />
           <span class="text-big">{csItem.textBig}</span>
           <span class="text-small">{csItem.textSmall}</span>
         </button>
@@ -74,6 +74,7 @@ export let csList: any[] = [];
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        color: $default-black;
         &:first-child {
           margin-right: 1.2rem;
         }
@@ -93,7 +94,8 @@ export let csList: any[] = [];
   }
   &.on {
     .layer {
-
+      opacity: 1;
+      visibility: visible;
     }
     .inner {
       bottom: 0;

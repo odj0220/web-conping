@@ -11,12 +11,8 @@ interface IMenu {
   depth2: IDepth2[]
 }
 
-
 import SettingsMenuDepth2 from './SettingsMenuDepth2.svelte';
 export let menu: IMenu;
-
-
-console.log('menu', menu);
 </script>
 
 <li class="depth1">
