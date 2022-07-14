@@ -3,13 +3,12 @@ import { graphqlApi } from '$lib/_api_graphql';
 import CenterSection from '$styles/CenterSection.svelte';
 import { onMount } from 'svelte';
 import Celebs from './Celebs.svelte';
-import Header from './Header.svelte';
+import MainHeaderContainer from './MainHeaderContainer.svelte';
 
 onMount(() => {
   getData();
 });
 
-const buttons = ['setting'];
 let celebs;
 
 const getData = async () => {
@@ -22,7 +21,7 @@ const getData = async () => {
 
 </script>
 
-<Header title="셀럽존" buttons={buttons}/>
+<MainHeaderContainer title="셀럽존" />
 <CenterSection type="transparency">
   <Celebs {celebs}/>
 </CenterSection>

@@ -27,8 +27,8 @@ export interface Content {
 }
 
 export interface TitleElement {
-  text: string,
-  type?: string,
+  text: string;
+  type?: string;
 }
 
 export interface Program {
@@ -49,12 +49,12 @@ export interface ICeleb {
   description: string;
   categories: string[];
   thumbnail: string;
-  follows: Celeb[];
+  follows: ICeleb[];
   programs: Program[];
-  products: Product[];
+  products: IProduct[];
 }
 
-export interface Product {
+export interface IProduct {
   id: string;
   name: string;
   brand: string;
@@ -62,4 +62,5 @@ export interface Product {
   discount: number;
   category: string;
   exposed: [[number]];
+  image: string;
 }
