@@ -259,9 +259,17 @@ export async function Graphql(query: string) {
           };
         });
     },
-    getProgramContentsByContentId: ({ contentId }: {contentId: string}) => {
-      const content: any = contentJson.find(contentItem => contentItem.id === contentId);
-      return contentJson.filter(contentItem => (contentItem.programId === content.programId && contentItem.id !== contentId));
+    getProgramContentsByContentId: ({ id }: {id: string}) => {
+      const content: any = contentJson.find(contentItem => contentItem.id === id);
+      return contentJson
+        .filter(contentItem => (contentItem.programId === content.programId && contentItem.id !== id))
+        .filter(contentItem => (contentItem.contentType === 'FULL' || contentItem.contentType === 'HIGHLIGHT'))
+        .map(contentItem => {
+          return {
+            ...contentItem,
+            program: programJson.find(program => program.id === content.programId),
+          };
+        });
     },
     getProductsByCategory: ({ category }: { category: string }) => {
       return productJson.filter((product) => product.category === category);
