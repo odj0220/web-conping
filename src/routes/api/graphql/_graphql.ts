@@ -21,6 +21,7 @@ export async function Graphql(query: string) {
       category: String
       exposed: [[Int]]
       storeUrl: String
+      views: Float
 		}
 		
     type Program {
@@ -49,6 +50,7 @@ export async function Graphql(query: string) {
       program: Program
       currentTime: Float
       duration: Float
+      views: Float
 		}
 		
 		type Celeb {
@@ -309,7 +311,14 @@ export async function Graphql(query: string) {
             text: '영상',
           },
         ],
-        contents: contentJson.slice(0, 2),
+        contents: contentJson.slice(0, 2).map(content => {
+          return {
+            ...content,
+            program: programJson.find(
+              (program) => program.id === content.programId,
+            ),
+          };
+        }),
       };
     },
     getMainSeries: () => {

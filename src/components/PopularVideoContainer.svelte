@@ -39,7 +39,11 @@
           id
           program {
             title
+            thumbnail
           }
+          createDt
+          episode
+          views
         }
       }
     }`;
