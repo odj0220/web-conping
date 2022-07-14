@@ -1,10 +1,10 @@
 <script lang="ts">
 import { appCheck, openBrowser } from '$lib/util';
-import { copyToClipboard, getVersion, launchTel } from '$lib/_app_communication';
+import { copyToClipboard, getVersion, launchSystemNotification, launchTel } from '$lib/_app_communication';
 import { onMount } from 'svelte';
 import SettingsCS from './SettingsCS.svelte';
 import SettingsMenuList from './SettingsMenuList.svelte';
-import SubHeader from './SubHeader.svelte';
+import SubHeaderContainer from './SubHeaderContainer.svelte';
 
 let isApp: boolean;
 let appVersion = '알 수 없음';
@@ -14,7 +14,7 @@ const setCSState = (bool: boolean) => {
 };
 
 const onClickPush = () => {
-  console.log('onClickPush');
+  launchSystemNotification();
 };
 
 const onClickNotice = () => {
@@ -31,6 +31,7 @@ const onClickCS = () => {
 
 const onClickPartnership = () => {
   copyToClipboard('cs@gollala.com');
+  console.log('ddddd');
 };
 
 const onClickTerms = () => {
@@ -53,6 +54,7 @@ const onClickCSKakao = () => {
   console.log('onClickCSKakao');
 };
 
+
 const menuList = [
   {
     depth1: '푸쉬 알림',
@@ -66,7 +68,7 @@ const menuList = [
       { title: '공지사항', handler: onClickNotice },
       { title: 'FAQ', handler: onClickFAQ },
       { title: '문의하기', handler: onClickCS },
-      { title: '브랜드/셀럽 제휴 문의', handler: onClickPartnership, link: 'cs@gollala.com' },
+      { title: '브랜드/셀럽 제휴 문의', linkHandler: onClickPartnership, link: 'cs@gollala.com' },
       { title: '서비스 이용약관', handler: onClickTerms },
       { title: '개인정보 처리방침', handler: onClickPrivate }],
   },
@@ -104,9 +106,8 @@ onMount(async () => {
   }
 });
 
-
 </script>
 
-<SubHeader title="설정" share={false} />
-<SettingsMenuList {menuList} />
-<SettingsCS {csState} {setCSState} {csList} appCheck={isApp}/>
+<SubHeaderContainer title="설정" share={false} />
+<SettingsMenuList {menuList} appCheck={isApp}/>
+<SettingsCS {csState} {setCSState} {csList} />

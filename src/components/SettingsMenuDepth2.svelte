@@ -4,6 +4,7 @@ interface IDepth2 {
   link: string
   desc: string
   handler: () => void
+  linkHandler: () => void
 }
 export let depth2: IDepth2;
 </script>
@@ -11,7 +12,11 @@ export let depth2: IDepth2;
 <li class="depth2-menu" on:click={depth2.handler}>
   <span class="depth2-title">{depth2.title}</span>
   {#if depth2.desc || depth2.link}
-    <span class:link={depth2.link} class="depth2-desc">{depth2.desc || depth2.link}</span>
+    <span 
+      class:link={depth2.link}
+      class="depth2-desc"
+      on:click={depth2.linkHandler}
+    >{depth2.desc || depth2.link}</span>
   {/if}
 </li>
 

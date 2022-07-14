@@ -1,6 +1,5 @@
 <script lang="ts">
 import { onMount } from 'svelte';
-
 import SettingMenuDepth1 from './SettingsMenuDepth1.svelte';
 
 export let menuList: any[] = [];
@@ -10,9 +9,9 @@ let list: any[] = [];
 
 onMount(() => {
   if (appCheck) {
-    console.log('app');
+    list = menuList;
   }
-  console.log('web');
+  list = menuList.filter(el => el.depth1 === '고객센터');
 });
 
 </script>

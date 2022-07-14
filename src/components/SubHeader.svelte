@@ -2,8 +2,8 @@
   import Icon from './icons/Icon.svelte';
 
   export let onClick: (type: string) => void;
-  export let title = '';
-  export let share = true;
+  export let title: string;
+  export let share: boolean;
 </script>
 
 <div class="header-wrapper">
