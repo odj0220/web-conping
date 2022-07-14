@@ -20,6 +20,7 @@ export interface Program {
 export interface TitleElement {
   text: string,
   type?: string,
+  style?: string;
 }
 
 export interface Program {
