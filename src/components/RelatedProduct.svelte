@@ -30,9 +30,6 @@ const onClickMore = () => {
             {#each list as el}
                 <ProductItem {...el} {onClickTimeButton} {timelineButtonVisible}/>
             {/each}
-            {#each list as el}
-                <ProductItem {...el} {onClickTimeButton} {timelineButtonVisible}/>
-            {/each}
         </ul>
         {#if data?.length > 5 && displayMore && moreButton}
             <button class="more" on:click={onClickMore}>
