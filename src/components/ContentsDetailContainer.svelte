@@ -3,22 +3,25 @@
 
   import { guid } from '$lib/util';
   import { graphqlApi } from '$lib/_api_graphql';
-  import { setContents, getList } from '$lib/_continue_watching';
+  import { setContents, getContinueWatchingList } from '$lib/_continue_watching';
 
   import YP from 'youtube-player';
 
   import type { YouTubePlayer } from 'youtube-player/dist/types';
   
+  import type { Content } from 'src/global/types';
+  
   import Metadata from './Metadata.svelte';
   import Player from './Player.svelte';
   import RelatedProductContainer from './RelatedProductContainer.svelte';
+  import SubHeaderContainer from './SubHeaderContainer.svelte';
 
   const playerId = guid();
 
   export let id: string;
   
   let player: YouTubePlayer;
-  let content: any;
+  let content: Content;
   let continueInterval;
   let continueIntervalTime = 10000;
 
@@ -36,7 +39,7 @@
 
     player = await YP(playerId, option);
   
-    const continueItem = (await getList() || []).find(contentItem => contentItem.id === content.id);
+    const continueItem = (await getContinueWatchingList() || []).find(contentItem => contentItem.id === content.id);
   
     const continueCurrentTime = continueItem ? continueItem.currentTime : 0;
   
@@ -49,16 +52,16 @@
       {
         content(id:"${id}"){
           id 
-          name
+          title
           contentType 
           createDt 
           description 
           program { 
-            id 
-            name
+            id
+            title
           } 
           programId 
-          round 
+          episode 
           thumb 
           videoId 
           duration 
@@ -91,7 +94,6 @@
 
     player.on('stateChange', event => {
       const status = event.data;
-      console.log(event);
 
       if (status === PLAYER_STATE.PLAYING) {
         setContinueWatching();
@@ -134,6 +136,7 @@
   };
 </script>
 
+<SubHeaderContainer title={content?.title} />
 <div class="container">
   <Player
     {player}

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   
-  import { getList } from '$lib/_continue_watching';
+  import { getContinueWatchingList } from '$lib/_continue_watching';
   
   import { goto } from '$app/navigation';
   
@@ -16,7 +16,7 @@
   let contents: Content[] = [];
 
   onMount(async () => {
-    contents = await getList();
+    contents = await getContinueWatchingList();
   });
 
   function handleClickContents(id: string) {
