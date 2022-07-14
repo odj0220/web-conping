@@ -32,19 +32,25 @@
         cursor: '',
       };
       const programTitle = getProgramContentsByContentId[0].program.title;
+      const programId = getProgramContentsByContentId[0].program.id;
+
       return {
         programTitle,
+        programId,
         contents,
       };
     }
 </script>
 
 {#await loadAnotherContents()}
-{:then {programTitle, contents}}
+{:then {programTitle, programId, contents}}
     <section class="divider"></section>
     <section class="layout">
         <Title title={createTitle(programTitle)}/>
         <PreviewVideos contents={contents}/>
+        <a class="link" href={'/programs/' + programId}>
+            {programTitle} 시리즈 보러가기
+        </a>
     </section>
 {/await}
 
@@ -58,5 +64,20 @@
   }
   .layout {
     padding: 2.4rem 1.6rem 4rem 1.6rem;
+
+    .link {
+      margin-top: 1.6rem;
+      margin-bottom: 4rem;
+      display: inline-block;
+      width: 100%;
+      @include body3-700;
+      color: $text-white-f2;
+      text-decoration: none;
+      padding: 1.2rem 0;
+      text-align: center;
+      border: 0.1rem solid $text-white-f2;
+      border-radius: 0.2rem;
+      cursor: pointer;
+    }
   }
 </style>
