@@ -29,7 +29,7 @@ export const onMessageFromApp = (event: string) => {
 
 export const callToast = (message: string) => {
   const win: any = window;
-  return win['flutter_inappwebview'].callHandler('callToast', message);
+  win['flutter_inappwebview'].callHandler('callToast', message);
 };
 
 export const callShare = async (text: string[]) => {
@@ -37,10 +37,14 @@ export const callShare = async (text: string[]) => {
   return await win['flutter_inappwebview'].callHandler('callShare', JSON.stringify(text));
 };
 
-
-export const callConfirm = async (message: string) => {
+export const callAlert = (message: string, title?: string, subject?: string) => {
   const win: any = window;
-  return await win['flutter_inappwebview'].callHandler('callConfirm', message);
+  win['flutter_inappwebview'].callHandler('callConfirm', JSON.stringify({ message, title, subject }));
+};
+
+export const callConfirm = async (message: string, title?: string, subject?: string) => {
+  const win: any = window;
+  return await win['flutter_inappwebview'].callHandler('callConfirm', JSON.stringify({ message, title, subject }));
 };
 
 export const getStorage = async (key: string) => {
@@ -50,7 +54,7 @@ export const getStorage = async (key: string) => {
 
 export const setStorage = (key: string, value: string) => {
   const win: any = window;
-  return win['flutter_inappwebview'].callHandler('setStorage', JSON.stringify({ key, value }));
+  win['flutter_inappwebview'].callHandler('setStorage', JSON.stringify({ key, value }));
 };
 
 export const getVersion = async (): Promise<string> => {
@@ -60,7 +64,7 @@ export const getVersion = async (): Promise<string> => {
 
 export const copyToClipboard = (text: string) => {
   const win: any = window;
-  return win['flutter_inappwebview'].callHandler('copyToClipboard', text);
+  win['flutter_inappwebview'].callHandler('copyToClipboard', text);
 };
 
 export const launchTel = async (phoneNumber: string): Promise<boolean> => {
@@ -71,4 +75,14 @@ export const launchTel = async (phoneNumber: string): Promise<boolean> => {
 export const launchWeb = async (url: string, headers?: string): Promise<boolean> => {
   const win: any = window;
   return await win['flutter_inappwebview'].callHandler('launchWeb', JSON.stringify({ url, headers }));
+};
+
+export const launchSystemNotification = () => {
+  const win: any = window;
+  win['flutter_inappwebview'].callHandler('launchSystemNotification');
+};
+
+export const getUser = async () => {
+  const win: any = window;
+  return await win['flutter_inappwebview'].callHandler('getUser');
 };
