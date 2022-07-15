@@ -1,33 +1,28 @@
 <script lang="ts">
-  import { onMount, SvelteComponent } from 'svelte';
-  import { graphqlApi } from '../lib/_api_graphql';
-  let Banners: SvelteComponent;
+import { onMount, SvelteComponent } from 'svelte';
+import { graphqlApi } from '../lib/_api_graphql';
+import Container from './common/layout/Container.svelte';
+let Banners: SvelteComponent;
 
-  let banners = [];
+let banners = [];
 
-  onMount(async () => {
-    await loadBannersComponenrt();
-    await loadBannersData();
-  });
+onMount(async () => {
+  await loadBannersComponenrt();
+  await loadBannersData();
+});
 
-  async function loadBannersComponenrt() {
-    const module = await import('./Banners.svelte');
-    Banners = module.default;
-  }
+async function loadBannersComponenrt() {
+  const module = await import('./Banners.svelte');
+  Banners = module.default;
+}
 
-  async function loadBannersData() {
-    const query = '{getBanners{title imgPath link}}';
-    const { data: { getBanners } } = await graphqlApi(query);
-    banners = getBanners;
-  }
+async function loadBannersData() {
+  const query = '{getBanners{title imgPath link}}';
+  const { data: { getBanners } } = await graphqlApi(query);
+  banners = getBanners;
+}
 </script>
 
-<section>
-    <svelte:component this={Banners} banners={banners}></svelte:component>
-</section>
-
-<style lang="scss">
-    section {
-      min-height: 32.8rem;
-    }
-</style>
+<Container type="full">
+  <svelte:component this={Banners} banners={banners}></svelte:component>
+</Container>

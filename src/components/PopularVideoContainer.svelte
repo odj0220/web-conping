@@ -8,6 +8,7 @@
 
   import { onMount } from 'svelte';
   import { graphqlApi } from '$lib/_api_graphql';
+import Container from './common/layout/Container.svelte';
 
   let contents: Content[];
   let end = false;
@@ -54,7 +55,7 @@
 </script>
 
 {#if contents?.length }
-  <CenterSection type="transparency">
+  <Container marginTop="4rem">
     <Title
       {title}
     />
@@ -66,5 +67,5 @@
       infiniteScroll={false}
       autoPlay={true}
     />
-  </CenterSection>
+  </Container>
 {/if}

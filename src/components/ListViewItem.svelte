@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Content } from 'src/global/types';
+import Thumbnail from './common/shared/Thumbnail.svelte';
 
   export let onClick: (id: string) => void;
   export let content: Content;
@@ -19,11 +20,7 @@
 
 <li class="grid-item">
   <div class="left">
-    <img
-      src={thumb}
-      alt="방송이미지"
-      on:click={() => onClick(id)}
-    > 
+    <Thumbnail src={thumb} width="12rem" height="6.8rem"/>
   </div>
 
   <div
@@ -37,30 +34,28 @@
 
 <style lang="scss">
   .grid-item {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    min-height: 6.8rem;
-
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
     .left {
       border-radius: 2px;
       overflow: hidden;
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
+      flex-shrink: 0;
     }
 
     .right {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      padding: 1rem;
       font-size: 1.2rem;
+      @include caption2-400;
 
       .head-line {
+        display: block;
         color: #8A8A8A;
+        margin-bottom: 0.4rem;
+      }
+      .sub-head {
+        @include ellipsis(2);
       }
     }
   }

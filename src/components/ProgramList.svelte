@@ -17,5 +17,6 @@
 <style lang="scss">
   .list {
     display: flex;
+    padding: 0 1.6rem;
   }
 </style>

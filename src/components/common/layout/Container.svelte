@@ -20,9 +20,13 @@ export let title = '';
       border-radius: 0.4rem;
       background-color: $bg-black-21;
       padding: 1.6rem 1.2rem;
+      margin:0 1.6rem;
     }
     &.wide {
       padding: 1.6rem 0;
+    }
+    &.full {
+      padding: 0;
     }
   }
 </style>
