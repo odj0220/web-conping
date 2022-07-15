@@ -52,19 +52,18 @@
 
 <script type="ts">
   import { guid, toHHMMSS } from '$lib/util';
-  export { toHHMMSS } from '$lib/util';
   import { onMount, SvelteComponent } from 'svelte';
   import YP from 'youtube-player';
   import Avatar from './Avatar.svelte';
+  import type { Content } from 'src/global/types';
 
-  export let content: any;
+  export let content: Content;
   export let order = 0;
   export let onClickContents: (id: string) => void;
   export let autoPlay: boolean;
 
-  let playTime;
   const playerId = guid();
-
+  let playTime;
   let player: YouTubePlayer;
   let container: HTMLElement | null = null;
   let videoElement: HTMLElement | null = null;
@@ -83,8 +82,10 @@
 
   $: videoName = content.title;
   $: programName = content.program.title;
-  $: round = `${content.episode && `${content.episode}화`}`;
+  $: programThumbnail = content.program?.thumbnail;
+  $: episode = `${content.episode && `${content.episode}화`}`;
   $: createdAt = content.createDt;
+  $: views = content.views ? `조회수 ${content.views}회` : '';
 
   function loadYoutubePlayer() {
     const playerVars = {
@@ -212,7 +213,7 @@
         <section class="player-wrap">
             <div id='{playerId}' class="youtube-player"></div>
             <section class="thumb-wrap" bind:this={thumbnailElement}>
-                <img src={content.thumb} alt={content.name + '의 썸네일'}>
+                <img src={content.thumb} alt={content.title + '의 썸네일'}>
             </section>
             <div class="overlay-wrap">
                 {#if player}
@@ -236,14 +237,16 @@
             </span>
             </div>
             <div class="rest">
-              <Avatar size="24px" src="" />
+              <Avatar size="24px" src="{programThumbnail}" />
               <div class="info">
-                <span class="program-name">{programName}</span>
-                <span class="divider">・</span>
-                <span calss="round">{round}</span>
+                <span class="program-name">{programName}</span>=
+                <span class="episode">{episode}</span>
+                {#if views}
+                    <span class="divider">・</span>
+                    <span class="views">{views}</span>
+                {/if}
                 <span class="divider">・</span>
                 <svelte:component this={PastTimeDelta} pastTime={createdAt}></svelte:component>
-
               </div>
             </div>
         </section>

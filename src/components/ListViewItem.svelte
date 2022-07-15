@@ -3,23 +3,25 @@
 
   export let onClick: (id: string) => void;
   export let content: Content;
+
+  const { id, title, subtitle, thumb } = content;
 </script>
 
 <li class="grid-item">
   <div class="left">
     <img
-      src={content.thumb}
+      src={thumb}
       alt="방송이미지"
-      on:click={() => onClick(content.videoId)}
+      on:click={() => onClick(id)}
     > 
   </div>
 
   <div
     class="right"
-    on:click={() => onClick(content.videoId)}
+    on:click={() => onClick(id)}
   >
-    <span class="title">{content.program.title}</span>
-    <span class="sub-title">{content.title}</span>
+    <span class="title">{title}</span>
+    <span class="sub-title">{subtitle}</span>
   </div>
 </li>
 

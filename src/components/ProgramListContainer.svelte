@@ -1,5 +1,7 @@
 <script lang=ts>
+  import { onMount } from 'svelte';
   import { graphqlApi } from '$lib/_api_graphql';
+  import type { Program } from 'src/global/types';
 
   import Metadata from './Metadata.svelte';
   import Tabs from './Tabs.svelte';
@@ -9,8 +11,6 @@
   import SubHeaderContainer from './SubHeaderContainer.svelte';
 
   export let id: string;
-  let data = {};
-  let celebs = [];
   let items = [
     { label: '에피소드',
       value: 1,
@@ -29,10 +29,28 @@
     },
   ];
 
+
   async function loadData() {
-    const query = `{program(id:"${id}"){id title description banner regularAiringAt airingBeginAt airingEndAt} getCelebsByProgramId(id:"${id}"){thumbnail name categories}}`;
+    const query = `{
+      program(id:"${id}"){
+        id
+        title
+        description
+        banner
+        regularAiringAt
+        airingBeginAt
+        airingEndAt
+      }
+
+      getCelebsByProgramId(id:"${id}"){
+        thumbnail
+        name
+        categories
+      }
+    }`;
+
     const result = await graphqlApi(query);
-    const program = result?.data?.program;
+    const program: Program = result?.data?.program;
     const celobs = result?.data.getCelebsByProgramId;
     const metaDataOption = setMetadataOption(program, celobs);
 

@@ -1,18 +1,28 @@
 <script lang=ts>
   import ShortsGridVodList from './ShortsGridVodList.svelte';
   import { graphqlApi } from '../lib/_api_graphql';
+  import { goto } from '$app/navigation';
+  import type { Content } from 'src/global/types';
 
   export let id;
-  
-  const handleClick = (id) => {
-    console.log('TODO: click 이벤트', id);
+
+  const handleClickShorts = (id: string) => {
+    goto(`/contents/${id}`);
   };
 
-  async function loadData() {
-    const query = `{getContentsByProgramId(id:"${id}", type:SHORTS){id title videoId thumb program {title}}}`;
+  async function loadData(): Promise<Content[]> {
+    const query = `{
+      getContentsByProgramId(id:"${id}", type:SHORTS){
+        id
+        title
+        videoId
+        thumb
+        program {title}
+      }
+    }`;
     const result = await graphqlApi(query);
     const contents = result.data.getContentsByProgramId;
-    return contents;
+    return new Promise((resolve, reject) => resolve(contents));
   }
 </script>
 
@@ -21,10 +31,9 @@
   {#if contents.length}
     <ShortsGridVodList
             {contents}
-            onClick={handleClick}
+            onClick={handleClickShorts}
     />
     {:else}
     <p>쇼츠가 없습니다.</p>
   {/if}
-
 {/await}

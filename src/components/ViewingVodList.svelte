@@ -17,7 +17,6 @@
   {/each}
 </section>
 
-
 <style lang="scss">
   section {
     display: flex;

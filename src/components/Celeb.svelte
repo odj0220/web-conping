@@ -1,23 +1,18 @@
 <script lang="ts">
-  import type { ICeleb } from 'src/global/types';
+import type { ICeleb } from 'src/global/types';
+import Avatar from './Avatar.svelte';
 
-// export let id: string;
-// export let name: string;
-// export let thumbnail: string;
-export let categories: any[] = [];
-  import Avatar from './Avatar.svelte';
+export let celeb: ICeleb;
 
-  export let celeb: ICeleb;
-
-  const { id, name, thumbnail } = celeb;
+const { id, name, thumbnail, categories } = celeb;
 
 const returnColor = (category: string) => {
-    switch (category) {
-    case '뷰티': return '#FF70E2';
-    case '먹방': return '#FFA370';
-    case 'IT': return '#BE65F2';
-    case '기획': return '#4FBF69';
-    }
+  switch (category) {
+  case '뷰티': return '#FF70E2';
+  case '먹방': return '#FFA370';
+  case 'IT': return '#BE65F2';
+  case '기획': return '#4FBF69';
+  }
 };
 
 </script>
@@ -49,20 +44,6 @@ const returnColor = (category: string) => {
             </li>
         </ul>
     </div>
-    <ul class="info-list">
-      <li class="info-item">
-        <span class="key">팔로워</span>
-        <span class="value">60.2만명</span>
-      </li>
-      <li class="info-item">
-        <span class="key">콘텐츠</span>
-        <span class="value">2</span>
-      </li>
-      <li class="info-item">
-        <span class="key">상품</span>
-        <span class="value">9</span>
-      </li>
-    </ul>
 </li>
 
 <style lang="scss">

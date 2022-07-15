@@ -5,7 +5,7 @@
   
   import { graphqlApi } from '$lib/_api_graphql';
 
-  import type { Content, TitleElement } from 'src/global/types';
+  import type { Content, Program, TitleElement } from 'src/global/types';
   
   import CenterSection from '../styles/CenterSection.svelte';
   
@@ -13,17 +13,16 @@
   import ImageListView from './ImageListView.svelte';
   import MoreButton from './common/shared/MoreButton.svelte';
 
-  let contents: Content[];
   let title: TitleElement[];
-  let seriesId: string;
-  let seriesName: string;
+  let contents: Content[];
+  let series: Program;
   
   const move = (targetUrl: string) => {
     goto(targetUrl);
   };
 
   const handleTitleClick = () => {
-    move(`/programs/${seriesId}`);
+    move(`/programs/${series.id}`);
   };
 
   const handleItemClick = (id: string) => {
@@ -31,58 +30,76 @@
   };
 
   const handleButtonClick = () => {
-    move(`/programs/${seriesId}`);
+    move(`/programs/${series.id}`);
   };
   
-  onMount(async () => {
+
+  const getData = async () => {
     const query = `{
-      getMainSeries{
-        title {
+      getMainSeries {
+        title{
           text
           type
         }
-        series{
-          name
+        contents {
           id
-        }
-        contents{
-          thumb
-          name
+          title
+          subtitle
+          programId
+          createDt
+          episode
+          description
+          url
           videoId
-          program{
-            name
+          thumb
+          program {
+            id
+            title
+            description
           }
+          currentTime
+          duration
+        }
+        series {
+          title
+          id
         }
       }
     }`;
-  
-    graphqlApi(query).then(response => {
-      const {
-        title: titleArray,
-        series,
-        contents: contentList,
-      } = response.data.getMainSeries;
-  
-      title = titleArray;
-      seriesId = series.id;
-      seriesName = series.name;
-      contents = contentList;
-    });
+
+    const response = await graphqlApi(query);
+
+    const {
+      title: resivedTitle,
+      series: resivedSeries,
+      contents: resivedContents,
+    } = response.data.getMainSeries;
+
+    title = resivedTitle;
+    series = resivedSeries;
+    contents = resivedContents;
+  };
+
+  onMount(async () => {
+    getData();
   });
 </script>
 
-<CenterSection type='inner' >
-  <Title
-    onClick={handleTitleClick}
-    {title}
-  />
-  
-  <ImageListView
-    {contents}
-    onClick={handleItemClick}
-  />
-  <MoreButton
-    value="{seriesName} 시리즈 보러가기"
-    onClick={handleButtonClick}
-  />
-</CenterSection>
+{#if contents?.length }
+  <CenterSection type='inner'>
+    <Title
+      onClick={handleTitleClick}
+      {title}
+    />
+    
+    <ImageListView
+      {contents}
+      onClick={handleItemClick}
+    />
+    
+    <MoreButton
+      value="{series.title} 시리즈 보러가기"
+      onClick={handleButtonClick}
+    />
+  </CenterSection>
+{/if}

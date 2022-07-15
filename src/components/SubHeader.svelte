@@ -2,7 +2,8 @@
   import Icon from './icons/Icon.svelte';
 
   export let onClick: (type: string) => void;
-  export let title = '';
+  export let title: string;
+  export let share: boolean;
 </script>
 
 <div class="header-wrapper">
@@ -17,6 +18,7 @@
   <div class="title-wrapper">
     <div class="title">{title}</div>
   </div>
+  {#if share}
   <div class="right-wrapper">
     <button
       type="button"
@@ -25,22 +27,35 @@
       <Icon name="share" />
     </button>
   </div>
+  {/if}
+  
 </div>
 
 <style lang="scss">
   .header-wrapper {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     height: 5.4rem;
-    padding: 0 1.6rem;
     position: sticky;
     top: 0;
     z-index: 50;
     background-color: $default-black;
 
+    .left-wrapper {
+      position: absolute;
+      left: 1.2rem;
+    }
+    .title-wrapper {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .right-wrapper {
+      position: absolute;
+      right: 1.2rem;
+    }
     .title {
-      @include title1-700
+      @include body1-700;
     }
   }
 </style>

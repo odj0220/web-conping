@@ -3,15 +3,18 @@
 
   import { guid } from '$lib/util';
   import { graphqlApi } from '$lib/_api_graphql';
-  import { setContents, getList } from '$lib/_continue_watching';
+  import { setContents, getContinueWatchingList } from '$lib/_continue_watching';
 
   import YP from 'youtube-player';
 
   import type { YouTubePlayer } from 'youtube-player/dist/types';
   
+  import type { Content } from 'src/global/types';
+
   import Metadata from './Metadata.svelte';
   import Player from './Player.svelte';
   import RelatedProductContainer from './RelatedProductContainer.svelte';
+  import SubHeaderContainer from './SubHeaderContainer.svelte';
   import ContentDetailAnotherVideosContainer from './ContentDetailAnotherVideosContainer.svelte';
 
   const playerId = guid();
@@ -19,7 +22,7 @@
   export let id: string;
   
   let player: YouTubePlayer;
-  let content: any;
+  let content: Content;
   let continueInterval;
   let continueIntervalTime = 10000;
   let metaDataOption: any = {};
@@ -27,6 +30,7 @@
   onMount(async () => {
     await getData();
     await loadYoutubePlayer();
+    onPlayerStateChange();
   });
 
   const getData = async () => {
@@ -37,16 +41,17 @@
           title
           createDt
           description
-          programId
-          episode
-          thumb
-          videoId
-          duration
-          currentTime
+          contentType
           program {
             id
             title
           }
+          programId
+          episode
+          thumb 
+          videoId 
+          duration 
+          currentTime
         }
 
         getCelebsByContentId(id: "${id}") {
@@ -78,7 +83,7 @@
         },
       },
     };
-  
+
     return newData;
   };
 
@@ -88,17 +93,17 @@
       rel: 0, //연관동영상 표시여부
       loop: 0,
     };
-  
+
     const option: any = {
       videoId: content.videoId,
       playerVars,
     };
 
     player = await YP(playerId, option);
-  
-    const continueItem = (await getList() || []).find(contentItem => contentItem.id === content.id);
+
+    const continueItem = (await getContinueWatchingList() || []).find(contentItem => contentItem.id === content.id);
     const continueCurrentTime = continueItem ? continueItem.currentTime : 0;
-  
+
     setCurrentTime(continueCurrentTime);
     onPlayerStateChange();
   };
@@ -157,10 +162,11 @@
   };
 </script>
 
+<SubHeaderContainer title={content?.title} />
 <div class="container">
   <Player
-          {player}
-          {playerId}
+    {player}
+    {playerId}
   />
 
   <Metadata option={metaDataOption}/>

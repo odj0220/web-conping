@@ -4,14 +4,14 @@
   export let program: Program;
   export let onClick: (id: string) => void;
 
-  const { bannerImg, name, id } = program;
+  const { thumbnail, title, id } = program;
 </script>
 
 <li class="item" on:click={() => onClick(`${id}`)}>
-  <div class="bannerImg">
-    <img src={bannerImg} alt={name} />
+  <div class="thumbnail">
+    <img src={thumbnail} alt={title} />
   </div>
-  <h6 class="name">{name}</h6>
+  <h6 class="title">{title}</h6>
 </li>
 
 <style lang="scss">
@@ -21,7 +21,7 @@
     &:not(:last-child) {
         margin-right: 12px;
     }
-    .bannerImg {
+    .thumbnail {
         border-radius: 0.4rem;
         overflow: hidden;
         img {
@@ -30,7 +30,7 @@
             object-fit: cover;
         }
     }
-    .name {
+    .title {
         @include caption1-400;
         margin-top: 8px;
     }

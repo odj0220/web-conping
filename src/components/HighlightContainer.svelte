@@ -1,39 +1,52 @@
 <script lang=ts>
   import { graphqlApi } from '../lib/_api_graphql';
   import PreviewVideos from './PreviewVideos.svelte';
-  
+  import { goto } from '$app/navigation';
+  import type { Content } from 'src/global/types';
+
   export let id;
-  
-  const handleClick = (id) => {
-    console.log('TODO: click 이벤트', id);
+
+  const handleClickContents = (contentsId: string) => {
+      goto(`/contents/${contentsId}`);
   };
 
   async function loadHighlight() {
-    const query = `{getContentsByProgramId(id:"${id}", type:HIGHLIGHT){id title programId videoId thumb createDt episode program {id title}}}`;
+    const query = `{
+      getContentsByProgramId(id:"${id}", type:HIGHLIGHT){
+        id
+        title
+        programId
+        videoId
+        thumb
+        createDt
+        episode
+        program{
+          id
+          title
+        }
+      }
+    }`;
     const result = await graphqlApi(query);
-    const contents: {data: any[]; end: boolean; cursor:string} = {
-      data: [],
+    const data: {data: Content[]; end: boolean; cursor:string} = {
+      contents: result.data.getContentsByProgramId,
       end: false,
       cursor: '',
     };
-    contents.data = result.data.getContentsByProgramId;
-    return contents;
+    return data;
   }
 </script>
 
 {#await loadHighlight()}
     <p>loading...</p>
-{:then data}
-    {#if data.length}
+{:then {contents, end, cursor}}
+    {#if contents.length}
         <PreviewVideos
-                contents={data}
-                onClick={handleClick}
+                contents={contents}
+                end={end}
+                cursor={cursor}
+                onClick={handleClickContents}
         />
     {:else}
         <p>하이라이트가 없습니다.</p>
     {/if}
 {/await}
-
-<style lang="scss">
-
-</style>

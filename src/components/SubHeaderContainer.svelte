@@ -1,23 +1,24 @@
 <script lang="ts">
   import { navigate } from 'svelte-navigator';
-
   import SubHeader from './SubHeader.svelte';
 
-  function handleClickButton(type: string) {
-    // TODO: click 이벤트
-    console.log(type, 'button clicked');
+  export let title = '';
+  export let share = true;
 
+  function handleClickButton(type: string) {
     switch (type) {
     case 'back':
       navigate(-1);
       break;
-  
+
+    case 'share':
+      console.log('TODO: 공유하기');
+      break;
+
     default:
       break;
     }
   }
-
-  export let title;
 </script>
 
-<SubHeader {title} onClick={handleClickButton}/>
+<SubHeader {title} {share} onClick={handleClickButton}/>

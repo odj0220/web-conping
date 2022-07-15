@@ -5,14 +5,14 @@
   
   import { goto } from '$app/navigation';
   
+  import type { Content } from 'src/global/types';
+  
   import CenterSection from '../styles/CenterSection.svelte';
   import PreviewVideos from './PreviewVideos.svelte';
 
-  let contents: {data: any[]; end: boolean; cursor:string} = {
-    data: [],
-    end: false,
-    cursor: '',
-  };
+  let contents: Content[];
+  let end = false;
+  let cursor = '';
 
   onMount(async () => {
     await loadContents(2);
@@ -29,16 +29,18 @@
                 cursor
                 node {
                    id
-                   name
+                   title
                    programId
                    program {
                       id
-                      name
+                      title
+                      thumbnail
                    }
                    createDt
-                   round
+                   episode
                    videoId
                    thumb
+                   views
                 }
             }
             pageInfo {
@@ -51,13 +53,9 @@
     try {
       const { data: { getMainInfiniteContents } } = await graphqlApi(query);
   
-      const newContents = getMainInfiniteContents.edges.map((edge) => edge.node);
-  
-      const videos = [...contents.data, ...newContents];
-  
-      contents.data = videos;
-      contents.end = !getMainInfiniteContents.pageInfo.hasNextPage;
-      contents.cursor = getMainInfiniteContents.pageInfo.startCursor;
+      contents = getMainInfiniteContents.edges.map((edge) => edge.node);
+      end = !getMainInfiniteContents.pageInfo.hasNextPage;
+      cursor = getMainInfiniteContents.pageInfo.startCursor;
     } catch (error) {
       console.log(error);
     }
@@ -69,7 +67,7 @@
 
   async function runInfiniteScrolling(event) {
     const detail = event.detail;
-    await loadContents(6, contents.cursor);
+    await loadContents(6, cursor);
     detail.stop();
   }
 </script>
@@ -77,6 +75,8 @@
 <CenterSection type="transparency">
   <PreviewVideos
     {contents}
+    {end}
+    {cursor}
     infiniteScroll={true}
     autoPlay={true}
     onClickContents={handleClickContents}

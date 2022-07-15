@@ -5,12 +5,11 @@
 
   export let contents: Content[] = [];
   export let onClick: (id: string) => void;
-
 </script>
 
 <section>
   <ul>
-    {#each contents as content, index }
+    {#each contents as content}
       <ListViewItem {content} {onClick} />
     {/each}
   </ul>

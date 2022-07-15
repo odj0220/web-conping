@@ -26,14 +26,14 @@
     </div>
     <img class="thumbnail" src={content.thumb} alt="thubnail"/>
     <div class="play-btn-wrapper">
-      <button on:click={() => onClick(`${content.videoId}`)}>
+      <button on:click={() => onClick(`${content.id}`)}>
         <img class="play-btn" src="/images/icons/ic_play.svg" alt="play-btn"/>
       </button>
     </div>
   </div>
 
-  <p class="name">
-    {content?.name}
+  <p class="title">
+    {content?.title}
   </p>
 </section>
 
@@ -109,7 +109,7 @@
         }
       }
 
-      .name {
+      .title {
         @include caption3;
         @include ellipsis(2)
       }

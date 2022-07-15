@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-  import { get, writable } from 'svelte/store';
+  import { writable } from 'svelte/store';
   const scrolling = writable(false);
   
   export function startScrolling () {
@@ -12,12 +12,13 @@
 </script>
 
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onMount} from 'svelte';
   import PreviewVideo from './PreviewVideo.svelte';
-  import { onMount } from 'svelte';
+  import type { Content } from 'src/global/types';
 
-  export let title: string;
-  export let contents!: {data: any[]; end: boolean; cursor: string};
+  export let contents: Content[] = [];
+  export let end: boolean;
+  export let cursor: string;
   export let onClickContents: (id: string) => void;
   export let infiniteScroll = false;
   export let autoPlay = false;
@@ -25,8 +26,6 @@
   let infiniteScrollArea: HTMLElement | null = null;
   let scrollTimer: any = null;
   let io: any = null;
-
-  $: videos = contents.data ? contents.data : [];
 
   const dispatch = createEventDispatcher<{'request-more': {stop:() => void}}>();
 
@@ -48,7 +47,7 @@
     io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          if (!videos.length) {
+          if (!contents?.length) {
             return;
           }
 
@@ -56,7 +55,7 @@
             return;
           }
 
-          if (contents.end) {
+          if (end) {
             return;
           }
 
@@ -80,24 +79,21 @@
 </script>
 
 <section class="videos-wrapper">
-  {#if title}
-    <h2 class="title">
-      {title}
-    </h2>
-  {/if}
-
   <ul class="contents-container">
-    <ul class="contents-container">
-        {#if videos.length > 0}
-            {#each videos as video, order (video.id)}
-                <PreviewVideo content={video} order={order + 1} autoPlay={autoPlay}/>
-            {/each}
-        {/if}
-    </ul>
+    {#if contents?.length > 0}
+      {#each contents as video, order (video.id)}
+        <PreviewVideo
+          {onClickContents}
+          content={contents}
+          order={order + 1}
+          autoPlay={autoPlay}
+        />
+      {/each}
+    {/if}
 
     {#if infiniteScroll}
       <section class="infinite-scroll"
-               class:done={contents.end}
+               class:done={end}
                bind:this={infiniteScrollArea}
 
       ></section>
@@ -112,11 +108,6 @@
 <style lang="scss">
   .videos-wrapper {
     width: 100%;
-
-    .title {
-      @include body3-700;
-      margin-bottom: 1.2rem;
-    }
 
     .infinite-scroll {
       padding-bottom: 2rem;

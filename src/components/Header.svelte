@@ -3,7 +3,7 @@
 
   export let onClick: (type: string) => void;
   export let title: string;
-  export let buttons: any[] = [];
+  export let buttons: string[] = [];
 
 </script>
 
