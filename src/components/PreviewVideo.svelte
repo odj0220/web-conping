@@ -239,7 +239,7 @@
     <div class="rest">
       <Avatar size="24px" src="{programThumbnail}" />
       <div class="info">
-        <span class="program-name">{programName}</span>=
+        <span class="program-name">{programName}</span>
         <span class="episode">{episode}</span>
         {#if views}
           <span class="divider">・</span>
