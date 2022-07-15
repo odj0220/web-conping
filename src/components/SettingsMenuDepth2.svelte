@@ -1,22 +1,13 @@
 <script lang="ts">
-interface IDepth2 {
-  title: string
-  link: string
-  desc: string
-  handler: () => void
-  linkHandler: () => void
-}
-export let depth2: IDepth2;
+export let depth2: any;
+export let onClick: (category: string) => void;
+
 </script>
 
-<li class="depth2-menu" on:click={depth2.handler}>
+<li class="depth2-menu" on:click="{() => onClick(depth2.title)}">
   <span class="depth2-title">{depth2.title}</span>
-  {#if depth2.desc || depth2.link}
-    <span 
-      class:link={depth2.link}
-      class="depth2-desc"
-      on:click={depth2.linkHandler}
-    >{depth2.desc || depth2.link}</span>
+  {#if depth2.desc}
+    <span class="depth2-desc">{depth2.desc}</span>
   {/if}
 </li>
 
