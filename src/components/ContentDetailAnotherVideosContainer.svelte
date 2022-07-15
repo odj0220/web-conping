@@ -1,7 +1,7 @@
 <script lang="ts">
     import Title from './Title.svelte';
     import PreviewVideos from './PreviewVideos.svelte';
-    import { graphqlApi } from '../lib/_api_graphql';
+    import { graphqlApi } from '../lib/_api';
 
 
     export let contentId: string;

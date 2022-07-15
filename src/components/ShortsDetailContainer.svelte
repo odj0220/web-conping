@@ -1,8 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { graphqlApi } from '$lib/_api_graphql';
+  import { graphqlApi } from '$lib/_api';
 
-  import type { Content } from 'src/global/types';
+  import type { IContent } from 'src/global/types';
 
   import BottomSheet from './common/layout/BottomSheet.svelte';
   import RelatedProductContainer from './RelatedProductContainer.svelte';
@@ -11,7 +11,7 @@
 
   export let id: string;
 
-  let content: Content;
+  let content: IContent;
   let offsetTop = 0;
 
   const setOffsetTop = (num: number) => {

@@ -1,5 +1,5 @@
 <script lang="ts">
-import { graphqlApi } from '$lib/_api_graphql';
+import { graphqlApi } from '$lib/_api';
 import { onMount } from 'svelte';
 import type { ICeleb } from 'src/global/types';
 import Celebs from './Celebs.svelte';

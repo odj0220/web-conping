@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { graphqlApi } from '$lib/_api_graphql';
+  import { graphqlApi } from '$lib/_api';
   import type { IContent, TitleElement } from 'src/global/types';
 
   import CenterSection from '$styles/CenterSection.svelte';
