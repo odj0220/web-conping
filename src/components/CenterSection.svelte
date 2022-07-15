@@ -11,8 +11,6 @@ export let type: string;
 </section>
 
 <style lang="scss">
-@import  '../styles/variables.scss';
-
 .section {
 
 }

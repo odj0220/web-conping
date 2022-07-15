@@ -1,40 +1,41 @@
 <script lang=ts>
-  import { onMount } from 'svelte';
-  
   import { graphqlApi } from '../lib/_api_graphql';
-  import { goto } from '$app/navigation';
-  
+  import ImageListView from './ImageListView.svelte';
   import type { Content } from 'src/global/types';
 
-  import ImageListView from './ImageListView.svelte';
+  export let id;
 
-  export let id: string;
-  let contents: Content[];
-
-  onMount(async () => {
+  async function loadContents(): Promise<Content[]> {
     const query = `{
-      getContentsByProgramId(id:"${id}", type:FULL){
-        id
-        title
-        videoId
-        thumb
-        program{
-          title
-        }
-      }
+       getContentsByProgramId(id:"${id}", type:FULL){
+         id
+         title
+         videoId
+         thumb
+         program{
+           title
+           }
+       }
     }`;
-
     const result = await graphqlApi(query);
-
-    contents = result.data.getContentsByProgramId;
-  });
+    const contents = result.data.getContentsByProgramId;
+    return contents;
+  }
 
   const handleClickContents = (contentsId: string) => {
-    goto(`/contents/${contentsId}`);
+    window.location.href = `/contents/${contentsId}`;
   };
 </script>
 
-<ImageListView
-  {contents}
-  onClick={handleClickContents}
-/>
+{#await loadContents()}
+{:then contents}
+    {#if contents.length}
+        <ImageListView
+                {contents}
+                onClick={handleClickContents}
+        />
+    {:else}
+        <p>에피소드가 없습니다.</p>
+    {/if}
+{/await}
+

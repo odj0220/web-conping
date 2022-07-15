@@ -16,14 +16,12 @@
 {#if title?.length }
   <h1 on:click={() => clickTitle()}>
     {#each title as element }
-    <span class={element?.type}>{element.text} </span>
+    <span class={element?.type} style={element.style}>{element.text} </span>
     {/each}
   </h1>
 {/if}
 
 <style lang="scss">
-  @import '../styles/variables.scss';
-
   h1 {
     display: flex;
     flex-direction: row;

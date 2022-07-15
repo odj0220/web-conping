@@ -10,11 +10,12 @@
   import type { YouTubePlayer } from 'youtube-player/dist/types';
   
   import type { Content } from 'src/global/types';
-  
+
   import Metadata from './Metadata.svelte';
   import Player from './Player.svelte';
   import RelatedProductContainer from './RelatedProductContainer.svelte';
   import SubHeaderContainer from './SubHeaderContainer.svelte';
+  import ContentDetailAnotherVideosContainer from './ContentDetailAnotherVideosContainer.svelte';
 
   const playerId = guid();
 
@@ -24,6 +25,67 @@
   let content: Content;
   let continueInterval;
   let continueIntervalTime = 10000;
+  let metaDataOption: any = {};
+
+  onMount(async () => {
+    await getData();
+    await loadYoutubePlayer();
+    onPlayerStateChange();
+  });
+
+  const getData = async () => {
+    const query = `
+      {
+        content(id:"${id}"){
+          id
+          title
+          createDt
+          description
+          contentType
+          program {
+            id
+            title
+          }
+          programId
+          episode
+          thumb 
+          videoId 
+          duration 
+          currentTime
+        }
+
+        getCelebsByContentId(id: "${id}") {
+          id
+          name
+          description
+          categories
+          banner
+          thumbnail
+        }
+      }
+    `;
+
+    const result = await graphqlApi(query);
+    const celobs = result.data.getCelebsByContentId;
+    content = result?.data?.content;
+    metaDataOption = setMetadataOption(content, celobs);
+  };
+
+  const setMetadataOption = (content: any, celebs: any[]) => {
+    const newData = {
+      contentDetail: {
+        title: content.title,
+        celebs,
+        info: {
+          programTitle: content.program.title,
+          episode: content.episode,
+          createDt: content.createDt,
+        },
+      },
+    };
+
+    return newData;
+  };
 
   const loadYoutubePlayer = async () => {
     const playerVars = {
@@ -38,50 +100,14 @@
     };
 
     player = await YP(playerId, option);
-  
+
     const continueItem = (await getContinueWatchingList() || []).find(contentItem => contentItem.id === content.id);
-  
     const continueCurrentTime = continueItem ? continueItem.currentTime : 0;
-  
+
     setCurrentTime(continueCurrentTime);
-  };
-
-
-  const getData = async () => {
-    const query = `
-      {
-        content(id:"${id}"){
-          id 
-          title
-          contentType 
-          createDt 
-          description
-          program { 
-            id
-            title
-          } 
-          programId 
-          episode 
-          thumb 
-          videoId 
-          duration 
-          currentTime
-        }
-      }
-    `;
-  
-    const result = await graphqlApi(query);
-  
-    content = result?.data?.content;
-  };
-
-  onMount(async () => {
-    await getData();
-
-    await loadYoutubePlayer();
-  
     onPlayerStateChange();
-  });
+  };
+
 
   const onPlayerStateChange = () => {
     const PLAYER_STATE = {
@@ -143,13 +169,13 @@
     {playerId}
   />
 
-  <Metadata
-    title={content?.description}
-  />
-  
+  <Metadata option={metaDataOption}/>
+
   <RelatedProductContainer
-    {id}
-    onClickTimeButton={setCurrentTime}
-    timelineButtonVisible={true}
+          {id}
+          onClickTimeButton={setCurrentTime}
+          timelineButtonVisible={true}
   />
+
+  <ContentDetailAnotherVideosContainer contentId={id}/>
 </div>

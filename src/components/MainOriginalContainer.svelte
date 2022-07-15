@@ -1,9 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  
   import { graphqlApi } from '$lib/_api_graphql';
-  
-  import { goto } from '$app/navigation';
 
   import type { Program } from 'src/global/types';
   
@@ -16,7 +13,7 @@
   let programs: Program[] = [];
 
   function handleClickContents(id: string) {
-    goto(`/programs/${id}`);
+    window.location.href = `/programs/${id}`;
   }
 
   const getData = async () => {

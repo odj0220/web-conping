@@ -51,22 +51,17 @@
 </script>
 
 <script type="ts">
-  import { onMount, SvelteComponent } from 'svelte';
-
-  import YP from 'youtube-player';
-  
   import { guid, toHHMMSS } from '$lib/util';
-  export { toHHMMSS } from '$lib/util';
-
+  import { onMount, SvelteComponent } from 'svelte';
+  import YP from 'youtube-player';
   import Avatar from './Avatar.svelte';
-
   import type { Content } from 'src/global/types';
 
   export let content: Content;
   export let order = 0;
   export let onClickContents: (id: string) => void;
   export let autoPlay: boolean;
-  
+
   const playerId = guid();
   let playTime;
   let player: YouTubePlayer;
@@ -91,7 +86,6 @@
   $: episode = `${content.episode && `${content.episode}화`}`;
   $: createdAt = content.createDt;
   $: views = content.views ? `조회수 ${content.views}회` : '';
-
 
   function loadYoutubePlayer() {
     const playerVars = {
@@ -201,9 +195,9 @@
   }
 
   onMount(async () => {
-    console.log(content);
     const module = await import('./PastTimeDelta.svelte');
     PastTimeDelta = module.default;
+  
     loadYoutubePlayer();
     onPlayerReady();
     onPlayerStateChange();
@@ -215,62 +209,65 @@
   });
 </script>
 
-<li class="preview-container" bind:this ={container} on:click={() => onClickContents(`${content.id}`)}>
-  <section class="player-wrap">
-    <div id='{playerId}' class="youtube-player"></div>
-    <section class="thumb-wrap" bind:this={thumbnailElement}>
-      <img src={content.thumb} alt={content.title + '의 썸네일'}>
-    </section>
-    <div class="overlay-wrap">
-      {#if player}
-        <div class="running-time overlay" class:hide={!autoPlay}>
-          {#await playTime}
-              ...waiting
-          {:then number}
-              {toHHMMSS(number)}
-          {:catch error}
-              {error.message}
-          {/await}
-        </div>
-      {/if}
-    </div>
-  </section>
+<li class="preview-layout" bind:this ={container} on:click={() => onClickContents(`${content.id}`)}>
+    <section class="preview-container">
+        <section class="player-wrap">
+            <div id='{playerId}' class="youtube-player"></div>
+            <section class="thumb-wrap" bind:this={thumbnailElement}>
+                <img src={content.thumb} alt={content.title + '의 썸네일'}>
+            </section>
+            <div class="overlay-wrap">
+                {#if player}
+                    <div class="running-time overlay" class:hide={!autoPlay}>
+                        {#await playTime}
+                            ...waiting
+                        {:then number}
+                            {toHHMMSS(number)}
+                        {:catch error}
+                            {error.message}
+                        {/await}
+                    </div>
+                {/if}
+            </div>
+        </section>
 
-  <section class="data-wrap">
-    <div class="title-wrapper">
-      <span class="title">
-        {videoName}
-      </span>
-    </div>
-    <div class="rest">
-      <Avatar size="24px" src="{programThumbnail}" />
-      <div class="info">
-        <span class="program-name">{programName}</span>
-        <span class="episode">{episode}</span>
-        {#if views}
-          <span class="divider">・</span>
-          <span class="views">{views}</span>
-        {/if}
-        <span class="divider">・</span>
-        <svelte:component this={PastTimeDelta} pastTime={createdAt}></svelte:component>
-      </div>
-    </div>
-  </section>
+        <section class="data-wrap">
+            <div class="title-wrapper">
+        <span class="title">
+              {videoName}
+        </span>
+            </div>
+            <div class="rest">
+                <Avatar size="24px" src="{programThumbnail}" />
+                <div class="info">
+                    <span class="program-name">{programName}</span>=
+                    <span class="episode">{episode}</span>
+                    {#if views}
+                        <span class="divider">・</span>
+                        <span class="views">{views}</span>
+                    {/if}
+                    <span class="divider">・</span>
+                    <svelte:component this={PastTimeDelta} pastTime={createdAt}></svelte:component>
+                </div>
+            </div>
+        </section>
+    </section>
 </li>
 
 <style lang="scss">
-  @import '../styles/modules.scss';
-  @import '../styles/variables.scss';
-    .preview-container {
+    .preview-layout {
       /* 유튜브 플레이어 영역 */
       border-radius: 0.4rem;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      position: relative;
-      width: 100%;
-      display: flex;
-      
+
+      .preview-container {
+        position: relative;
+        width: 100%;
+        height: calc((100vw - 3.2rem) * 0.83);
+        display: flex;
+        flex-direction: column;
 
         .player-wrap {
           display: inline-block;
@@ -362,5 +359,6 @@
             }
           }
         }
+      }
     }
 </style>

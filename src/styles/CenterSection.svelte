@@ -7,9 +7,6 @@
 </section>
 
 <style lang="scss">
-  @import '../styles/modules.scss';
-  @import '../styles/variables.scss';
-
   section {
     margin: 2rem 1.6rem 0 1.6rem;
     display: flex;

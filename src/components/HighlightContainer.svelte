@@ -1,20 +1,12 @@
 <script lang=ts>
-  import { goto } from '$app/navigation';
-  
   import { graphqlApi } from '../lib/_api_graphql';
-  
+  import PreviewVideos from './PreviewVideos.svelte';
   import type { Content } from 'src/global/types';
 
-  import PreviewVideos from './PreviewVideos.svelte';
-
-  export let id: string;
-
-  let contents: Content[];
-  let end = false;
-  let cursor = '';
+  export let id;
 
   const handleClickContents = (contentsId: string) => {
-    goto(`/contents/${contentsId}`);
+    window.location.href = `/contents/${contentsId}`;
   };
 
   async function loadHighlight() {
@@ -33,16 +25,27 @@
         }
       }
     }`;
-
     const result = await graphqlApi(query);
-
-    contents = result.data.getContentsByProgramId;
+    const data: {data: Content[]; end: boolean; cursor:string} = {
+      contents: result.data.getContentsByProgramId,
+      end: false,
+      cursor: '',
+    };
+    return data;
   }
 </script>
 
-  <PreviewVideos
-    {contents}
-    {end}
-    {cursor}
-    onClickContents={handleClickContents}
-  />
+{#await loadHighlight()}
+    <p>loading...</p>
+{:then {contents, end, cursor}}
+    {#if contents.length}
+        <PreviewVideos
+                contents={contents}
+                end={end}
+                cursor={cursor}
+                onClick={handleClickContents}
+        />
+    {:else}
+        <p>하이라이트가 없습니다.</p>
+    {/if}
+{/await}

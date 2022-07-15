@@ -1,10 +1,8 @@
 <script lang=ts>
   import { onMount } from 'svelte';
-
   import { graphqlApi } from '$lib/_api_graphql';
-
   import type { Program } from 'src/global/types';
-  
+
   import Metadata from './Metadata.svelte';
   import Tabs from './Tabs.svelte';
   import EpisodeContainer from './EpisodeContainer.svelte';
@@ -13,8 +11,6 @@
   import SubHeaderContainer from './SubHeaderContainer.svelte';
 
   export let id: string;
-  let program: Program;
-  let celebs = [];
   let items = [
     { label: '에피소드',
       value: 1,
@@ -33,66 +29,86 @@
     },
   ];
 
-  onMount(async () => {
+
+  async function loadData() {
     const query = `{
       program(id:"${id}"){
         id
         title
         description
-        thumbnail
         banner
         regularAiringAt
         airingBeginAt
         airingEndAt
-      } 
+      }
+
       getCelebsByProgramId(id:"${id}"){
         thumbnail
         name
         categories
       }
     }`;
-  
-    const { data } = await graphqlApi(query);
 
-    program = data?.program;
+    const result = await graphqlApi(query);
+    const program: Program = result?.data?.program;
+    const celobs = result?.data.getCelebsByProgramId;
+    const metaDataOption = setMetadataOption(program, celobs);
 
-    console.log(program);
-    celebs = data?.getCelebsByProgramId;
-  });
+    return new Promise((resolve, reject) => {
+      resolve({
+        program,
+        celobs,
+        metaDataOption,
+      });
+    });
+  }
+
+  function setMetadataOption (program: any, celebs: any[]) {
+    const newData = {
+      programDetail: {
+        title: program.title,
+        description: program.description,
+        celebs,
+        info: {
+          airingBeginAt: program.airingBeginAt,
+          airingEndAt: program.airingEndAt,
+          regularAiringAt: program.regularAiringAt,
+        },
+      },
+    };
+
+    return newData;
+  }
 </script>
 
-<SubHeaderContainer title={program?.title} />
-<div class="container">
-  {#if program?.banner }
-    <div class="visual">
-      <img src={program?.banner} alt="banner 이미지"/>
-    </div>
-  {/if}                             
-  <Metadata
-    name={program?.title}
-    description={program?.description}
-    airingBeginAt={program?.airingBeginAt}
-    airingEndAt={program?.airingEndAt}
-    {celebs}
-  />
-</div>
+{#await loadData()}
+{:then {program, celobs, metaDataOption}}
+  <header>
+    <SubHeaderContainer title={program.title} />
+  </header>
+  <main class="container">
+      <section class="thumbnail-wrapper">
+        <img class="thumbnail" src={program.banner} alt=""/>
+      </section>
 
-<section class="tabs-wrapper">
-  <Tabs {items} />
-</section>
+      <Metadata option={metaDataOption}/>
+
+      <section class="tabs-wrapper">
+        <Tabs {items} />
+      </section>
+  </main>
+{/await}
 
 <style lang="scss">
-  @import '../styles/variables.scss';
-
   .container {
-    .visual {
+    .thumbnail-wrapper {
       border-radius: 4px;
       overflow: hidden;
       margin: 0.8rem 1.6rem;
       height: 0;
       padding-bottom: 141%;
       position: relative;
-      img {
+      img.thumbnail {
         position: absolute;
         top: 0;
         left: 0;

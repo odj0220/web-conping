@@ -1,10 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-
   import { graphqlApi } from '$lib/_api_graphql';
-  
-  import { goto } from '$app/navigation';
-
   import type { Content, TitleElement } from 'src/global/types';
 
   import CenterSection from '$styles/CenterSection.svelte';
@@ -21,7 +17,7 @@
   });
 
   function handleClickShorts(id:string) {
-    goto(`/shorts/${id}`);
+    window.location.href = `/shorts/${id}`;
   }
 
   async function getShorts() {

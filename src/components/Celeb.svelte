@@ -47,8 +47,6 @@ const returnColor = (category: string) => {
 </li>
 
 <style lang="scss">
-    @import "../styles/variables.scss";
-
     .item {
         padding: 1.2rem 1.6rem;
         border-radius: 0.4rem;
