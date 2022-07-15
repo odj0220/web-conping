@@ -209,7 +209,7 @@
   });
 </script>
 
-<li class="preview-layout" bind:this ={container} on:click={() => onClickContents(`${content.programId}`)}>
+<li class="preview-layout" bind:this ={container} on:click={() => onClickContents(`${content.id}`)}>
     <section class="preview-container">
         <section class="player-wrap">
             <div id='{playerId}' class="youtube-player"></div>
@@ -233,26 +233,26 @@
 
         <section class="data-wrap">
             <div class="title-wrapper">
-            <span class="title">
-                  {videoName}
-            </span>
+        <span class="title">
+              {videoName}
+        </span>
             </div>
             <div class="rest">
-              <Avatar size="24px" src="{programThumbnail}" />
-              <div class="info">
-                <span class="program-name">{programName}</span>=
-                <span class="episode">{episode}</span>
-                {#if views}
+                <Avatar size="24px" src="{programThumbnail}" />
+                <div class="info">
+                    <span class="program-name">{programName}</span>=
+                    <span class="episode">{episode}</span>
+                    {#if views}
+                        <span class="divider">・</span>
+                        <span class="views">{views}</span>
+                    {/if}
                     <span class="divider">・</span>
-                    <span class="views">{views}</span>
-                {/if}
-                <span class="divider">・</span>
-                <svelte:component this={PastTimeDelta} pastTime={createdAt}></svelte:component>
-              </div>
+                    <svelte:component this={PastTimeDelta} pastTime={createdAt}></svelte:component>
+                </div>
             </div>
         </section>
     </section>
-  </li>
+</li>
 
 <style lang="scss">
     .preview-layout {
