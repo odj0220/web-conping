@@ -125,7 +125,7 @@
   }
 
   .tabs-wrapper {
-    padding-bottom: 13.4rem;
+    padding-bottom: 4rem;
   }
   
 </style>

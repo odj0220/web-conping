@@ -18,11 +18,7 @@ const { thumbnail, title, id } = program;
 .item {
   flex-shrink: 0;
   width: 14.4rem;
-  box-sizing: content-box;
-  &:last-child {
-    margin-right: 1.6rem;
-  }
-
+  
   .thumbnail {
     border-radius: 0.4rem;
     overflow: hidden;

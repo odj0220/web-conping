@@ -82,6 +82,7 @@ const BUTTONS = [
       align-items: flex-end;
       z-index: 2;
       .info {
+        flex-grow: 1;
         .title {
           @include body1-400;
           margin-bottom: 1.6rem;

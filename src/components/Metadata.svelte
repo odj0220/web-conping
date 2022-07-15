@@ -2,33 +2,35 @@
 import { SvelteComponent } from 'svelte';
 import Avatar from './Avatar.svelte';
 import GrayBox from './CenterSection.svelte';
+import Container from './common/layout/Container.svelte';
 import Hscroller from './HorizontalScroller.svelte';
+import Title from './Title.svelte';
 
 let PastTimeDelta: SvelteComponent;
 
 export let option: {
-    programDetail?: {
-        title?: string;
-        description?: string;
-        celebs?: any[];
-        info?: {
-          airingBeginAt?: number;
-          airingEndAt?: number;
-          totalEpisode?: number;
-          regularAiringAt?: number;
-        };
-    }
+  programDetail?: {
+    title?: string;
+    description?: string;
+    celebs?: any[];
+    info?: {
+      airingBeginAt?: number;
+      airingEndAt?: number;
+      totalEpisode?: number;
+      regularAiringAt?: number;
+    };
+  }
 
-    contentDetail?: {
-        title?: string;
-        celebs?: any[];
-        info?: {
-          programTitle?: string;
-          episode?: number;
-          view: number;
-          createDt?: string;
-        };
-    }
+  contentDetail?: {
+    title?: string;
+    celebs?: any[];
+    info?: {
+      programTitle?: string;
+      episode?: number;
+      view: number;
+      createDt?: string;
+    };
+  }
 };
 
 let information = [];
@@ -164,23 +166,20 @@ const getDay = (time: number) => {
       {/if}
 
       {#if option.contentDetail?.celebs.length}
-          <section class="celob-wrapper">
-              <GrayBox title="출연 셀럽">
-                  <Hscroller>
-                      <ul class="profile-list">
-                          {#each option.contentDetail.celebs as celeb (celeb.id)}
-                              <li class="profile-item">
-                                  <a sveltekit:prefetch href={'/celobs/' + celeb.id}>
-                                      <Avatar size="8rem" src={celeb.thumbnail} alt="{celeb.name + '의 사진'}"/>
-                                      <span class="profile-name">{celeb.name}</span>
-                                      <span class="profile-role">{celeb.categories[0]}</span>
-                                  </a>
-                              </li>
-                          {/each}
-                      </ul>
-                  </Hscroller>
-              </GrayBox>
-          </section>
+          <Container type="grayBox wide" margin="2.4rem 0 0 0">
+            <Title title={[{ text: '출연 셀럽' }]} marginLeft="1.2rem"/>
+            <ul class="profile-list">
+              {#each option.contentDetail.celebs as celeb (celeb.id)}
+                <li class="profile-item">
+                  <a sveltekit:prefetch href={'/celebs/' + celeb.id}>
+                    <Avatar size="8rem" src={celeb.thumbnail} alt="{celeb.name + '의 사진'}"/>
+                    <span class="profile-name">{celeb.name}</span>
+                    <span class="profile-role">{celeb.categories[0]}</span>
+                  </a>
+                </li>
+              {/each}
+            </ul>
+          </Container>
       {/if}
     {/if}
 
@@ -204,30 +203,27 @@ const getDay = (time: number) => {
         {/if}
 
         {#if option.programDetail?.celebs.length}
-            <section class="celob-wrapper">
-                <GrayBox title="출연 셀럽">
-                    <Hscroller>
-                        <ul class="profile-list">
-                            {#each option.programDetail.celebs as celeb, index}
-                                <li class="profile-item">
-                                    <a sveltekit:prefetch href={'/celobs/' + celeb.id}>
-                                        <Avatar size="8rem" src={celeb.thumbnail} alt="{celeb.name + '의 사진'}"/>
-                                        <span class="profile-name">{celeb.name}</span>
-                                        <span class="profile-role">{celeb.categories[0]}</span>
-                                    </a>
-                                </li>
-                            {/each}
-                        </ul>
-                    </Hscroller>
-                </GrayBox>
-            </section>
-        {/if}
+        <Container type="grayBox wide" margin="2.4rem 0 0 0">
+          <Title title={[{ text: '출연 셀럽' }]} marginLeft="1.2rem"/>
+          <ul class="profile-list">
+            {#each option.programDetail.celebs as celeb, index}
+              <li class="profile-item">
+                <a sveltekit:prefetch href={'/celobs/' + celeb.id}>
+                  <Avatar size="8rem" src={celeb.thumbnail} alt="{celeb.name + '의 사진'}"/>
+                  <span class="profile-name">{celeb.name}</span>
+                  <span class="profile-role">{celeb.categories[0]}</span>
+                </a>
+              </li>
+            {/each}
+          </ul>
+        </Container>
+      {/if}
     {/if}
 </div>
 
 <style lang="scss">
     .container {
-      padding: 1.6rem;
+      padding: 1.6rem 1.6rem 4rem;
       .content-name {
         @include body3-700;
         margin-top: 0.8rem;
@@ -247,40 +243,28 @@ const getDay = (time: number) => {
       }
       .description {
         @include caption1-400;
-        margin: 24px 0;
+        margin: 24px 0 0;
       }
 
-      .celob-wrapper {
-        padding: 1.6rem 1.2rem;
-        background-color: $bg-black-21;
-        border-radius: 0.4rem;
-        margin-top: 2.4rem;
+      .profile-list {
+        @include horizontalScroll(2rem, 1.2rem);
+        .profile-item {
+          a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            @include caption3;
+            text-decoration: none;
 
-        .profile-list {
-          display: flex;
-          .profile-item {
-
-            &:not(:last-child) {
-              margin-right: 12px;
+            .profile-name {
+              display: block;
+              margin: 0.4rem 0 0.2rem;
+              color: $all-white;
+              cursor: pointer;
             }
 
-            a {
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              @include caption3;
-              text-decoration: none;
-
-              .profile-name {
-                display: block;
-                margin: 0.4rem 0 0.2rem;
-                color: $all-white;
-                cursor: pointer;
-              }
-
-              .profile-role {
-                color: $disabled-8a;
-              }
+            .profile-role {
+              color: $disabled-8a;
             }
           }
         }

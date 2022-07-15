@@ -54,7 +54,7 @@ import Container from './common/layout/Container.svelte';
 </script>
 
 {#if contents?.length }
-  <Container marginTop="4rem">
+  <Container margin="4rem 0 0 0">
     <Title
       {title}
     />
