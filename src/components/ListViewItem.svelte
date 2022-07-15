@@ -18,15 +18,12 @@ import Thumbnail from './common/shared/Thumbnail.svelte';
   $: metaDataContent = `${programTitle} ${episode}화`;
 </script>
 
-<li class="grid-item">
+<li class="grid-item" on:click={() => onClick(id)}>
   <div class="left">
     <Thumbnail src={thumb} width="12rem" height="6.8rem"/>
   </div>
 
-  <div
-    class="right"
-    on:click={() => onClick(id)}
-  >
+  <div class="right">
     <span class="head-line">{metaDataContent}</span>
     <span class="sub-head">{title}</span>
   </div>

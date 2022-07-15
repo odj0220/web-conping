@@ -56,6 +56,7 @@
     }
     .title {
       @include body1-700;
+      @include ellipsis(1);
     }
   }
 </style>
