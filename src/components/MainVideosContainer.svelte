@@ -4,11 +4,12 @@
   import { graphqlApi } from '../lib/_api';
 
   import type { IContent } from 'src/global/types';
-
+  
+  import CenterSection from '../styles/CenterSection.svelte';
   import PreviewVideos from './PreviewVideos.svelte';
 import Container from './common/layout/Container.svelte';
 
-  let contents: IContent[] = [];
+  let contents: Content[] = [];
   let end = false;
   let cursor = '';
 

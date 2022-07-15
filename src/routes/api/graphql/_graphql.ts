@@ -1,21 +1,13 @@
 import { buildSchema, graphql } from 'graphql';
 import contentJson from '../../../../static/data/content.json';
+import productJson from '../../../../static/data/product.json';
 import celebJson from '../../../../static/data/celeb.json';
+import exposedJson from '../../../../static/data/exposed.json';
 import programJson from '../../../../static/data/program.json';
 import relationJson from '../../../../static/data/relation.json';
 import watchingJson from '../../../../static/data/watching.json';
 import bannerJson from '../../../../static/data/banner.json';
 import type { GraphQLSchema } from 'graphql/type/schema';
-import type {
-  Celeb,
-  CelebProduct,
-  Product,
-  Program, ProgramInfo,
-  VideoContent, VideoContentCast,
-  VideoContentProduct,
-} from '../../../lib/models/backend/backend';
-import type { ICeleb, IContent, IProduct } from '../../../global/types';
-import { GET } from '../../../lib/_api';
 
 export async function Graphql(query: string) {
   const schema: GraphQLSchema = buildSchema(`
@@ -74,6 +66,12 @@ export async function Graphql(query: string) {
       products: [Product]
 		}
 		
+		enum Order {
+		  LIKE
+		  VIEW
+		  CREATE
+		}
+		
 		enum ContentType {
 		  FULL
 		  HIGHLIGHT
@@ -117,17 +115,12 @@ export async function Graphql(query: string) {
 		  edges: [ContentEdge]
 		  pageInfo: PageInfo
 		}
-		
-		enum Order {
-		  desc
-		  asc
-		}
 	
 		
 		type Query {
 		  products: [Product]
 			product(id:ID!): Product
-			contents(sortField: String, sortOrder: Order, type:ContentType): [Content]
+			contents(order:Order, type:ContentType): [Content]
 			content(id:ID!): Content
 			celebs: [Celeb]
 			celeb(id:ID!): Celeb
@@ -157,80 +150,81 @@ export async function Graphql(query: string) {
     getBanners: () => {
       return bannerJson;
     },
-    products: async () => {
-      const products = await GET('/product');
-      return products.map((product:Product) => convertProduct(product));
+    products: () => {
+      return productJson;
     },
-    product: async ({ id }: { id: string }) => {
-      const product = await GET(`/product/${id}`);
-      return convertProduct(product);
+    product: ({ id }: { id: string }) => {
+      return productJson.find((product) => product.id === id);
     },
-    contents: async ({ sortField, sortOrder, type }: { sortField: string, sortOrder: 'desc' | 'asc', type: string }) => {
-      const sort = setOrderBy(sortField, sortOrder);
-      const params = JSON.parse(JSON.stringify({
-        type,
-        sort,
-      }));
-      const contents = await GET(`/video-content?${new URLSearchParams(params).toString()}`);
-      return contents.map((content: VideoContent) => convertContent(content));
+    contents: ({ order, type }: { order: string; type: string }) => {
+      const result = contentJson.map((content) => {
+        return {
+          ...content,
+          program: programJson.find(
+            (program) => program.id === content.programId,
+          ),
+        };
+      });
+      return result;
     },
-    content: async ({ id }: { id: string }) => {
-      const content = await GET(`/video-content/${id}`);
-      return convertContent(content);
+    content: ({ id }: { id: string }) => {
+      const content: any = contentJson.find((content) => content.id === id);
+      const program = programJson.find(
+        (program) => program.id === content.programId,
+      );
+      const currentTime =
+        watchingJson.find((watching) => watching.contentId === content.id)
+          ?.currentTime || 0;
+      return {
+        ...content,
+        program,
+        currentTime,
+      };
     },
-    celebs: async () => {
-      const celebs = await GET('/celeb');
-      return celebs.map((celeb: Celeb) => convertCeleb(celeb));
+    celebs: () => {
+      return celebJson;
     },
-    celeb: async ({ id }: { id: string }) => {
-      const celeb = await GET(`/celeb/${id}`);
-      return convertCeleb(celeb);
+    celeb: ({ id }: { id: string }) => {
+      return celebJson.find((celeb) => celeb.id === id);
     },
-    programs: async () => {
-      const programs = await GET('/program');
-      return programs.map((program: Program) => convertProgram(program));
+    programs: () => {
+      return programJson;
     },
-    program: async ({ id }: { id: string }) => {
-      const program = await GET(`/program/${id}`);
-      return convertProgram(program);
+    program: ({ id }: { id: string }) => {
+      return programJson.find((program) => program.id === id);
     },
-    getProductsByContentId: async ({ id }: { id: string }) => {
-      const content:VideoContent = await GET(`/video-content/${id}?product=true`);
-      const products: IProduct[] = [];
-      if (content.VideoContentProduct) {
-        content.VideoContentProduct.forEach(videoContentProduct => {
-          const product: IProduct | undefined = convertProduct(videoContentProduct.Product, +id);
-          if (product) {
-            products.push(product);
-          }
+    getProductsByContentId: ({ id }: { id: string }) => {
+      const products = exposedJson
+        .filter((exposed) => exposed.content === id)
+        .map((exposed) => {
+          const product = productJson.find(
+            (product) => product.id === exposed.product,
+          );
+          return {
+            ...product,
+            exposed: exposed.timelines,
+          };
         });
-      }
       return products;
     },
-    // TODO: back api 생성시 업데이트
     getCelebsByContentId: ({ id }: { id: string }) => {
       const celebIds = relationJson
         .filter((relation) => relation.content === id)
         .map((relation) => relation.celeb);
       return celebJson.filter((celeb) => celebIds.includes(celeb.id));
     },
-    getContentsByProductId: async ({ id }: { id: string }) => {
-      const product = await GET(`/product/${id}`);
-      let contents: IContent[] = [];
-      if (product.VideoContentProduct) {
-        contents = product.VideoContentProduct.map((videoContentProduct: VideoContentProduct) => convertContent(videoContentProduct.VideoContent));
-      }
-      return contents;
+    getContentsByProductId: ({ id }: { id: string }) => {
+      const contentIds = relationJson
+        .filter((relation) => relation.product === id)
+        .map((relation) => relation.content);
+      return contentJson.filter((content) => contentIds.includes(content.id));
     },
-    getCelebsByProductId: async ({ id }: { id: string }) => {
-      const product: Product = await GET(`/product/${id}`);
-      let celebs: ICeleb[] = [];
-      if (product.CelebProduct) {
-        celebs = product.CelebProduct.map((celebProduct: CelebProduct) => convertCeleb(celebProduct.Celeb));
-      }
-      return celebs;
+    getCelebsByProductId: ({ id }: { id: string }) => {
+      const celebIds = relationJson
+        .filter((relation) => relation.product === id)
+        .map((relation) => relation.celeb);
+      return celebJson.filter((celeb) => celebIds.includes(celeb.id));
     },
-    // TODO: back api 생성시 업데이트
     getCelebsByProgramId: ({ id }: { id: string }) => {
       const contents = contentJson
         .filter((content) => content.programId === id)
@@ -240,35 +234,50 @@ export async function Graphql(query: string) {
         .map((relation) => relation.celeb);
       return celebJson.filter((celeb) => celebIds.includes(celeb.id));
     },
-    getProductByCelebId: async ({ id }: { id: string }) => {
-      const celeb: Celeb = await GET(`/celeb/${id}`);
-      let products: IProduct[] = [];
-      if (celeb.CelebProduct) {
-        products = celeb.CelebProduct.map((celebProduct: CelebProduct) => convertProduct(celebProduct.Product));
-      }
-      return products;
+    getProductByCelebId: ({ id }: { id: string }) => {
+      const productIds = relationJson
+        .filter((relation) => relation.celeb === id)
+        .map((relation) => relation.product);
+      return productJson.filter((product) => productIds.includes(product.id));
     },
-    getContentsByCelebId: async ({ id }: { id: string }) => {
-      const celeb: Celeb = await GET(`/celeb/${id}`);
-      let contents: IContent[] = [];
-      if (celeb.VideoContentCast) {
-        contents = celeb.VideoContentCast.map((videoContentCast: VideoContentCast) => convertContent(videoContentCast.VideoContent));
-      }
-      return contents;
+    getContentsByCelebId: ({ id }: { id: string }) => {
+      const contentIds = relationJson
+        .filter((relation) => relation.celeb === id)
+        .map((relation) => relation.content);
+      return contentJson.filter((content) => contentIds.includes(content.id));
     },
-    getContentsByProgramId: async ({ id, type }: { id: string; type: string }) => {
-      return getContentsByProgramId(id, type);
+    getContentsByProgramId: ({ id, type }: { id: string; type: string }) => {
+      return contentJson
+        .filter((content) => {
+          if (content.programId !== id) {
+            return false;
+          }
+          return !type || type === content.contentType;
+        })
+        .map((content) => {
+          return {
+            ...content,
+            program: programJson.find(
+              (program) => program.id === content.programId,
+            ),
+          };
+        });
     },
-    getProgramContentsByContentId: async ({ id }: {id: string}) => {
-      const content:VideoContent = await GET(`/video-content/${id}`);
-      const programId = content?.ProgramInfo?.programId;
-      if (!programId) {
-        return [];
-      }
-      const contents = await getContentsByProgramId(programId.toString());
-      return contents.filter(content => content.id !== id);
+    getProgramContentsByContentId: ({ id }: {id: string}) => {
+      const content: any = contentJson.find(contentItem => contentItem.id === id);
+      return contentJson
+        .filter(contentItem => (contentItem.programId === content.programId && contentItem.id !== id))
+        .filter(contentItem => (contentItem.contentType === 'FULL' || contentItem.contentType === 'HIGHLIGHT'))
+        .map(contentItem => {
+          return {
+            ...contentItem,
+            program: programJson.find(program => program.id === content.programId),
+          };
+        });
     },
-    // TODO: backend 와 연결할때 다시 작업
+    getProductsByCategory: ({ category }: { category: string }) => {
+      return productJson.filter((product) => product.category === category);
+    },
     getContinueWatching: () => {
       return contentJson
         .filter((content) =>
@@ -289,8 +298,7 @@ export async function Graphql(query: string) {
           };
         });
     },
-    getMainContents: async () => {
-      const contents = await GET('/video-content?sort={views:desc}');
+    getMainContents: () => {
       return {
         title: [
           {
@@ -363,6 +371,7 @@ export async function Graphql(query: string) {
       first: number;
       afterCursor: string;
     }) => {
+      const totalCount = contentJson.length;
       const data = contentJson;
       let afterIndex = 0;
       if (afterCursor) {
@@ -402,111 +411,3 @@ export async function Graphql(query: string) {
     rootValue,
   });
 }
-
-const getContentsByProgramId = async (id: string, type?: string) => {
-  const program: Program = await GET(`/program/${id}`);
-  const contents: IContent[] = [];
-  if (program?.ProgramInfo) {
-    program?.ProgramInfo.forEach((programInfo: ProgramInfo) => {
-      if (programInfo.VideoContent) {
-        programInfo.VideoContent.forEach((videoContent: VideoContent) => {
-          contents.push(convertContent(videoContent));
-        });
-      }
-    });
-  }
-  return contents.filter(content => {
-    if (!type) {
-      return true;
-    }
-    return content.contentType === type;
-  });
-};
-
-const setOrderBy = (sortField?: string, sortOrder?: string) => {
-  if (!sortField) {
-    return ;
-  }
-  const obj:any = {};
-  obj[sortField] = sortOrder || 'asc';
-  return JSON.stringify(obj);
-};
-
-const getThumbnail = (videoId?: string) => `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
-
-const convertContent = (content?: VideoContent) => {
-  if (!content) {
-    return ;
-  }
-  const { id, programInfoId, type, releaseAt, Video, ProgramInfo } = content;
-  let program, videoId, duration, thumb;
-  if (ProgramInfo) {
-    program = ProgramInfo ? convertProgram(ProgramInfo.Program) : undefined;
-  }
-  if (Video) {
-    videoId = Video[0].youtubeVideoId;
-    duration = Video[0].duration;
-    thumb = getThumbnail(videoId || '');
-  }
-
-  return JSON.parse(JSON.stringify({
-    ...content,
-    id: id.toString(),
-    programId: programInfoId,
-    contentType: type,
-    createDt: releaseAt,
-    videoId,
-    duration,
-    thumb,
-    program,
-  }));
-};
-
-const convertProgram = (program?: Program) => {
-  if (!program) {
-    return ;
-  }
-  const { id } = program;
-  return {
-    ...program,
-    id: id.toString(),
-  };
-};
-
-const convertProduct = (product?: Product, videoContentId?: number) => {
-  if (!product) {
-    return ;
-  }
-  const { id, VideoContentProduct } = product;
-  let exposed;
-  if (VideoContentProduct && videoContentId) {
-    const videoContentProduct = VideoContentProduct.find(videoContentProduct => videoContentProduct.videoContentId === videoContentId);
-    if (videoContentProduct?.VideoExposureTime) {
-      exposed = videoContentProduct.VideoExposureTime.map(videoExposureTime => [videoExposureTime.exposedOffsetBeginMs, videoExposureTime.exposedOffsetEndMs]);
-    }
-  }
-  return JSON.parse(JSON.stringify({
-    ...product,
-    id: id.toString(),
-    exposed,
-  }));
-};
-
-const convertCeleb = (celeb?: Celeb) => {
-  if (!celeb) {
-    return ;
-  }
-  const { id, backImageUrl, imageUrl, CelebCategory, CelebFollower, CelebProduct } = celeb;
-  const categories = CelebCategory;
-  const follows = CelebFollower;
-  const products = CelebProduct;
-  return JSON.parse(JSON.stringify({
-    ...celeb,
-    id: id.toString(),
-    banner: backImageUrl,
-    thumbnail: imageUrl,
-    categories,
-    follows,
-    products,
-  }));
-};
