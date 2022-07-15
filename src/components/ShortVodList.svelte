@@ -16,10 +16,8 @@
 
 <style lang="scss">
   section {
-    min-width: 100%;
-    display: flex;
-    gap: 1.2rem;
-    padding: 0 1.6rem;
+    @include horizontalScroll(1.2rem, 1.6rem);
+
     & > :global(*) {
       min-width: 14rem !important;
       max-width: 14rem !important;

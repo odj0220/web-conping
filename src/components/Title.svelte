@@ -3,6 +3,8 @@
   
   export let onClick: () => void;
   export let title: TitleElement[];
+  export let marginLeft = '0';
+  export let marginBottom = '1.2rem';
 
   function clickTitle() {
     if (!onClick) {
@@ -14,16 +16,14 @@
 </script>
 
 {#if title?.length }
-  <h1 on:click={() => clickTitle()}>
+  <h1 on:click={() => clickTitle()} style="margin-left: {marginLeft}; margin-bottom: {marginBottom}">
     {#each title as element }
-    <span class={element?.type}>{element.text} </span>
+    <span class={element?.type} style={element.style}>{element.text} </span>
     {/each}
   </h1>
 {/if}
 
 <style lang="scss">
-  @import '../styles/variables.scss';
-
   h1 {
     display: flex;
     flex-direction: row;

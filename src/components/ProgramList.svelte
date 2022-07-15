@@ -1,11 +1,10 @@
 <script lang="ts">
-  import type { IProgram } from 'src/global/types';
+import type { IProgram } from 'src/global/types';
+import ProgramItem from './ProgramItem.svelte';
 
-  import ProgramItem from './ProgramItem.svelte';
-
-  export let programs: IProgram[] = [];
-  export let type: string;
-  export let onClick: (id: string) => void;
+export let programs: IProgram[] = [];
+export let type: string;
+export let onClick: (id: string) => void;
 </script>
 
 <ul class="list" class:horizontal={type === 'horizontal'}>
@@ -16,6 +15,6 @@
 
 <style lang="scss">
   .list {
-    display: flex;
+    @include horizontalScroll(1.2rem, 1.6rem);
   }
 </style>

@@ -51,22 +51,17 @@
 </script>
 
 <script type="ts">
-  import { onMount, SvelteComponent } from 'svelte';
-
-  import YP from 'youtube-player';
-  
   import { guid, toHHMMSS } from '$lib/util';
-  export { toHHMMSS } from '$lib/util';
-
+  import { onMount, SvelteComponent } from 'svelte';
+  import YP from 'youtube-player';
   import Avatar from './Avatar.svelte';
-
   import type { IContent } from 'src/global/types';
 
   export let content: IContent;
   export let order = 0;
   export let onClickContents: (id: string) => void;
   export let autoPlay: boolean;
-  
+
   const playerId = guid();
   let playTime;
   let player: YouTubePlayer;
@@ -91,7 +86,6 @@
   $: episode = `${content.episode && `${content.episode}화`}`;
   $: createdAt = content.createDt;
   $: views = content.views ? `조회수 ${content.views}회` : '';
-
 
   function loadYoutubePlayer() {
     const playerVars = {
@@ -201,9 +195,9 @@
   }
 
   onMount(async () => {
-    console.log(content);
     const module = await import('./PastTimeDelta.svelte');
     PastTimeDelta = module.default;
+
     loadYoutubePlayer();
     onPlayerReady();
     onPlayerStateChange();
@@ -215,7 +209,7 @@
   });
 </script>
 
-<li class="preview-container" bind:this ={container} on:click={() => onClickContents(`${content.id}`)}>
+<li class="preview-layout" bind:this ={container} on:click={() => onClickContents(`${content.id}`)}>
   <section class="player-wrap">
     <div id='{playerId}' class="youtube-player"></div>
     <section class="thumb-wrap" bind:this={thumbnailElement}>
@@ -225,11 +219,11 @@
       {#if player}
         <div class="running-time overlay" class:hide={!autoPlay}>
           {#await playTime}
-              ...waiting
+            ...waiting
           {:then number}
-              {toHHMMSS(number)}
+            {toHHMMSS(number)}
           {:catch error}
-              {error.message}
+            {error.message}
           {/await}
         </div>
       {/if}
@@ -238,9 +232,9 @@
 
   <section class="data-wrap">
     <div class="title-wrapper">
-      <span class="title">
+  <span class="title">
         {videoName}
-      </span>
+  </span>
     </div>
     <div class="rest">
       <Avatar size="24px" src="{programThumbnail}" />
@@ -259,108 +253,103 @@
 </li>
 
 <style lang="scss">
-  @import '../styles/modules.scss';
-  @import '../styles/variables.scss';
-    .preview-container {
-      /* 유튜브 플레이어 영역 */
-      border-radius: 0.4rem;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      position: relative;
+.preview-layout {
+  /* 유튜브 플레이어 영역 */
+  border-radius: 0.4rem;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  .player-wrap {
+  width: 100%;
+  height: auto;
+  padding-bottom: 56.25%;
+  position: relative;
+
+  .thumb-wrap {
+    border-top-left-radius: 0.4rem;
+    border-top-right-radius: 0.4rem;
+    overflow: hidden;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+
+    img {
       width: 100%;
-      display: flex;
-      
-
-        .player-wrap {
-          display: inline-block;
-          width: 100%;
-          height: auto;
-          padding-bottom: 56.25%;
-          position: relative;
-          overflow: hidden;
-
-          .thumb-wrap {
-            z-index: 2;
-            top: 0;
-            left: 0;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-          }
-
-          .youtube-player {
-            z-index: 1;
-            top: 0;
-            left: 0;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-          }
-
-          .overlay {
-            position: absolute;
-          }
-
-          .overlay-wrap {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-          }
-
-          .hide {
-            opacity: 0;
-            transition: opacity 0.3s;
-          }
-
-          .running-time {
-            @include caption3;
-            bottom: 1rem;
-            right: 0.8rem;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 0.2rem;
-            color: #fff;
-            font-family: system-ui;
-            padding: 0.2rem 0.6rem;
-
-            &.hide {
-              display: none !important;
-            }
-          }
-        }
-
-        .data-wrap {
-          flex: 1;
-          padding: 1.2rem;
-          background-color: #212121;
-
-          .title-wrapper {
-            @include ellipsis(2);
-            margin-bottom: 0.8rem;
-            .title {
-              @include caption1-400;
-            }
-          }
-
-          .rest {
-            @include caption2-400;
-            display: flex;
-            align-items: center;
-            .info {
-              margin-left: 0.8rem;
-            }
-          }
-        }
+      height: 100%;
+      object-fit: cover;
     }
+  }
+
+  .youtube-player {
+    z-index: 1;
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .overlay {
+    position: absolute;
+  }
+
+  .overlay-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+  }
+
+  .hide {
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .running-time {
+    @include caption3;
+    bottom: 1rem;
+    right: 0.8rem;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 0.2rem;
+    color: #fff;
+    font-family: system-ui;
+    padding: 0.2rem 0.6rem;
+
+    &.hide {
+      display: none !important;
+    }
+  }
+}
+
+.data-wrap {
+  flex: 1;
+  padding: 1.2rem;
+  background-color: #212121;
+
+  .title-wrapper {
+    @include ellipsis(2);
+    margin-bottom: 0.8rem;
+    .title {
+      @include caption1-400;
+    }
+  }
+
+  .rest {
+    @include caption2-400;
+    display: flex;
+    align-items: center;
+    .info {
+      margin-left: 0.8rem;
+    }
+  }
+}
+}
+
 </style>

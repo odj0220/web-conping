@@ -1,10 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-
-  import { graphqlApi } from '../lib/_api';
-  
-  import { goto } from '$app/navigation';
-
+  import { graphqlApi } from '$lib/_api_graphql';
   import type { IContent, TitleElement } from 'src/global/types';
 
   import CenterSection from '$styles/CenterSection.svelte';
@@ -12,6 +8,7 @@
 
   import Title from './Title.svelte';
   import ShortVodList from './ShortVodList.svelte';
+import Container from './common/layout/Container.svelte';
 
   let contents: IContent[];
   let title: TitleElement[];
@@ -21,7 +18,7 @@
   });
 
   function handleClickShorts(id:string) {
-    goto(`/shorts/${id}`);
+    window.location.href = `/shorts/${id}`;
   }
 
   async function getShorts() {
@@ -32,9 +29,9 @@
           type
         } 
         contents {
+          id
           thumb
           title
-          videoId
         }
       }
     }`;
@@ -47,14 +44,12 @@
 </script>
 
 {#if contents?.length }
-  <CenterSection type="transparency">
-    <Title {title}></Title>
+  <Container type="full" marginTop="5.6rem">
+    <Title {title} marginLeft="1.6rem" marginBottom="1.6rem"/>
     
-    <Hscroller>
-      <ShortVodList
+    <ShortVodList
       {contents}
       onClick={handleClickShorts}
-      />
-    </Hscroller>
-  </CenterSection>
+    />
+  </Container>
 {/if}

@@ -29,8 +29,9 @@ export interface IContent {
 }
 
 export interface TitleElement {
-  text: string;
-  type?: string;
+  text: string,
+  type?: string,
+  style?: string;
 }
 
 export interface ICeleb {

@@ -1,56 +1,46 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  
-  import { graphqlApi } from '../lib/_api';
-  
-  import { goto } from '$app/navigation';
+import { onMount } from 'svelte';
+import { graphqlApi } from '$lib/_api';
+import type { IProgram } from 'src/global/types';
+import Title from './Title.svelte';
+import ProgramList from './ProgramList.svelte';
+import Container from './common/layout/Container.svelte';
 
-  import type { IProgram } from 'src/global/types';
-  
-  import CenterSection from '$styles/CenterSection.svelte';
-  import HorizontalScroller from './HorizontalScroller.svelte';
-  
-  import Title from './Title.svelte';
-  import ProgramList from './ProgramList.svelte';
+let programs: IProgram[] = [];
 
-  let programs: IProgram[] = [];
+function handleClickContents(id: string) {
+  window.location.href = `/programs/${id}`;
+}
 
-  function handleClickContents(id: string) {
-    goto(`/programs/${id}`);
-  }
-
-  const getData = async () => {
-    const query = `
-      {
-        programs {
-          id
-          title
-          thumbnail
-        }
+const getData = async () => {
+  const query = `
+    {
+      programs {
+        id
+        title
+        thumbnail
       }
-    `;
+    }
+  `;
 
-    const result = await graphqlApi(query);
+  const result = await graphqlApi(query);
 
-    programs = result?.data?.programs;
-  };
+  programs = result?.data?.programs;
+};
 
-  onMount(() => {
-    getData();
-  });
+onMount(() => {
+  getData();
+});
 
 </script>
 
 {#if programs?.length }
-  <CenterSection type="inner transparency">
-    <Title title={[{ text: '골라라 오리지널' }]} />
-    
-    <HorizontalScroller>
-      <ProgramList
-      {programs}
-      type="horizontal"
-      onClick={handleClickContents}
-      />
-    </HorizontalScroller>
-  </CenterSection>
+  <Container marginTop="5.6rem" type="full">
+    <Title title={[{ text: '골라라 오리지널' }]} marginLeft="1.6rem"/>
+    <ProgramList
+    {programs}
+    type="horizontal"
+    onClick={handleClickContents}
+    />
+  </Container>
 {/if}

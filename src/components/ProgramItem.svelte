@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { IProgram } from 'src/global/types';
+import type { IProgram } from 'src/global/types';
 
-  export let program: IProgram;
-  export let onClick: (id: string) => void;
+export let program: IProgram;
+export let onClick: (id: string) => void;
 
-  const { thumbnail, title, id } = program;
+const { thumbnail, title, id } = program;
 </script>
 
 <li class="item" on:click={() => onClick(`${id}`)}>
@@ -15,26 +15,27 @@
 </li>
 
 <style lang="scss">
-  @import "../styles/variables.scss";
+.item {
+  flex-shrink: 0;
+  width: 14.4rem;
+  box-sizing: content-box;
+  &:last-child {
+    margin-right: 1.6rem;
+  }
 
-  .item {
-    flex-shrink: 0;
-    width: 144px;
-    &:not(:last-child) {
-        margin-right: 12px;
-    }
-    .thumbnail {
-        border-radius: 0.4rem;
-        overflow: hidden;
-        img {
-            width: 100%;
-            height: 203px;
-            object-fit: cover;
-        }
-    }
-    .title {
-        @include caption1-400;
-        margin-top: 8px;
+  .thumbnail {
+    border-radius: 0.4rem;
+    overflow: hidden;
+    height: 20.3rem;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
+  .title {
+    @include caption1-400;
+    margin-top: 8px;
+  }
+}
 </style>

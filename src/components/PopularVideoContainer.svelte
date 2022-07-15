@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
-  
   import type { IContent, TitleElement } from 'src/global/types';
   
   import CenterSection from '$styles/CenterSection.svelte';
@@ -9,7 +7,8 @@
   import Title from './Title.svelte';
 
   import { onMount } from 'svelte';
-  import { graphqlApi } from '../lib/_api';
+  import { graphqlApi } from '$lib/_api_graphql';
+import Container from './common/layout/Container.svelte';
 
   let contents: IContent[];
   let end = false;
@@ -17,7 +16,7 @@
   let title: TitleElement[];
 
   const handleClickContents = (id: string) => {
-    goto(`contents/${id}`);
+    window.location.href = `/contents/${id}`;
   };
 
   onMount(async () => {
@@ -56,7 +55,7 @@
 </script>
 
 {#if contents?.length }
-  <CenterSection type="transparency">
+  <Container marginTop="4rem">
     <Title
       {title}
     />
@@ -68,5 +67,5 @@
       infiniteScroll={false}
       autoPlay={true}
     />
-  </CenterSection>
+  </Container>
 {/if}

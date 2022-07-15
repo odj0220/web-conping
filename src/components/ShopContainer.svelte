@@ -1,11 +1,12 @@
 <script lang="ts">
-import { graphqlApi } from '../lib/_api';
-import CenterSection from '$styles/CenterSection.svelte';
+import { graphqlApi } from '$lib/_api';
 import { onMount } from 'svelte';
 import MainHeaderContainer from './MainHeaderContainer.svelte';
 import ShopList from './ShopList.svelte';
 import type { IProduct } from 'src/global/types';
 import Sorter from './Sorter.svelte';
+import Container from './common/layout/Container.svelte';
+import Dimmend from './common/layout/Dimmend.svelte';
 
 let products: IProduct[] = [];
 let list: IProduct[] = [];
@@ -38,7 +39,8 @@ const sorter = [
 </script>
 
 <MainHeaderContainer title="쇼핑존" />
-<CenterSection type="transparency">
+<Container marginTop="0px">
   <Sorter {sorter} {sort}/>
   <ShopList {list}/>
-</CenterSection>
+</Container>
+<Dimmend />

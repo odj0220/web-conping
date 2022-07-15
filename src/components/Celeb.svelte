@@ -5,7 +5,7 @@ import Avatar from './Avatar.svelte';
 export let celeb: ICeleb;
 
 const { id, name, thumbnail, categories } = celeb;
-
+console.log('celeb', celeb);
 const returnColor = (category: string) => {
   switch (category) {
   case '뷰티': return '#FF70E2';
@@ -47,8 +47,6 @@ const returnColor = (category: string) => {
 </li>
 
 <style lang="scss">
-    @import "../styles/variables.scss";
-
     .item {
         padding: 1.2rem 1.6rem;
         border-radius: 0.4rem;

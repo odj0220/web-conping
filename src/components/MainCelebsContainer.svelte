@@ -49,8 +49,6 @@ const title = [
 </section>
 
 <style lang="scss">
-    @import "../styles/variables.scss";
-
     .section {
       margin-top: 5.6rem;
       padding: 0 1.6rem;
