@@ -81,7 +81,7 @@
   };
 
   $: videoName = content.title;
-  $: programName = content.program.title;
+  $: programName = content.program?.title;
   $: programThumbnail = content.program?.thumbnail;
   $: episode = `${content.episode && `${content.episode}화`}`;
   $: createdAt = content.createDt;
@@ -197,6 +197,7 @@
   onMount(async () => {
     const module = await import('./PastTimeDelta.svelte');
     PastTimeDelta = module.default;
+  
     loadYoutubePlayer();
     onPlayerReady();
     onPlayerStateChange();

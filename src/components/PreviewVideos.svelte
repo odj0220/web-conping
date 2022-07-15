@@ -12,7 +12,7 @@
 </script>
 
 <script lang="ts">
-  import { createEventDispatcher, onMount} from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
   import PreviewVideo from './PreviewVideo.svelte';
   import type { Content } from 'src/global/types';
 
@@ -81,10 +81,10 @@
 <section class="videos-wrapper">
   <ul class="contents-container">
     {#if contents?.length > 0}
-      {#each contents as video, order (video.id)}
+      {#each contents as content, order (content.id)}
         <PreviewVideo
           {onClickContents}
-          content={contents}
+          content={content}
           order={order + 1}
           autoPlay={autoPlay}
         />
