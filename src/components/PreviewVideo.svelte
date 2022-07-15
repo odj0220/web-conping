@@ -210,155 +210,143 @@
 </script>
 
 <li class="preview-layout" bind:this ={container} on:click={() => onClickContents(`${content.id}`)}>
-    <section class="preview-container">
-        <section class="player-wrap">
-            <div id='{playerId}' class="youtube-player"></div>
-            <section class="thumb-wrap" bind:this={thumbnailElement}>
-                <img src={content.thumb} alt={content.title + '의 썸네일'}>
-            </section>
-            <div class="overlay-wrap">
-                {#if player}
-                    <div class="running-time overlay" class:hide={!autoPlay}>
-                        {#await playTime}
-                            ...waiting
-                        {:then number}
-                            {toHHMMSS(number)}
-                        {:catch error}
-                            {error.message}
-                        {/await}
-                    </div>
-                {/if}
-            </div>
-        </section>
-
-        <section class="data-wrap">
-            <div class="title-wrapper">
-        <span class="title">
-              {videoName}
-        </span>
-            </div>
-            <div class="rest">
-                <Avatar size="24px" src="{programThumbnail}" />
-                <div class="info">
-                    <span class="program-name">{programName}</span>=
-                    <span class="episode">{episode}</span>
-                    {#if views}
-                        <span class="divider">・</span>
-                        <span class="views">{views}</span>
-                    {/if}
-                    <span class="divider">・</span>
-                    <svelte:component this={PastTimeDelta} pastTime={createdAt}></svelte:component>
-                </div>
-            </div>
-        </section>
+  <section class="player-wrap">
+    <div id='{playerId}' class="youtube-player"></div>
+    <section class="thumb-wrap" bind:this={thumbnailElement}>
+      <img src={content.thumb} alt={content.title + '의 썸네일'}>
     </section>
+    <div class="overlay-wrap">
+      {#if player}
+        <div class="running-time overlay" class:hide={!autoPlay}>
+          {#await playTime}
+            ...waiting
+          {:then number}
+            {toHHMMSS(number)}
+          {:catch error}
+            {error.message}
+          {/await}
+        </div>
+      {/if}
+    </div>
+  </section>
+
+  <section class="data-wrap">
+    <div class="title-wrapper">
+  <span class="title">
+        {videoName}
+  </span>
+    </div>
+    <div class="rest">
+      <Avatar size="24px" src="{programThumbnail}" />
+      <div class="info">
+        <span class="program-name">{programName}</span>=
+        <span class="episode">{episode}</span>
+        {#if views}
+          <span class="divider">・</span>
+          <span class="views">{views}</span>
+        {/if}
+        <span class="divider">・</span>
+        <svelte:component this={PastTimeDelta} pastTime={createdAt}></svelte:component>
+      </div>
+    </div>
+  </section>
 </li>
 
 <style lang="scss">
-    .preview-layout {
-      /* 유튜브 플레이어 영역 */
-      border-radius: 0.4rem;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
+.preview-layout {
+  /* 유튜브 플레이어 영역 */
+  border-radius: 0.4rem;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  .player-wrap {
+  width: 100%;
+  height: auto;
+  padding-bottom: 56.25%;
+  position: relative;
 
-      .preview-container {
-        position: relative;
-        width: 100%;
-        height: calc((100vw - 3.2rem) * 0.83);
-        display: flex;
-        flex-direction: column;
+  .thumb-wrap {
+    z-index: 2;
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
 
-        .player-wrap {
-          display: inline-block;
-          width: 100%;
-          height: auto;
-          padding-bottom: 56.25%;
-          position: relative;
-          overflow: hidden;
-
-          .thumb-wrap {
-            z-index: 2;
-            top: 0;
-            left: 0;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-          }
-
-          .youtube-player {
-            z-index: 1;
-            top: 0;
-            left: 0;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-          }
-
-          .overlay {
-            position: absolute;
-          }
-
-          .overlay-wrap {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-          }
-
-          .hide {
-            opacity: 0;
-            transition: opacity 0.3s;
-          }
-
-          .running-time {
-            @include caption3;
-            bottom: 1rem;
-            right: 0.8rem;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 0.2rem;
-            color: #fff;
-            font-family: system-ui;
-            padding: 0.2rem 0.6rem;
-
-            &.hide {
-              display: none !important;
-            }
-          }
-        }
-
-        .data-wrap {
-          flex: 1;
-          padding: 1.2rem;
-          background-color: #212121;
-
-          .title-wrapper {
-            @include ellipsis(2);
-            margin-bottom: 0.8rem;
-            .title {
-              @include caption1-400;
-            }
-          }
-
-          .rest {
-            @include caption2-400;
-            display: flex;
-            align-items: center;
-            .info {
-              margin-left: 0.8rem;
-            }
-          }
-        }
-      }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
+  }
+
+  .youtube-player {
+    z-index: 1;
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .overlay {
+    position: absolute;
+  }
+
+  .overlay-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+  }
+
+  .hide {
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .running-time {
+    @include caption3;
+    bottom: 1rem;
+    right: 0.8rem;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 0.2rem;
+    color: #fff;
+    font-family: system-ui;
+    padding: 0.2rem 0.6rem;
+
+    &.hide {
+      display: none !important;
+    }
+  }
+}
+
+.data-wrap {
+  flex: 1;
+  padding: 1.2rem;
+  background-color: #212121;
+
+  .title-wrapper {
+    @include ellipsis(2);
+    margin-bottom: 0.8rem;
+    .title {
+      @include caption1-400;
+    }
+  }
+
+  .rest {
+    @include caption2-400;
+    display: flex;
+    align-items: center;
+    .info {
+      margin-left: 0.8rem;
+    }
+  }
+}
+}
+
 </style>

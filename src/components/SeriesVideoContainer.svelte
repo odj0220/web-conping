@@ -12,6 +12,7 @@
   import Title from './Title.svelte';
   import ImageListView from './ImageListView.svelte';
   import MoreButton from './common/shared/MoreButton.svelte';
+import Container from './common/layout/Container.svelte';
 
   let title: TitleElement[];
   let contents: Content[];
@@ -86,10 +87,11 @@
 </script>
 
 {#if contents?.length }
-  <CenterSection type='inner'>
+  <Container type="grayBox" marginTop="5.6rem">
     <Title
       onClick={handleTitleClick}
       {title}
+      marginBottom="1.6rem"
     />
     
     <ImageListView
@@ -101,5 +103,5 @@
       value="{series.title} 시리즈 보러가기"
       onClick={handleButtonClick}
     />
-  </CenterSection>
+  </Container>
 {/if}

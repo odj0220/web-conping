@@ -7,6 +7,7 @@
   
   import CenterSection from '../styles/CenterSection.svelte';
   import PreviewVideos from './PreviewVideos.svelte';
+import Container from './common/layout/Container.svelte';
 
   let contents: Content[] = [];
   let end = false;
@@ -71,7 +72,7 @@
   }
 </script>
 
-<CenterSection type="transparency">
+<Container marginTop="5.6rem">
   <PreviewVideos
     {contents}
     {end}
@@ -81,4 +82,4 @@
     onClickContents={handleClickContents}
     on:request-more={runInfiniteScrolling}
   />
-</CenterSection>
+</Container>

@@ -9,6 +9,7 @@
   
   import Title from './Title.svelte';
   import ProgramList from './ProgramList.svelte';
+import Container from './common/layout/Container.svelte';
 
   let programs: Program[] = [];
 
@@ -39,9 +40,8 @@
 </script>
 
 {#if programs?.length }
-  <CenterSection type="inner transparency">
-    <Title title={[{ text: '골라라 오리지널' }]} />
-    
+  <Container marginTop="5.6rem" type="full">
+    <Title title={[{ text: '골라라 오리지널' }]}  marginLeft="1.6rem"/>
     <HorizontalScroller>
       <ProgramList
       {programs}
@@ -49,5 +49,5 @@
       onClick={handleClickContents}
       />
     </HorizontalScroller>
-  </CenterSection>
+  </Container>
 {/if}

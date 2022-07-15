@@ -10,6 +10,7 @@
 
   import Title from './Title.svelte';
   import ViewingVodList from './ViewingVodList.svelte';
+import Container from './common/layout/Container.svelte';
 
   let contents: Content[] = [];
 
@@ -24,12 +25,14 @@
 </script>
 
 {#if contents.length > 0}
-  <CenterSection type='inner'>
+  <Container type="grayBox wide" marginTop="2rem">
     <Title
       title={[{ text: '시청중인 영상' }]}
+      marginLeft="1.2rem"
+      marginBottom="1.6rem"
     />
     <Hscroller>
       <ViewingVodList {contents} onClick={handleClickContents} />
     </Hscroller>
-  </CenterSection>
+  </Container>
 {/if}

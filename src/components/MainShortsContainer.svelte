@@ -8,6 +8,7 @@
 
   import Title from './Title.svelte';
   import ShortVodList from './ShortVodList.svelte';
+import Container from './common/layout/Container.svelte';
 
   let contents: Content[];
   let title: TitleElement[];
@@ -43,8 +44,8 @@
 </script>
 
 {#if contents?.length }
-  <CenterSection type="transparency">
-    <Title {title}></Title>
+  <Container type="full" marginTop="5.6rem">
+    <Title {title} marginLeft="1.6rem" marginBottom="1.6rem"/>
     
     <Hscroller>
       <ShortVodList
@@ -52,5 +53,5 @@
         onClick={handleClickShorts}
       />
     </Hscroller>
-  </CenterSection>
+  </Container>
 {/if}
