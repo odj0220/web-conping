@@ -48,8 +48,6 @@ const BUTTONS = [
 
 </div> 
 <style lang="scss">
-    @import "../styles/variables.scss";
-
     .section {
         .btn-close {
             position: fixed;

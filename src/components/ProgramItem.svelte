@@ -15,8 +15,6 @@
 </li>
 
 <style lang="scss">
-  @import "../styles/variables.scss";
-
   .item {
     flex-shrink: 0;
     width: 144px;

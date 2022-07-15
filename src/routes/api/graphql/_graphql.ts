@@ -358,7 +358,7 @@ export async function Graphql(query: string) {
           },
         ],
         contents: contentJson
-          .filter((content) => content.contentType === 'Shorts')
+          .filter((content) => content.contentType === 'SHORTS')
           .slice(0, 6),
       };
     },

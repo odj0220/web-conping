@@ -2,9 +2,7 @@
   import { onMount } from 'svelte';
   
   import { graphqlApi } from '../lib/_api_graphql';
-  
-  import { goto } from '$app/navigation';
-  
+
   import type { Content } from 'src/global/types';
   
   import CenterSection from '../styles/CenterSection.svelte';
@@ -62,7 +60,7 @@
   }
 
   function handleClickContents(id: string) {
-    goto(`/contents/${id}`);
+    window.location.href = `/contents/${id}`;
   }
 
   async function runInfiniteScrolling(event) {

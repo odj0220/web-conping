@@ -38,9 +38,6 @@
 </section>
 
 <style lang="scss">
-  @import "../styles/variables.scss";
-  @import "../styles/modules.scss";
-
     .viewing-vod-item {
       width: 8rem;
       margin-left: 2rem;

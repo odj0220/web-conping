@@ -1,4 +1,6 @@
 <script lang="ts">
+import { toHHMMSS } from '../lib/util';
+
 export let timelineButtonVisible: boolean;
 export let name:string;
 export let price: number;
@@ -24,7 +26,7 @@ const timelines = () => {
         <ul class="time-stamps">
             {#each timelines() as timeline}
             <li on:click="{() => onClickTimeButton(timeline)}" class="time-stamp">
-                {timeline}
+                {toHHMMSS(timeline)}
             </li>
             {/each}
         </ul>
@@ -33,9 +35,6 @@ const timelines = () => {
 </li>
 
 <style lang="scss">
-@import "../styles/variables.scss";
-@import "../styles/modules.scss";
-
 .container {
     position: relative;
     display: flex;

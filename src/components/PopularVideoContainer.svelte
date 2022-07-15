@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
-  
   import type { Content, TitleElement } from 'src/global/types';
   
   import CenterSection from '$styles/CenterSection.svelte';
@@ -17,7 +15,7 @@
   let title: TitleElement[];
 
   const handleClickContents = (id: string) => {
-    goto(`contents/${id}`);
+    window.location.href = `/contents/${id}`;
   };
 
   onMount(async () => {
