@@ -41,6 +41,9 @@
         description
         thumbnail
         banner
+        regularAiringAt
+        airingBeginAt
+        airingEndAt
       } 
       getCelebsByProgramId(id:"${id}"){
         thumbnail
@@ -52,18 +55,26 @@
     const { data } = await graphqlApi(query);
 
     program = data?.program;
+
+    console.log(program);
     celebs = data?.getCelebsByProgramId;
   });
 </script>
 
-<SubHeaderContainer title={program?.name} />
+<SubHeaderContainer title={program?.title} />
 <div class="container">
   {#if program?.banner }
     <div class="visual">
       <img src={program?.banner} alt="banner 이미지"/>
     </div>
   {/if}                             
-  <Metadata name={program?.name} description={program?.description} {celebs} />
+  <Metadata
+    name={program?.title}
+    description={program?.description}
+    airingBeginAt={program?.airingBeginAt}
+    airingEndAt={program?.airingEndAt}
+    {celebs}
+  />
 </div>
 
 <section class="tabs-wrapper">

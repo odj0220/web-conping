@@ -55,7 +55,7 @@
           title
           contentType 
           createDt 
-          description 
+          description
           program { 
             id
             title
@@ -144,9 +144,7 @@
   />
 
   <Metadata
-    title="MZ세대의 트렌드 Y2K, 트렌드에 맞는 핵심 메이크업 비결을 알아보자!!??"
-    airingBeginAt={1655045914850}
-    airingEndAt={1655045914850}
+    title={content?.description}
   />
   
   <RelatedProductContainer

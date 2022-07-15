@@ -6,7 +6,7 @@
 </script>
 
 <section>
-  <div class="container" on:click={() => onClick(`${content.videoId}`)}>
+  <div class="container" on:click={() => onClick(`${content.id}`)}>
     <img src={content.thumb} alt="shorts-preview">
     <div class="overlay"></div>
     <div class="data">
