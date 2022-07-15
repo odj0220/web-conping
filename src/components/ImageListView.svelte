@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { Content } from 'src/global/types';
-
   import ListViewItem from './ListViewItem.svelte';
 
   export let contents: Content[] = [];

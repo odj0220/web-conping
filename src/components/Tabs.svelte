@@ -10,8 +10,10 @@
 
   export let items: tabItem[];
   export let activeTabValue = 1;
+  export let programTitle: string;
+
   let selectedComponent: SvelteComponent = items[0].component;
-  let selectedProps = items[0].props;
+  let selectedProps = { ...items[0].props, programTitle };
 
   async function onActiveTabitem(tabItem: tabItem) {
     onUpdateActiveTabValue(tabItem.value);
@@ -28,7 +30,7 @@
   }
 
   function onUpdateSelectedProps(props: any) {
-    selectedProps = props;
+    selectedProps = { ...props, programTitle };
   }
 
 </script>

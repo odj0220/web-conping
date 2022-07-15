@@ -19,7 +19,6 @@ const onClickContact = () => {
 };
 
 const onClickCall = () => {
-  console.log('ddd');
   const win: any = window;
   if (win['flutter_inappwebview']) {
     return launchTel('02-6245-1111');
@@ -27,15 +26,16 @@ const onClickCall = () => {
   window.location.href = 'tel://02-6245-1111';
 };
 
+// TODO: brand, celbel 배너, 공지사항, FAQ, 약관, 개인정보 링크
 const onClick = (category: string) => {
   switch (category) {
-  case 'brand' : openBrowser('https://naver.com'); break;
-  case 'celeb' : openBrowser('https://naver.com'); break;
-  case '공지사항' : openBrowser('https://naver.com'); break;
-  case 'FAQ' : openBrowser('https://naver.com'); break;
+  case 'brand' : openBrowser('https://gollala.notion.site/49e0d78a1f6f4a1f8604c062e69e7b07'); break;
+  case 'celeb' : openBrowser('https://gollala.notion.site/0615fbe2cce947fca3ba1bc4750aa064'); break;
+  case '공지사항' : openBrowser('https://gollala.notion.site/Conping-Service-Guide-7fa484071f0247e38dd541fe3ab73b33#125700027aaf498b8a363589d8167390'); break;
+  case 'FAQ' : openBrowser('https://gollala.notion.site/Conping-Service-Guide-7fa484071f0247e38dd541fe3ab73b33'); break;
   case '문의하기' : onClickContact(); break;
-  case '서비스 이용약관' : openBrowser('https://naver.com'); break;
-  case '개인정보 처리방침' : openBrowser('https://naver.com'); break;
+  case '서비스 이용약관' : openBrowser('https://gollala.notion.site/Terms-Conditions-c250f076b2194d16a5e38d9d61d8364c'); break;
+  case '개인정보 처리방침' : openBrowser('https://gollala.notion.site/Privacy-Policy-ca2ea53837a74823b67c9fe655e7b369'); break;
   case '고객센터 전화 문의' : onClickCall(); break;
   case '메세지 문의' : openBrowser('https://talk.naver.com/W4BGJY'); break;
   default: break;
