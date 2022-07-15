@@ -1,8 +1,8 @@
 <script lang="ts">
 import { onMount } from 'svelte';
-import type { Content } from 'src/global/types';
+import type { IContent } from 'src/global/types';
 
-export let content!: Content;
+export let content!: IContent;
 export let percent = 24;
 export let onClick: (id: string) => void;
 

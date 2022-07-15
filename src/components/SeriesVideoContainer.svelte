@@ -3,9 +3,9 @@
 
   import { goto } from '$app/navigation';
   
-  import { graphqlApi } from '$lib/_api_graphql';
+  import { graphqlApi } from '../lib/_api';
 
-  import type { Content, Program, TitleElement } from 'src/global/types';
+  import type { IContent, IProgram, TitleElement } from 'src/global/types';
   
   import CenterSection from '../styles/CenterSection.svelte';
   
@@ -15,8 +15,8 @@
 import Container from './common/layout/Container.svelte';
 
   let title: TitleElement[];
-  let contents: Content[];
-  let series: Program;
+  let contents: IContent[];
+  let series: IProgram;
   
   const move = (targetUrl: string) => {
     goto(targetUrl);

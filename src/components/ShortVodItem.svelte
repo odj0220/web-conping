@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { Content } from 'src/global/types';
+  import type { IContent } from 'src/global/types';
 
-  export let content: Content;
+  export let content: IContent;
   export let onClick: (id: string) => void;
 </script>
 

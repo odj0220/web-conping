@@ -1,8 +1,8 @@
 <script lang="ts">
-import type { Program } from 'src/global/types';
+import type { IProgram } from 'src/global/types';
 import ProgramItem from './ProgramItem.svelte';
 
-export let programs: Program[] = [];
+export let programs: IProgram[] = [];
 export let type: string;
 export let onClick: (id: string) => void;
 </script>

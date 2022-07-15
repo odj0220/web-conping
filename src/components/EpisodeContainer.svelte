@@ -1,12 +1,12 @@
 <script lang=ts>
-  import { graphqlApi } from '../lib/_api_graphql';
+  import { graphqlApi } from '../lib/_api';
   import ImageListView from './ImageListView.svelte';
-  import type { Content } from 'src/global/types';
+  import type { IContent } from 'src/global/types';
 
-  export let id;
+  export let id: string;
   export let programTitle: string;
 
-  async function loadContents(): Promise<Content[]> {
+  async function loadContents(): Promise<IContent[]> {
     const query = `{
        getContentsByProgramId(id:"${id}", type:FULL){
          id

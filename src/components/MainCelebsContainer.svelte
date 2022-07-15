@@ -1,7 +1,7 @@
 <script lang="ts">
 import { onMount } from 'svelte';
 
-import { graphqlApi } from '$lib/_api_graphql';
+import { graphqlApi } from '../lib/_api';
 
 import type { ICeleb } from 'src/global/types';
 

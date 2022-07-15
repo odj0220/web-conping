@@ -1,8 +1,8 @@
 <script lang=ts>
   import ShortsGridVodList from './ShortsGridVodList.svelte';
-  import { graphqlApi } from '../lib/_api_graphql';
+  import { graphqlApi } from '../lib/_api';
   import { goto } from '$app/navigation';
-  import type { Content } from 'src/global/types';
+  import type { IContent } from 'src/global/types';
 
   export let id;
   export let programTitle: string;
@@ -11,7 +11,7 @@
     goto(`/contents/${id}`);
   };
 
-  async function loadData(): Promise<Content[]> {
+  async function loadData(): Promise<IContent[]> {
     const query = `{
       getContentsByProgramId(id:"${id}", type:SHORTS){
         id

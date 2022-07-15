@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type { Content } from 'src/global/types';
+  import type { IContent } from 'src/global/types';
 
   import ListViewItem from './ListViewItem.svelte';
 
-  export let contents: Content[] = [];
+  export let contents: IContent[] = [];
   export let onClick: (id: string) => void;
 </script>
 
@@ -20,8 +20,8 @@
     ul {
       display: flex;
       flex-direction: column;
-      flex-wrap: 'wrap';
-      justify-content: 'space-between';
+      flex-wrap: wrap;
+      justify-content: space-between;
       gap: 1.2rem;
       margin-bottom: 1.2rem;
     }

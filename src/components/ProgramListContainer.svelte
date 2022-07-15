@@ -1,6 +1,6 @@
 <script lang=ts>
-  import { graphqlApi } from '$lib/_api_graphql';
-  import type { Program } from 'src/global/types';
+  import { graphqlApi } from '$lib/_api';
+  import type { IProgram } from 'src/global/types';
 
   import Metadata from './Metadata.svelte';
   import Tabs from './Tabs.svelte';
@@ -49,7 +49,7 @@
     }`;
 
     const result = await graphqlApi(query);
-    const program: Program = result?.data?.program;
+    const program: IProgram = result?.data?.program;
     const celobs = result?.data.getCelebsByProgramId;
     const metaDataOption = setMetadataOption(program, celobs);
 

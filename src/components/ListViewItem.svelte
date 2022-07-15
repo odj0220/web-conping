@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type { Content } from 'src/global/types';
+  import type { IContent } from 'src/global/types';
 import Thumbnail from './common/shared/Thumbnail.svelte';
 
   export let onClick: (id: string) => void;
-  export let content: Content;
+  export let content: IContent;
 
   const {
     id,
