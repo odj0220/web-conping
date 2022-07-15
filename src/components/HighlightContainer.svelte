@@ -1,15 +1,15 @@
 <script lang=ts>
   import { goto } from '$app/navigation';
   
-  import { graphqlApi } from '../lib/_api_graphql';
+  import { graphqlApi } from '../lib/_api';
   
-  import type { Content } from 'src/global/types';
+  import type { IContent } from 'src/global/types';
 
   import PreviewVideos from './PreviewVideos.svelte';
 
   export let id: string;
 
-  let contents: Content[];
+  let contents: IContent[];
   let end = false;
   let cursor = '';
 

@@ -1,11 +1,11 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  import { graphqlApi } from '$lib/_api_graphql';
+  import { graphqlApi } from '../lib/_api';
   
   import { goto } from '$app/navigation';
 
-  import type { Content, TitleElement } from 'src/global/types';
+  import type { IContent, TitleElement } from 'src/global/types';
 
   import CenterSection from '$styles/CenterSection.svelte';
   import Hscroller from './HorizontalScroller.svelte';
@@ -13,7 +13,7 @@
   import Title from './Title.svelte';
   import ShortVodList from './ShortVodList.svelte';
 
-  let contents: Content[];
+  let contents: IContent[];
   let title: TitleElement[];
 
   onMount(async () => {

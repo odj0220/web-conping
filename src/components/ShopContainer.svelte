@@ -1,5 +1,5 @@
 <script lang="ts">
-import { graphqlApi } from '$lib/_api_graphql';
+import { graphqlApi } from '../lib/_api';
 import CenterSection from '$styles/CenterSection.svelte';
 import { onMount } from 'svelte';
 import MainHeaderContainer from './MainHeaderContainer.svelte';

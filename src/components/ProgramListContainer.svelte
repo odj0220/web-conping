@@ -1,9 +1,9 @@
 <script lang=ts>
   import { onMount } from 'svelte';
 
-  import { graphqlApi } from '$lib/_api_graphql';
+  import { graphqlApi } from '../lib/_api';
 
-  import type { Program } from 'src/global/types';
+  import type { IProgram } from 'src/global/types';
   
   import Metadata from './Metadata.svelte';
   import Tabs from './Tabs.svelte';
@@ -13,7 +13,7 @@
   import SubHeaderContainer from './SubHeaderContainer.svelte';
 
   export let id: string;
-  let program: Program;
+  let program: IProgram;
   let celebs = [];
   let items = [
     { label: '에피소드',

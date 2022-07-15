@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { Program } from 'src/global/types';
+  import type { IProgram } from 'src/global/types';
 
-  export let program: Program;
+  export let program: IProgram;
   export let onClick: (id: string) => void;
 
   const { thumbnail, title, id } = program;

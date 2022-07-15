@@ -5,7 +5,7 @@
   
   import { goto } from '$app/navigation';
   
-  import type { Content } from 'src/global/types';
+  import type { IContent } from 'src/global/types';
 
   import Hscroller from './HorizontalScroller.svelte';
   import CenterSection from '$styles/CenterSection.svelte';
@@ -13,7 +13,7 @@
   import Title from './Title.svelte';
   import ViewingVodList from './ViewingVodList.svelte';
 
-  let contents: Content[] = [];
+  let contents: IContent[] = [];
 
   onMount(async () => {
     contents = await getContinueWatchingList();

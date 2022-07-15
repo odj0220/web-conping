@@ -14,11 +14,11 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
 
-  import type { Content } from 'src/global/types';
+  import type { IContent } from 'src/global/types';
 
   import PreviewVideo from './PreviewVideo.svelte';
 
-  export let contents: Content[] = [];
+  export let contents: IContent[] = [];
   export let end: boolean;
   export let cursor: string;
   export let onClickContents: (id: string) => void;

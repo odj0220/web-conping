@@ -60,9 +60,9 @@
 
   import Avatar from './Avatar.svelte';
 
-  import type { Content } from 'src/global/types';
+  import type { IContent } from 'src/global/types';
 
-  export let content: Content;
+  export let content: IContent;
   export let order = 0;
   export let onClickContents: (id: string) => void;
   export let autoPlay: boolean;

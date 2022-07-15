@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   
-  import type { Content, TitleElement } from 'src/global/types';
+  import type { IContent, TitleElement } from 'src/global/types';
   
   import CenterSection from '$styles/CenterSection.svelte';
   import PreviewVideos from './PreviewVideos.svelte';
@@ -9,9 +9,9 @@
   import Title from './Title.svelte';
 
   import { onMount } from 'svelte';
-  import { graphqlApi } from '$lib/_api_graphql';
+  import { graphqlApi } from '../lib/_api';
 
-  let contents: Content[];
+  let contents: IContent[];
   let end = false;
   let cursor = '';
   let title: TitleElement[];

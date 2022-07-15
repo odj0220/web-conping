@@ -1,11 +1,11 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   
-  import { graphqlApi } from '$lib/_api_graphql';
+  import { graphqlApi } from '../lib/_api';
   
   import { goto } from '$app/navigation';
 
-  import type { Program } from 'src/global/types';
+  import type { IProgram } from 'src/global/types';
   
   import CenterSection from '$styles/CenterSection.svelte';
   import HorizontalScroller from './HorizontalScroller.svelte';
@@ -13,7 +13,7 @@
   import Title from './Title.svelte';
   import ProgramList from './ProgramList.svelte';
 
-  let programs: Program[] = [];
+  let programs: IProgram[] = [];
 
   function handleClickContents(id: string) {
     goto(`/programs/${id}`);

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, SvelteComponent } from 'svelte';
-  import { graphqlApi } from '../lib/_api_graphql';
+  import { graphqlApi } from '../lib/_api';
   let Banners: SvelteComponent;
 
   let banners = [];

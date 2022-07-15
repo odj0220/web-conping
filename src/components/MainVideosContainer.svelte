@@ -1,16 +1,16 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   
-  import { graphqlApi } from '../lib/_api_graphql';
+  import { graphqlApi } from '../lib/_api';
   
   import { goto } from '$app/navigation';
   
-  import type { Content } from 'src/global/types';
+  import type { IContent } from 'src/global/types';
   
   import CenterSection from '../styles/CenterSection.svelte';
   import PreviewVideos from './PreviewVideos.svelte';
 
-  let contents: Content[];
+  let contents: IContent[];
   let end = false;
   let cursor = '';
 

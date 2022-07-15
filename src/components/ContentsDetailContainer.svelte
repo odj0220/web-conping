@@ -2,14 +2,14 @@
   import { onMount } from 'svelte';
 
   import { guid } from '$lib/util';
-  import { graphqlApi } from '$lib/_api_graphql';
+  import { graphqlApi } from '../lib/_api';
   import { setContents, getContinueWatchingList } from '$lib/_continue_watching';
 
   import YP from 'youtube-player';
 
   import type { YouTubePlayer } from 'youtube-player/dist/types';
   
-  import type { Content } from 'src/global/types';
+  import type { IContent } from 'src/global/types';
   
   import Metadata from './Metadata.svelte';
   import Player from './Player.svelte';
@@ -21,7 +21,7 @@
   export let id: string;
   
   let player: YouTubePlayer;
-  let content: Content;
+  let content: IContent;
   let continueInterval;
   let continueIntervalTime = 10000;
 
