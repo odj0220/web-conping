@@ -3,8 +3,6 @@
   
   import { getContinueWatchingList } from '$lib/_continue_watching';
   
-  import { goto } from '$app/navigation';
-  
   import type { Content } from 'src/global/types';
 
   import Hscroller from './HorizontalScroller.svelte';
@@ -20,7 +18,7 @@
   });
 
   function handleClickContents(id: string) {
-    goto(`/contents/${id}`);
+    window.location.href = `/contents/${id}`;
   }
 
 </script>

@@ -1,13 +1,12 @@
 <script lang=ts>
   import { graphqlApi } from '../lib/_api_graphql';
   import ImageListView from './ImageListView.svelte';
-  import { goto } from '$app/navigation';
   import type { Content } from 'src/global/types';
 
   export let id;
 
   async function loadContents(): Promise<Content[]> {
-     const query = `{
+    const query = `{
        getContentsByProgramId(id:"${id}", type:FULL){
          id
          title
@@ -24,7 +23,7 @@
   }
 
   const handleClickContents = (contentsId: string) => {
-    goto(`/contents/${contentsId}`);
+    window.location.href = `/contents/${contentsId}`;
   };
 </script>
 
