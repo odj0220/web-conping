@@ -95,7 +95,6 @@
       <section class="infinite-scroll"
                class:done={end}
                bind:this={infiniteScrollArea}
-
       ></section>
       {#if $scrolling}
         <div class="spinner-wrapper">

@@ -1,9 +1,8 @@
 <script lang="ts">
     import Title from './Title.svelte';
     import PreviewVideos from './PreviewVideos.svelte';
-    import type { TitleElement } from '../global/types';
     import { graphqlApi } from '../lib/_api_graphql';
-    import { onMount } from 'svelte';
+    import { goto } from '$app/navigation';
 
 
     export let contentId: string;
@@ -40,6 +39,10 @@
         contents,
       };
     }
+
+    function handleClickContents(id: string) {
+      goto(`/contents/${id}`);
+    }
 </script>
 
 {#await loadAnotherContents()}
@@ -47,7 +50,12 @@
     <section class="divider"></section>
     <section class="layout">
         <Title title={createTitle(programTitle)}/>
-        <PreviewVideos contents={contents}/>
+        <PreviewVideos
+                contents={contents.data}
+                end={contents.end}
+                cursor={contents.cursor}
+                onClickContents={handleClickContents}
+        />
         <a class="link" href={'/programs/' + programId}>
             {programTitle} 시리즈 보러가기
         </a>
