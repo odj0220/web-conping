@@ -4,7 +4,17 @@
   export let onClick: (id: string) => void;
   export let content: Content;
 
-  const { id, title, subtitle, thumb } = content;
+  const {
+    id,
+    title,
+    thumb,
+    episode,
+    program: {
+      title: programTitle,
+    },
+  } = content;
+
+  $: metaDataContent = `${programTitle} ${episode}화`;
 </script>
 
 <li class="grid-item">
@@ -20,8 +30,8 @@
     class="right"
     on:click={() => onClick(id)}
   >
-    <span class="title">{title}</span>
-    <span class="sub-title">{subtitle}</span>
+    <span class="head-line">{metaDataContent}</span>
+    <span class="sub-head">{title}</span>
   </div>
 </li>
 
@@ -40,11 +50,6 @@
         height: 100%;
         object-fit: cover;
       }
-   
-      &:active {
-        transform: scale(1.1);
-        //TODO: 클릭할 때 효과 정의 필요
-      }
     }
 
     .right {
@@ -54,7 +59,7 @@
       padding: 1rem;
       font-size: 1.2rem;
 
-      .title {
+      .head-line {
         color: #8A8A8A;
       }
     }

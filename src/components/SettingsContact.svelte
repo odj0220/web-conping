@@ -3,21 +3,22 @@ import Icon from './icons/Icon.svelte';
 
 export let csState: boolean;
 export let setCSState: (bool: boolean) => void;
-export let csList: any[] = [];
+export let contactList: any[] = [];
+export let onClick: (category: string) => void;
 
 </script>
 
-<div class="cs-container" class:on={csState}>
+<div class="contact-container" class:on={csState}>
   <div class="layer" on:click="{() => setCSState(false)}"></div>
   <div class="inner">
     <h6 class="title">문의하기</h6>
     <p class="desc">궁금한 점이 있다면 편하게 연락주세요</p>
     <div class="buttons">
-      {#each csList as csItem}
-        <button on:click="{() => csItem.handler()}">
-          <Icon name={csItem.icon} />
-          <span class="text-big">{csItem.textBig}</span>
-          <span class="text-small">{csItem.textSmall}</span>
+      {#each contactList as item}
+        <button on:click="{() => onClick(item.textSmall)}">
+          <Icon name={item.icon} />
+          <span class="text-big">{item.textBig}</span>
+          <span class="text-small">{item.textSmall}</span>
         </button>
       {/each}
     </div>
@@ -27,7 +28,7 @@ export let csList: any[] = [];
 <style lang="scss">
 @import "../styles/variables.scss";
 
-.cs-container {
+.contact-container {
   .layer {
     position: fixed;
     top: 0;
@@ -79,8 +80,8 @@ export let csList: any[] = [];
           margin-right: 1.2rem;
         }
         &:last-child {
-          background-color: #F8DB40;
-          color: #381E1F;
+          background-color: #39B73C;
+          color: $text-white-f2;
         }
         .text-big {
           margin: 0.6rem 0 0.2rem;

@@ -28,9 +28,9 @@
           type
         } 
         contents {
+          id
           thumb
           title
-          videoId
         }
       }
     }`;
@@ -48,8 +48,8 @@
     
     <Hscroller>
       <ShortVodList
-      {contents}
-      onClick={handleClickShorts}
+        {contents}
+        onClick={handleClickShorts}
       />
     </Hscroller>
   </CenterSection>

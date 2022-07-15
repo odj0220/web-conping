@@ -1,21 +1,22 @@
 <script lang="ts">
-import { goto } from '$app/navigation';
-import Header from './Header.svelte';
+  import { goto } from '$app/navigation';
+  
+  import Header from './Header.svelte';
 
-export let title: string;
+  export let title = '';
+  
+  const BUTTONS = ['setting'];
 
-function handleClickButton(type: string) {
-  switch (type) {
-  case 'setting':
-    goto('/settings');
-    break;
+  function handleClickButton(type: string) {
+    switch (type) {
+    case 'setting':
+      goto('/settings');
+      break;
 
-  default:
-    break;
+    default:
+      break;
+    }
   }
-}
-
-const BUTTONS = ['setting'];
 </script>
 
 <Header onClick={handleClickButton} {title} buttons={BUTTONS}/>

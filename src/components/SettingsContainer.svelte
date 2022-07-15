@@ -2,7 +2,8 @@
 import { appCheck, openBrowser } from '$lib/util';
 import { copyToClipboard, getVersion, launchSystemNotification, launchTel } from '$lib/_app_communication';
 import { onMount } from 'svelte';
-import SettingsCS from './SettingsCS.svelte';
+import SettingsBanner from './SettingsBanner.svelte';
+import SettingsContact from './SettingsContact.svelte';
 import SettingsMenuList from './SettingsMenuList.svelte';
 import SubHeaderContainer from './SubHeaderContainer.svelte';
 
@@ -13,36 +14,12 @@ const setCSState = (bool: boolean) => {
   csState = bool;
 };
 
-const onClickPush = () => {
-  launchSystemNotification();
-};
-
-const onClickNotice = () => {
-  openBrowser('https://naver.com');
-};
-
-const onClickFAQ = () => {
-  openBrowser('https://naver.com');
-};
-
-const onClickCS = () => {
+const onClickContact = () => {
   setCSState(true);
 };
 
-const onClickPartnership = () => {
-  copyToClipboard('cs@gollala.com');
-  console.log('ddddd');
-};
-
-const onClickTerms = () => {
-  openBrowser('https://naver.com');
-};
-
-const onClickPrivate = () => {
-  openBrowser('https://naver.com');
-};
-
-const onClickCScenter = () => {
+const onClickCall = () => {
+  console.log('ddd');
   const win: any = window;
   if (win['flutter_inappwebview']) {
     return launchTel('02-6245-1111');
@@ -50,48 +27,61 @@ const onClickCScenter = () => {
   window.location.href = 'tel://02-6245-1111';
 };
 
-const onClickCSKakao = () => {
-  console.log('onClickCSKakao');
+const onClick = (category: string) => {
+  switch (category) {
+  case 'brand' : openBrowser('https://naver.com'); break;
+  case 'celeb' : openBrowser('https://naver.com'); break;
+  case '공지사항' : openBrowser('https://naver.com'); break;
+  case 'FAQ' : openBrowser('https://naver.com'); break;
+  case '문의하기' : onClickContact(); break;
+  case '서비스 이용약관' : openBrowser('https://naver.com'); break;
+  case '개인정보 처리방침' : openBrowser('https://naver.com'); break;
+  case '고객센터 전화 문의' : onClickCall(); break;
+  case '메세지 문의' : openBrowser('https://talk.naver.com/W4BGJY'); break;
+  default: break;
+  }
 };
 
+const bannerList = [
+  {
+    name: 'brand',
+    image: 'images/Banner_Brand.png',
+  },
+  {
+    name: 'celeb',
+    image: 'images/Banner_Celeb.png',
+  },
+];
 
 const menuList = [
   {
-    depth1: '푸쉬 알림',
-    depth2: [
-      { title: '푸쉬 알림 설정', handler: onClickPush },
-    ],
-  },
-  {
     depth1: '고객센터',
     depth2: [
-      { title: '공지사항', handler: onClickNotice },
-      { title: 'FAQ', handler: onClickFAQ },
-      { title: '문의하기', handler: onClickCS },
-      { title: '브랜드/셀럽 제휴 문의', linkHandler: onClickPartnership, link: 'cs@gollala.com' },
-      { title: '서비스 이용약관', handler: onClickTerms },
-      { title: '개인정보 처리방침', handler: onClickPrivate }],
+      { title: '공지사항' },
+      { title: 'FAQ' },
+      { title: '문의하기' },
+      { title: '서비스 이용약관' },
+      { title: '개인정보 처리방침' }],
   },
   {
     depth1: '기타',
     depth2: [
+      { title: '푸쉬 알림 설정' },
       { title: '버전 정보', desc: appVersion },
     ],
   },
 ];
 
-const csList = [
+const contactList = [
   {
     textBig: '02-6245-1111',
     textSmall: '고객센터 전화 문의',
-    handler: onClickCScenter,
     icon: 'call',
   },
   {
-    textBig: '골라라 플러스친구',
-    textSmall: '카카오톡 문의',
-    handler: onClickCSKakao,
-    icon: 'kakao',
+    textBig: '콘핑 네이버톡톡',
+    textSmall: '메세지 문의',
+    icon: 'naverTalkTalk',
   },
 ];
 
@@ -109,5 +99,7 @@ onMount(async () => {
 </script>
 
 <SubHeaderContainer title="설정" share={false} />
-<SettingsMenuList {menuList} appCheck={isApp}/>
-<SettingsCS {csState} {setCSState} {csList} />
+
+<SettingsBanner {bannerList} {onClick}/>
+<SettingsMenuList {menuList} appCheck={isApp} {onClick}/>
+<SettingsContact {csState} {setCSState} {contactList} {onClick}/>
