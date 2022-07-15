@@ -72,7 +72,7 @@ import Container from './common/layout/Container.svelte';
   }
 </script>
 
-<Container marginTop="5.6rem">
+<Container margin="5.6rem 0 0 0">
   <PreviewVideos
     {contents}
     {end}

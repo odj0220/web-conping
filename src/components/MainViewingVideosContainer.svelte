@@ -25,7 +25,7 @@ import Container from './common/layout/Container.svelte';
 </script>
 
 {#if contents.length > 0}
-  <Container type="grayBox wide" marginTop="2rem">
+  <Container type="grayBox wide" margin="2rem 1.6rem 0">
     <Title
       title={[{ text: '시청중인 영상' }]}
       marginLeft="1.2rem"

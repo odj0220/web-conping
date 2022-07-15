@@ -74,7 +74,6 @@
 
     .link {
       margin-top: 1.6rem;
-      margin-bottom: 4rem;
       display: inline-block;
       width: 100%;
       @include body3-700;

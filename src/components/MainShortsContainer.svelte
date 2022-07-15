@@ -44,7 +44,7 @@ import Container from './common/layout/Container.svelte';
 </script>
 
 {#if contents?.length }
-  <Container type="full" marginTop="5.6rem">
+  <Container type="full" margin="5.6rem 0 0 0">
     <Title {title} marginLeft="1.6rem" marginBottom="1.6rem"/>
     
     <ShortVodList

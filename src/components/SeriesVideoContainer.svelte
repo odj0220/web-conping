@@ -87,7 +87,7 @@ import Container from './common/layout/Container.svelte';
 </script>
 
 {#if contents?.length }
-  <Container type="grayBox" marginTop="5.6rem">
+  <Container type="grayBox" margin="5.6rem 1.6rem 0">
     <Title
       onClick={handleTitleClick}
       {title}

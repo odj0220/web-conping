@@ -1,10 +1,10 @@
 <script lang="ts">
-export let marginTop = '8px';
+export let margin = '8px 0 0 ';
 export let type = '';
 export let title = '';
 </script>
 
-<section class="container {type}" style="margin-top: {marginTop};">
+<section class="container {type}" style="margin: {margin};">
   {#if title}
     <h3 class="title">{title}</h3>
   {/if}
@@ -20,7 +20,6 @@ export let title = '';
       border-radius: 0.4rem;
       background-color: $bg-black-21;
       padding: 1.6rem 1.2rem;
-      margin:0 1.6rem;
     }
     &.wide {
       padding: 1.6rem 0;
