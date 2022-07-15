@@ -1,15 +1,16 @@
-<script>
+<script lang="ts">
 import { graphqlApi } from '$lib/_api_graphql';
-import CenterSection from '$styles/CenterSection.svelte';
 import { onMount } from 'svelte';
+import type { ICeleb } from 'src/global/types';
 import Celebs from './Celebs.svelte';
+import Container from './common/layout/Container.svelte';
 import MainHeaderContainer from './MainHeaderContainer.svelte';
 
 onMount(() => {
   getData();
 });
 
-let celebs;
+let celebs: ICeleb[] = [];
 
 const getData = async () => {
   const query = '{celebs{id name thumbnail categories}}';
@@ -22,6 +23,6 @@ const getData = async () => {
 </script>
 
 <MainHeaderContainer title="셀럽존" />
-<CenterSection type="transparency">
+<Container marginTop="8px">
   <Celebs {celebs}/>
-</CenterSection>
+</Container>
