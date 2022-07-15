@@ -1,7 +1,7 @@
 <script lang="ts">
-import type { Program } from 'src/global/types';
+import type { IProgram } from 'src/global/types';
 
-export let program: Program;
+export let program: IProgram;
 export let onClick: (id: string) => void;
 
 const { thumbnail, title, id } = program;
@@ -18,7 +18,15 @@ const { thumbnail, title, id } = program;
 .item {
   flex-shrink: 0;
   width: 14.4rem;
+<<<<<<< HEAD
   
+=======
+  box-sizing: content-box;
+  &:last-child {
+    margin-right: 1.6rem;
+  }
+
+>>>>>>> c5c67cab6520de937071a8ca7a6e1f05c1ddda41
   .thumbnail {
     border-radius: 0.4rem;
     overflow: hidden;

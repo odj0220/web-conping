@@ -1,15 +1,14 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   
-  import { graphqlApi } from '../lib/_api_graphql';
+  import { graphqlApi } from '../lib/_api';
 
-  import type { Content } from 'src/global/types';
-  
-  import CenterSection from '../styles/CenterSection.svelte';
+  import type { IContent } from 'src/global/types';
+
   import PreviewVideos from './PreviewVideos.svelte';
 import Container from './common/layout/Container.svelte';
 
-  let contents: Content[] = [];
+  let contents: IContent[] = [];
   let end = false;
   let cursor = '';
 
@@ -52,7 +51,7 @@ import Container from './common/layout/Container.svelte';
     try {
       const { data: { getMainInfiniteContents } } = await graphqlApi(query);
       const newContents = getMainInfiniteContents.edges.map((edge) => edge.node);
-  
+
       contents = [...contents, ...newContents];
       end = !getMainInfiniteContents.pageInfo.hasNextPage;
       cursor = getMainInfiniteContents.pageInfo.startCursor;

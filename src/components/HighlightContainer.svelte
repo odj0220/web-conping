@@ -1,5 +1,5 @@
 <script lang=ts>
-  import { graphqlApi } from '../lib/_api_graphql';
+  import { graphqlApi } from '../lib/_api';
   import PreviewVideos from './PreviewVideos.svelte';
 
   export let id;

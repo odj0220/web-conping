@@ -1,12 +1,12 @@
 <script lang="ts">
 import { onMount } from 'svelte';
-import { graphqlApi } from '$lib/_api_graphql';
-import type { Program } from 'src/global/types';
+import { graphqlApi } from '$lib/_api';
+import type { IProgram } from 'src/global/types';
 import Title from './Title.svelte';
 import ProgramList from './ProgramList.svelte';
 import Container from './common/layout/Container.svelte';
 
-let programs: Program[] = [];
+let programs: IProgram[] = [];
 
 function handleClickContents(id: string) {
   window.location.href = `/programs/${id}`;

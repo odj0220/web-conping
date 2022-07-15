@@ -3,7 +3,7 @@
   
   import { getContinueWatchingList } from '$lib/_continue_watching';
   
-  import type { Content } from 'src/global/types';
+  import type { IContent } from 'src/global/types';
 
   import Hscroller from './HorizontalScroller.svelte';
   import CenterSection from '$styles/CenterSection.svelte';
@@ -12,7 +12,7 @@
   import ViewingVodList from './ViewingVodList.svelte';
 import Container from './common/layout/Container.svelte';
 
-  let contents: Content[] = [];
+  let contents: IContent[] = [];
 
   onMount(async () => {
     contents = await getContinueWatchingList();

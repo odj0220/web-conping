@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type { Content } from 'src/global/types';
+  import type { IContent } from 'src/global/types';
 
   import ViewingVodItem from './VewingVodItem.svelte';
 
-  export let contents: Content[];
+  export let contents: IContent[];
 
   export let onClick: (id: string) => void;
   console.log('contents', contents);
