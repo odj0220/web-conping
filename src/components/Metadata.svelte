@@ -1,16 +1,8 @@
 <script lang="ts">
-  import { onMount, SvelteComponent } from 'svelte';
+import { SvelteComponent } from 'svelte';
 import Avatar from './Avatar.svelte';
 import GrayBox from './CenterSection.svelte';
 import Hscroller from './HorizontalScroller.svelte';
-
-// export let name: string;
-// export let title: string;
-// export let description: string;
-// export let airingBeginAt: number;
-// export let airingEndAt: number;
-// export let airingAt: number;
-// export let celebs: any;
 
 let PastTimeDelta: SvelteComponent;
 
@@ -46,110 +38,110 @@ $: isContentDetail = !!option['contentDetail'];
 $: isProgramDetail = !!option['programDetail'];
 
 const getInformation = async () => {
-    let result = '';
-    if (isContentDetail) {
-      const { contentDetail: { info: { programTitle, episode, createDt, view } } } = option;
+  let result = '';
+  if (isContentDetail) {
+    const { contentDetail: { info: { programTitle, episode, createDt, view } } } = option;
 
-      if (programTitle) {
-        information = [programTitle];
-      }
-
-      if (episode) {
-        information = [...information, `${episode}화`];
-      }
-
-      if (view) {
-        information = [...information, `조회수 ${view}회`];
-      }
-
-      if (createDt) {
-        const module = await import('./PastTimeDelta.svelte');
-        PastTimeDelta = module.default;
-        pastTime = +createDt;
-      }
-
-      result = information.join(' ・ ') + `${createDt ? ' ・ ' : ''}`;
-  
-      return result;
+    if (programTitle) {
+      information = [programTitle];
     }
 
-    if (isProgramDetail) {
-      const { programDetail: { info: { airingBeginAt, airingEndAt, totalEpisode, regularAiringAt } } } = option;
-  
-      if (airingBeginAt) {
-        const start = convertDate(airingBeginAt) + ' ~';
-        let end = '';
-        if (airingEndAt) {
-          end = convertDate(airingEndAt);
-        }
-
-        information = [...information, start + end];
-      }
-
-      if (totalEpisode) {
-        information = [...information, `${totalEpisode}부작`];
-      }
-
-      if (regularAiringAt) {
-        const regularTime = convertRegularDate(regularAiringAt);
-        information = [...information, regularTime];
-      }
-
-      result = information.join(' ・ ');
-
-      return result;
+    if (episode) {
+      information = [...information, `${episode}화`];
     }
 
-    return '';
+    if (view) {
+      information = [...information, `조회수 ${view}회`];
+    }
+
+    if (createDt) {
+      const module = await import('./PastTimeDelta.svelte');
+      PastTimeDelta = module.default;
+      pastTime = +createDt;
+    }
+
+    result = information.join(' ・ ') + `${createDt ? ' ・ ' : ''}`;
+
+    return result;
+  }
+
+  if (isProgramDetail) {
+    const { programDetail: { info: { airingBeginAt, airingEndAt, totalEpisode, regularAiringAt } } } = option;
+
+    if (airingBeginAt) {
+      const start = convertDate(airingBeginAt) + ' ~';
+      let end = '';
+      if (airingEndAt) {
+        end = convertDate(airingEndAt);
+      }
+
+      information = [...information, start + end];
+    }
+
+    if (totalEpisode) {
+      information = [...information, `${totalEpisode}부작`];
+    }
+
+    if (regularAiringAt) {
+      const regularTime = convertRegularDate(regularAiringAt);
+      information = [...information, regularTime];
+    }
+
+    result = information.join(' ・ ');
+
+    return result;
+  }
+
+  return '';
 };
 
 const convertDate = (time: number) => {
-    const date = new Date(time);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
+  const date = new Date(time);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
 
-    return `${year}.${month < 10 ? `0${month}` : month}.${day < 10 ? `0${day}` : day}`;
+  return `${year}.${month < 10 ? `0${month}` : month}.${day < 10 ? `0${day}` : day}`;
 };
 
 const convertRegularDate = (time:number) => {
-    const date = new Date(time);
-    const day = getDay(date.getDay());
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const division = hours > 12 ? '오후' : '오전';
-    return `(${day}) ${division} ${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}`;
+  const date = new Date(time);
+  const day = getDay(date.getDay());
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const division = hours > 12 ? '오후' : '오전';
+  return `(${day}) ${division} ${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}`;
 };
 
 const getDay = (time: number) => {
-    const DAYS = {
-      SUNDAY: 0,
-      MONDAY: 1,
-      TUESDAY: 2,
-      WENSDAY: 3,
-      THURSDAY: 4,
-      FRIDAY: 5,
-      SATURDAY: 6,
-    };
+  const DAYS = {
+    SUNDAY: 0,
+    MONDAY: 1,
+    TUESDAY: 2,
+    WENSDAY: 3,
+    THURSDAY: 4,
+    FRIDAY: 5,
+    SATURDAY: 6,
+  };
 
-    switch (time) {
-    case DAYS.SUNDAY:
-      return '일';
-    case DAYS.MONDAY:
-      return '월';
-    case DAYS.TUESDAY:
-      return '화';
-    case DAYS.WENSDAY:
-      return '수';
-    case DAYS.THURSDAY:
-      return '목';
-    case DAYS.FRIDAY:
-      return '금';
-    case DAYS.SATURDAY:
-      return '토';
-    default:
-      return '알 수 없음';
-    }
+  switch (time) {
+  case DAYS.SUNDAY:
+    return '일';
+  case DAYS.MONDAY:
+    return '월';
+  case DAYS.TUESDAY:
+    return '화';
+  case DAYS.WENSDAY:
+    return '수';
+  case DAYS.THURSDAY:
+    return '목';
+  case DAYS.FRIDAY:
+    return '금';
+  case DAYS.SATURDAY:
+    return '토';
+  default:
+    return '알 수 없음';
+  }
 };
 </script>
 
