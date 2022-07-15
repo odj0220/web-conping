@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type { ICeleb } from 'src/global/types';
-  
-  import Celeb from './Celeb.svelte';
+import type { ICeleb } from 'src/global/types';
+import Celeb from './Celeb.svelte';
 
-  export let celebs: ICeleb[] = [];
+export let celebs: ICeleb[] = [];
+console.log('celebs', celebs);
 </script>
 
 <ul class="celebs">
