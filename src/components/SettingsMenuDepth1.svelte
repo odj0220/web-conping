@@ -1,25 +1,21 @@
 <script lang="ts">
-interface IDepth2 {
-  title: string
-  link: string
-  desc: string
-  handler: () => void
-}
-
 interface IMenu {
   depth1: string
-  depth2: IDepth2[]
+  depth2: string[]
 }
 
 import SettingsMenuDepth2 from './SettingsMenuDepth2.svelte';
+
 export let menu: IMenu;
+export let onClick = (category: string) => void;
+
 </script>
 
 <li class="depth1">
   <span class="depth1-menu">{menu.depth1}</span>
   <ul class="depth2">
       {#each menu.depth2 as depth2}
-        <SettingsMenuDepth2 {depth2}/>
+        <SettingsMenuDepth2 {depth2} {onClick}/>
       {/each}
   </ul>
 </li>

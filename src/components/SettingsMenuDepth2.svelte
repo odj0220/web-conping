@@ -1,23 +1,11 @@
 <script lang="ts">
-interface IDepth2 {
-  title: string
-  link: string
-  desc: string
-  handler: () => void
-  linkHandler: () => void
-}
-export let depth2: IDepth2;
+export let depth2: string;
+export let onClick = (category: string) => void;
+
 </script>
 
-<li class="depth2-menu" on:click={depth2.handler}>
-  <span class="depth2-title">{depth2.title}</span>
-  {#if depth2.desc || depth2.link}
-    <span 
-      class:link={depth2.link}
-      class="depth2-desc"
-      on:click={depth2.linkHandler}
-    >{depth2.desc || depth2.link}</span>
-  {/if}
+<li class="depth2-menu" on:click={() => onClick(depth2)}>
+  {depth2}
 </li>
 
 <style lang="scss">
@@ -31,11 +19,5 @@ export let depth2: IDepth2;
   padding: 0 1.6rem;
   box-sizing: border-box;
   border-bottom: 1px solid $bg-black-21;
-  .depth2-desc {
-    color: $disabled-8a;
-    &.link {
-      text-decoration: underline;
-    }
-  }
 }
 </style>
