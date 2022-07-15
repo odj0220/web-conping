@@ -43,11 +43,6 @@
         height: 100%;
         object-fit: cover;
       }
-   
-      &:active {
-        transform: scale(1.1);
-        //TODO: 클릭할 때 효과 정의 필요
-      }
     }
 
     .right {
