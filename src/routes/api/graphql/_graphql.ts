@@ -32,7 +32,8 @@ export async function Graphql(query: string) {
       thumbnail: String
       regularAiringAt: Float
       airingBeginAt: Float
-      airingEndAt: Float 
+      airingEndAt: Float
+      totalEpisode: Int
 		}
 		
 		type Content {
