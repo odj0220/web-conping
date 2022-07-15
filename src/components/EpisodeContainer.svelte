@@ -19,13 +19,9 @@
        }
     }`;
 
-    try {
-      const result = await graphqlApi(query);
-      const contents = result.data.getContentsByProgramId;
-      return contents;
-    } catch (error) {
-      throw error;
-    }
+    const result = await graphqlApi(query);
+    const contents = result.data.getContentsByProgramId;
+    return contents;
   }
 
   const handleClickContents = (contentsId: string) => {
