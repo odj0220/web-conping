@@ -47,11 +47,9 @@ import Container from './common/layout/Container.svelte';
   <Container type="full" marginTop="5.6rem">
     <Title {title} marginLeft="1.6rem" marginBottom="1.6rem"/>
     
-    <Hscroller>
-      <ShortVodList
-        {contents}
-        onClick={handleClickShorts}
-      />
-    </Hscroller>
+    <ShortVodList
+      {contents}
+      onClick={handleClickShorts}
+    />
   </Container>
 {/if}

@@ -266,6 +266,9 @@
   position: relative;
 
   .thumb-wrap {
+    border-top-left-radius: 0.4rem;
+    border-top-right-radius: 0.4rem;
+    overflow: hidden;
     z-index: 2;
     top: 0;
     left: 0;

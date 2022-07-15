@@ -39,8 +39,6 @@ onMount(() => {
 <style lang="scss">
   .viewing-vod-item {
     width: 8rem;
-    margin-left: 2rem;
-
     .thumb-wrapper {
       position: relative;
       width: 8rem;
