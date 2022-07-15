@@ -27,6 +27,7 @@ const onClickCall = () => {
   window.location.href = 'tel://02-6245-1111';
 };
 
+// TODO: brand, celbel 배너, 공지사항, FAQ, 약관, 개인정보 링크
 const onClick = (category: string) => {
   switch (category) {
   case 'brand' : openBrowser('https://naver.com'); break;
