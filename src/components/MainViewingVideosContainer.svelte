@@ -31,8 +31,6 @@ import Container from './common/layout/Container.svelte';
       marginLeft="1.2rem"
       marginBottom="1.6rem"
     />
-    <Hscroller>
-      <ViewingVodList {contents} onClick={handleClickContents} />
-    </Hscroller>
+    <ViewingVodList {contents} onClick={handleClickContents} />
   </Container>
 {/if}

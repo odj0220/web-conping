@@ -20,8 +20,7 @@
 
 <style lang="scss">
   section {
-    display: flex;
-    padding: 0 1.2rem;
+    @include horizontalScroll(2rem, 1.6rem);
     & > :global(*) {
       &:first-child {
         margin-left: 0 !important;
