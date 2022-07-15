@@ -1,5 +1,4 @@
 <script lang=ts>
-  import { onMount } from 'svelte';
   import { graphqlApi } from '$lib/_api_graphql';
   import type { Program } from 'src/global/types';
 
@@ -94,7 +93,7 @@
       <Metadata option={metaDataOption}/>
 
       <section class="tabs-wrapper">
-        <Tabs {items} />
+        <Tabs {items} programTitle={program.title}/>
       </section>
   </main>
 {/await}
