@@ -36,7 +36,7 @@ onMount(() => {
 
 {#if programs?.length }
   <Container margin="5.6rem 0 0 0" type="full">
-    <Title title={[{ text: '골라라 오리지널' }]} marginLeft="1.6rem"/>
+    <Title title={[{ text: '콘핑 오리지널' }]} marginLeft="1.6rem"/>
     <ProgramList
     {programs}
     type="horizontal"
