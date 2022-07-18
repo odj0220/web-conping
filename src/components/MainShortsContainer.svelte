@@ -1,28 +1,25 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { graphqlApi } from '$lib/_api';
-  import type { IContent, TitleElement } from 'src/global/types';
+import { onMount } from 'svelte';
+import { graphqlApi } from '$lib/_api';
+import type { IContent, TitleElement } from 'src/global/types';
 
-  import CenterSection from '$styles/CenterSection.svelte';
-  import Hscroller from './HorizontalScroller.svelte';
-
-  import Title from './Title.svelte';
-  import ShortVodList from './ShortVodList.svelte';
+import Title from './Title.svelte';
+import ShortVodList from './ShortsVodList.svelte';
 import Container from './common/layout/Container.svelte';
 
-  let contents: IContent[];
-  let title: TitleElement[];
+let contents: IContent[];
+let title: TitleElement[];
 
-  onMount(async () => {
-    getShorts();
-  });
+onMount(async () => {
+  getShorts();
+});
 
-  function handleClickShorts(id:string) {
-    window.location.href = `/shorts/${id}`;
-  }
+function handleClickShorts(id:string) {
+  window.location.href = `/shorts/${id}`;
+}
 
-  async function getShorts() {
-    const query = `{
+async function getShorts() {
+  const query = `{
       getMainShorts{
         title {
           text
@@ -35,12 +32,12 @@ import Container from './common/layout/Container.svelte';
         }
       }
     }`;
-  
-    const result = await graphqlApi(query);
 
-    title = result?.data?.getMainShorts?.title;
-    contents = result?.data?.getMainShorts?.contents;
-  }
+  const result = await graphqlApi(query);
+
+  title = result?.data?.getMainShorts?.title;
+  contents = result?.data?.getMainShorts?.contents;
+}
 </script>
 
 {#if contents?.length }
