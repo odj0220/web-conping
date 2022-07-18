@@ -33,7 +33,7 @@
     <Swiper
             pagination={{ clickable: true }}
             spaceBetween={0}
-            loop={true}
+            loop={false}
             autoplay={{ deplay: 1000 }}
             elementClass="main-banner"
             slideToClickedSlide={true}

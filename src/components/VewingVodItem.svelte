@@ -14,7 +14,6 @@ onMount(() => {
     ratio = (currentTime / duration) * 100;
   }
 });
-console.log('content', content);
 </script>
 
 <div class="viewing-vod-item" on:click={() => onClick(`${id}`)}>
