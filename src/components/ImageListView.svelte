@@ -23,6 +23,7 @@
       flex-wrap: wrap;
       justify-content: space-between;
       gap: 1.2rem;
+      margin-bottom: 1.2rem;
     }
   }
 </style>

@@ -8,7 +8,8 @@
 }
 
 @mixin horizontalScroll($gap, $padding) {
-  overflow-y: scroll;
+  position: relative;
+  overflow-x: scroll;
   display: flex;
   box-sizing: border-box;
   gap: $gap;

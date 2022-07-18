@@ -45,7 +45,7 @@ const title = [
 <section class="section">
   <Title {title} />
   <Celebs {celebs}/>
-  <MoreButton onClick={onClickMore} value="골라라 셀럽 더보기"/>
+  <MoreButton onClick={onClickMore} value="콘핑 셀럽 더보기"/>
 </section>
 
 <style lang="scss">
