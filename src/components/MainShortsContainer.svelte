@@ -1,60 +1,52 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+import { onMount } from 'svelte';
+import { graphqlApi } from '$lib/_api';
+import type { IContent, TitleElement } from 'src/global/types';
 
-  import { graphqlApi } from '$lib/_api_graphql';
-  
-  import { goto } from '$app/navigation';
+import Title from './Title.svelte';
+import ShortVodList from './ShortsVodList.svelte';
+import Container from './common/layout/Container.svelte';
 
-  import type { Content, TitleElement } from 'src/global/types';
+let contents: IContent[];
+let title: TitleElement[];
 
-  import CenterSection from '$styles/CenterSection.svelte';
-  import Hscroller from './HorizontalScroller.svelte';
+onMount(async () => {
+  getShorts();
+});
 
-  import Title from './Title.svelte';
-  import ShortVodList from './ShortVodList.svelte';
+function handleClickShorts(id:string) {
+  window.location.href = `/shorts/${id}`;
+}
 
-  let contents: Content[];
-  let title: TitleElement[];
-
-  onMount(async () => {
-    getShorts();
-  });
-
-  function handleClickShorts(id:string) {
-    goto(`/shorts/${id}`);
-  }
-
-  async function getShorts() {
-    const query = `{
+async function getShorts() {
+  const query = `{
       getMainShorts{
         title {
           text
           type
         } 
         contents {
+          id
           thumb
           title
-          videoId
         }
       }
     }`;
-  
-    const result = await graphqlApi(query);
 
-    title = result?.data?.getMainShorts?.title;
-    contents = result?.data?.getMainShorts?.contents;
-  }
+  const result = await graphqlApi(query);
+
+  title = result?.data?.getMainShorts?.title;
+  contents = result?.data?.getMainShorts?.contents;
+}
 </script>
 
 {#if contents?.length }
-  <CenterSection type="transparency">
-    <Title {title}></Title>
+  <Container type="full" margin="5.6rem 0 0 0">
+    <Title {title} marginLeft="1.6rem" marginBottom="1.6rem"/>
     
-    <Hscroller>
-      <ShortVodList
+    <ShortVodList
       {contents}
       onClick={handleClickShorts}
-      />
-    </Hscroller>
-  </CenterSection>
+    />
+  </Container>
 {/if}

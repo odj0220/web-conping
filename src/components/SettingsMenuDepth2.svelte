@@ -1,11 +1,14 @@
 <script lang="ts">
-export let depth2: string;
-export let onClick = (category: string) => void;
+export let depth2: any;
+export let onClick: (category: string) => void;
 
 </script>
 
-<li class="depth2-menu" on:click={() => onClick(depth2)}>
-  {depth2}
+<li class="depth2-menu" on:click="{() => onClick(depth2.title)}">
+  <span class="depth2-title">{depth2.title}</span>
+  {#if depth2.desc}
+    <span class="depth2-desc">{depth2.desc}</span>
+  {/if}
 </li>
 
 <style lang="scss">

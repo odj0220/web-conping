@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   
-  import { graphqlApi } from '$lib/_api_graphql';
+  import { graphqlApi } from '../lib/_api';
 
   import RelatedProduct from './RelatedProduct.svelte';
 
@@ -20,12 +20,12 @@
     exposed: [[number]],
   }
 
-  let productList: Product[];
-
   const getRelatedProducts = async () => {
     const query = `{getProductsByContentId(id:"${id}"){id name price exposed}}`;
     const result = await graphqlApi(query);
-    productList = result?.data?.getProductsByContentId;
+    const productList = result?.data?.getProductsByContentId;
+
+    return productList;
   };
 
   onMount(async () => {
@@ -34,9 +34,15 @@
 
 </script>
 
-<RelatedProduct
-  data={productList}
-  {moreButton}
-  {onClickTimeButton}
-  {timelineButtonVisible}
-/>
+
+{#await getRelatedProducts()}
+{:then productList}
+    {#if productList.length}
+        <RelatedProduct
+                data={productList}
+                {moreButton}
+                {onClickTimeButton}
+                {timelineButtonVisible}
+        />
+    {/if}
+{/await}

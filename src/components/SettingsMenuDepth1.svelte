@@ -1,13 +1,8 @@
 <script lang="ts">
-interface IMenu {
-  depth1: string
-  depth2: string[]
-}
-
 import SettingsMenuDepth2 from './SettingsMenuDepth2.svelte';
 
-export let menu: IMenu;
-export let onClick = (category: string) => void;
+export let menu: any;
+export let onClick: (category: string) => void;
 
 </script>
 

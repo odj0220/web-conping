@@ -1,47 +1,37 @@
-export interface Program {
-  id: string;
-  title: string;
-  description: string;
-  banner: string;
-  thumbnail: string;
-  regularAiringAt: number;
-  airingBeginAt: number;
-  airingEndAt: number;
+export interface IProgram {
+  id?: string;
+  title?: string;
+  description?: string;
+  banner?: string;
+  thumbnail?: string;
+  regularAiringAt?: number;
+  airingBeginAt?: number;
+  airingEndAt?: number;
+  totalEpisode?: number;
 }
 
-export interface Content {
-  id: string;
-  title: string;
-  subtitle: string;
-  programId: string;
-  contentType: string;
-  createDt: number;
-  episode: number;
-  description: string;
-  url: string;
-  videoId: string;
-  thumb: string;
-  program: Program;
-  currentTime: number;
-  duration: number;
-  views: number;
+export interface IContent {
+  id?: string;
+  title?: string;
+  subtitle?: string;
+  programId?: string;
+  contentType?: string;
+  createDt?: number;
+  episode?: number;
+  description?: string;
+  url?: string;
+  videoId?: string;
+  thumb?: string;
+  program?: IProgram;
+  currentTime?: number;
+  duration?: number;
+  views?: number;
 }
 
 export interface TitleElement {
-  text: string;
-  type?: string;
-}
-
-export interface Program {
-  id: string;
-  name: string;
-  description: string;
-  bannerImg: string;
-  profileImg: string;
-  releasedAt: number;
-  airingAt: number;
-  airingBeginAt: number;
-  airingEndAt: number;
+  text: string,
+  type?: string,
+  style?: string;
 }
 
 export interface ICeleb {
@@ -51,8 +41,9 @@ export interface ICeleb {
   categories: string[];
   thumbnail: string;
   follows: ICeleb[];
-  programs: Program[];
+  programs: IProgram[];
   products: IProduct[];
+  banner: string;
 }
 
 export interface IProduct {
@@ -65,4 +56,6 @@ export interface IProduct {
   exposed: [[number]];
   image: string;
   views: number;
+  discountRate: number;
+  storeUrl: string;
 }

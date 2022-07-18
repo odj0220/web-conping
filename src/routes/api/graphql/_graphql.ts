@@ -32,7 +32,8 @@ export async function Graphql(query: string) {
       thumbnail: String
       regularAiringAt: Float
       airingBeginAt: Float
-      airingEndAt: Float 
+      airingEndAt: Float
+      totalEpisode: Int
 		}
 		
 		type Content {
@@ -77,10 +78,15 @@ export async function Graphql(query: string) {
 		  SHORTS
 		}
 		
+        type BannerLink {
+		  to: String
+		  openBrowser: Boolean
+		}
+		
 		type Banner {
 		  title: String
 		  imgPath: String
-		  link: String
+		  link: BannerLink
 		}
 		
 		type MainContent {
@@ -114,6 +120,11 @@ export async function Graphql(query: string) {
 		  edges: [ContentEdge]
 		  pageInfo: PageInfo
 		}
+		
+		type MainOrigin {
+		  title: [Title]
+		  programs: [Program]
+		}
 	
 		
 		type Query {
@@ -142,6 +153,7 @@ export async function Graphql(query: string) {
       getMainSeries: MainSeries
       getMainShorts: MainContent
       getMainInfiniteContents(first: Int, afterCursor: String): PageContent
+      getMainOrigin: MainOrigin
     }
 	`);
 
@@ -358,11 +370,20 @@ export async function Graphql(query: string) {
           },
         ],
         contents: contentJson
-          .filter((content) => content.contentType === 'Shorts')
+          .filter((content) => content.contentType === 'SHORTS')
           .slice(0, 6),
       };
     },
-
+    getMainOrigin: () => {
+      return {
+        title: [
+          {
+            text: '콜핑 오리지널',
+          },
+        ],
+        programs: programJson,
+      };
+    },
     getMainInfiniteContents: ({
       first,
       afterCursor,

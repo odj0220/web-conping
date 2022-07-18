@@ -1,11 +1,9 @@
 <script lang="ts">
-  import type { Content } from 'src/global/types';
+import type { IContent } from 'src/global/types';
+import ViewingVodItem from './VewingVodItem.svelte';
 
-  import ViewingVodItem from './VewingVodItem.svelte';
-
-  export let contents: Content[];
-
-  export let onClick: (id: string) => void;
+export let contents: IContent[];
+export let onClick: (id: string) => void;
 </script>
 
 <section>
@@ -19,8 +17,7 @@
 
 <style lang="scss">
   section {
-    display: flex;
-    padding: 0 1.2rem;
+    @include horizontalScroll(2rem, 1.2rem);
     & > :global(*) {
       &:first-child {
         margin-left: 0 !important;

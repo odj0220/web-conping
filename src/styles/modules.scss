@@ -6,3 +6,15 @@
   -webkit-box-orient: vertical;
   word-wrap: break-word;
 }
+
+@mixin horizontalScroll($gap, $padding) {
+  position: relative;
+  overflow-x: scroll;
+  display: flex;
+  box-sizing: border-box;
+  gap: $gap;
+  padding: 0 $padding;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

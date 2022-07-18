@@ -1,16 +1,14 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   
-  import { graphqlApi } from '../lib/_api_graphql';
-  
-  import { goto } from '$app/navigation';
-  
-  import type { Content } from 'src/global/types';
-  
-  import CenterSection from '../styles/CenterSection.svelte';
-  import PreviewVideos from './PreviewVideos.svelte';
+  import { graphqlApi } from '../lib/_api';
 
-  let contents: Content[];
+  import type { IContent } from 'src/global/types';
+
+  import PreviewVideos from './PreviewVideos.svelte';
+import Container from './common/layout/Container.svelte';
+
+  let contents: IContent[] = [];
   let end = false;
   let cursor = '';
 
@@ -18,11 +16,11 @@
     await loadContents(2);
   });
 
-  async function loadContents(num: number, cursor?: string): Promise<any> {
+  async function loadContents(num: number, inputedCursor?: string): Promise<any> {
     const query = `{
         getMainInfiniteContents(
             first: ${num},
-            ${cursor ? `afterCursor: "${cursor}"` : ''}
+            ${inputedCursor ? `afterCursor: "${inputedCursor}"` : ''}
         ) {
             totalCount,
             edges {
@@ -52,8 +50,9 @@
 
     try {
       const { data: { getMainInfiniteContents } } = await graphqlApi(query);
-  
-      contents = getMainInfiniteContents.edges.map((edge) => edge.node);
+      const newContents = getMainInfiniteContents.edges.map((edge) => edge.node);
+
+      contents = [...contents, ...newContents];
       end = !getMainInfiniteContents.pageInfo.hasNextPage;
       cursor = getMainInfiniteContents.pageInfo.startCursor;
     } catch (error) {
@@ -62,7 +61,7 @@
   }
 
   function handleClickContents(id: string) {
-    goto(`/contents/${id}`);
+    window.location.href = `/contents/${id}`;
   }
 
   async function runInfiniteScrolling(event) {
@@ -72,7 +71,7 @@
   }
 </script>
 
-<CenterSection type="transparency">
+<Container margin="5.6rem 0 0 0">
   <PreviewVideos
     {contents}
     {end}
@@ -82,4 +81,4 @@
     onClickContents={handleClickContents}
     on:request-more={runInfiniteScrolling}
   />
-</CenterSection>
+</Container>

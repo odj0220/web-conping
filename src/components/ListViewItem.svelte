@@ -1,64 +1,58 @@
 <script lang="ts">
-  import type { Content } from 'src/global/types';
+  import type { IContent } from 'src/global/types';
+import Thumbnail from './common/shared/Thumbnail.svelte';
 
   export let onClick: (id: string) => void;
-  export let content: Content;
+  export let content: IContent;
 
-  const { id, title, subtitle, thumb } = content;
+  const {
+    id,
+    title,
+    thumb,
+    episode,
+    program: {
+      title: programTitle,
+    },
+  } = content;
+
+  $: metaDataContent = `${programTitle} ${episode}화`;
 </script>
 
-<li class="grid-item">
+<li class="grid-item" on:click={() => onClick(id)}>
   <div class="left">
-    <img
-      src={thumb}
-      alt="방송이미지"
-      on:click={() => onClick(id)}
-    > 
+    <Thumbnail src={thumb} width="12rem" height="6.8rem"/>
   </div>
 
-  <div
-    class="right"
-    on:click={() => onClick(id)}
-  >
-    <span class="title">{title}</span>
-    <span class="sub-title">{subtitle}</span>
+  <div class="right">
+    <span class="head-line">{metaDataContent}</span>
+    <span class="sub-head">{title}</span>
   </div>
 </li>
 
 <style lang="scss">
-  @import '../styles/modules.scss';
-  @import '../styles/variables.scss';
-
   .grid-item {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    min-height: 6.8rem;
-
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
     .left {
       border-radius: 2px;
       overflow: hidden;
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-   
-      &:active {
-        transform: scale(1.1);
-        //TODO: 클릭할 때 효과 정의 필요
-      }
+      flex-shrink: 0;
     }
 
     .right {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      padding: 1rem;
       font-size: 1.2rem;
+      @include caption2-400;
 
-      .title {
+      .head-line {
+        display: block;
         color: #8A8A8A;
+        margin-bottom: 0.4rem;
+      }
+      .sub-head {
+        @include ellipsis(2);
       }
     }
   }

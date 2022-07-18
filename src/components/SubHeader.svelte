@@ -32,8 +32,6 @@
 </div>
 
 <style lang="scss">
-  @import '../styles/variables.scss';
-
   .header-wrapper {
     display: flex;
     align-items: center;
@@ -42,6 +40,8 @@
     top: 0;
     z-index: 50;
     background-color: $default-black;
+    padding-top: constant(safe-area-inset-top);
+    padding-top: env(safe-area-inset-top);
 
     .left-wrapper {
       position: absolute;
@@ -58,6 +58,7 @@
     }
     .title {
       @include body1-700;
+      @include ellipsis(1);
     }
   }
 </style>

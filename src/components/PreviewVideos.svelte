@@ -13,12 +13,10 @@
 
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
-
-  import type { Content } from 'src/global/types';
-
   import PreviewVideo from './PreviewVideo.svelte';
+  import type { IContent } from 'src/global/types';
 
-  export let contents: Content[] = [];
+  export let contents: IContent[] = [];
   export let end: boolean;
   export let cursor: string;
   export let onClickContents: (id: string) => void;
@@ -81,25 +79,22 @@
 </script>
 
 <section class="videos-wrapper">
-
   <ul class="contents-container">
     {#if contents?.length > 0}
-      {#each contents as video, order (video?.id)}
+      {#each contents as content, order (content.id)}
         <PreviewVideo
           {onClickContents}
-          content={video}
+          content={content}
           order={order + 1}
           autoPlay={autoPlay}
         />
       {/each}
     {/if}
-  </ul>
 
     {#if infiniteScroll}
       <section class="infinite-scroll"
                class:done={end}
                bind:this={infiniteScrollArea}
-
       ></section>
       {#if $scrolling}
         <div class="spinner-wrapper">
@@ -110,8 +105,6 @@
 </section>
 
 <style lang="scss">
-  @import '../styles/variables.scss';
-
   .videos-wrapper {
     width: 100%;
 

@@ -3,8 +3,8 @@ import Icon from './icons/Icon.svelte';
 
 export let csState: boolean;
 export let setCSState: (bool: boolean) => void;
-export let csList: any[] = [];
-export let onClick: () => void;
+export let contactList: any[] = [];
+export let onClick: (category: string) => void;
 
 </script>
 
@@ -14,11 +14,11 @@ export let onClick: () => void;
     <h6 class="title">문의하기</h6>
     <p class="desc">궁금한 점이 있다면 편하게 연락주세요</p>
     <div class="buttons">
-      {#each csList as csItem}
-        <button on:click="{() => onClick()}">
-          <Icon name={csItem.icon} />
-          <span class="text-big">{csItem.textBig}</span>
-          <span class="text-small">{csItem.textSmall}</span>
+      {#each contactList as item}
+        <button on:click="{() => onClick(item.textSmall)}">
+          <Icon name={item.icon} />
+          <span class="text-big">{item.textBig}</span>
+          <span class="text-small">{item.textSmall}</span>
         </button>
       {/each}
     </div>

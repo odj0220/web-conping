@@ -28,19 +28,17 @@
 </div>
 
 <style lang="scss">
-  @import '../styles/variables.scss';
-
   .header-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 5.4rem;
-    padding: 0 1.2rem 0 1.6rem;
+    padding: constant(safe-area-inset-top) 1.2rem 0;
+    padding: env(safe-area-inset-top) 1.2rem 0;
     position: sticky;
     top: 0;
     z-index: 50;
     background-color: $default-black;
-
     .title {
       @include title1-700;
     }

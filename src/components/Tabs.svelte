@@ -10,8 +10,10 @@
 
   export let items: tabItem[];
   export let activeTabValue = 1;
+  export let programTitle: string;
+
   let selectedComponent: SvelteComponent = items[0].component;
-  let selectedProps = items[0].props;
+  let selectedProps = { ...items[0].props, programTitle };
 
   async function onActiveTabitem(tabItem: tabItem) {
     onUpdateActiveTabValue(tabItem.value);
@@ -28,7 +30,7 @@
   }
 
   function onUpdateSelectedProps(props: any) {
-    selectedProps = props;
+    selectedProps = { ...props, programTitle };
   }
 
 </script>
@@ -50,27 +52,47 @@
     display: flex;
     flex-wrap: nowrap;
     gap: 2rem;
-    padding: 2.4rem 1.6rem 0;
+    padding: 0 1.6rem 3.3rem;
 
     li {
       display: flex;
 
       .tab-item {
+        @include body1-400;
         flex: 1;
-        padding: 0.6rem;
-        font-size: 1.6rem;
+        color: $disabled-8a;
+        position: relative;
+        &:after {
+          content: "";
+          position: absolute;
+          left: 50%;
+          right: 0;
+          display: block;
+          width: 0;
+          height: 3px;
+          margin-top: 0.6rem;
+          background-color: $text-white-f2;
+          transition: all 0.3s;
+        }
+      }
+      &.active {
+        .tab-item{
+          @include body1-700;
+          color: $text-white-f2;
+          &:after {
+            left: 0;
+            width: 100%;
+          }
+        }
       }
     }
     
-    .active {
-      font-weight: 700;
-      border-bottom: 3px solid #dee2e6;
-    }
+  
   }
   
   .contents-container {
     display: flex;
     flex: 1;
-    padding: 2.4em 1.6rem;
+    padding: 0 1.6rem;
 	}
 </style>

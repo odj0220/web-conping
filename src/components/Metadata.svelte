@@ -1,49 +1,233 @@
 <script lang="ts">
+import { SvelteComponent } from 'svelte';
 import Avatar from './Avatar.svelte';
 import GrayBox from './CenterSection.svelte';
+import Container from './common/layout/Container.svelte';
 import Hscroller from './HorizontalScroller.svelte';
+import Title from './Title.svelte';
 
-export let name: string;
-export let title: string;
-export let description: string;
-export let airingBeginAt: number;
-export let airingEndAt: number;
-export let airingAt: number;
-export let celebs: any;
+let PastTimeDelta: SvelteComponent;
 
+export let option: {
+  programDetail?: {
+    title?: string;
+    description?: string;
+    celebs?: any[];
+    info?: {
+      airingBeginAt?: number;
+      airingEndAt?: number;
+      totalEpisode?: number;
+      regularAiringAt?: number;
+    };
+  }
+
+  contentDetail?: {
+    title?: string;
+    celebs?: any[];
+    info?: {
+      programTitle?: string;
+      episode?: number;
+      view: number;
+      createDt?: string;
+    };
+  }
+};
+
+let information = [];
+let pastTime: number;
+
+$: isContentDetail = !!option['contentDetail'];
+$: isProgramDetail = !!option['programDetail'];
+
+const getInformation = async () => {
+  let result = '';
+  if (isContentDetail) {
+    const { contentDetail: { info: { programTitle, episode, createDt, view } } } = option;
+
+    if (programTitle) {
+      information = [programTitle];
+    }
+
+    if (episode) {
+      information = [...information, `${episode}화`];
+    }
+
+    if (view) {
+      information = [...information, `조회수 ${view}회`];
+    }
+
+    if (createDt) {
+      const module = await import('./PastTimeDelta.svelte');
+      PastTimeDelta = module.default;
+      pastTime = +createDt;
+    }
+
+    result = information.join(' ・ ') + `${createDt ? ' ・ ' : ''}`;
+
+    return result;
+  }
+
+  if (isProgramDetail) {
+    const { programDetail: { info: { airingBeginAt, airingEndAt, totalEpisode, regularAiringAt } } } = option;
+
+    if (airingBeginAt) {
+      const start = convertDate(airingBeginAt) + ' ~';
+      let end = '';
+      if (airingEndAt) {
+        end = convertDate(airingEndAt);
+      }
+
+      information = [...information, start + end];
+    }
+
+    if (totalEpisode) {
+      information = [...information, `${totalEpisode}부작`];
+    }
+
+    if (regularAiringAt) {
+      const regularTime = convertRegularDate(regularAiringAt);
+      information = [...information, regularTime];
+    }
+
+    result = information.join(' ・ ');
+
+    return result;
+  }
+
+  return '';
+};
+
+const convertDate = (time: number) => {
+  const date = new Date(time);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+
+  return `${year}.${month < 10 ? `0${month}` : month}.${day < 10 ? `0${day}` : day}`;
+};
+
+const convertRegularDate = (time:number) => {
+  const date = new Date(time);
+  const day = getDay(date.getDay());
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const division = hours > 12 ? '오후' : '오전';
+  return `(${day}) ${division} ${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}`;
+};
+
+const getDay = (time: number) => {
+  const DAYS = {
+    SUNDAY: 0,
+    MONDAY: 1,
+    TUESDAY: 2,
+    WENSDAY: 3,
+    THURSDAY: 4,
+    FRIDAY: 5,
+    SATURDAY: 6,
+  };
+
+  switch (time) {
+  case DAYS.SUNDAY:
+    return '일';
+  case DAYS.MONDAY:
+    return '월';
+  case DAYS.TUESDAY:
+    return '화';
+  case DAYS.WENSDAY:
+    return '수';
+  case DAYS.THURSDAY:
+    return '목';
+  case DAYS.FRIDAY:
+    return '금';
+  case DAYS.SATURDAY:
+    return '토';
+  default:
+    return '알 수 없음';
+  }
+};
 </script>
 
-<section class="container">
-    {#if name}<h4 class="name">{name}</h4>{/if}
-    <span class="info">
-      {#if airingBeginAt && airingEndAt}{airingBeginAt}~{airingEndAt} &middot{/if}
-      8부작 &middot 
-      {airingAt}</span>
-    {#if title}<h5 class="title">{title}</h5>{/if}
-    {#if description}<div class="description">{description}</div>{/if}
+<div class="container">
+    {#if isContentDetail}
+      {#await getInformation()}
+      {:then text}
+          <div class="info">
+              {#if information.length > 0}
+                  {text}
+                  {#if PastTimeDelta}
+                      <svelte:component this={PastTimeDelta} pastTime={pastTime}></svelte:component>
+                  {/if}
+              {/if}
+          </div>
+      {/await}
 
-    {#if celebs?.length}
-      <GrayBox title="골라라 셀럽">
-        <Hscroller>
+      {#if option.contentDetail.title}
+          <h4 class="content-name">{option.contentDetail.title}</h4>
+      {/if}
+
+      {#if option.contentDetail?.celebs.length}
+          <Container type="grayBox wide" margin="2.4rem 0 0 0">
+            <Title title={[{ text: '출연 셀럽' }]} marginLeft="1.2rem"/>
+            <ul class="profile-list">
+              {#each option.contentDetail.celebs as celeb (celeb.id)}
+                <li class="profile-item">
+                  <a sveltekit:prefetch href={'/celebs/' + celeb.id}>
+                    <Avatar size="8rem" src={celeb.thumbnail} alt="{celeb.name + '의 사진'}"/>
+                    <span class="profile-name">{celeb.name}</span>
+                    <span class="profile-role">{celeb.categories[0]}</span>
+                  </a>
+                </li>
+              {/each}
+            </ul>
+          </Container>
+      {/if}
+    {/if}
+
+
+    {#if isProgramDetail}
+        {#if option['programDetail']['title']}
+            <h4 class="name">
+                {option['programDetail']['title']}
+            </h4>
+        {/if}
+        {#await getInformation()}
+        {:then text}
+            <div class="info">
+                {text}
+            </div>
+        {/await}
+        {#if option['programDetail']['description']}
+            <div class="description">
+                {option['programDetail']['description']}
+            </div>
+        {/if}
+
+        {#if option.programDetail?.celebs.length}
+        <Container type="grayBox wide" margin="2.4rem 0 0 0">
+          <Title title={[{ text: '출연 셀럽' }]} marginLeft="1.2rem"/>
           <ul class="profile-list">
-            {#each celebs as celeb}
+            {#each option.programDetail.celebs as celeb, index}
               <li class="profile-item">
-                <Avatar size="80px" src="{celeb.thumbnail}" />
-                <span class="profile-name">{celeb.name}</span>
+                <a sveltekit:prefetch href={'/celobs/' + celeb.id}>
+                  <Avatar size="8rem" src={celeb.thumbnail} alt="{celeb.name + '의 사진'}"/>
+                  <span class="profile-name">{celeb.name}</span>
+                  <span class="profile-role">{celeb.categories[0]}</span>
+                </a>
               </li>
             {/each}
           </ul>
-        </Hscroller>
-      </GrayBox>
+        </Container>
+      {/if}
     {/if}
-  </section>  
+</div>
 
-
-  <style lang="scss">
-    @import '../styles/variables.scss';
-
+<style lang="scss">
     .container {
-      padding: 1.6rem;
+      padding: 1.6rem 1.6rem 4rem;
+      .content-name {
+        @include body3-700;
+        margin-top: 0.8rem;
+      }
       .name {
         @include title1-700;
         margin-bottom: 0.8rem;
@@ -59,30 +243,31 @@ export let celebs: any;
       }
       .description {
         @include caption1-400;
-        margin: 24px 0;
+        margin: 24px 0 0;
       }
 
-    }
-    .profile-list {
-      display: flex;
-      .profile-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        @include caption3;
+      .profile-list {
+        @include horizontalScroll(2rem, 1.2rem);
+        .profile-item {
+          a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            @include caption3;
+            text-decoration: none;
 
-        &:not(:last-child) {
-          margin-right: 12px;
-        }
+            .profile-name {
+              display: block;
+              margin: 0.4rem 0 0.2rem;
+              color: $all-white;
+              cursor: pointer;
+            }
 
-        .profile-name {
-          display: block;
-          margin: 0.4rem 0 0.2rem;
+            .profile-role {
+              color: $disabled-8a;
+            }
+          }
         }
-        .profile-role {
-          color: $disabled-8a;
-        }
-
       }
     }
-  </style>
+</style>

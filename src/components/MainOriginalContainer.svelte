@@ -1,56 +1,47 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  
-  import { graphqlApi } from '$lib/_api_graphql';
-  
-  import { goto } from '$app/navigation';
+import { graphqlApi } from '$lib/_api';
+import type { IProgram, TitleElement } from 'src/global/types';
+import Title from './Title.svelte';
+import ProgramList from './ProgramList.svelte';
+import Container from './common/layout/Container.svelte';
 
-  import type { Program } from 'src/global/types';
-  
-  import CenterSection from '$styles/CenterSection.svelte';
-  import HorizontalScroller from './HorizontalScroller.svelte';
-  
-  import Title from './Title.svelte';
-  import ProgramList from './ProgramList.svelte';
+function handleClickContents(id: string) {
+  window.location.href = `/programs/${id}`;
+}
 
-  let programs: Program[] = [];
-
-  function handleClickContents(id: string) {
-    goto(`/programs/${id}`);
-  }
-
-  const getData = async () => {
-    const query = `
-      {
+const getData = async (): Promise<{programs: IProgram[]; title: TitleElement[]}> => {
+  const query = `
+    {
+      getMainOrigin {
+        title {
+          text
+          type
+        }
         programs {
           id
           title
           thumbnail
         }
       }
-    `;
+    }
+  `;
 
-    const result = await graphqlApi(query);
+  const result = await graphqlApi(query);
 
-    programs = result?.data?.programs;
-  };
-
-  onMount(() => {
-    getData();
-  });
-
+  return result.data.getMainOrigin;
+};
 </script>
 
-{#if programs?.length }
-  <CenterSection type="inner transparency">
-    <Title title={[{ text: '골라라 오리지널' }]} />
-    
-    <HorizontalScroller>
+<Container margin="5.6rem 0 0 0" type="full">
+{#await getData()}
+{:then {programs, title}}
+  <Title title={title} marginLeft="1.6rem"/>
+  {#if programs?.length}
       <ProgramList
-      {programs}
-      type="horizontal"
-      onClick={handleClickContents}
+        {programs}
+        type="horizontal"
+        onClick={handleClickContents}
       />
-    </HorizontalScroller>
-  </CenterSection>
-{/if}
+  {/if}
+{/await}
+</Container>

@@ -1,120 +1,124 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  
-  import type { Content } from 'src/global/types';
+import { onMount } from 'svelte';
+import type { IContent } from 'src/global/types';
+import Icon from './icons/Icon.svelte';
 
-  export let content!: Content;
-  export let percent = 24;
-  export let onClick: (id: string) => void;
+export let content!: IContent;
+export let onClick: (id: string) => void;
 
-  let ratio = 0;
+let ratio = 0;
+const { id, thumb, title, duration, currentTime } = content;
 
-  onMount(() => {
-    ratio = ((360 / 100) * percent) / 2;
-  });
+onMount(() => {
+  if (duration && currentTime) {
+    ratio = (currentTime / duration) * 100;
+  }
+});
+console.log('content', content);
 </script>
 
-<section class="viewing-vod-item">
+<div class="viewing-vod-item" on:click={() => onClick(`${id}`)}>
   <div class="thumb-wrapper">
-    <div class="circle">
-      <div class="mask half">
-        <div class="fill" style="transform: rotate({ratio}deg)"></div>
-      </div>
-      <div class="mask full" style="transform: rotate({ratio}deg)">
-        <div class="fill" style="transform: rotate({ratio}deg)"></div>
-      </div>
+    <div class="progress">
+      <svg>
+        <circle cx="40" cy="40" r="40" style="--percent: {ratio}"></circle>
+      </svg>
     </div>
-    <img class="thumbnail" src={content.thumb} alt="thubnail"/>
+    <img class="thumbnail" src={thumb} alt="thubnail"/>
     <div class="play-btn-wrapper">
-      <button on:click={() => onClick(`${content.id}`)}>
-        <img class="play-btn" src="/images/icons/ic_play.svg" alt="play-btn"/>
-      </button>
+      <Icon name="play" size="2rem" />
     </div>
   </div>
-
-  <p class="title">
-    {content?.title}
-  </p>
-</section>
+  <h6 class="title">
+    {title}
+  </h6>
+</div>
 
 <style lang="scss">
-  @import "../styles/variables.scss";
-  @import "../styles/modules.scss";
-
-    .viewing-vod-item {
+  .viewing-vod-item {
+    width: 8rem;
+    .thumb-wrapper {
+      position: relative;
       width: 8rem;
-      margin-left: 2rem;
+      height: 8rem;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-bottom: 0.4rem;
 
-      .thumb-wrapper {
-        position: relative;
+      .thumbnail {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        z-index: 2;
+      }
+
+      .play-btn-wrapper {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10;
+        width: 2rem;
+        height: 2rem;
+      }
+
+      .progress {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 8rem;
         height: 8rem;
-        border-radius: 50%;
-        overflow: hidden;
-        background-color: #F2F2F2;
-        margin-bottom: 0.4rem;
-
-        .thumbnail {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 7.6rem;
-          height: 7.6rem;
-          border-radius: 50%;
-          z-index: 2;
-          object-fit: cover;
-          object-position: center center;
-        }
-
-        .play-btn-wrapper {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          z-index: 3;
-          width: 2rem;
-          height: 2rem;
-
-          button {
-            margin: 0;
-            padding: 0;
-            background: transparent;
-            border: none;
-            cursor:pointer;
-          }
-        }
-
-        .circle {
-          position: absolute;
-          top: 0;
-          left: 0;
+        z-index: 10;
+        svg {
+          position: relative;
           width: 100%;
           height: 100%;
-          z-index: 1;
-
-          .mask, .fill {
-            position: absolute;
-            top: 0;
-            left: 0;
+          transform: rotate(-90deg);
+          circle {
             width: 100%;
             height: 100%;
-            border-radius: 50%;
-          }
-
-          .mask {
-            clip: rect(0px, 8rem, 8rem, 4rem);
-            .fill {
-              clip: rect(0, 4rem, 8rem, 0);
-              background-color: #AE3EEF;
-            }
+            fill: none;
+            stroke: #f0f0f0;
+            stroke-width: 2;
+            stroke-dasharray: 251.3px;
+            stroke-dashoffset: calc(251.3px - (251.3px * var(--percent)) / 100);
+            stroke: $primary-40;
           }
         }
       }
+      // .circle {
+      //   position: absolute;
+      //   top: 0;
+      //   left: 0;
+      //   width: 100%;
+      //   height: 100%;
+      //   z-index: 1;
 
-      .title {
-        @include caption3;
-        @include ellipsis(2)
-      }
+      //   .mask, .fill {
+      //     position: absolute;
+      //     top: 0;
+      //     left: 0;
+      //     width: 100%;
+      //     height: 100%;
+      //     border-radius: 50%;
+      //   }
+
+      //   .mask {
+      //     clip: rect(0px, 8rem, 8rem, 4rem);
+      //     .fill {
+      //       clip: rect(0, 4rem, 8rem, 0);
+      //       background-color: #AE3EEF;
+      //     }
+      //   }
+      // }
     }
+
+    .title {
+      @include caption3;
+      @include ellipsis(2);
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+  }
 </style>

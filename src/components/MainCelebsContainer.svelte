@@ -1,7 +1,7 @@
 <script lang="ts">
 import { onMount } from 'svelte';
 
-import { graphqlApi } from '$lib/_api_graphql';
+import { graphqlApi } from '../lib/_api';
 
 import type { ICeleb } from 'src/global/types';
 
@@ -45,12 +45,10 @@ const title = [
 <section class="section">
   <Title {title} />
   <Celebs {celebs}/>
-  <MoreButton onClick={onClickMore} value="골라라 셀럽 더보기"/>
+  <MoreButton onClick={onClickMore} value="콘핑 셀럽 더보기"/>
 </section>
 
 <style lang="scss">
-    @import "../styles/variables.scss";
-
     .section {
       margin-top: 5.6rem;
       padding: 0 1.6rem;
