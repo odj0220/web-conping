@@ -115,6 +115,11 @@ export async function Graphql(query: string) {
 		  edges: [ContentEdge]
 		  pageInfo: PageInfo
 		}
+		
+		type MainOrigin {
+		  title: [Title]
+		  programs: [Program]
+		}
 	
 		
 		type Query {
@@ -143,6 +148,7 @@ export async function Graphql(query: string) {
       getMainSeries: MainSeries
       getMainShorts: MainContent
       getMainInfiniteContents(first: Int, afterCursor: String): PageContent
+      getMainOrigin: MainOrigin
     }
 	`);
 
@@ -363,7 +369,16 @@ export async function Graphql(query: string) {
           .slice(0, 6),
       };
     },
-
+    getMainOrigin: () => {
+      return {
+        title: [
+          {
+            text: '콜핑 오리지널',
+          },
+        ],
+        programs: programJson,
+      };
+    },
     getMainInfiniteContents: ({
       first,
       afterCursor,
