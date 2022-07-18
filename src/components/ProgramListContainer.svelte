@@ -83,9 +83,7 @@ import Container from './common/layout/Container.svelte';
 
 {#await loadData()}
 {:then {program, celobs, metaDataOption}}
-  <header>
-    <SubHeaderContainer title={program.title} />
-  </header>
+  <SubHeaderContainer title={program.title} />
   <Container type="full">
     <section class="thumbnail-wrapper">
       <img class="thumbnail" src={program.banner} alt=""/>
