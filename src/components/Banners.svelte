@@ -3,13 +3,29 @@
     import SwiperCore, { Autoplay, Pagination } from 'swiper';
     import 'swiper/css';
     import 'swiper/css/pagination';
+    import { openBrowser } from '../lib/util';
 
     export let banners = [];
 
     SwiperCore.use([Pagination, Autoplay]);
 
     function handleClick(swiper, event) {
-      console.log('Real Index', swiper.detail[0].realIndex);
+      const bannerIndex = swiper.detail[0].realIndex;
+      const { link: { to, openBrowser: isOpenBrowser } } = banners[bannerIndex];
+    
+      if (isOpenBrowser) {
+        goPageUsingBrowser(to);
+      } else {
+        goPage(to);
+      }
+    }
+
+    function goPage(link: string) {
+      window.location.href = link;
+    }
+
+    function goPageUsingBrowser(link: string) {
+      openBrowser(link);
     }
 </script>
 

@@ -17,7 +17,7 @@ async function loadBannersComponenrt() {
 }
 
 async function loadBannersData() {
-  const query = '{getBanners{title imgPath link}}';
+  const query = '{getBanners{title imgPath link {to openBrowser}}}';
   const { data: { getBanners } } = await graphqlApi(query);
   banners = getBanners;
 }
