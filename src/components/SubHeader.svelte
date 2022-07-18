@@ -40,6 +40,8 @@
     top: 0;
     z-index: 50;
     background-color: $default-black;
+    padding-top: constant(safe-area-inset-top);
+    padding-top: env(safe-area-inset-top);
 
     .left-wrapper {
       position: absolute;

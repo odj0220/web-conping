@@ -7,30 +7,30 @@ export let content!: IContent;
 export let onClick: (id: string) => void;
 
 let ratio = 0;
-const { duration, currentTime } = content;
+const { id, thumb, title, duration, currentTime } = content;
 
 onMount(() => {
   if (duration && currentTime) {
     ratio = (currentTime / duration) * 100;
   }
 });
-
+console.log('content', content);
 </script>
 
-<div class="viewing-vod-item" on:click={() => onClick(`${content.id}`)}>
+<div class="viewing-vod-item" on:click={() => onClick(`${id}`)}>
   <div class="thumb-wrapper">
     <div class="progress">
       <svg>
         <circle cx="40" cy="40" r="40" style="--percent: {ratio}"></circle>
       </svg>
     </div>
-    <img class="thumbnail" src={content.thumb} alt="thubnail"/>
+    <img class="thumbnail" src={thumb} alt="thubnail"/>
     <div class="play-btn-wrapper">
       <Icon name="play" size="2rem" />
     </div>
   </div>
   <h6 class="title">
-    {content?.title}
+    {title}
   </h6>
 </div>
 
@@ -80,9 +80,9 @@ onMount(() => {
             height: 100%;
             fill: none;
             stroke: #f0f0f0;
-            stroke-width: 4;
-            stroke-dasharray: 251px;
-            stroke-dashoffset: calc(251px - (251px * var(--percent)) / 100);
+            stroke-width: 2;
+            stroke-dasharray: 251.3px;
+            stroke-dashoffset: calc(251.3px - (251.3px * var(--percent)) / 100);
             stroke: $primary-40;
           }
         }

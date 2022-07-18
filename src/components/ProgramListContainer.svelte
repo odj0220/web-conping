@@ -8,6 +8,7 @@
   import HighlightContainer from './HighlightContainer.svelte';
   import ShortsContainer from './ShortsContainer.svelte';
   import SubHeaderContainer from './SubHeaderContainer.svelte';
+import Container from './common/layout/Container.svelte';
 
   export let id: string;
   let items = [
@@ -85,37 +86,35 @@
   <header>
     <SubHeaderContainer title={program.title} />
   </header>
-  <main class="container">
-      <section class="thumbnail-wrapper">
-        <img class="thumbnail" src={program.banner} alt=""/>
-      </section>
+  <Container type="full">
+    <section class="thumbnail-wrapper">
+      <img class="thumbnail" src={program.banner} alt=""/>
+    </section>
 
-      <Metadata option={metaDataOption}/>
+    <Metadata option={metaDataOption}/>
 
-      <section class="tabs-wrapper">
-        <Tabs {items} programTitle={program.title}/>
-      </section>
-  </main>
+    <section class="tabs-wrapper">
+      <Tabs {items} programTitle={program.title}/>
+    </section>
+  </Container>
 {/await}
 
 <style lang="scss">
-  .container {
-    .thumbnail-wrapper {
-      border-radius: 4px;
-      overflow: hidden;
-      margin: 0.8rem 1.6rem;
-      height: 0;
-      padding-bottom: 141%;
-      position: relative;
-      img.thumbnail {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
-      }
+  .thumbnail-wrapper {
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 0.8rem 1.6rem;
+    height: 0;
+    padding-bottom: 141%;
+    position: relative;
+    img.thumbnail {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
     }
   }
   .gap {
