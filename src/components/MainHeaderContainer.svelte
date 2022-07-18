@@ -1,15 +1,14 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  
   import Header from './Header.svelte';
 
   export let title = '';
   
-  const BUTTONS = ['setting'];
+  const BUTTONS = ['cs'];
 
   function handleClickButton(type: string) {
     switch (type) {
-    case 'setting':
+    case 'cs':
       goto('/settings');
       break;
 
