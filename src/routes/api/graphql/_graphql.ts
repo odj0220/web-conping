@@ -78,10 +78,15 @@ export async function Graphql(query: string) {
 		  SHORTS
 		}
 		
+        type BannerLink {
+		  to: String
+		  openBrowser: Boolean
+		}
+		
 		type Banner {
 		  title: String
 		  imgPath: String
-		  link: String
+		  link: BannerLink
 		}
 		
 		type MainContent {
