@@ -39,7 +39,7 @@ export const callShare = async (text: string[]) => {
 
 export const callAlert = (message: string, title?: string, subject?: string) => {
   const win: any = window;
-  win['flutter_inappwebview'].callHandler('callConfirm', JSON.stringify({ message, title, subject }));
+  win['flutter_inappwebview'].callHandler('callAlert', JSON.stringify({ message, title, subject }));
 };
 
 export const callConfirm = async (message: string, title?: string, subject?: string) => {
