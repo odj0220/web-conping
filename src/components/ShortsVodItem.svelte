@@ -3,20 +3,21 @@
 
   export let content: IContent;
   export let onClick: (id: string) => void;
+  export let width = '100%';
+  export let height = '166%';
 </script>
 
-<div class="container" on:click={() => onClick(`${content.id}`)}>
-  <img src={content.thumb} alt="shorts-preview">
-    <h6 class="title">
-      {content.title}
-    </h6>
-</div>
+<li class="container" on:click={() => onClick(`${content.id}`)} style="width: {width}; padding-bottom:{height}">
+  <img src={content.thumb} alt="shorts-preview" />
+  <h6 class="title">
+    {content.title}
+  </h6>
+</li>
 
 <style lang="scss">
 
 .container {
-  width: 14.4rem;
-  height: 22rem;
+  flex-shrink: 0;
   border-radius: 0.4rem;
   overflow: hidden;
   position: relative;
@@ -41,18 +42,16 @@
     width: 100%;
     height: 100%;
     z-index: 1;
-    -webkit-user-drag: none;
-    -khtml-user-drag: none;
-    -moz-user-drag: none;
-    -o-user-drag: none;
-    user-drag: none;
     object-fit: cover;
   }
   .title {
+    position: absolute;
+    left: 0;
+    bottom: 0;
     z-index: 3;
     padding: 0.8rem;
     @include caption2-400;
-    @include ellipsis(3)
+    @include ellipsis(3);
   }
 }
 </style>

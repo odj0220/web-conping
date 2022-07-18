@@ -1,26 +1,21 @@
 <script lang="ts">
   import type { IContent } from 'src/global/types';
 
-  import ShortVodItem from './ShortVodItem.svelte';
+  import ShortsVodItem from './ShortsVodItem.svelte';
 
   export let contents: IContent[] = [];
   export let onClick: (id: string) => void;
 
 </script>
 
-<section>
+<ul>
   {#each contents as content}
-    <ShortVodItem {content} {onClick} />
+    <ShortsVodItem {content} {onClick} width="144px" height="240px"/>
   {/each}
-</section>
+</ul>
 
 <style lang="scss">
-  section {
+  ul {
     @include horizontalScroll(1.2rem, 1.6rem);
-
-    & > :global(*) {
-      min-width: 14rem !important;
-      max-width: 14rem !important;
-    }
   }
 </style>
