@@ -6,7 +6,6 @@
   export let contents: IContent[];
 
   export let onClick: (id: string) => void;
-  console.log('contents', contents);
 </script>
 
 <section>
