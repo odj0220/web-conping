@@ -98,7 +98,7 @@ onMount(async () => {
 
 </script>
 
-<SubHeaderContainer title="설정" share={false} />
+<SubHeaderContainer title="고객센터" share={false} />
 
 <SettingsBanner {bannerList} {onClick}/>
 <SettingsMenuList {menuList} appCheck={isApp} {onClick}/>
