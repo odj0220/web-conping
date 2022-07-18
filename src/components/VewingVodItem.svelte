@@ -1,6 +1,7 @@
 <script lang="ts">
 import { onMount } from 'svelte';
 import type { IContent } from 'src/global/types';
+import Icon from './icons/Icon.svelte';
 
 export let content!: IContent;
 export let percent = 24;
@@ -13,7 +14,7 @@ onMount(() => {
 });
 </script>
 
-<section class="viewing-vod-item">
+<div class="viewing-vod-item" on:click={() => onClick(`${content.id}`)}>
   <div class="thumb-wrapper">
     <div class="circle">
       <div class="mask half">
@@ -25,16 +26,13 @@ onMount(() => {
     </div>
     <img class="thumbnail" src={content.thumb} alt="thubnail"/>
     <div class="play-btn-wrapper">
-      <button on:click={() => onClick(`${content.id}`)}>
-        <img class="play-btn" src="/images/icons/ic_play.svg" alt="play-btn"/>
-      </button>
+      <Icon name="play" size="2rem" />
     </div>
   </div>
-
-  <p class="title">
+  <h6 class="title">
     {content?.title}
-  </p>
-</section>
+  </h6>
+</div>
 
 <style lang="scss">
   .viewing-vod-item {
@@ -66,17 +64,9 @@ onMount(() => {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        z-index: 3;
+        z-index: 10;
         width: 2rem;
         height: 2rem;
-
-        button {
-          margin: 0;
-          padding: 0;
-          background: transparent;
-          border: none;
-          cursor:pointer;
-        }
       }
 
       .circle {
