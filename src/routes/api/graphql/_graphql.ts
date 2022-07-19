@@ -10,7 +10,7 @@ import type {
   Celeb,
   CelebProduct,
   Product,
-  Program, ProgramInfo,
+  Program,
   VideoContent, VideoContentCast,
   VideoContentProduct,
 } from '../../../lib/models/backend/backend';
@@ -189,7 +189,8 @@ export async function Graphql(query: string) {
       return contents.map((content: VideoContent) => convertContent(content));
     },
     content: async ({ id }: { id: string }) => {
-      const content = await GET(`/video-content/${id}`);
+      const content = await GET(`/video-content/${id}?program=true`);
+      console.log(content);
       return convertContent(content);
     },
     celebs: async () => {
@@ -271,18 +272,16 @@ export async function Graphql(query: string) {
       return contents;
     },
     getContentsByProgramId: async ({ id, type }: { id: string; type: string }) => {
-      const contents = await getContentsByProgramId(id, type);
-      console.log(contents);
-      return contents;
+      return await getContentsByProgramId(id, type);
     },
     getProgramContentsByContentId: async ({ id }: {id: string}) => {
-      const content:VideoContent = await GET(`/video-content/${id}`);
+      const content:VideoContent = await GET(`/video-content/${id}?program=true`);
       const programId = content?.ProgramInfo?.programId;
       if (!programId) {
         return [];
       }
       const contents = await getContentsByProgramId(programId.toString());
-      return contents.filter(content => content.id !== id);
+      return contents.filter((content: IContent) => content.id !== id).splice(0, 2);
     },
     // TODO: backend 와 연결할때 다시 작업
     getContinueWatching: () => {
@@ -307,7 +306,7 @@ export async function Graphql(query: string) {
     },
 
     getMainContents: async () => {
-      const contents = await GET('/video-content?sort=[{views:desc}]&programId=1');
+      const contents = await GET('/video-content?sort=[{views:desc}]&cursor=0&size=2&program=true');
       return {
         title: [
           {
@@ -318,7 +317,7 @@ export async function Graphql(query: string) {
             type: 'primary-30',
           },
           {
-            text: '영상',
+            text: '콘텐츠',
           },
         ],
         contents: contents.items.map((content: VideoContent) => convertContent(content)),
@@ -327,7 +326,7 @@ export async function Graphql(query: string) {
 
     getMainSeries: async () => {
       const programId = '1';
-      const response = await GET(`/video-content?sort=[{views:desc}]&programId=${programId}`);
+      const response = await GET(`/video-content?sort=[{views:desc}]&programId=${programId}&program=true&cursor=0&size=5`);
       const contents = response.items.map((content: VideoContent) => convertContent(content));
       let series;
       if (contents[0].ProgramInfo) {
@@ -365,7 +364,7 @@ export async function Graphql(query: string) {
     },
     getMainOrigin: async () => {
       const response = await GET('/program');
-      const programs = response.items.map((program: Program) => convertProgram(program));
+      const programs = response.map((program: Program) => convertProgram(program));
       return {
         title: [
           {
@@ -382,7 +381,7 @@ export async function Graphql(query: string) {
       first: number;
       afterCursor: string;
     }) => {
-      const response = await GET(`/video-content?size=${first}&cursor=${afterCursor || 0}&type=FULL,HIGHLIGHT`);
+      const response = await GET(`/video-content?size=${first}&cursor=${afterCursor || 0}&type=FULL,HIGHLIGHT&program=true`);
       const edges = response.items.map((content: VideoContent) => {
         const node = convertContent(content);
         return {
@@ -390,6 +389,7 @@ export async function Graphql(query: string) {
           cursor: node.id,
         };
       });
+
       let startCursor = 0;
       if (edges.length > 0) {
         startCursor = edges[edges.length - 1].node.id;
@@ -415,22 +415,9 @@ export async function Graphql(query: string) {
 }
 
 const getContentsByProgramId = async (id: string, type?: string) => {
-  const program: Program = await GET(`/program/${id}`);
-  const contents: IContent[] = [];
-  if (program?.ProgramInfo) {
-    program?.ProgramInfo.forEach((programInfo: ProgramInfo) => {
-      if (programInfo.VideoContent) {
-        programInfo.VideoContent.forEach((videoContent: VideoContent) => {
-          contents.push({
-            ...convertContent(videoContent),
-            episode: programInfo.episode,
-            program: convertProgram(program),
-          });
-        });
-      }
-    });
-  }
-  return contents.filter(content => {
+  const response = await GET(`/video-content?programId=${id}&program=true`);
+  const contents = response.items.map((content: VideoContent) => convertContent(content));
+  return contents.filter((content: IContent) => {
     if (!type) {
       return true;
     }
@@ -461,7 +448,7 @@ const convertContent = (content?: VideoContent) => {
   }
   if (Video) {
     videoId = Video[0].youtubeVideoId;
-    duration = dayjs.duration(Video[0].duration);
+    duration = dayjs.duration(Video[0].duration).asSeconds();
     thumb = getThumbnail(videoId || '');
   }
 
@@ -470,7 +457,8 @@ const convertContent = (content?: VideoContent) => {
     id: id.toString(),
     programId,
     contentType: type,
-    createDt: releaseAt,
+    createDt: +dayjs(releaseAt),
+    episode: ProgramInfo?.episode,
     videoId,
     duration,
     thumb,
@@ -482,10 +470,13 @@ const convertProgram = (program?: Program) => {
   if (!program) {
     return ;
   }
-  const { id } = program;
+  const { id, regularAiringAt, airingBeginAt, airingEndAt } = program;
   return {
     ...program,
     id: id.toString(),
+    regularAiringAt: regularAiringAt ? +dayjs(regularAiringAt) : 0,
+    airingBeginAt: airingBeginAt ? +dayjs(airingBeginAt) : 0,
+    airingEndAt: airingEndAt ? +dayjs(airingEndAt) : 0,
   };
 };
 
