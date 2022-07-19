@@ -15,14 +15,17 @@ let celebs: ICeleb[] = [];
 const getData = async () => {
   const query = '{celebs{id name thumbnail categories}}';
   const result = await graphqlApi(query);
-  celebs = result?.data?.celebs?.slice(0, 3);
-  console.log('celebs', celebs);
+  celebs = result?.data?.celebs;
 };
 
+const onClickCeleb = (id: string) => {
+  window.location.href = `/celebs/${id}`;
+};
 
 </script>
 
 <MainHeaderContainer title="셀럽존" />
-<Container marginTop="8px">
-  <Celebs {celebs}/>
+
+<Container margin="8px 0 0 0">
+  <Celebs {celebs} onClick={onClickCeleb}/>
 </Container>

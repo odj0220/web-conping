@@ -3,6 +3,7 @@ import type { ICeleb } from 'src/global/types';
 import Avatar from './Avatar.svelte';
 
 export let celeb: ICeleb;
+export let onClick : (id: string) => void;
 
 const { id, name, thumbnail, categories } = celeb;
 console.log('celeb', celeb);
@@ -17,33 +18,33 @@ const returnColor = (category: string) => {
 
 </script>
 
-<li class="item">
-    <Avatar size="72px" src={thumbnail}/>
-    <div class="info">
-        <div class="info-top"> 
-            <h6 class="name">{name}</h6>
-            <ul class="categories">
-              {#each categories as category} 
-                <li class="category" style="background-color: {returnColor(category)}">{category}</li>
-              {/each}
-                
-            </ul>
-        </div>
-        <ul class="info-list">
-            <li class="info-item">
-                <span class="key">팔로워</span>
-                <span class="value">60.2만명</span>
-            </li>
-            <li class="info-item">
-                <span class="key">콘텐츠</span>
-                <span class="value">2</span>
-            </li>
-            <li class="info-item">
-                <span class="key">상품</span>
-                <span class="value">9</span>
-            </li>
-        </ul>
+<li class="item" on:click="{() => onClick(id)}">
+  <Avatar size="72px" src={thumbnail} alt={name}/>
+  <div class="info">
+    <div class="info-top"> 
+      <h6 class="name">{name}</h6>
+      <ul class="categories">
+        {#each categories as category} 
+          <li class="category" style="background-color: {returnColor(category)}">{category}</li>
+        {/each}
+          
+      </ul>
     </div>
+    <ul class="info-list">
+      <li class="info-item">
+        <span class="key">팔로워</span>
+        <span class="value">60.2만명</span>
+      </li>
+      <li class="info-item">
+        <span class="key">콘텐츠</span>
+        <span class="value">2</span>
+      </li>
+      <li class="info-item">
+        <span class="key">상품</span>
+        <span class="value">9</span>
+      </li>
+    </ul>
+  </div>
 </li>
 
 <style lang="scss">
