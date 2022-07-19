@@ -17,7 +17,7 @@ import type {
 import type { ICeleb, IContent, IProduct } from '../../../global/types';
 import { GET } from '../../../lib/_api';
 import dayjs from 'dayjs';
-import Duration from 'dayjs/plugin/duration';
+import Duration from 'dayjs/plugin/duration.js';
 dayjs.extend(Duration);
 
 export async function Graphql(query: string) {
