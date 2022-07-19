@@ -13,7 +13,7 @@
 		"test": "jest --verbose --passWithNoTests",
 		"coverage": "npm run test -- --coverage",
 		"doc": "jsdoc -c jsdoc.json && gh-pages -d docs",
-		"start": "node build/index.js"
+		"start": "node build/index.js --host"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",

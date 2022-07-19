@@ -4,9 +4,10 @@ import type { IProgram, TitleElement } from 'src/global/types';
 import Title from './Title.svelte';
 import ProgramList from './ProgramList.svelte';
 import Container from './common/layout/Container.svelte';
+import { goto } from '$app/navigation';
 
 function handleClickContents(id: string) {
-  window.location.href = `/programs/${id}`;
+  goto(`/programs/${id}`);
 }
 
 const getData = async (): Promise<{programs: IProgram[]; title: TitleElement[]}> => {

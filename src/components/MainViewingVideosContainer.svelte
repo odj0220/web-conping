@@ -5,6 +5,7 @@ import type { IContent } from 'src/global/types';
 import Title from './Title.svelte';
 import ViewingVodList from './ViewingVodList.svelte';
 import Container from './common/layout/Container.svelte';
+import { goto } from '$app/navigation';
 
 let contents: IContent[] = [];
 
@@ -13,7 +14,7 @@ onMount(async () => {
 });
 
 function handleClickContents(id: string) {
-  window.location.href = `/contents/${id}`;
+  goto(`/contents/${id}`);
 }
 
 </script>
