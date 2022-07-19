@@ -3,7 +3,6 @@
    License: none (public domain)
 */
 
-
 html,
 body,
 div,
@@ -137,6 +136,7 @@ img {
 html,
 body {
   font-size: 10px;
+  overflow-x: hidden;
 }
 
 button,
@@ -167,8 +167,6 @@ body {
   line-height: 1;
   background-color: #0a0a0a;
   color: #f2f2f2;
-  /* prettier-ignore */
-  padding-top: 25PX;
   padding: env(safe-area-inset-top) env(safe-area-inset-right)
     env(safe-area-inset-bottom) env(safe-area-inset-left);
   padding: constant(safe-area-inset-top) constant(safe-area-inset-right)
