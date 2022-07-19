@@ -8,13 +8,17 @@
   function handleClickButton(type: string) {
     switch (type) {
     case 'back':
-      window.history.go(-1);
+      goBack();
       break;
     case 'share':
       break;
     default:
       break;
     }
+  }
+
+  function goBack() {
+    window.history.go(-1);
   }
 </script>
 

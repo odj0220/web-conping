@@ -2,6 +2,7 @@
     import Title from './Title.svelte';
     import PreviewVideos from './PreviewVideos.svelte';
     import { graphqlApi } from '../lib/_api';
+    import { goto } from '$app/navigation';
 
 
     export let contentId: string;
@@ -40,7 +41,9 @@
     }
 
     function handleClickContents(id: string) {
-      window.location.href = `/contents/${id}`;
+      goto(`/contents/${id}`, {
+        replaceState: false,
+      });
     }
 </script>
 

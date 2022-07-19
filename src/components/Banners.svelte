@@ -3,6 +3,7 @@
     import SwiperCore, { Autoplay, Pagination } from 'swiper';
     import 'swiper/css';
     import 'swiper/css/pagination';
+    import { goto } from '$app/navigation';
     import { openBrowser } from '../lib/util';
 
     export let banners = [];
@@ -21,7 +22,7 @@
     }
 
     function goPage(link: string) {
-      window.location.href = link;
+      goto(link);
     }
 
     function goPageUsingBrowser(link: string) {
