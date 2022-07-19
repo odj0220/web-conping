@@ -1,12 +1,13 @@
 <script lang=ts>
   import { graphqlApi } from '../lib/_api';
   import PreviewVideos from './PreviewVideos.svelte';
+  import { goto } from '$app/navigation';
 
   export let id;
   export let programTitle: string;
 
   const handleClickContents = (contentsId: string) => {
-    window.location.href = `/contents/${contentsId}`;
+    goto(`/contents/${contentsId}`);
   };
 
   async function loadHighlight() {
