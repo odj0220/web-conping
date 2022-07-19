@@ -3,7 +3,7 @@
   import SubHeader from './SubHeader.svelte';
 
   export let title = '';
-  export let share = true;
+  export let share = false;
 
   function handleClickButton(type: string) {
     switch (type) {
