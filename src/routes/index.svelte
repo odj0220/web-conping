@@ -17,7 +17,7 @@
   function reloadAfterBackForward() {
     const { type } = window.performance.getEntriesByType('navigation')[0];
     if (type === 'back_forward') {
-      window.location.href = document.renderer;
+      window.location.reload();
     }
   }
 </script>

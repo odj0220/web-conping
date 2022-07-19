@@ -20,7 +20,7 @@
 
   const onClickClose = (e: TouchEvent) => {
     e.stopPropagation();
-    history.back();
+    history.go(-1);
   };
 
   const onClickShare = (e: TouchEvent) => {
