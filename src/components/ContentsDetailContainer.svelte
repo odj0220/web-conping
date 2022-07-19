@@ -91,12 +91,6 @@
 
     <Metadata option={metaDataOption}/>
 
-    <RelatedProductContainer
-            {id}
-            onClickTimeButton={setCurrentTime}
-            timelineButtonVisible={true}
-    />
-
     <ContentDetailAnotherVideosContainer contentId={id}/>
   </div>
 {/await}
