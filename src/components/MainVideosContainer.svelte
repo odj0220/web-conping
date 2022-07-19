@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  
+  import { goto } from '$app/navigation';
   import { graphqlApi } from '../lib/_api';
 
   import type { IContent } from 'src/global/types';
@@ -61,7 +61,7 @@ import Container from './common/layout/Container.svelte';
   }
 
   function handleClickContents(id: string) {
-    window.location.href = `/contents/${id}`;
+    goto(`/contents/${id}`);
   }
 
   async function runInfiniteScrolling(event) {

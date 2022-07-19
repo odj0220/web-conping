@@ -8,18 +8,6 @@
   import SeriesVideoContainer from '$component/SeriesVideoContainer.svelte';
   import MainShortsContainer from '$component/MainShortsContainer.svelte';
   import MainVideosContainer from '$component/MainVideosContainer.svelte';
-  import { onMount } from 'svelte';
-
-  onMount(() => {
-    reloadAfterBackForward();
-  });
-
-  function reloadAfterBackForward() {
-    const { type } = window.performance.getEntriesByType('navigation')[0];
-    if (type === 'back_forward') {
-      window.location.reload();
-    }
-  }
 </script>
     
 <MainHeaderContainer />

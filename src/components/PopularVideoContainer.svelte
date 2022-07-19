@@ -1,13 +1,12 @@
 <script lang="ts">
   import type { IContent, TitleElement } from 'src/global/types';
-
   import PreviewVideos from './PreviewVideos.svelte';
-
   import Title from './Title.svelte';
 
   import { onMount } from 'svelte';
   import { graphqlApi } from '$lib/_api';
-import Container from './common/layout/Container.svelte';
+  import { goto } from '$app/navigation';
+  import Container from './common/layout/Container.svelte';
 
   let contents: IContent[];
   let end = false;
@@ -15,7 +14,9 @@ import Container from './common/layout/Container.svelte';
   let title: TitleElement[];
 
   const handleClickContents = (id: string) => {
-    window.location.href = `/contents/${id}`;
+    goto(`/contents/${id}`, {
+      replaceState: false,
+    });
   };
 
   onMount(async () => {
