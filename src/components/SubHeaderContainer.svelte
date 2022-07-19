@@ -9,7 +9,9 @@
     switch (type) {
     case 'back':
       window.history.back();
-      window.location.href = document.referrer;
+      setTimeout(() => {
+        window.location.href = document.referrer;
+      }, 0);
       break;
     case 'share':
       break;
