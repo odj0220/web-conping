@@ -164,23 +164,6 @@ const getDay = (time: number) => {
       {#if option.contentDetail.title}
           <h4 class="content-name">{option.contentDetail.title}</h4>
       {/if}
-
-      {#if option.contentDetail?.celebs.length}
-          <Container type="grayBox wide" margin="2.4rem 0 0 0">
-            <Title title={[{ text: '출연 셀럽' }]} marginLeft="1.2rem"/>
-            <ul class="profile-list">
-              {#each option.contentDetail.celebs as celeb (celeb.id)}
-                <li class="profile-item">
-                  <a sveltekit:prefetch href={'/celebs/' + celeb.id}>
-                    <Avatar size="8rem" src={celeb.thumbnail} alt="{celeb.name + '의 사진'}"/>
-                    <span class="profile-name">{celeb.name}</span>
-                    <span class="profile-role">{celeb.categories[0]}</span>
-                  </a>
-                </li>
-              {/each}
-            </ul>
-          </Container>
-      {/if}
     {/if}
 
 
@@ -201,23 +184,6 @@ const getDay = (time: number) => {
                 {option['programDetail']['description']}
             </div>
         {/if}
-
-        {#if option.programDetail?.celebs.length}
-        <Container type="grayBox wide" margin="2.4rem 0 0 0">
-          <Title title={[{ text: '출연 셀럽' }]} marginLeft="1.2rem"/>
-          <ul class="profile-list">
-            {#each option.programDetail.celebs as celeb, index}
-              <li class="profile-item">
-                <a sveltekit:prefetch href={'/celobs/' + celeb.id}>
-                  <Avatar size="8rem" src={celeb.thumbnail} alt="{celeb.name + '의 사진'}"/>
-                  <span class="profile-name">{celeb.name}</span>
-                  <span class="profile-role">{celeb.categories[0]}</span>
-                </a>
-              </li>
-            {/each}
-          </ul>
-        </Container>
-      {/if}
     {/if}
 </div>
 
