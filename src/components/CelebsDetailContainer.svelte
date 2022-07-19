@@ -5,7 +5,6 @@ import { graphqlApi } from '$lib/_api';
 
 export let id: string;
 
-let data;
 const getData = async () => {
   const query = `
     {
@@ -18,13 +17,12 @@ const getData = async () => {
     }
   `;
   const { data: { celeb } } = await graphqlApi(query);
-  data = celeb;
 };
 
 </script>
 
 {#await getData()}
-{:then celebData} 
+{:then data} 
 <Container margin="0" type="full">
   <CelebsVisual {data}/>
 </Container>  

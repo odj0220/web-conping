@@ -1,14 +1,9 @@
 <script lang="ts">
 import { graphqlApi } from '$lib/_api';
-import { onMount } from 'svelte';
 import type { ICeleb } from 'src/global/types';
 import Celebs from './Celebs.svelte';
 import Container from './common/layout/Container.svelte';
 import MainHeaderContainer from './MainHeaderContainer.svelte';
-
-onMount(() => {
-  getData();
-});
 
 let celebs: ICeleb[] = [];
 
@@ -24,8 +19,11 @@ const onClickCeleb = (id: string) => {
 
 </script>
 
+{#await getData()}
+{:then data} 
 <MainHeaderContainer title="셀럽존" />
 
 <Container margin="8px 0 0 0">
   <Celebs {celebs} onClick={onClickCeleb}/>
 </Container>
+{/await}
