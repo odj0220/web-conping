@@ -1,37 +1,20 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
-  import { guid } from '$lib/util';
   import { graphqlApi } from '../lib/_api';
-  import { setContents, getContinueWatchingList } from '$lib/_continue_watching';
-
-  import YP from 'youtube-player';
 
   import type { YouTubePlayer } from 'youtube-player/dist/types';
-  
   import type { IContent } from 'src/global/types';
-  
+
   import Metadata from './Metadata.svelte';
   import Player from './Player.svelte';
   import RelatedProductContainer from './RelatedProductContainer.svelte';
   import SubHeaderContainer from './SubHeaderContainer.svelte';
   import ContentDetailAnotherVideosContainer from './ContentDetailAnotherVideosContainer.svelte';
 
-  const playerId = guid();
-
   export let id: string;
-  
-  let player: YouTubePlayer;
-  let content: IContent;
-  let continueInterval;
-  let continueIntervalTime = 10000;
-  let metaDataOption: any = {};
 
-  onMount(async () => {
-    await getData();
-    await loadYoutubePlayer();
-    onPlayerStateChange();
-  });
+  let player: YouTubePlayer | null = null;
+  let content: IContent;
+  let metaDataOption: any = {};
 
   const getData = async () => {
     const query = `
@@ -67,6 +50,7 @@
 
     const result = await graphqlApi(query);
     const celobs = result.data.getCelebsByContentId;
+  
     content = result?.data?.content;
     metaDataOption = setMetadataOption(content, celobs);
   };
@@ -87,95 +71,26 @@
     return newData;
   };
 
-  const loadYoutubePlayer = async () => {
-    const playerVars = {
-      controls: 1, //플레이어 컨드롤러 표시여부
-      rel: 0, //연관동영상 표시여부
-      loop: 0,
-    };
-
-    const option: any = {
-      videoId: content.videoId,
-      playerVars,
-    };
-
-    player = await YP(playerId, option);
-
-    const continueItem = (await getContinueWatchingList() || []).find(contentItem => contentItem.id === content.id);
-    const continueCurrentTime = continueItem ? continueItem.currentTime : 0;
-
-    setCurrentTime(continueCurrentTime);
-    onPlayerStateChange();
-  };
-
-
-  const onPlayerStateChange = () => {
-    const PLAYER_STATE = {
-      NOT_STARTED: -1,
-      ENDED: 0,
-      PLAYING: 1,
-      PAUSED: 2,
-      BUFFERING: 3,
-    };
-
-    player.on('stateChange', event => {
-      const status = event.data;
-
-      if (status === PLAYER_STATE.PLAYING) {
-        setContinueWatching();
-        return;
-      }
-
-      if (status === PLAYER_STATE.PAUSED) {
-        clearInterval(continueInterval);
-        return;
-      }
-
-      if (status === PLAYER_STATE.ENDED) {
-        clearInterval(continueInterval);
-        return;
-      }
-    });
+  const setPlayer = (event) => {
+    player = event.detail.player;
   };
 
   const setCurrentTime = (num: number) => {
-    player.seekTo(num, true);
-  };
-
-  const setContinueWatching = () => {
-    clearInterval(continueInterval);
-  
-    setContinueTime();
-  
-    continueInterval = setInterval(() => {
-      setContinueTime();
-    }, continueIntervalTime);
-  };
-
-  const setContinueTime = () => {
-    player.getCurrentTime().then(async currentTime => {
-      await setContents({
-        ...content,
-        currentTime,
-      });
-    });
+    if (player && player.seekTo) {
+      player.seekTo(num, true);
+    }
   };
 </script>
 
-<SubHeaderContainer title={content?.title} />
-<div class="container">
-  <Player
-    {player}
-    {playerId}
-  />
 
-  <Metadata option={metaDataOption}/>
+{#await getData()}
+{:then data}
+  <SubHeaderContainer title='{content?.program.title} {content?.episode}화' />
+  <div class="container">
+    <Player content={content} on:get-player={setPlayer}/>
 
-  <RelatedProductContainer
-          {id}
-          onClickTimeButton={setCurrentTime}
-          timelineButtonVisible={true}
-  />
+    <Metadata option={metaDataOption}/>
 
-  <ContentDetailAnotherVideosContainer contentId={id}/>
-</div>
+    <ContentDetailAnotherVideosContainer contentId={id}/>
+  </div>
+{/await}

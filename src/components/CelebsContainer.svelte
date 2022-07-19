@@ -16,7 +16,6 @@ const getData = async () => {
   const query = '{celebs{id name thumbnail categories}}';
   const result = await graphqlApi(query);
   celebs = result?.data?.celebs?.slice(0, 3);
-  console.log('celebs', celebs);
 };
 
 

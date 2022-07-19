@@ -3,18 +3,15 @@
   import SubHeader from './SubHeader.svelte';
 
   export let title = '';
-  export let share = true;
+  export let share = false;
 
   function handleClickButton(type: string) {
     switch (type) {
     case 'back':
-      navigate(-1);
+      window.history.go(-1);
       break;
-
     case 'share':
-      console.log('TODO: 공유하기');
       break;
-
     default:
       break;
     }

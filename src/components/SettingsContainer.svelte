@@ -66,7 +66,6 @@ const menuList = [
   {
     depth1: '기타',
     depth2: [
-      { title: '푸쉬 알림 설정' },
       { title: '버전 정보', desc: appVersion },
     ],
   },
@@ -98,7 +97,7 @@ onMount(async () => {
 
 </script>
 
-<SubHeaderContainer title="설정" share={false} />
+<SubHeaderContainer title="고객센터" share={false} />
 
 <SettingsBanner {bannerList} {onClick}/>
 <SettingsMenuList {menuList} appCheck={isApp} {onClick}/>

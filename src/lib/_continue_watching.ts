@@ -11,9 +11,11 @@ export const setContents = async (content: any) => {
   const list = await getContinueWatchingList();
   const findIndex = list.findIndex((contentItem: any) => contentItem.id === content.id);
   if (findIndex < 0) {
-    list.push(content);
+    list.unshift(content);
   } else {
-    list[findIndex] = content;
+    // list[findIndex] = content;
+    list.splice(findIndex, 1);
+    list.unshift(content);
   }
   clientStorage().set(STORAGE_KEY, JSON.stringify(list));
 };

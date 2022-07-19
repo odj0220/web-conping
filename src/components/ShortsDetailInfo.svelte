@@ -10,18 +10,7 @@ export let onClickCart: (e: TouchEvent) => void;
 export let onClickProfile: (e: TouchEvent) => void;
 export let content:Content;
 
-const BUTTONS = [
-  {
-    name: '공유',
-    icon: 'share',
-    handler: onClickShare,
-  },
-  {
-    name: '상품',
-    icon: 'cart',
-    handler: onClickCart,
-  },
-];
+const BUTTONS = [];
 
 </script>
 

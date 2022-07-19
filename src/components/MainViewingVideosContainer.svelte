@@ -1,26 +1,20 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  
-  import { getContinueWatchingList } from '$lib/_continue_watching';
-  
-  import type { IContent } from 'src/global/types';
-
-  import Hscroller from './HorizontalScroller.svelte';
-  import CenterSection from '$styles/CenterSection.svelte';
-
-  import Title from './Title.svelte';
-  import ViewingVodList from './ViewingVodList.svelte';
+import { onMount } from 'svelte';
+import { getContinueWatchingList } from '$lib/_continue_watching';
+import type { IContent } from 'src/global/types';
+import Title from './Title.svelte';
+import ViewingVodList from './ViewingVodList.svelte';
 import Container from './common/layout/Container.svelte';
 
-  let contents: IContent[] = [];
+let contents: IContent[] = [];
 
-  onMount(async () => {
-    contents = await getContinueWatchingList();
-  });
+onMount(async () => {
+  contents = await getContinueWatchingList();
+});
 
-  function handleClickContents(id: string) {
-    window.location.href = `/contents/${id}`;
-  }
+function handleClickContents(id: string) {
+  window.location.href = `/contents/${id}`;
+}
 
 </script>
 

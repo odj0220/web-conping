@@ -1,11 +1,9 @@
 <script lang="ts">
-  import type { IContent } from 'src/global/types';
+import type { IContent } from 'src/global/types';
+import ViewingVodItem from './VewingVodItem.svelte';
 
-  import ViewingVodItem from './VewingVodItem.svelte';
-
-  export let contents: IContent[];
-
-  export let onClick: (id: string) => void;
+export let contents: IContent[];
+export let onClick: (id: string) => void;
 </script>
 
 <section>
