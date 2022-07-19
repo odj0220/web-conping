@@ -8,10 +8,7 @@
   function handleClickButton(type: string) {
     switch (type) {
     case 'back':
-      window.history.back();
-      setTimeout(() => {
-        window.location.href = document.referrer;
-      }, 0);
+      window.history.go(-1);
       break;
     case 'share':
       break;
