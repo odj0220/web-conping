@@ -2,7 +2,7 @@
   import { graphqlApi } from '../lib/_api';
   import PreviewVideos from './PreviewVideos.svelte';
 
-  export let id;
+  export let id: string;
   export let programTitle: string;
 
   const handleClickContents = (contentsId: string) => {
@@ -22,6 +22,7 @@
            program{
              id
              title
+             thumbnail
             }
           }
       }`;

@@ -22,7 +22,7 @@
     }
 
     async function loadAnotherContents() {
-      const query = `{getProgramContentsByContentId(id:"${contentId}"){id title programId createDt episode description thumb program {id title}}}`;
+      const query = `{getProgramContentsByContentId(id:"${contentId}"){id title programId createDt episode description thumb program {id title thumbnail}}}`;
       const { data: { getProgramContentsByContentId } } = await graphqlApi(query);
       const contents: {data: any[]; end: boolean; cursor: string} = {
         data: getProgramContentsByContentId,
@@ -32,6 +32,7 @@
       const programTitle = getProgramContentsByContentId[0].program.title;
       const programId = getProgramContentsByContentId[0].program.id;
 
+      console.log('getProgramContentsByContentId', getProgramContentsByContentId);
       return {
         programTitle,
         programId,

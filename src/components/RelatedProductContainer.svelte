@@ -28,10 +28,6 @@
     return productList;
   };
 
-  onMount(async () => {
-    getRelatedProducts();
-  });
-
 </script>
 
 
