@@ -5,7 +5,6 @@ import Icon from './icons/Icon.svelte';
 
 export let item:IProduct;
 const { name, brand, image, price } = item;
-console.log('item', item);
 </script>
 
 <li class="shop-item">

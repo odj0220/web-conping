@@ -6,7 +6,6 @@ export let celeb: ICeleb;
 export let onClick : (id: string) => void;
 
 const { id, name, thumbnail, categories } = celeb;
-console.log('celeb', celeb);
 const returnColor = (category: string) => {
   switch (category) {
   case '뷰티': return '#FF70E2';
