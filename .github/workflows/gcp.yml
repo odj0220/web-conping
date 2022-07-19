@@ -2,7 +2,7 @@ name: PROD - Build and Deploy to GCP
 
 on:
   push:
-    branches: [main]
+    branches: [none]
 
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
@@ -28,34 +28,34 @@ jobs:
       - run: npm run build --if-present
       - run: npm run lint
 #      - run: npm test
-#  deploy-to-artifact:
-#    needs: test
-#    name: PROD - Deploy to GCP
-#    runs-on: ubuntu-latest
-#    environment: production
-#
-#    steps:
-#      - name: PROD - Checkout
-#        uses: actions/checkout@v2
-#
-#      - uses: google-github-actions/setup-gcloud@v0.2.0
-#        with:
-#          service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT }}
-#          project_id: ${{ secrets.GCP_PROJECT_ID }}
-#
-#      - run: |-
-#          gcloud --quiet auth configure-docker asia-northeast3-docker.pkg.dev
-#
-#      # Build and Deploy Docker Image
-#      - name: PROD - Build
-#        run: |-
-#          gcloud builds submit \
-#            --tag "asia-northeast3-docker.pkg.dev/$PROJECT_ID/$ARTIFACT_REGISTRY_REPO_NAME/$IMAGE" --timeout "2h15m5s"
-#      - name: PROD - Deploy to Cloud Run
-#        id: deploy
-#        uses: google-github-actions/deploy-cloudrun@main
-#        with:
-#          service: ${{ env.SERVICE_ID }}
-#          region: ${{ env.ZONE }}
-#          image: asia-northeast3-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY_REPO_NAME }}/${{ env.IMAGE }}:latest
-#          credentials: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+  deploy-to-artifact:
+    needs: test
+    name: PROD - Deploy to GCP
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: PROD - Checkout
+        uses: actions/checkout@v2
+
+      - uses: google-github-actions/setup-gcloud@v0.2.0
+        with:
+          service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - run: |-
+          gcloud --quiet auth configure-docker asia-northeast3-docker.pkg.dev
+
+      # Build and Deploy Docker Image
+      - name: PROD - Build
+        run: |-
+          gcloud builds submit \
+            --tag "asia-northeast3-docker.pkg.dev/$PROJECT_ID/$ARTIFACT_REGISTRY_REPO_NAME/$IMAGE" --timeout "2h15m5s"
+      - name: PROD - Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@main
+        with:
+          service: ${{ env.SERVICE_ID }}
+          region: ${{ env.ZONE }}
+          image: asia-northeast3-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY_REPO_NAME }}/${{ env.IMAGE }}:latest
+          credentials: ${{ secrets.GCP_SERVICE_ACCOUNT }}
