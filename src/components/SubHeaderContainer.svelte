@@ -8,13 +8,11 @@
   function handleClickButton(type: string) {
     switch (type) {
     case 'back':
-      navigate(-1);
+      window.history.back();
+      window.location.href = document.referrer;
       break;
-
     case 'share':
-      console.log('TODO: 공유하기');
       break;
-
     default:
       break;
     }
