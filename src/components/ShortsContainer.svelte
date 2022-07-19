@@ -8,7 +8,7 @@
   export let programTitle: string;
 
   const handleClickShorts = (id: string) => {
-    goto(`/contents/${id}`);
+    goto(`/shorts/${id}`);
   };
 
   async function loadData(): Promise<IContent[]> {

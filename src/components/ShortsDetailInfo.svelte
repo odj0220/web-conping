@@ -1,41 +1,40 @@
 <script lang="ts">
-import type { Content } from 'src/global/types';
+import type { IContent } from 'src/global/types';
 
 import Avatar from './Avatar.svelte';
 import Icon from './icons/Icon.svelte';
 
 export let onClickClose: (e: TouchEvent) => void;
-export let onClickShare: (e: TouchEvent) => void;
-export let onClickCart: (e: TouchEvent) => void;
-export let onClickProfile: (e: TouchEvent) => void;
-export let content:Content;
+export let onClickProfile: (e: TouchEvent, id: string) => void;
+export let content:IContent;
+export let buttons: any[] = [];
 
-const BUTTONS = [];
+console.log('content', content);
 
 </script>
 
 <div class="section">
   <button
     class="btn-close"
-    on:click="{onClickClose}"
+    on:click={onClickClose}
   >
     <Icon name="close" />
   </button>    
   <div class="contents">
     <div class="info">
       <h6 class="title">
-        {content.title}
+        {content?.title}
       </h6>
       <div
         class="profile"
-        on:click="{onClickProfile}"
+        on:click="{(e) => onClickProfile(e, content?.program?.id)}"
       >
-        <Avatar size="24px" />
-        <span class="name">랜선뷰티</span>
+        <Avatar size="24px" src={content?.program?.thumbnail} alt={content?.program?.title} />
+        <span class="name">{content?.program?.title}</span>
       </div>
     </div>
     <div class="buttons">
-      {#each BUTTONS as button}
+      {#each buttons as button}
         <button
           class="button"
           on:click="{button.handler}"
