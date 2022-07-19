@@ -10,7 +10,6 @@
   function goApp() {
     //location.href = 'intent://trend.mdlens.com/#Intent;package=com.wisefashion.trend;scheme=https;end';
     window.open('intent://asbc/#Intent;package=com.wisefashion.trend;scheme=mdlenstrend;end', '_self');
-    console.log('afdsaffsafsadf');
   }
 
   function ios() {

@@ -23,7 +23,6 @@ const getData = async () => {
 };
 
 const sortHandler = (sort: string) => {
-  console.log('sort', sort);
   switch (sort) {
   case '인기순': list = products;
   }

@@ -5,7 +5,6 @@ import Avatar from './Avatar.svelte';
 export let celeb: ICeleb;
 
 const { id, name, thumbnail, categories } = celeb;
-console.log('celeb', celeb);
 const returnColor = (category: string) => {
   switch (category) {
   case '뷰티': return '#FF70E2';
