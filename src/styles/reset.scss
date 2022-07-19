@@ -3,6 +3,7 @@
    License: none (public domain)
 */
 
+
 html,
 body,
 div,
@@ -88,8 +89,8 @@ video {
   padding: 0;
   border: 0;
   font-size: 100%;
-  // font: inherit;
   vertical-align: baseline;
+  font-family: "SUIT";
 }
 /* HTML5 display-role reset for older browsers */
 article,
@@ -104,11 +105,6 @@ menu,
 nav,
 section {
   display: block;
-}
-body {
-  line-height: 1;
-  background-color: #0a0a0a;
-  color: #f2f2f2;
 }
 ol,
 ul {
@@ -141,7 +137,6 @@ img {
 html,
 body {
   font-size: 10px;
-  font-family: ‘SUIT’, sans-serif;
 }
 
 button,
@@ -152,6 +147,7 @@ input[type="submit"] {
   border: none;
   outline: none;
   padding: 0;
+  font-family: "SUIT";
 }
 
 .gap {
@@ -165,4 +161,16 @@ input[type="submit"] {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   user-select: none;
   -webkit-touch-callout: none;
+}
+
+body {
+  line-height: 1;
+  background-color: #0a0a0a;
+  color: #f2f2f2;
+  /* prettier-ignore */
+  padding-top: 25PX;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+  padding: constant(safe-area-inset-top) constant(safe-area-inset-right)
+    constant(safe-area-inset-bottom) constant(safe-area-inset-left);
 }

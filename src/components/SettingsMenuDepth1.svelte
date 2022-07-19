@@ -3,7 +3,7 @@ import SettingsMenuDepth2 from './SettingsMenuDepth2.svelte';
 
 export let menu: any;
 export let onClick: (category: string) => void;
-
+console.log('menu', menu);
 </script>
 
 <li class="depth1">
