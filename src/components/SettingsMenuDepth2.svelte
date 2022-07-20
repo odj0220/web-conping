@@ -22,11 +22,5 @@ export let onClick: (category: string) => void;
   padding: 0 1.6rem;
   box-sizing: border-box;
   border-bottom: 1px solid $bg-black-21;
-  .depth2-desc {
-    color: $disabled-8a;
-    &.link {
-      text-decoration: underline;
-    }
-  }
 }
 </style>
