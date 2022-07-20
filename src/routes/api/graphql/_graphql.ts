@@ -5,16 +5,15 @@ import programJson from '../../../../static/data/program.json';
 import relationJson from '../../../../static/data/relation.json';
 import watchingJson from '../../../../static/data/watching.json';
 import bannerJson from '../../../../static/data/banner.json';
+import productJson from '../../../../static/data/product.json';
 import type { GraphQLSchema } from 'graphql/type/schema';
 import type {
   Celeb,
-  CelebProduct,
   Product,
   Program,
-  VideoContent, VideoContentCast,
-  VideoContentProduct,
+  VideoContent,
 } from '../../../lib/models/backend/backend';
-import type { ICeleb, IContent, IProduct } from '../../../global/types';
+import type { IContent, IProduct } from '../../../global/types';
 import { GET } from '../../../lib/_api';
 import dayjs from 'dayjs';
 import Duration from 'dayjs/plugin/duration.js';
@@ -171,13 +170,13 @@ export async function Graphql(query: string) {
     getBanners: () => {
       return bannerJson;
     },
-    products: async () => {
-      const products = await GET('/product');
-      return products.map((product:Product) => convertProduct(product));
+    // TODO: api 연동하기
+    products: () => {
+      return programJson;
     },
+    // TODO: api 연동하기
     product: async ({ id }: { id: string }) => {
-      const product = await GET(`/product/${id}`);
-      return convertProduct(product);
+      return productJson.find((product) => product.id === id);
     },
     contents: async ({ sortField, sortOrder, type }: { sortField: string, sortOrder: 'desc' | 'asc', type: string }) => {
       const sort = setOrderBy(sortField, sortOrder);
@@ -192,13 +191,13 @@ export async function Graphql(query: string) {
       const content = await GET(`/video-content/${id}?program=true`);
       return convertContent(content);
     },
-    celebs: async () => {
-      const celebs = await GET('/celeb');
-      return celebs.map((celeb: Celeb) => convertCeleb(celeb));
+    // TODO: api 연동하기
+    celebs: () => {
+      return celebJson;
     },
-    celeb: async ({ id }: { id: string }) => {
-      const celeb = await GET(`/celeb/${id}`);
-      return convertCeleb(celeb);
+    // TODO: api 연동하기
+    celeb: ({ id }: { id: string }) => {
+      return celebJson.find((celeb) => celeb.id === id);
     },
     programs: async () => {
       const programs = await GET('/program');
@@ -228,21 +227,19 @@ export async function Graphql(query: string) {
         .map((relation) => relation.celeb);
       return celebJson.filter((celeb) => celebIds.includes(celeb.id));
     },
-    getContentsByProductId: async ({ id }: { id: string }) => {
-      const product = await GET(`/product/${id}`);
-      let contents: IContent[] = [];
-      if (product.VideoContentProduct) {
-        contents = product.VideoContentProduct.map((videoContentProduct: VideoContentProduct) => convertContent(videoContentProduct.VideoContent));
-      }
-      return contents;
+    // TODO: api 연동하기
+    getContentsByProductId: ({ id }: { id: string }) => {
+      const contentIds = relationJson
+        .filter((relation) => relation.product === id)
+        .map((relation) => relation.content);
+      return contentJson.filter((content) => contentIds.includes(content.id));
     },
-    getCelebsByProductId: async ({ id }: { id: string }) => {
-      const product: Product = await GET(`/product/${id}`);
-      let celebs: ICeleb[] = [];
-      if (product.CelebProduct) {
-        celebs = product.CelebProduct.map((celebProduct: CelebProduct) => convertCeleb(celebProduct.Celeb));
-      }
-      return celebs;
+    // TODO: api 연동하기
+    getCelebsByProductId: ({ id }: { id: string }) => {
+      const celebIds = relationJson
+        .filter((relation) => relation.product === id)
+        .map((relation) => relation.celeb);
+      return celebJson.filter((celeb) => celebIds.includes(celeb.id));
     },
     // TODO: back api 생성시 업데이트
     getCelebsByProgramId: ({ id }: { id: string }) => {
@@ -254,21 +251,19 @@ export async function Graphql(query: string) {
         .map((relation) => relation.celeb);
       return celebJson.filter((celeb) => celebIds.includes(celeb.id));
     },
-    getProductByCelebId: async ({ id }: { id: string }) => {
-      const celeb: Celeb = await GET(`/celeb/${id}`);
-      let products: IProduct[] = [];
-      if (celeb.CelebProduct) {
-        products = celeb.CelebProduct.map((celebProduct: CelebProduct) => convertProduct(celebProduct.Product));
-      }
-      return products;
+    // TODO: api 연동하기
+    getProductByCelebId: ({ id }: { id: string }) => {
+      const productIds = relationJson
+        .filter((relation) => relation.celeb === id)
+        .map((relation) => relation.product);
+      return productJson.filter((product) => productIds.includes(product.id));
     },
-    getContentsByCelebId: async ({ id }: { id: string }) => {
-      const celeb: Celeb = await GET(`/celeb/${id}`);
-      let contents: IContent[] = [];
-      if (celeb.VideoContentCast) {
-        contents = celeb.VideoContentCast.map((videoContentCast: VideoContentCast) => convertContent(videoContentCast.VideoContent));
-      }
-      return contents;
+    // TODO: api 연동하기
+    getContentsByCelebId: ({ id }: { id: string }) => {
+      const contentIds = relationJson
+        .filter((relation) => relation.celeb === id)
+        .map((relation) => relation.content);
+      return contentJson.filter((content) => contentIds.includes(content.id));
     },
     getContentsByProgramId: async ({ id, type }: { id: string; type: string }) => {
       return await getContentsByProgramId(id, type);
