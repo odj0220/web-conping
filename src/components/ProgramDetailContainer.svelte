@@ -1,83 +1,85 @@
 <script lang=ts>
-import { graphqlApi } from '$lib/_api';
-import type { IProgram } from 'src/global/types';
-import Metadata from './Metadata.svelte';
-import Tabs from './Tabs.svelte';
-import EpisodeContainer from './EpisodeContainer.svelte';
-import HighlightContainer from './HighlightContainer.svelte';
-import ShortsContainer from './ShortsContainer.svelte';
-import SubHeaderContainer from './SubHeaderContainer.svelte';
-import Container from './common/layout/Container.svelte';
+  import { graphqlApi } from '$lib/_api';
 
-export let id: string;
-let items = [
-  { label: '에피소드',
-    value: 1,
-    props: { id },
-    component: EpisodeContainer,
-  },
-  { label: '하이라이트',
-    value: 2,
-    props: { id },
-    component: HighlightContainer,
-  },
-  { label: '쇼츠',
-    value: 3,
-    props: { id },
-    component: ShortsContainer,
-  },
-];
+  import Metadata from './Metadata.svelte';
+  import Tabs from './Tabs.svelte';
+  import EpisodeContainer from './EpisodeContainer.svelte';
+  import HighlightContainer from './HighlightContainer.svelte';
+  import ShortsContainer from './ShortsContainer.svelte';
+  import SubHeaderContainer from './SubHeaderContainer.svelte';
+  import Container from './common/layout/Container.svelte';
 
+  import type { IProgram } from 'src/global/types';
 
-async function loadData() {
-  const query = `{
-      program(id:"${id}"){
-        id
-        title
-        description
-        banner
-        regularAiringAt
-        airingBeginAt
-        airingEndAt
-      }
+  export let id: string;
 
-      getCelebsByProgramId(id:"${id}"){
-        thumbnail
-        name
-        categories
-      }
-    }`;
-
-  const result = await graphqlApi(query);
-  const program: IProgram = result?.data?.program;
-  const celobs = result?.data.getCelebsByProgramId;
-  const metaDataOption = setMetadataOption(program, celobs);
-
-  return new Promise((resolve, reject) => {
-    resolve({
-      program,
-      celobs,
-      metaDataOption,
-    });
-  });
-}
-
-function setMetadataOption (program: any, celebs: any[]) {
-  const newData = {
-    programDetail: {
-      title: program.title,
-      description: program.description,
-      celebs,
-      info: {
-        airingBeginAt: program.airingBeginAt,
-        airingEndAt: program.airingEndAt,
-        regularAiringAt: program.regularAiringAt,
-      },
+  let items = [
+    { label: '에피소드',
+      index: 0,
+      props: { id },
+      component: EpisodeContainer,
     },
-  };
+    { label: '하이라이트',
+      index: 1,
+      props: { id },
+      component: HighlightContainer,
+    },
+    { label: '쇼츠',
+      index: 2,
+      props: { id },
+      component: ShortsContainer,
+    },
+  ];
 
-  return newData;
-}
+  async function loadData() {
+    const query = `{
+        program(id:"${id}"){
+          id
+          title
+          description
+          banner
+          regularAiringAt
+          airingBeginAt
+          airingEndAt
+        }
+
+        getCelebsByProgramId(id:"${id}"){
+          thumbnail
+          name
+          categories
+        }
+      }`;
+
+    const result = await graphqlApi(query);
+    const program: IProgram = result?.data?.program;
+    const celobs = result?.data.getCelebsByProgramId;
+    const metaDataOption = setMetadataOption(program, celobs);
+
+    return new Promise((resolve, reject) => {
+      resolve({
+        program,
+        celobs,
+        metaDataOption,
+      });
+    });
+  }
+
+  function setMetadataOption (program: any, celebs: any[]) {
+    const newData = {
+      programDetail: {
+        title: program.title,
+        description: program.description,
+        celebs,
+        info: {
+          airingBeginAt: program.airingBeginAt,
+          airingEndAt: program.airingEndAt,
+          regularAiringAt: program.regularAiringAt,
+        },
+      },
+    };
+
+    return newData;
+  }
 </script>
 
 {#await loadData()}

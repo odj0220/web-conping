@@ -4,11 +4,7 @@ import type { IProgram, TitleElement } from 'src/global/types';
 import Title from './Title.svelte';
 import ProgramList from './ProgramList.svelte';
 import Container from './common/layout/Container.svelte';
-import { goto } from '$app/navigation';
-
-function handleClickContents(id: string) {
-  goto(`/programs/${id}`);
-}
+import { gotoPrograms } from '$lib/util';
 
 const getData = async (): Promise<{programs: IProgram[]; title: TitleElement[]}> => {
   const query = `
@@ -27,9 +23,8 @@ const getData = async (): Promise<{programs: IProgram[]; title: TitleElement[]}>
     }
   `;
 
-  const result = await graphqlApi(query);
-
-  return result.data.getMainOrigin;
+  const { data: { getMainOrigin } } = await graphqlApi(query);
+  return getMainOrigin;
 };
 </script>
 
@@ -38,11 +33,11 @@ const getData = async (): Promise<{programs: IProgram[]; title: TitleElement[]}>
 {:then {programs, title}}
   <Title title={title} marginLeft="1.6rem"/>
   {#if programs?.length}
-      <ProgramList
-        {programs}
-        type="horizontal"
-        onClick={handleClickContents}
-      />
+    <ProgramList
+      {programs}
+      type="horizontal"
+      onClick={gotoPrograms}
+    />
   {/if}
 {/await}
 </Container>

@@ -1,31 +1,30 @@
 <script lang="ts">
-import type { SvelteComponent } from 'svelte';
+  import type { SvelteComponent } from 'svelte';
 
-interface tabItem {
-  label: string,
-  index: number,
-  component: SvelteComponent,
-  props: any,
-}
+  interface tabItem {
+    label: string,
+    index: number,
+    component: SvelteComponent,
+    props: any,
+  }
 
-export let items: tabItem[];
-export let programTitle = '';
-export let borderBottom = false;
+  export let items: tabItem[];
+  export let programTitle = '';
+  export let borderBottom = false;
 
-let activeTabIndex = 0;
-$: selectedTab = items[activeTabIndex];
-$: selectedProps = { ...selectedTab.props, programTitle };
-
-async function onActiveTabitem(tabItem: tabItem) {
-  selectedTab = tabItem;
-}
+  $: selectedTab = items[0];
+  $: selectedProps = { ...selectedTab.props, programTitle };
+  
+  function onActiveTabitem(tabItem: tabItem) {
+    selectedTab = tabItem;
+  }
 
 </script>
 
 <div class="tab-conatainer">
   <ul class="tab-header">
     {#each items as item, i}
-      <li class={`tab-item ${i} ${selectedTab.index === i ? 'active' : ''}`} on:click={onActiveTabitem(item)}>
+      <li class={`tab-item ${selectedTab.index === i ? 'active' : ''}`} on:click={onActiveTabitem(item)}>
         {item.label}
       </li>
     {/each}
@@ -38,8 +37,7 @@ async function onActiveTabitem(tabItem: tabItem) {
 
 <style lang="scss">
 .tab-conatainer {
-  gap: 2rem;
-  padding: 0 0 3.3rem;
+  padding: 0 0 4rem;
   .tab-header {
     display: flex;
     padding: 0 1.6rem;
