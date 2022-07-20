@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { beforeNavigate } from '$app/navigation';
+  import { page } from '$app/stores';
+  import { beforeNavigate, afterNavigate } from '$app/navigation';
 
   beforeNavigate((navigation) => {
-    const { to } = navigation;
-    window.location.href = to.pathname;
+    const { to, from, cancel } = navigation;
+    // window.location.href = to.pathname;
   });
 </script>
 
