@@ -1,13 +1,12 @@
 <script lang=ts>
   import { graphqlApi } from '../lib/_api';
 
-  import { goto } from '$app/navigation';
-  
   import type { IContent } from 'src/global/types';
-  
-  import Spinner from './common/shared/Spinner.svelte';
 
-  import ImageListView from './ImageListView.svelte';
+  import { goto } from '$app/navigation';
+
+  import Spinner from '$component/common/shared/Spinner.svelte';
+  import ImageListView from '$component/ImageListView.svelte';
 
   export let id: string;
   export let programTitle: string;
@@ -41,22 +40,22 @@
 {#await loadContents()}
   <Spinner />
 {:then contents}
-    {#if contents.length}
-        <ImageListView
-                {contents}
-                onClick={handleClickContents}
-        />
-    {:else}
-        <p class="empty-message">
-            {programTitle} 에피소드는 준비중입니다.<br/>
-            조금만 기다려주세요 :)
-        </p>
-    {/if}
-{:catch error}
-    <p class="error-message">
-        {programTitle} 에피소드 데이터를 <br/>
-        가져오는데 실패하였습니다.
+  {#if contents.length}
+    <ImageListView
+      {contents}
+      onClick={handleClickContents}
+    />
+  {:else}
+    <p class="empty-message">
+      {programTitle} 에피소드는 준비중입니다.<br/>
+      조금만 기다려주세요 :)
     </p>
+  {/if}
+{:catch error}
+  <p class="error-message">
+    {programTitle} 에피소드 데이터를 <br/>
+    가져오는데 실패하였습니다.
+  </p>
 {/await}
 
 
@@ -69,4 +68,3 @@
     color: $disabled-8a;
   }
 </style>
-

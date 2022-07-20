@@ -1,21 +1,25 @@
 <script lang="ts">
-import { onMount } from 'svelte';
-import { getContinueWatchingList } from '$lib/_continue_watching';
-import type { IContent } from 'src/global/types';
-import Title from './Title.svelte';
-import ViewingVodList from './ViewingVodList.svelte';
-import Container from './common/layout/Container.svelte';
-import { goto } from '$app/navigation';
+  import { onMount } from 'svelte';
 
-let contents: IContent[] = [];
+  import { goto } from '$app/navigation';
 
-onMount(async () => {
-  contents = await getContinueWatchingList();
-});
+  import type { IContent } from 'src/global/types';
 
-function handleClickContents(id: string) {
-  goto(`/contents/${id}`);
-}
+  import { getContinueWatchingList } from '$lib/_continue_watching';
+  
+  import Container from '$component/common/layout/Container.svelte';
+  import Title from '$component/Title.svelte';
+  import ViewingVodList from '$component/ViewingVodList.svelte';
+
+  let contents: IContent[] = [];
+
+  onMount(async () => {
+    contents = await getContinueWatchingList();
+  });
+
+  function handleClickContents(id: string) {
+    goto(`/contents/${id}`);
+  }
 
 </script>
 
