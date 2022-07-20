@@ -34,7 +34,6 @@ const getContent = async () => {
 
   const result = await graphqlApi(query);
   const { data: { content } } = result;
-  console.log('container content', content);
   return content;
 };
 
@@ -63,7 +62,6 @@ const move = (targetUrl: string) => {
 const onClickProfile = (e: TouchEvent, id: string) => {
   e.stopPropagation();
   move(`/programs/${id}`);
-  console.log('profile click');
 };
 
 
@@ -104,7 +102,6 @@ const returnButtons = async () => {
 {:then content} 
 <ShortsFullScreen
   videoId={content.videoId}
-  thumbnail={content.thumb}
 >
 {#await returnButtons()}
 {:then buttons} 

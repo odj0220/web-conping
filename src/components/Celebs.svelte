@@ -4,7 +4,6 @@ import Celeb from './Celeb.svelte';
 
 export let celebs: ICeleb[] = [];
 export let onClick : (id: string) => void;
-console.log('celebs', celebs);
 </script>
 
 <ul class="celebs">

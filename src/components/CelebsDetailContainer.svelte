@@ -1,6 +1,6 @@
 <script type="ts">
 import Container from './common/layout/Container.svelte';
-import CelebsVisual from './CelebsVisual.svelte';
+import CelebsProfile from './CelebsProfile.svelte';
 import { graphqlApi } from '$lib/_api';
 
 export let id: string;
@@ -17,6 +17,7 @@ const getData = async () => {
     }
   `;
   const { data: { celeb } } = await graphqlApi(query);
+  return celeb;
 };
 
 </script>
@@ -24,6 +25,6 @@ const getData = async () => {
 {#await getData()}
 {:then data} 
 <Container margin="0" type="full">
-  <CelebsVisual {data}/>
+  <CelebsProfile {data}/>
 </Container>  
 {/await}
