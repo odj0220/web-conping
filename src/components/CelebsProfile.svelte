@@ -7,25 +7,25 @@ export let data: ICeleb;
 const { thumbnail, name } = data;
 
 </script>
-<div class="celebs-visual">
-  <div class="main-visual">
+<div class="profile-container">
+  <div class="banner">
 
   </div>
-  <div class="user-visual">
+  <div class="avatar">
     <Avatar src={thumbnail} size="8.8rem" alt={name}/>
   </div>
 </div>
 
 <style lang="scss">
-.celebs-visual {
+.profile-container {
   position: relative;
   margin-bottom: 4.4rem;
-  .main-visual {
+  .banner {
     width: 100%;
     padding-bottom: 94.4444%;
     background-color: yellow;
   }
-  .user-visual {
+  .avatar {
     position: absolute;
     bottom: -4.4rem;
     right: 2.4rem;
