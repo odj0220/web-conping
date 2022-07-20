@@ -84,7 +84,7 @@ export const getMainContents = async () => {
   };
 };
 
-const getMainInfiniteContents = async ({ first, afterCursor }: {
+export const getMainInfiniteContents = async ({ first, afterCursor }: {
   first: number;
   afterCursor: string;
 }) => {

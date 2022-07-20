@@ -86,6 +86,7 @@ export async function Graphql(query: string) {
     getMainSeries,
     getMainShorts,
     getMainOrigin,
+    getMainInfiniteContents,
   };
 
   return graphql({
