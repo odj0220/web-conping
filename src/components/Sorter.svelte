@@ -1,10 +1,11 @@
 <script lang="ts">
-import Icon from './icons/Icon.svelte';
+  import Icon from './icons/Icon.svelte';
 
-export let sort: string;
+  export let sort: string;
+  export let onClick: () => void;
 </script>
 
-<div class="sorter">
+<div class="sorter" on:click={() => onClick()}>
   <Icon name="sort" />
   <span class="sort">{sort}</span>
 </div>

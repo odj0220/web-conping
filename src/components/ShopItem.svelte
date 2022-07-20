@@ -1,10 +1,11 @@
 <script lang="ts">
-import type { IProduct } from 'src/global/types';
-import Thumbnail from './common/shared/Thumbnail.svelte';
-import Icon from './icons/Icon.svelte';
+  import type { IProduct } from 'src/global/types';
+  
+  import Thumbnail from './common/shared/Thumbnail.svelte';
 
-export let item:IProduct;
-const { name, brand, image, price } = item;
+  export let item:IProduct;
+
+  const { name, brand, image, price } = item;
 </script>
 
 <li class="shop-item">
@@ -14,10 +15,6 @@ const { name, brand, image, price } = item;
       <span class="brand">{brand}</span>
       <h6 class="name">{name}</h6>
       <span class="price">{price.toLocaleString()}원</span>
-      <span class="view-count">
-        <Icon name="mypagex"/>
-        00명이 구경했어요
-      </span>
     </div>
     <div class="info-bottom">
 
@@ -26,9 +23,6 @@ const { name, brand, image, price } = item;
 </li>
 
 <style lang="scss">
-  @import "../styles/variables.scss";
-  @import "../styles/modules.scss";
-
   .shop-item {
     display: flex;
     &:not(:last-child) {
@@ -54,13 +48,6 @@ const { name, brand, image, price } = item;
         .price {
           @include body1-700;
           margin-top: 0.8rem;
-        }
-        .view-count {
-          @include caption3;
-          color: $disabled-8a;
-          margin-top: 0.8rem;
-          display: flex;
-          align-items: center;
         }
       }
       .info-bottom {
