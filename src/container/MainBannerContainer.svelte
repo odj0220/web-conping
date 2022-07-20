@@ -1,7 +1,7 @@
 <script lang="ts">
 import { onMount, SvelteComponent } from 'svelte';
 import { graphqlApi } from '../lib/_api';
-import Container from './common/layout/Container.svelte';
+import Container from '$component/common/layout/Container.svelte';
 let Banners: SvelteComponent;
 
 let banners = [];
@@ -12,7 +12,7 @@ onMount(async () => {
 });
 
 async function loadBannersComponenrt() {
-  const module = await import('./Banners.svelte');
+  const module = await import('$component/Banners.svelte');
   Banners = module.default;
 }
 

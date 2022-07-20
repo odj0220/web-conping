@@ -1,53 +1,49 @@
 <script lang="ts">
-import { onMount } from 'svelte';
-import { graphqlApi } from '$lib/_api';
-import type { IContent, TitleElement } from 'src/global/types';
-import { goto } from '$app/navigation';
+  import { graphqlApi } from '$lib/_api';
+  
+  import { goto } from '$app/navigation';
 
-import Title from './Title.svelte';
-import ShortVodList from './ShortsVodList.svelte';
-import Container from './common/layout/Container.svelte';
+  import Title from '$component/Title.svelte';
+  import ShortsVodList from '$component/ShortsVodList.svelte';
+  import Container from '$component/common/layout/Container.svelte';
 
-let contents: IContent[];
-let title: TitleElement[];
+  function handleClickShorts(id:string) {
+    goto(`/shorts/${id}`);
+  }
 
-onMount(async () => {
-  getShorts();
-});
-
-function handleClickShorts(id:string) {
-  goto(`/shorts/${id}`);
-}
-
-async function getShorts() {
-  const query = `{
-      getMainShorts{
-        title {
-          text
-          type
-        } 
-        contents {
-          id
-          thumb
-          title
+  async function getData() {
+    const query = `{
+        getMainShorts{
+          title {
+            text
+            type
+          } 
+          contents {
+            id
+            thumb
+            title
+          }
         }
-      }
-    }`;
+      }`;
 
-  const result = await graphqlApi(query);
+    const { data: { getMainShorts: { title, contents } } } = await graphqlApi(query);
 
-  title = result?.data?.getMainShorts?.title;
-  contents = result?.data?.getMainShorts?.contents;
-}
+    return {
+      title, contents,
+    };
+  }
 </script>
 
-{#if contents?.length }
-  <Container type="full" margin="5.6rem 0 0 0">
-    <Title {title} marginLeft="1.6rem" marginBottom="1.6rem"/>
-    
-    <ShortVodList
-      {contents}
-      onClick={handleClickShorts}
-    />
-  </Container>
-{/if}
+{#await getData()} 
+{:then {title, contents}} 
+  {#if contents?.length }
+    <Container type="full" margin="5.6rem 0 0 0">
+      <Title {title} marginLeft="1.6rem" marginBottom="1.6rem"/>
+      
+      <ShortsVodList
+        {contents}
+        onClick={handleClickShorts}
+      />
+    </Container>
+  {/if}
+{/await}
