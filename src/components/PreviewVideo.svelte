@@ -59,7 +59,7 @@
 
   export let content: IContent;
   export let order = 0;
-  export let onClickContents: (id: string) => void;
+  export let onClick: (id: string) => void;
   export let autoPlay: boolean;
 
   const playerId = guid();
@@ -209,7 +209,7 @@
   });
 </script>
 
-<li class="preview-layout" bind:this ={container} on:click={() => onClickContents(`${content.id}`)}>
+<li class="preview-layout" bind:this ={container} on:click={() => onClick(`${content.id}`)}>
   <section class="player-wrap">
     <div id='{playerId}' class="youtube-player"></div>
     <section class="thumb-wrap" bind:this={thumbnailElement}>
@@ -237,7 +237,7 @@
   </span>
     </div>
     <div class="rest">
-      <Avatar size="24px" src="{programThumbnail}" />
+      <Avatar size="24px" src={programThumbnail} alt={programName} />
       <div class="info">
         <span class="program-name">{programName}</span>
         <span class="episode">{episode}</span>

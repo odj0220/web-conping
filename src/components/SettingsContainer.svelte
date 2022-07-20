@@ -1,13 +1,11 @@
 <script lang="ts">
 import { appCheck, openBrowser } from '$lib/util';
-import { getVersion, launchSystemNotification, launchTel } from '$lib/_app_communication';
-import { onMount } from 'svelte';
+import { getVersion, launchTel } from '$lib/_app_communication';
 import SettingsBanner from './SettingsBanner.svelte';
 import SettingsContact from './SettingsContact.svelte';
 import SettingsMenuList from './SettingsMenuList.svelte';
 import SubHeaderContainer from './SubHeaderContainer.svelte';
 
-let isApp: boolean;
 let appVersion = '알 수 없음';
 let csState = false;
 const setCSState = (bool: boolean) => {
@@ -25,7 +23,6 @@ const onClickCall = () => {
   }
 };
 
-// TODO: brand, celbel 배너, 공지사항, FAQ, 약관, 개인정보 링크
 const onClick = (category: string) => {
   switch (category) {
   case 'brand' : openBrowser('https://gollala.notion.site/49e0d78a1f6f4a1f8604c062e69e7b07'); break;
@@ -52,6 +49,10 @@ const bannerList = [
   },
 ];
 
+const getAppVersion = () => {
+  return appVersion;
+};
+
 const menuList = [
   {
     depth1: '고객센터',
@@ -66,7 +67,7 @@ const menuList = [
     depth1: '기타',
     depth2: [
       { title: '푸쉬 알림 설정' },
-      { title: '버전 정보', desc: appVersion },
+      { title: '버전 정보', descFn: getAppVersion },
     ],
   },
 ];
@@ -84,21 +85,27 @@ const contactList = [
   },
 ];
 
-onMount(async () => {
+const listUpdatehandler = async () => {
+  let list = [...menuList];
+
   if (appCheck()) {
-    isApp = true;
-    const version = await getVersion();
+    const version: any = await getVersion();
     if (version) {
-      const { major, minor, build } = JSON.parse(version);
+      const { major, minor, build } = version;
       appVersion = `${major}.${minor}.${build}`;
     }
+    return list;
   }
-});
+
+  return [...menuList].filter(el => el.depth1 === '고객센터');
+};
 
 </script>
 
 <SubHeaderContainer title="고객센터" share={false} />
-
 <SettingsBanner {bannerList} {onClick}/>
-<SettingsMenuList {menuList} appCheck={isApp} {onClick}/>
+{#await listUpdatehandler()}
+{:then list}
+  <SettingsMenuList {list} {onClick}/>
+{/await}
 <SettingsContact {csState} {setCSState} {contactList} {onClick}/>

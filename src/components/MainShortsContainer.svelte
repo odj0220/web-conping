@@ -2,6 +2,7 @@
 import { onMount } from 'svelte';
 import { graphqlApi } from '$lib/_api';
 import type { IContent, TitleElement } from 'src/global/types';
+import { goto } from '$app/navigation';
 
 import Title from './Title.svelte';
 import ShortVodList from './ShortsVodList.svelte';
@@ -15,7 +16,7 @@ onMount(async () => {
 });
 
 function handleClickShorts(id:string) {
-  window.location.href = `/shorts/${id}`;
+  goto(`/shorts/${id}`);
 }
 
 async function getShorts() {

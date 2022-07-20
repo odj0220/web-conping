@@ -6,8 +6,8 @@ export let onClick: (category: string) => void;
 
 <li class="depth2-menu" on:click="{() => onClick(depth2.title)}">
   <span class="depth2-title">{depth2.title}</span>
-  {#if depth2.desc}
-    <span class="depth2-desc">{depth2.desc}</span>
+  {#if depth2.descFn}
+    <span class="depth2-desc">{depth2.descFn()}</span>
   {/if}
 </li>
 

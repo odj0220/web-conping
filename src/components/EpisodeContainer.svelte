@@ -2,6 +2,7 @@
   import { graphqlApi } from '../lib/_api';
   import ImageListView from './ImageListView.svelte';
   import type { IContent } from 'src/global/types';
+  import { goto } from '$app/navigation';
 
   export let id: string;
   export let programTitle: string;
@@ -26,7 +27,7 @@
   }
 
   const handleClickContents = (contentsId: string) => {
-    window.location.href = `/contents/${contentsId}`;
+    goto(`/contents/${contentsId}`);
   };
 </script>
 
@@ -59,7 +60,7 @@
       margin: 9.6rem 0;
       width: 100%;
       text-align: center;
-      @include caption3;
+      @include caption1-400;
       color: $disabled-8a;
     }
 

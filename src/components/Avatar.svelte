@@ -1,7 +1,7 @@
 <script lang="ts">
-    export let size: string;
-    export let src: string;
-    export let alt: string;
+    export let size = '';
+    export let src = '';
+    export let alt = '';
 </script>
 
 <div class="container" style="width: {size}; height: {size}">
