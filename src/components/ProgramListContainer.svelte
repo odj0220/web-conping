@@ -1,6 +1,7 @@
 <script lang=ts>
 import { graphqlApi } from '$lib/_api';
 import type { IProgram } from 'src/global/types';
+
 import Metadata from './Metadata.svelte';
 import Tabs from './Tabs.svelte';
 import EpisodeContainer from './EpisodeContainer.svelte';
@@ -12,17 +13,17 @@ import Container from './common/layout/Container.svelte';
 export let id: string;
 let items = [
   { label: '에피소드',
-    value: 1,
+    index: 0,
     props: { id },
     component: EpisodeContainer,
   },
   { label: '하이라이트',
-    value: 2,
+    index: 1,
     props: { id },
     component: HighlightContainer,
   },
   { label: '쇼츠',
-    value: 3,
+    index: 2,
     props: { id },
     component: ShortsContainer,
   },
@@ -31,22 +32,22 @@ let items = [
 
 async function loadData() {
   const query = `{
-      program(id:"${id}"){
-        id
-        title
-        description
-        banner
-        regularAiringAt
-        airingBeginAt
-        airingEndAt
-      }
+    program(id:"${id}"){
+      id
+      title
+      description
+      banner
+      regularAiringAt
+      airingBeginAt
+      airingEndAt
+    }
 
-      getCelebsByProgramId(id:"${id}"){
-        thumbnail
-        name
-        categories
-      }
-    }`;
+    getCelebsByProgramId(id:"${id}"){
+      thumbnail
+      name
+      categories
+    }
+  }`;
 
   const result = await graphqlApi(query);
   const program: IProgram = result?.data?.program;
@@ -117,6 +118,7 @@ function setMetadataOption (program: any, celebs: any[]) {
     height: 8px;
     background-color: $bg-black-21;
   }
+  
 </style>
 
   
