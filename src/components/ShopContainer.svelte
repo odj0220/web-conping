@@ -7,6 +7,7 @@ import type { IProduct } from 'src/global/types';
 import Sorter from './Sorter.svelte';
 import Container from './common/layout/Container.svelte';
 import Dimmend from './common/layout/Dimmend.svelte';
+import DimmendSorter from './common/shared/DimmendSorter.svelte';
 
 let products: IProduct[] = [];
 let list: IProduct[] = [];
@@ -38,8 +39,8 @@ const sorter = [
 </script>
 
 <MainHeaderContainer title="쇼핑존" />
-<Container marginTop="0px">
+<Container margin="0 0 0 0">
   <Sorter {sorter} {sort}/>
   <ShopList {list}/>
 </Container>
-<Dimmend />
+<DimmendSorter />

@@ -12,21 +12,21 @@
 
   async function loadHighlight() {
     const query = `{
-         getContentsByProgramId(id:"${id}", type:HIGHLIGHT){
-           id
-           title
-           programId
-           videoId
-           thumb
-           createDt
-           episode
-           program{
-             id
-             title
-             thumbnail
-            }
+        getContentsByProgramId(id:"${id}", type:HIGHLIGHT){
+          id
+          title
+          programId
+          videoId
+          thumb
+          createDt
+          episode
+          program{
+            id
+            title
+            thumbnail
           }
-      }`;
+        }
+    }`;
     try {
       const result = await graphqlApi(query);
       const data:any = {
@@ -77,7 +77,7 @@
   }
 
   .spinner-wrapper {
-    margin-top: 9.6rem;
+    margin: 9.6rem 0;
     width: 100%;
     display: flex;
     justify-content: center;

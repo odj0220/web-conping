@@ -1,6 +1,5 @@
 <script lang="ts">
 import type { IContent } from 'src/global/types';
-
 import Avatar from './Avatar.svelte';
 import Icon from './icons/Icon.svelte';
 
@@ -8,8 +7,6 @@ export let onClickClose: (e: TouchEvent) => void;
 export let onClickProfile: (e: TouchEvent, id: string) => void;
 export let content:IContent;
 export let buttons: any[] = [];
-
-console.log('content', content);
 
 </script>
 

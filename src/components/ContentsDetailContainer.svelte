@@ -49,10 +49,10 @@
     `;
 
     const result = await graphqlApi(query);
-    const celobs = result.data.getCelebsByContentId;
+    const celebs = result.data.getCelebsByContentId;
   
     content = result?.data?.content;
-    metaDataOption = setMetadataOption(content, celobs);
+    metaDataOption = setMetadataOption(content, celebs);
   };
 
   const setMetadataOption = (content: any, celebs: any[]) => {

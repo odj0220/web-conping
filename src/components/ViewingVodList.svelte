@@ -17,7 +17,7 @@ export let onClick: (id: string) => void;
 
 <style lang="scss">
   section {
-    @include horizontalScroll(2rem, 1.6rem);
+    @include horizontalScroll(2rem, 1.2rem);
     & > :global(*) {
       &:first-child {
         margin-left: 0 !important;

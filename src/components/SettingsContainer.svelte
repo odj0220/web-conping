@@ -21,7 +21,6 @@ const onClickCall = () => {
   if (win['flutter_inappwebview']) {
     return launchTel('02-6245-1111');
   }
-  window.location.href = 'tel://02-6245-1111';
 };
 
 const onClick = (category: string) => {

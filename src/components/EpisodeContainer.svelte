@@ -65,7 +65,7 @@
     }
 
     .spinner-wrapper {
-      margin-top: 9.6rem;
+      margin: 9.6rem 0;
       width: 100%;
       display: flex;
       justify-content: center;
