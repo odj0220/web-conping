@@ -69,7 +69,7 @@
 
 <style lang="scss">
   .empty-message, .error-message {
-    margin-top: 9.6rem;
+    margin: 9.6rem 0;
     width: 100%;
     text-align: center;
     @include caption3;

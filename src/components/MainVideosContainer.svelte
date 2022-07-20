@@ -59,10 +59,12 @@ import Container from './common/layout/Container.svelte';
       console.log(error);
     }
   }
-
-  function handleClickContents(id: string) {
-    goto(`/contents/${id}`);
-  }
+  const handleClickContents = (id: string) => {
+    console.log('id', id);
+    goto(`/contents/${id}`, {
+      replaceState: false,
+    });
+  };
 
   async function runInfiniteScrolling(event) {
     const detail = event.detail;
@@ -78,7 +80,7 @@ import Container from './common/layout/Container.svelte';
     {cursor}
     infiniteScroll={true}
     autoPlay={true}
-    onClickContents={handleClickContents}
+    onClick={handleClickContents}
     on:request-more={runInfiniteScrolling}
   />
 </Container>
