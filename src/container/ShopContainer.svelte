@@ -1,35 +1,36 @@
 <script lang="ts">
   import { graphqlApi } from '$lib/_api';
-
+  
   import type { IProduct } from 'src/global/types';
   
-  import Container from './common/layout/Container.svelte';
-  import Dimmend from './common/layout/Dimmend.svelte';
-  import Spinner from './common/shared/Spinner.svelte';
-  
   import MainHeaderContainer from './MainHeaderContainer.svelte';
-  import Sorter from './Sorter.svelte';
-  import ShopList from './ShopList.svelte';
   
+  import Container from '$component/common/layout/Container.svelte';
+  import Spinner from '$component/common/shared/Spinner.svelte';
+  import ShopList from '$component/ShopList.svelte';
+  import Sorter from '$component/Sorter.svelte';
+  import Dimmend from '$component/common/layout/Dimmend.svelte';
+
+
   let products: IProduct[] = [];
   let list: IProduct[] = [];
   let sort = 'latest';
 
   const getProducts = async (sortField: string) => {
     console.log('//TODO: sort .. ', sortField);
-  
+
     const query = `{
-      products {
-        id
-        name
-        price
-        image
-        brand
-      }
-    }`;
+        products {
+          id
+          name
+          price
+          image
+          brand
+        }
+      }`;
 
     const { data: { products } } = await graphqlApi(query);
-  
+
     return products;
   };
 

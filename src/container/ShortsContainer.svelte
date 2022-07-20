@@ -1,12 +1,14 @@
 <script lang=ts>
-  import ShortsGridVodList from './ShortsGridVodList.svelte';
   import { graphqlApi } from '../lib/_api';
-  import { goto } from '$app/navigation';
-  import type { IContent } from 'src/global/types';
-  
-  import Spinner from './common/shared/Spinner.svelte';
 
-  export let id;
+  import { goto } from '$app/navigation';
+
+  import type { IContent } from 'src/global/types';
+
+  import Spinner from '$component/common/shared/Spinner.svelte';
+  import ShortsGridVodList from '$component/ShortsGridVodList.svelte';
+
+  export let id: string;
   export let programTitle: string;
 
   const handleClickShorts = (id: string) => {
