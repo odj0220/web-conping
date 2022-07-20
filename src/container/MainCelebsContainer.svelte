@@ -5,9 +5,11 @@ import { graphqlApi } from '../lib/_api';
 
 import type { ICeleb } from 'src/global/types';
 
-import Title from './Title.svelte';
-import Celebs from './Celebs.svelte';
-import MoreButton from './common/shared/MoreButton.svelte';
+import Title from '$component/Title.svelte';
+import Celebs from '$component/Celebs.svelte';
+import MoreButton from '$component/common/shared/MoreButton.svelte';
+import Container from '$component/common/layout/Container.svelte';
+
 
 let celebs: ICeleb[] = [];
 
@@ -41,19 +43,8 @@ const title = [
 ];
 </script>
 
-<section class="section">
+<Container>
   <Title {title} />
   <Celebs {celebs}/>
   <MoreButton onClick={onClickMore} value="콘핑 셀럽 더보기"/>
-</section>
-
-<style lang="scss">
-    .section {
-      margin-top: 5.6rem;
-      padding: 0 1.6rem;
-      .title {
-        @include body1-700;   
-        margin-bottom: 12px;     
-      }   
-    }
-</style>
+</Container>

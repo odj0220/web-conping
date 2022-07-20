@@ -172,7 +172,7 @@ export async function Graphql(query: string) {
     },
     // TODO: api 연동하기
     products: () => {
-      return programJson;
+      return productJson;
     },
     // TODO: api 연동하기
     product: async ({ id }: { id: string }) => {

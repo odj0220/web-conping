@@ -1,10 +1,14 @@
 <script lang=ts>
-  import ShortsGridVodList from './ShortsGridVodList.svelte';
   import { graphqlApi } from '../lib/_api';
+
   import { goto } from '$app/navigation';
+
   import type { IContent } from 'src/global/types';
 
-  export let id;
+  import Spinner from '$component/common/shared/Spinner.svelte';
+  import ShortsGridVodList from '$component/ShortsGridVodList.svelte';
+
+  export let id: string;
   export let programTitle: string;
 
   const handleClickShorts = (id: string) => {
@@ -34,9 +38,7 @@
 </script>
 
 {#await loadData()}
-  <div class="spinner-wrapper">
-    <div class="spinner"></div>
-  </div>
+  <Spinner />
 {:then contents}
   {#if contents.length}
     <ShortsGridVodList
@@ -63,28 +65,5 @@
     text-align: center;
     @include caption1-400;
     color: $disabled-8a;
-  }
-
-  .spinner-wrapper {
-    margin: 9.6rem 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .spinner {
-      width: 3.2rem;
-      height: 3.2rem;
-      border-radius: 50%;
-      border: 0.4rem solid transparent;
-      border-top-color: #ee2554;
-      border-left-color: #ee2554;
-      animation: spinner 1s ease infinite;
-    }
-
-    @keyframes spinner {
-      from {transform: rotate(0deg); }
-      to {transform: rotate(360deg);}
-    }
   }
 </style>

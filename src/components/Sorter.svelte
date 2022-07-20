@@ -1,18 +1,16 @@
 <script lang="ts">
-import Icon from './icons/Icon.svelte';
+  import Icon from './icons/Icon.svelte';
 
-export let sorter;
-export let sort: string;
+  export let sort: string;
+  export let onClick: () => void;
 </script>
 
-<div class="sorter">
+<div class="sorter" on:click={() => onClick()}>
   <Icon name="sort" />
   <span class="sort">{sort}</span>
 </div>
 
 <style lang="scss">
-  @import "../styles/variables.scss";
-  
   .sorter {
     padding: 0.8rem 0;
     display: flex;
