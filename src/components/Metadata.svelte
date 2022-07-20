@@ -1,10 +1,5 @@
 <script lang="ts">
 import { SvelteComponent } from 'svelte';
-import Avatar from './Avatar.svelte';
-import GrayBox from './CenterSection.svelte';
-import Container from './common/layout/Container.svelte';
-import Hscroller from './HorizontalScroller.svelte';
-import Title from './Title.svelte';
 
 let PastTimeDelta: SvelteComponent;
 

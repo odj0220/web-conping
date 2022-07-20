@@ -1,5 +1,4 @@
 <script lang="ts">
-  import '../styles/reset.scss';
   import { beforeNavigate } from '$app/navigation';
 
   beforeNavigate((navigation) => {

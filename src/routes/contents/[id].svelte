@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
   import { page } from '$app/stores';
 
-  import ContentsDetailContainer from '$component/ContentsDetailContainer.svelte';
+  import ContentsDetailContainer from '$container/ContentsDetailContainer.svelte';
 
   const id = $page.params.id;
 </script>

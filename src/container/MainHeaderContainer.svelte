@@ -1,6 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  import Header from './Header.svelte';
+
+  import Header from '$component/Header.svelte';
 
   export let title = '';
   

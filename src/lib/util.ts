@@ -49,10 +49,6 @@ export const appCheck = () => {
   return win['flutter_inappwebview'] ? true : false;
 };
 
-export const goLink = (path: string) => {
-  goto(path);
-};
-
-export const goBack = () => {
-  history.go(-1);
+export const gotoPrograms = (id: string) => {
+  goto(`/programs/${id}`);
 };

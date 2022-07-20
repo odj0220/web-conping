@@ -3,96 +3,78 @@
 
   interface tabItem {
     label: string,
-    value: number,
+    index: number,
     component: SvelteComponent,
     props: any,
   }
 
   export let items: tabItem[];
-  export let activeTabValue = 1;
-  export let programTitle: string;
+  export let programTitle = '';
+  export let borderBottom = false;
 
-  let selectedComponent: SvelteComponent = items[0].component;
-  let selectedProps = { ...items[0].props, programTitle };
-
-  async function onActiveTabitem(tabItem: tabItem) {
-    onUpdateActiveTabValue(tabItem.value);
-    onUpdateSelectedComponent(tabItem.component);
-    onUpdateSelectedProps(tabItem.props);
-  }
-
-  function onUpdateActiveTabValue(tabValue: number) {
-    activeTabValue = tabValue;
-  }
-
-  function onUpdateSelectedComponent(component: SvelteComponent) {
-    selectedComponent = component;
-  }
-
-  function onUpdateSelectedProps(props: any) {
-    selectedProps = { ...props, programTitle };
+  $: selectedTab = items[0];
+  $: selectedProps = { ...selectedTab.props, programTitle };
+  
+  function onActiveTabitem(tabItem: tabItem) {
+    selectedTab = tabItem;
   }
 
 </script>
 
-<ul class="tab-conatainer">
-  {#each items as item}
-    <li class={activeTabValue === item.value ? 'active' : ''}>
-      <span class="tab-item" on:click={onActiveTabitem(item)}>{item.label}</span>
-    </li>
-  {/each}
-</ul>
+<div class="tab-conatainer">
+  <ul class="tab-header">
+    {#each items as item, i}
+      <li class={`tab-item ${selectedTab.index === i ? 'active' : ''}`} on:click={onActiveTabitem(item)}>
+        {item.label}
+      </li>
+    {/each}
+  </ul>
 
-<div class="contents-container">
-      <svelte:component this={selectedComponent} {...selectedProps}/>
+  <div class="tab-contents">
+    <svelte:component this={selectedTab.component} {...selectedProps}/>
+  </div>
 </div>
 
 <style lang="scss">
-  .tab-conatainer {
+.tab-conatainer {
+  padding: 0 0 4rem;
+  .tab-header {
     display: flex;
-    flex-wrap: nowrap;
-    gap: 2rem;
-    padding: 0 1.6rem 3.3rem;
-
-    li {
-      display: flex;
-
-      .tab-item {
-        @include body1-400;
-        flex: 1;
-        color: $disabled-8a;
-        position: relative;
-        &:after {
-          content: "";
-          position: absolute;
-          left: 50%;
-          right: 0;
-          display: block;
-          width: 0;
-          height: 3px;
-          margin-top: 0.6rem;
-          background-color: $text-white-f2;
-          transition: all 0.3s;
-        }
+    padding: 0 1.6rem;
+    margin-bottom: 2.4rem;
+    .tab-item {
+      @include body1-400;
+      color: $disabled-8a;
+      position: relative;
+      transition: all 0.3s;
+      padding-bottom: 0.8rem;
+      &:not(:last-child) {
+        margin-right: 2rem;
+      }
+      &:after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        right: 0;
+        display: block;
+        width: 0;
+        height: 3px;
+        margin-top: 0.6rem;
+        background-color: $text-white-f2;
+        transition: all 0.3s;
       }
       &.active {
-        .tab-item{
-          @include body1-700;
-          color: $text-white-f2;
-          &:after {
-            left: 0;
-            width: 100%;
-          }
+        @include body1-700;
+        color: $text-white-f2;
+        &:after {
+          left: 0;
+          width: 100%;
         }
       }
     }
-    
-  
   }
-  
-  .contents-container {
-    display: flex;
-    flex: 1;
+  .tab-contents {
     padding: 0 1.6rem;
-	}
+  }
+}
 </style>

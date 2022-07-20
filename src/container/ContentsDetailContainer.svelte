@@ -4,11 +4,10 @@
   import type { YouTubePlayer } from 'youtube-player/dist/types';
   import type { IContent } from 'src/global/types';
 
-  import Metadata from './Metadata.svelte';
-  import Player from './Player.svelte';
-  import RelatedProductContainer from './RelatedProductContainer.svelte';
   import SubHeaderContainer from './SubHeaderContainer.svelte';
-  import ContentDetailAnotherVideosContainer from './ContentDetailAnotherVideosContainer.svelte';
+  import Player from '$component/Player.svelte';
+  import Metadata from '$component/Metadata.svelte';
+  import ContentDetailAnotherVideosContainer from '$component/ContentDetailAnotherVideosContainer.svelte';
 
   export let id: string;
 
@@ -49,10 +48,10 @@
     `;
 
     const result = await graphqlApi(query);
-    const celobs = result.data.getCelebsByContentId;
+    const celebs = result.data.getCelebsByContentId;
   
     content = result?.data?.content;
-    metaDataOption = setMetadataOption(content, celobs);
+    metaDataOption = setMetadataOption(content, celebs);
   };
 
   const setMetadataOption = (content: any, celebs: any[]) => {

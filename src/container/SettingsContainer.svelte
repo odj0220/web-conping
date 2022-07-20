@@ -1,9 +1,11 @@
 <script lang="ts">
+import SettingsBanner from '$component/SettingsBanner.svelte';
+import SettingsContact from '$component/SettingsContact.svelte';
+import SettingsMenuList from '$component/SettingsMenuList.svelte';
+
 import { appCheck, openBrowser } from '$lib/util';
 import { getVersion, launchTel } from '$lib/_app_communication';
-import SettingsBanner from './SettingsBanner.svelte';
-import SettingsContact from './SettingsContact.svelte';
-import SettingsMenuList from './SettingsMenuList.svelte';
+
 import SubHeaderContainer from './SubHeaderContainer.svelte';
 
 let appVersion = '알 수 없음';
@@ -21,7 +23,6 @@ const onClickCall = () => {
   if (win['flutter_inappwebview']) {
     return launchTel('02-6245-1111');
   }
-  window.location.href = 'tel://02-6245-1111';
 };
 
 const onClick = (category: string) => {
