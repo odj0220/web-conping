@@ -190,7 +190,6 @@ export async function Graphql(query: string) {
     },
     content: async ({ id }: { id: string }) => {
       const content = await GET(`/video-content/${id}?program=true`);
-      console.log(content);
       return convertContent(content);
     },
     celebs: async () => {
@@ -415,14 +414,15 @@ export async function Graphql(query: string) {
 }
 
 const getContentsByProgramId = async (id: string, type?: string) => {
-  const response = await GET(`/video-content?programId=${id}&program=true`);
+  const response = await GET(`/video-content?programId=${id}&program=true&sort=[{"ProgramInfo": {"episode": "desc"} }]`);
   const contents = response.items.map((content: VideoContent) => convertContent(content));
-  return contents.filter((content: IContent) => {
-    if (!type) {
-      return true;
-    }
-    return content.contentType === type;
-  });
+  return contents
+    .filter((content: IContent) => {
+      if (!type) {
+        return true;
+      }
+      return content.contentType === type;
+    });
 };
 
 const setOrderBy = (sortField?: string, sortOrder?: string) => {
