@@ -32,8 +32,7 @@
       };
       const programTitle = getProgramContentsByContentId[0].program.title;
       const programId = getProgramContentsByContentId[0].program.id;
-
-      console.log('getProgramContentsByContentId', getProgramContentsByContentId);
+    
       return {
         programTitle,
         programId,

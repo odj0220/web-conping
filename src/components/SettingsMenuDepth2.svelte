@@ -6,8 +6,8 @@ export let onClick: (category: string) => void;
 
 <li class="depth2-menu" on:click="{() => onClick(depth2.title)}">
   <span class="depth2-title">{depth2.title}</span>
-  {#if depth2.desc}
-    <span class="depth2-desc">{depth2.desc}</span>
+  {#if depth2.descFn}
+    <span class="depth2-desc">{depth2.descFn()}</span>
   {/if}
 </li>
 
@@ -22,11 +22,5 @@ export let onClick: (category: string) => void;
   padding: 0 1.6rem;
   box-sizing: border-box;
   border-bottom: 1px solid $bg-black-21;
-  .depth2-desc {
-    color: $disabled-8a;
-    &.link {
-      text-decoration: underline;
-    }
-  }
 }
 </style>

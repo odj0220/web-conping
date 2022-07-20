@@ -19,7 +19,7 @@
   export let contents: IContent[] = [];
   export let end: boolean;
   export let cursor: string;
-  export let onClick: (id: string) => void;
+  export let onClickContents: (id: string) => void;
   export let infiniteScroll = false;
   export let autoPlay = false;
 
@@ -84,7 +84,7 @@
     {#if contents?.length > 0}
       {#each contents as content, order (content.id)}
         <PreviewVideo
-          {onClick}
+          onClick={onClickContents}
           content={content}
           order={order + 1}
           autoPlay={autoPlay}

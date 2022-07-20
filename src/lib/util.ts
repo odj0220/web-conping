@@ -46,7 +46,11 @@ export const openBrowser = (url: string, header?: string) => {
 
 export const appCheck = () => {
   const win: any = window;
-  return win['flutter_inappwebview'];
+  return win['flutter_inappwebview'] ? true : false;
+};
+
+export const gotoPrograms = (id: string) => {
+  goto(`/programs/${id}`);
 };
 
 export const goLink = (path: string) => {

@@ -54,11 +54,11 @@ const onClickMore = () => {
         }
         .more {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            bottom: -0.2rem;
+            left: -1.2rem;
+            right: -1.2rem;
             background-color: $default-black;
-            padding: 1.6rem 0 0.8rem;
+            padding: 1.6rem 0 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -72,10 +72,10 @@ const onClickMore = () => {
                 display: block;
                 position: absolute;
                 background: linear-gradient(180deg, rgba(10, 10, 10, 0.6) 0%, #0A0A0A 100%);
-                height: 40px;
-                left: 0;
-                right: 0;
-                bottom: 40px;
+                height: 4.2rem;
+                left: -1.2rem;
+                right: -1.2rem;
+                bottom: 4rem;
             }
         }
     }

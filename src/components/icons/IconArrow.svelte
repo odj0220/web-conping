@@ -1,6 +1,6 @@
 <script lang="ts">
     export let name : string;
-    export let size : string;
+    export let size = '';
     
     const theme = 'dark';
     const color = '#FFFFFF';
