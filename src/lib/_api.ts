@@ -1,6 +1,6 @@
 
 const GRAPHQL_URL = '/api/graphql';
-const BACKEND_URL = 'https://gollala-backend-wzsqjexeka-du.a.run.app';
+const BACKEND_URL = 'https://gollala-backend-6hnxk7lkqq-du.a.run.app';
 
 interface fetchOption {
   method: string;
