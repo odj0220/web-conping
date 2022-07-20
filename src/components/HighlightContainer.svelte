@@ -2,6 +2,7 @@
   import { graphqlApi } from '../lib/_api';
   import PreviewVideos from './PreviewVideos.svelte';
   import { goto } from '$app/navigation';
+import Spinner from './common/shared/Spinner.svelte';
 
   export let id: string;
   export let programTitle: string;
@@ -43,9 +44,7 @@
 </script>
 
 {#await loadHighlight()}
-    <div class="spinner-wrapper">
-        <div class="spinner"></div>
-    </div>
+  <Spinner />
 {:then {contents, end, cursor}}
     {#if contents.length}
         <PreviewVideos
