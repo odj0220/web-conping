@@ -1,8 +1,6 @@
 import celebJson from '../../../../../../static/data/celeb.json';
 import relationJson from '../../../../../../static/data/relation.json';
 import contentJson from '../../../../../../static/data/content.json';
-import { GET } from '../../../../../lib/_api';
-import { VideoContent } from '../../../../../lib/models/backend/backend';
 
 export const celebs = () => celebJson;
 

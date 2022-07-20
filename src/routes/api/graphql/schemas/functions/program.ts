@@ -1,20 +1,6 @@
 import { GET } from '../../../../../lib/_api';
 import { Program } from '../../../../../lib/models/backend/backend';
-import dayjs from 'dayjs';
-
-const convertProgram = (program?: Program) => {
-  if (!program) {
-    return ;
-  }
-  const { id, regularAiringAt, airingBeginAt, airingEndAt } = program;
-  return {
-    ...program,
-    id: id.toString(),
-    regularAiringAt: regularAiringAt ? +dayjs(regularAiringAt) : 0,
-    airingBeginAt: airingBeginAt ? +dayjs(airingBeginAt) : 0,
-    airingEndAt: airingEndAt ? +dayjs(airingEndAt) : 0,
-  };
-};
+import { convertProgram } from './converts';
 
 
 export const programs = async () => {

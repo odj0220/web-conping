@@ -1,7 +1,5 @@
 import { buildSchema, graphql } from 'graphql';
 import type { GraphQLSchema } from 'graphql/type/schema';
-import GRAPH_TYPES from './schemas/types';
-import GRAPH_ENUMS from './schemas/enums';
 import { product, products, getProductsByContentId, getProductByCelebId } from './schemas/functions/products';
 import { getBanners } from './schemas/functions/banner';
 import { content, contents, getContentsByProductId, getProgramContentsByContentId, getContentsByCelebId, getMainContents, getContentsByProgramId, getMainInfiniteContents } from './schemas/functions/contents';
@@ -11,6 +9,9 @@ import { getContinueWatching } from './schemas/functions/watching';
 import { getMainSeries } from './schemas/functions/series';
 import { getMainShorts } from './schemas/functions/shorts';
 import { getMainOrigin } from './schemas/functions/origins';
+
+import GRAPH_TYPES from './schemas/types';
+import GRAPH_ENUMS from './schemas/enums';
 
 import dayjs from 'dayjs';
 import Duration from 'dayjs/plugin/duration.js';
