@@ -8,6 +8,7 @@
 
 <style lang="scss">
   button {
+    @include body3-700;
     border-radius: 0.2rem;
     border: 1px solid #f2f2f2;
     width: 100%;
