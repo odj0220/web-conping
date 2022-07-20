@@ -1,11 +1,4 @@
 <script lang="ts">
-  import { page } from '$app/stores';
-  import { beforeNavigate, afterNavigate } from '$app/navigation';
-
-  beforeNavigate((navigation) => {
-    const { to, from, cancel } = navigation;
-    // window.location.href = to.pathname;
-  });
 </script>
 
 <svelte:head>
