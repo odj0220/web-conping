@@ -62,6 +62,8 @@
   export let onClick: (id: string) => void;
   export let autoPlay: boolean;
 
+  console.log('content', content);
+
   const playerId = guid();
   let playTime;
   let player: YouTubePlayer;
@@ -207,9 +209,10 @@
       clearInterval(interval);
     };
   });
+  console.log('on click', onClick);
 </script>
 
-<li class="preview-layout" bind:this ={container} on:click={() => onClick(`${content.id}`)}>
+<li class="preview-layout" bind:this={container} on:click={() => onClick(`${content.id}`)}>
   <section class="player-wrap">
     <div id='{playerId}' class="youtube-player"></div>
     <section class="thumb-wrap" bind:this={thumbnailElement}>
