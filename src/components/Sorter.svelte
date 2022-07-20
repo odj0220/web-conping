@@ -1,7 +1,6 @@
 <script lang="ts">
 import Icon from './icons/Icon.svelte';
 
-export let sorter;
 export let sort: string;
 </script>
 
@@ -11,8 +10,6 @@ export let sort: string;
 </div>
 
 <style lang="scss">
-  @import "../styles/variables.scss";
-  
   .sorter {
     padding: 0.8rem 0;
     display: flex;

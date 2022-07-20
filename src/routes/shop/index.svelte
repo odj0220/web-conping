@@ -1,6 +1,5 @@
 <script>
-import ShopContainer from '$component/ShopContainer.svelte';
-
+  import ShopContainer from '$component/ShopContainer.svelte';
 </script>
 
 <ShopContainer />
