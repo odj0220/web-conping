@@ -13,21 +13,21 @@ let offsetTop = 0;
 const getContent = async () => {
   const query = `{
     content(id:"${id}"){
-      id 
+      id
       title
-      contentType 
-      createDt 
+      contentType
+      createDt
       description
-      program { 
+      program {
         id
         title
         thumbnail
       }
-      programId 
-      episode 
-      thumb 
-      videoId 
-      duration 
+      programId
+      episode
+      thumb
+      videoId
+      duration
       currentTime
     }
   }`;
@@ -101,13 +101,13 @@ const returnButtons = async () => {
 </script>
 
 {#await getContent()}
-{:then content} 
+{:then content}
 <ShortsFullScreen
   videoId={content.videoId}
   thumbnail={content.thumb}
 >
 {#await returnButtons()}
-{:then buttons} 
+{:then buttons}
 <ShortsDetailInfo
   {onClickClose}
   {onClickProfile}
@@ -120,7 +120,7 @@ const returnButtons = async () => {
 {/await}
 
 {#await getRelatedProducts()}
-{:then productData} 
+{:then productData}
 {#if productData.length > 0}
 <BottomSheet
   height={560}
