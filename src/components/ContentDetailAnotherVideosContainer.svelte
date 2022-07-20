@@ -57,7 +57,7 @@
                 contents={contents.data}
                 end={contents.end}
                 cursor={contents.cursor}
-                onClickContents={handleClickContents}
+                onClick={handleClickContents}
         />
         <a class="link" href={'/programs/' + programId}>
             {programTitle} 시리즈 보러가기
