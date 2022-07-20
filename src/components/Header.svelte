@@ -1,9 +1,9 @@
 <script lang="ts">
-  import Icon from './icons/Icon.svelte';
+import Icon from './icons/Icon.svelte';
 
-  export let onClick: (type: string) => void;
-  export let title: string;
-  export let buttons: string[] = [];
+export let onClick: (type: string) => void;
+export let title: string;
+export let buttons: string[] = [];
 
 </script>
 
@@ -33,8 +33,9 @@
     justify-content: space-between;
     align-items: center;
     height: 5.4rem;
-    padding: constant(safe-area-inset-top) 1.2rem 0;
-    padding: env(safe-area-inset-top) 1.2rem 0;
+    padding: 0 1.2rem;
+    padding-top: constant(safe-area-inset-top);
+    padding-top: snv(safe-area-inset-top);
     position: sticky;
     top: 0;
     z-index: 50;
