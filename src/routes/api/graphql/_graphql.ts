@@ -15,156 +15,44 @@ import type {
 } from '../../../lib/models/backend/backend';
 import type { IContent, IProduct } from '../../../global/types';
 import { GET } from '../../../lib/_api';
+import GRAPH_TYPES from './schemas/types';
+import GRAPH_ENUMS from './schemas/enums';
 import dayjs from 'dayjs';
 import Duration from 'dayjs/plugin/duration.js';
 dayjs.extend(Duration);
 
 export async function Graphql(query: string) {
   const schema: GraphQLSchema = buildSchema(`
-		type Product {
-      id: String!
-      name: String!
-      brand: String
-      price: Int
-      discountRate: Int
-      image: String
-      category: String
-      exposed: [[Int]]
-      storeUrl: String
-      views: Float
-		}
-		
-    type Program {
-      id: String!
-      title: String!
-      description: String,
-      banner: String
-      thumbnail: String
-      regularAiringAt: Float
-      airingBeginAt: Float
-      airingEndAt: Float
-      totalEpisode: Int
-		}
-		
-		type Content {
-		  id: ID!
-      title: String!
-      subtitle: String
-      programId: String
-      contentType: ContentType
-      createDt: Float!
-      episode: Int
-      description: String
-      url: String
-      videoId: String
-      thumb: String
-      program: Program
-      currentTime: Float
-      duration: Float
-      views: Float
-		}
-		
-		type Celeb {
-      id: String!
-      name: String!
-      description: String
-      categories: [String]
-      banner: String
-      thumbnail: String
-      follows: [Celeb]
-      programs: [Program]
-      products: [Product]
-		}
-		
-		enum ContentType {
-		  FULL
-		  HIGHLIGHT
-		  SHORTS
-		}
-		
-        type BannerLink {
-		  to: String
-		  openBrowser: Boolean
-		}
-		
-		type Banner {
-		  title: String
-		  imgPath: String
-		  link: BannerLink
-		}
-		
-		type MainContent {
-		  title: [Title]
-		  contents: [Content]
-		}
-		
-		type Title {
-		  text: String
-		  type: String
-		}
-		
-		type MainSeries {
-		  title: [Title]
-		  contents: [Content]
-		  series: Program
-		}
-		
-		type ContentEdge {
-		  node: Content
-		  cursor: String
-		}
-		
-		type PageInfo {
-      startCursor: String
-      hasNextPage: Boolean
-    }
-    
-		type PageContent {
-		  totalCount: String
-		  edges: [ContentEdge]
-		  pageInfo: PageInfo
-		}
-		
-		type MainOrigin {
-		  title: [Title]
-		  programs: [Program]
-		}
-		
-		enum Order {
-		  desc
-		  asc
-		}
-	
-		
-		type Query {
-		  products: [Product]
-			product(id:ID!): Product
-			contents(sortField: String, sortOrder: Order, type:ContentType): [Content]
-			content(id:ID!): Content
-			celebs: [Celeb]
-			celeb(id:ID!): Celeb
-			programs: [Program]
-			program(id:ID!): Program
-			getProductsByContentId(id:ID!): [Product]
-			getCelebsByContentId(id:ID!): [Celeb]
-      getContentsByProgramId(id:ID!, type:ContentType): [Content]
-      getContentsByProductId(id:ID!): [Content]
-      getCelebsByProductId(id:ID!): [Celeb]
-      getCelebsByProgramId(id:ID!): [Celeb]
-      getProductByCelebId(id:ID!): [Product]
-      getContentsByCelebId(id:ID!): [Content]
-      getProductsByCategory(category:String!): [Product]
-      getContinueWatching: [Content]
-      getProgramContentsByContentId(id:ID!): [Content]
+    ${GRAPH_TYPES}	
+    ${GRAPH_ENUMS}
+      type Query {
+        products: [Product]
+        product(id:ID!): Product
+        contents(sortField: String, sortOrder: Order, type:ContentType): [Content]
+        content(id:ID!): Content
+        celebs: [Celeb]
+        celeb(id:ID!): Celeb
+        programs: [Program]
+        program(id:ID!): Program
+        getProductsByContentId(id:ID!): [Product]
+        getCelebsByContentId(id:ID!): [Celeb]
+        getContentsByProgramId(id:ID!, type:ContentType): [Content]
+        getContentsByProductId(id:ID!): [Content]
+        getCelebsByProductId(id:ID!): [Celeb]
+        getCelebsByProgramId(id:ID!): [Celeb]
+        getProductByCelebId(id:ID!): [Product]
+        getContentsByCelebId(id:ID!): [Content]
+        getProductsByCategory(category:String!): [Product]
+        getContinueWatching: [Content]
+        getProgramContentsByContentId(id:ID!): [Content]
        
-      getBanners: [Banner]
-      getMainContents: MainContent
-      getMainSeries: MainSeries
-      getMainShorts: MainContent
-      getMainInfiniteContents(first: Int, afterCursor: String): PageContent
-      getMainOrigin: MainOrigin
-    }
-	`);
+        getBanners: [Banner]
+        getMainContents: MainContent
+        getMainSeries: MainSeries
+        getMainShorts: MainContent
+        getMainInfiniteContents(first: Int, afterCursor: String): PageContent
+        getMainOrigin: MainOrigin
+    }`);
 
   const rootValue = {
     getBanners: () => {
