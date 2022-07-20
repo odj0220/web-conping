@@ -63,7 +63,7 @@
       {contents}
       {end}
       {cursor}
-      onClickContents={handleClickContents}
+      onClick={handleClickContents}
       infiniteScroll={false}
       autoPlay={true}
     />
