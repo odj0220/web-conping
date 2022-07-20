@@ -5,7 +5,7 @@
   
   import Celebs from '$component/Celebs.svelte';
   import Container from '$component/common/layout/Container.svelte';
-  import MainHeaderContainer from '$component/MainHeaderContainer.svelte';
+  import MainHeaderContainer from '$container/MainHeaderContainer.svelte';
 
 
   let celebs: ICeleb[] = [];
