@@ -86,3 +86,8 @@ export const getUser = async () => {
   const win: any = window;
   return await win['flutter_inappwebview'].callHandler('getUser');
 };
+
+export const getNotch = async () => {
+  const win: any = window;
+  return await win['flutter_inappwebview'].callHandler('getNotch');
+};

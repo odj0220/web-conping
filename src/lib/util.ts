@@ -1,5 +1,5 @@
-import { goto } from '$app/navigation';
 import { launchWeb } from './_app_communication';
+import { goto } from '$app/navigation';
 
 export const guid = () => {
   const _s4 = () => {
