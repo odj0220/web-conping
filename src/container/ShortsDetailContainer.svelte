@@ -1,17 +1,19 @@
 <script lang="ts">
-import { graphqlApi } from '$lib/_api';
-import BottomSheet from './common/layout/BottomSheet.svelte';
-import ShortsDetailInfo from './ShortsDetailInfo.svelte';
-import ShortsFullScreen from './ShortsFullScreen.svelte';
-import RelatedProduct from './RelatedProduct.svelte';
-import { goto } from '$app/navigation';
+  import { graphqlApi } from '$lib/_api';
 
-export let id: string;
+  import { goto } from '$app/navigation';
 
-let offsetTop = 0;
+  import ShortsFullScreen from '$component/ShortsFullScreen.svelte';
+  import ShortsDetailInfo from '$component/ShortsDetailInfo.svelte';
+  import BottomSheet from '$component/common/layout/BottomSheet.svelte';
+  import RelatedProduct from '$component/RelatedProduct.svelte';
 
-const getContent = async () => {
-  const query = `{
+  export let id: string;
+
+  let offsetTop = 0;
+
+  const getContent = async () => {
+    const query = `{
     content(id:"${id}"){
       id
       title
@@ -29,71 +31,75 @@ const getContent = async () => {
       videoId
       duration
       currentTime
+      }
+    }`;
+
+    const result = await graphqlApi(query);
+  
+    const { data: { content } } = result;
+  
+    return content;
+};
+
+  const setOffsetTop = (num: number) => {
+    offsetTop = num;
+  };
+
+  const onClickClose = (e: TouchEvent) => {
+    e.stopPropagation();
+    history.back();
+  };
+
+  const onClickShare = (e: TouchEvent) => {
+    e.stopPropagation();
+  };
+
+  const onClickCart = (e: TouchEvent) => {
+    e.stopPropagation();
+    setOffsetTop(176);
+  };
+
+  const move = (targetUrl: string) => {
+    goto(targetUrl);
+  };
+
+  const onClickProfile = (e: TouchEvent, id: string) => {
+    e.stopPropagation();
+    move(`/programs/${id}`);
+  };
+
+
+  const getRelatedProducts = async () => {
+    const query = `{getProductsByContentId(id:"${id}"){id name price exposed}}`;
+    const result = await graphqlApi(query);
+    const productList = result?.data?.getProductsByContentId;
+    return productList;
+  };
+
+  const buttons = [
+    {
+      name: '공유',
+      icon: 'share',
+      handler: onClickShare,
+    },
+    {
+      name: '상품',
+      icon: 'cart',
+      handler: onClickCart,
+    },
+  ];
+
+  const returnButtons = async () => {
+    let btns = [...buttons];
+
+    let productLength = await getRelatedProducts();
+
+    if (productLength > 0) {
+      return btns;
     }
-  }`;
 
-  const result = await graphqlApi(query);
-  const { data: { content } } = result;
-  return content;
-};
-
-const setOffsetTop = (num: number) => {
-  offsetTop = num;
-};
-
-const onClickClose = (e: TouchEvent) => {
-  e.stopPropagation();
-  history.back();
-};
-
-const onClickShare = (e: TouchEvent) => {
-  e.stopPropagation();
-};
-
-const onClickCart = (e: TouchEvent) => {
-  e.stopPropagation();
-  setOffsetTop(176);
-};
-
-const move = (targetUrl: string) => {
-  goto(targetUrl);
-};
-
-const onClickProfile = (e: TouchEvent, id: string) => {
-  e.stopPropagation();
-  move(`/programs/${id}`);
-};
-
-
-const getRelatedProducts = async () => {
-  const query = `{getProductsByContentId(id:"${id}"){id name price exposed}}`;
-  const result = await graphqlApi(query);
-  const productList = result?.data?.getProductsByContentId;
-  return productList;
-};
-
-const buttons = [
-  {
-    name: '공유',
-    icon: 'share',
-    handler: onClickShare,
-  },
-  {
-    name: '상품',
-    icon: 'cart',
-    handler: onClickCart,
-  },
-];
-
-const returnButtons = async () => {
-  let btns = [...buttons];
-  let productLength = await getRelatedProducts();
-  console.log('product length', productLength);
-  if (productLength > 0) {
-    return btns;
-  }
-  return btns.filter(el => el.name === '공유');
-};
+    return btns.filter(el => el.name === '공유');
+  };
 
 
 </script>

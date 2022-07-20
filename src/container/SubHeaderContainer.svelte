@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { navigate } from 'svelte-navigator';
-  import SubHeader from './SubHeader.svelte';
+  import SubHeader from '$component/SubHeader.svelte';
 
   export let title = '';
   export let share = false;
