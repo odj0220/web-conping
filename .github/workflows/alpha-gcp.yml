@@ -5,11 +5,11 @@ on:
     branches: [0.3-alpha]
 
 env:
-  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  PROJECT_ID: ${{ secrets.GCP_STG_PROJECT_ID }}
   ZONE: asia-northeast3
   IMAGE: prod
-  SERVICE_ID: ${{ secrets.GCP_PROD_SERVICE_ID }}
-  ARTIFACT_REGISTRY_REPO_NAME: gollala-frontend-alpha
+  SERVICE_ID: ${{ secrets.GCP_STG_SERVICE_ID }}
+  ARTIFACT_REGISTRY_REPO_NAME: gollala-frontend-web
 
 jobs:
   test:
@@ -40,8 +40,8 @@ jobs:
 
       - uses: google-github-actions/setup-gcloud@v0.2.0
         with:
-          service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT }}
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_STG_SERVICE_ACCOUNT }}
+          project_id: ${{ secrets.GCP_STG_PROJECT_ID }}
 
       - run: |-
           gcloud --quiet auth configure-docker asia-northeast3-docker.pkg.dev
@@ -58,4 +58,4 @@ jobs:
           service: ${{ env.SERVICE_ID }}
           region: ${{ env.ZONE }}
           image: asia-northeast3-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY_REPO_NAME }}/${{ env.IMAGE }}:latest
-          credentials: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+          credentials: ${{ secrets.GCP_STG_SERVICE_ACCOUNT }}
