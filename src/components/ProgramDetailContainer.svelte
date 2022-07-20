@@ -9,28 +9,28 @@ import ShortsContainer from './ShortsContainer.svelte';
 import SubHeaderContainer from './SubHeaderContainer.svelte';
 import Container from './common/layout/Container.svelte';
 
-  export let id: string;
-  let items = [
-    { label: '에피소드',
-      value: 1,
-      props: { id },
-      component: EpisodeContainer,
-    },
-    { label: '하이라이트',
-      value: 2,
-      props: { id },
-      component: HighlightContainer,
-    },
-    { label: '쇼츠',
-      value: 3,
-      props: { id },
-      component: ShortsContainer,
-    },
-  ];
+export let id: string;
+let items = [
+  { label: '에피소드',
+    value: 1,
+    props: { id },
+    component: EpisodeContainer,
+  },
+  { label: '하이라이트',
+    value: 2,
+    props: { id },
+    component: HighlightContainer,
+  },
+  { label: '쇼츠',
+    value: 3,
+    props: { id },
+    component: ShortsContainer,
+  },
+];
 
 
-  async function loadData() {
-    const query = `{
+async function loadData() {
+  const query = `{
       program(id:"${id}"){
         id
         title
@@ -48,36 +48,36 @@ import Container from './common/layout/Container.svelte';
       }
     }`;
 
-    const result = await graphqlApi(query);
-    const program: IProgram = result?.data?.program;
-    const celobs = result?.data.getCelebsByProgramId;
-    const metaDataOption = setMetadataOption(program, celobs);
+  const result = await graphqlApi(query);
+  const program: IProgram = result?.data?.program;
+  const celobs = result?.data.getCelebsByProgramId;
+  const metaDataOption = setMetadataOption(program, celobs);
 
-    return new Promise((resolve, reject) => {
-      resolve({
-        program,
-        celobs,
-        metaDataOption,
-      });
+  return new Promise((resolve, reject) => {
+    resolve({
+      program,
+      celobs,
+      metaDataOption,
     });
-  }
+  });
+}
 
-  function setMetadataOption (program: any, celebs: any[]) {
-    const newData = {
-      programDetail: {
-        title: program.title,
-        description: program.description,
-        celebs,
-        info: {
-          airingBeginAt: program.airingBeginAt,
-          airingEndAt: program.airingEndAt,
-          regularAiringAt: program.regularAiringAt,
-        },
+function setMetadataOption (program: any, celebs: any[]) {
+  const newData = {
+    programDetail: {
+      title: program.title,
+      description: program.description,
+      celebs,
+      info: {
+        airingBeginAt: program.airingBeginAt,
+        airingEndAt: program.airingEndAt,
+        regularAiringAt: program.regularAiringAt,
       },
-    };
+    },
+  };
 
-    return newData;
-  }
+  return newData;
+}
 </script>
 
 {#await loadData()}
