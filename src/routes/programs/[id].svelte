@@ -1,8 +1,9 @@
 <script lang="ts">
-import { page } from '$app/stores';
-import ProgramDetailContainer from '$component/ProgramDetailContainer.svelte';
+  import { page } from '$app/stores';
 
-const id = $page.params.id;
+  import ProgramDetailContainer from '$container/ProgramDetailContainer.svelte';
+
+  const id = $page.params.id;
 </script>
 
 <ProgramDetailContainer {id} />

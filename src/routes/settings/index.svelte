@@ -1,5 +1,5 @@
 <script lang="ts">
-import SettingsContainer from '$component/SettingsContainer.svelte';
+  import SettingsContainer from '$container/SettingsContainer.svelte';
 
 </script>
 

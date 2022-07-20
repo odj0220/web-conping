@@ -1,5 +1,5 @@
-<script>
-import CelebsContainer from '$component/CelebsContainer.svelte';
+<script lang="ts">
+  import CelebsContainer from '$container/CelebsContainer.svelte';
 </script>
 
 <CelebsContainer />

@@ -1,4 +1,3 @@
-
 import adapter from '@sveltejs/adapter-node';
 import preprocess from 'svelte-preprocess';
 
@@ -9,6 +8,7 @@ const config = {
       out: 'build',
     }),
     alias: {
+      $container: 'src/container',
       $component: 'src/components',
       $styles: 'src/styles',
     },
