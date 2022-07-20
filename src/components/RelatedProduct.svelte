@@ -2,10 +2,10 @@
 import IconArrow from './icons/IconArrow.svelte';
 import ProductItem from './ProductItem.svelte';
 
-export let moreButton: boolean;
+export let moreButton: false;
 export let data: any[] = [];
 export let onClickTimeButton : (num: number) => void;
-export let timelineButtonVisible: boolean;
+export let timelineButtonVisible = false;
 
 let list: any[] = [];
 let displayMore = true;

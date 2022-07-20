@@ -1,7 +1,6 @@
 <script lang=ts>
 import { graphqlApi } from '$lib/_api';
 import type { IProgram } from 'src/global/types';
-
 import Metadata from './Metadata.svelte';
 import Tabs from './Tabs.svelte';
 import EpisodeContainer from './EpisodeContainer.svelte';

@@ -3,7 +3,7 @@
   import PreviewVideos from './PreviewVideos.svelte';
   import { goto } from '$app/navigation';
 
-  export let id;
+  export let id: string;
   export let programTitle: string;
 
   const handleClickContents = (contentsId: string) => {
@@ -23,6 +23,7 @@
            program{
              id
              title
+             thumbnail
             }
           }
       }`;
