@@ -42,6 +42,7 @@
         regularAiringAt
         airingBeginAt
         airingEndAt
+        totalEpisode
       }
 
       getCelebsByProgramId(id:"${id}"){
@@ -75,6 +76,7 @@
           airingBeginAt: program.airingBeginAt,
           airingEndAt: program.airingEndAt,
           regularAiringAt: program.regularAiringAt,
+          totalEpisode: program.totalEpisode,
         },
       },
     };

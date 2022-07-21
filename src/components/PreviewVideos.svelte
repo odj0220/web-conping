@@ -19,7 +19,7 @@
   export let contents: IContent[] = [];
   export let end: boolean;
   export let cursor: string;
-  export let onClickContents: (id: string) => void;
+  export let onClick: (id: string) => void;
   export let infiniteScroll = false;
   export let autoPlay = false;
 
@@ -84,7 +84,7 @@
     {#if contents?.length > 0}
       {#each contents as content, order (content.id)}
         <PreviewVideo
-          onClick={onClickContents}
+          onClick={onClick}
           content={content}
           order={order + 1}
           autoPlay={autoPlay}
@@ -103,6 +103,7 @@
         </div>
       {/if}
     {/if}
+  </ul>
 </section>
 
 <style lang="scss">

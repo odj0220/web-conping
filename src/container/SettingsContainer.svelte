@@ -68,7 +68,7 @@ const menuList = [
   {
     depth1: '기타',
     depth2: [
-      { title: '푸쉬 알림 설정' },
+      // { title: '푸쉬 알림 설정' },
       { title: '버전 정보', descFn: getAppVersion },
     ],
   },

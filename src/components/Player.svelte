@@ -114,6 +114,9 @@
     position: relative;
     padding-top: 56.25%;
     overflow: hidden;
+    position: sticky;
+    top: 5.4rem;
+    z-index: 49;
 
     .youtube-player {
         z-index: 1;

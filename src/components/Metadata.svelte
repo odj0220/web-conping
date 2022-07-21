@@ -185,6 +185,7 @@ const getDay = (time: number) => {
 <style lang="scss">
     .container {
       padding: 1.6rem 1.6rem 4rem;
+      background-color: $default-black;
       .content-name {
         @include body3-700;
         margin-top: 0.8rem;
