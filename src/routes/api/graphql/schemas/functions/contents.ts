@@ -1,8 +1,8 @@
 import { GET } from '../../../../../lib/_api';
-import { VideoContent } from '../../../../../lib/models/backend/backend';
+import type { VideoContent } from '../../../../../lib/models/backend/backend';
 import relationJson from '../../../../../../static/data/relation.json';
 import contentJson from '../../../../../../static/data/content.json';
-import { IContent } from '../../../../../global/types';
+import type { IContent } from '../../../../../global/types';
 import { convertContent } from './converts';
 
 const setOrderBy = (sortField?: string, sortOrder?: string) => {
