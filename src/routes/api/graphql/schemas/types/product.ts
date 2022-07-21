@@ -13,12 +13,7 @@ const Product = `
       createDt: Float
       celebs: [Celeb]
       contents: [Content]
-      relatedItems: [{
-          thumbnail: String,
-          title: String,
-          type: RelatedItemType, 
-          id: String
-      }]
+      relatedItems: [RelatedItemType]
     }
 ` ;
 
