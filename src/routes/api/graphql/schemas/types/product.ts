@@ -10,6 +10,15 @@ const Product = `
       exposed: [[Int]]
       storeUrl: String
       views: Float
+      createDt: Float
+      celebs: [Celeb]
+      contents: [Content]
+      relatedItems: [{
+          thumbnail: String,
+          title: String,
+          type: RelatedItemType, 
+          id: String
+      }]
     }
 ` ;
 
