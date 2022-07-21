@@ -1,26 +1,24 @@
 <script type="ts">
   import { graphqlApi } from '$lib/_api';
 
-  import CelebsProfile from '$component/CelebsProfile.svelte';
   import Container from '$component/common/layout/Container.svelte';
-  import Tabs from '$component/Tabs.svelte';
+  import Tabs from '$component/common/layout/Tabs.svelte';
+  import CelebsProfile from '$component/CelebsProfile.svelte';
 
   export let id: string;
 
   const getData = async () => {
     const query = `
-        {
-          celeb(id:"${id}"){
-            name
-            description
-            categories
-            thumbnail
-          }
+      {
+        celeb(id:"${id}"){
+          name
+          description
+          categories
+          thumbnail
         }
-      `;
-  
+      }
+    `;
     const { data: { celeb } } = await graphqlApi(query);
-  
     return celeb;
   };
 
@@ -41,7 +39,7 @@
       label: '콘텐츠',
       index: 2,
       component: '',
-      props: {},
+      props: '',
     },
     {
       label: '쇼츠',

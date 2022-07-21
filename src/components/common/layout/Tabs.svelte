@@ -22,7 +22,7 @@
 </script>
 
 <div class="tab-conatainer">
-  <ul class="tab-header">
+  <ul class="tab-header" class:borderBottom={'borderBottom'}>
     {#each items as item, i}
       <li class={`tab-item ${selectedTab.index === i ? 'active' : ''}`} on:click={onActiveTabitem(item)}>
         {item.label}
@@ -42,6 +42,10 @@
     display: flex;
     padding: 0 1.6rem;
     margin-bottom: 2.4rem;
+    &.borderBottom {
+      border-bottom: 1px solid $bg-gray-32;
+      margin-bottom: 4rem;
+    }
     .tab-item {
       @include body1-400;
       color: $disabled-8a;
