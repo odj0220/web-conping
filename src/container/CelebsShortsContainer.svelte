@@ -5,23 +5,24 @@
 
   import Container from '$component/common/layout/Container.svelte';
   import ShortsGridVodList from '$component/ShortsGridVodList.svelte';
+  import EmptyMessage from '$component/common/shared/EmptyMessage.svelte';
+
+  import type { TitleElement } from 'src/global/types';
 
   export let id : string;
-  console.log('id', id);
+  export let title : TitleElement[] = [];
 
   const getData = async () => {
     const query = `{
-      getContentsByCelebId(id:${id}){
+      getContentsByCelebId(id:"${id}"){
         id
         title
       }
     }`;
 
-    const { data } = await graphqlApi(query);
+    const { data: getContentsByCelebId } = await graphqlApi(query);
 
-    console.log('data', await graphqlApi(query));
-  
-    return data;
+    return getContentsByCelebId;
   };
 
   const promise = getData();
@@ -29,7 +30,11 @@
 </script>
   {#await promise}
   {:then data} 
-  <Container>
-    <ShortsGridVodList onClick={gotoShorts}/>
-  </Container>
+  {#if data.length}
+    <Container>
+      <ShortsGridVodList onClick={gotoShorts} />
+    </Container>
+    {:else}
+      <EmptyMessage text="서울리안 님의 쇼츠" />
+    {/if}
   {/await}

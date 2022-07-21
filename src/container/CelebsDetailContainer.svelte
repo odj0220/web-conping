@@ -10,7 +10,6 @@
   import CelebsShortsContainer from './CelebsShortsContainer.svelte';
 
   export let id: string;
-  console.log('id', id);
 
   const getData = async () => {
     const query = `
@@ -32,25 +31,21 @@
       label: '전체',
       index: 0,
       component: CelebsAllContentsContainer,
-      props: { id },
     },
     {
       label: '상품',
       index: 1,
       component: CelebsProductContainer,
-      props: { id },
     },
     {
       label: '콘텐츠',
       index: 2,
       component: CelebsContentsContainer,
-      props: { id },
     },
     {
       label: '쇼츠',
       index: 3,
       component: CelebsShortsContainer,
-      props: { id },
     },
   ];
 
@@ -58,8 +53,8 @@
 
 {#await getData()}
 {:then data} 
-<Container margin="0" type="full">
-  <CelebsProfile {data}/>
-  <Tabs items={tabItems} borderBottom={true}/>
-</Container>  
+  <Container margin="0" type="full">
+    <CelebsProfile {data}/>
+    <Tabs items={tabItems} borderBottom={true} {id}/>
+  </Container>  
 {/await}

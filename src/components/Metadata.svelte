@@ -206,6 +206,7 @@ const getDay = (time: number) => {
       .description {
         @include caption1-400;
         margin: 24px 0 0;
+        white-space: pre-line;
       }
 
       .profile-list {

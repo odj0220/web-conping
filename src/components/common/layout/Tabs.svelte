@@ -5,20 +5,18 @@
     label: string,
     index: number,
     component: SvelteComponent,
-    props: any,
   }
 
+  export let id: any;
   export let items: tabItem[];
   export let programTitle = '';
   export let borderBottom = false;
 
   $: selectedTab = items[0];
-  $: selectedProps = { ...selectedTab.props, programTitle };
   
   function onActiveTabitem(tabItem: tabItem) {
     selectedTab = tabItem;
   }
-  console.log('selectedProps', selectedTab);
 
 </script>
 
@@ -31,9 +29,8 @@
     {/each}
   </ul>
 
-  {JSON.stringify(selectedTab)}
   <div class="tab-contents">
-    <svelte:component this={selectedTab.component} {...selectedProps}/>
+    <svelte:component this={selectedTab.component} {id} {programTitle}/>
   </div>
 </div>
 

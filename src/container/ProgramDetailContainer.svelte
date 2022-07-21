@@ -16,17 +16,14 @@
   let items = [
     { label: '에피소드',
       index: 0,
-      props: { id },
       component: EpisodeContainer,
     },
     { label: '하이라이트',
       index: 1,
-      props: { id },
       component: HighlightContainer,
     },
     { label: '쇼츠',
       index: 2,
-      props: { id },
       component: ShortsContainer,
     },
   ];
@@ -41,6 +38,7 @@
           regularAiringAt
           airingBeginAt
           airingEndAt
+          totalEpisode
         }
 
         getCelebsByProgramId(id:"${id}"){
@@ -74,6 +72,7 @@
           airingBeginAt: program.airingBeginAt,
           airingEndAt: program.airingEndAt,
           regularAiringAt: program.regularAiringAt,
+          totalEpisode: program.totalEpisode,
         },
       },
     };
@@ -92,7 +91,7 @@
 
     <Metadata option={metaDataOption}/>
 
-    <Tabs {items} programTitle={program.title}/>
+    <Tabs {items} programTitle={program.title} {id}/>
   </Container>
 {/await}
 
