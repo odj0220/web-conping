@@ -2,8 +2,8 @@ const Category = `
     type Category {
         id: String
         name: String
-        fontColor: string
-        backColor: string
+        fontColor: String
+        backColor: String
     }
 ` ;
 
