@@ -86,9 +86,9 @@
 {:then data}
   <SubHeaderContainer title='{content?.program.title} {content?.episode}화' />
   <div class="container">
-    <Player content={content} on:get-player={setPlayer}/>
-
-    <Metadata option={metaDataOption}/>
+      <Player content={content} on:get-player={setPlayer}/>
+  
+      <Metadata option={metaDataOption}/>
 
     <ContentDetailAnotherVideosContainer contentId={id}/>
   </div>

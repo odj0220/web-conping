@@ -136,7 +136,6 @@ img {
 html,
 body {
   font-size: 10px;
-  overflow-x: hidden;
 }
 
 button,
@@ -164,6 +163,7 @@ input[type="submit"] {
 }
 
 body {
+  position: relative;
   line-height: 1;
   background-color: #0a0a0a;
   color: #f2f2f2;
