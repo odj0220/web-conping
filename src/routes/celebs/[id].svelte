@@ -3,8 +3,7 @@
 
   import CelebsDetailContainer from '$container/CelebsDetailContainer.svelte';
 
-const id = $page.params.id;
-
+  const id = $page.params.id;
 </script>
 
 <CelebsDetailContainer {id} />

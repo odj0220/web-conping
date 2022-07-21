@@ -4,8 +4,13 @@
   import Container from '$component/common/layout/Container.svelte';
   import Tabs from '$component/common/layout/Tabs.svelte';
   import CelebsProfile from '$component/CelebsProfile.svelte';
+  import CelebsAllContentsContainer from './CelebsAllContentsContainer.svelte';
+  import CelebsProductContainer from './CelebsProductContainer.svelte';
+  import CelebsContentsContainer from './CelebsContentsContainer.svelte';
+  import CelebsShortsContainer from './CelebsShortsContainer.svelte';
 
   export let id: string;
+  console.log('id', id);
 
   const getData = async () => {
     const query = `
@@ -26,26 +31,26 @@
     {
       label: '전체',
       index: 0,
-      component: '',
-      props: {},
+      component: CelebsAllContentsContainer,
+      props: { id },
     },
     {
       label: '상품',
       index: 1,
-      component: '',
-      props: {},
+      component: CelebsProductContainer,
+      props: { id },
     },
     {
       label: '콘텐츠',
       index: 2,
-      component: '',
-      props: '',
+      component: CelebsContentsContainer,
+      props: { id },
     },
     {
       label: '쇼츠',
       index: 3,
-      component: '',
-      props: '',
+      component: CelebsShortsContainer,
+      props: { id },
     },
   ];
 

@@ -18,6 +18,7 @@
   function onActiveTabitem(tabItem: tabItem) {
     selectedTab = tabItem;
   }
+  console.log('selectedProps', selectedTab);
 
 </script>
 
@@ -30,6 +31,7 @@
     {/each}
   </ul>
 
+  {JSON.stringify(selectedTab)}
   <div class="tab-contents">
     <svelte:component this={selectedTab.component} {...selectedProps}/>
   </div>
