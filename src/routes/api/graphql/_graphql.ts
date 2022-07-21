@@ -1,20 +1,21 @@
 import { buildSchema, graphql } from 'graphql';
 import type { GraphQLSchema } from 'graphql/type/schema';
-import { product, products, getProductsByContentId, getProductByCelebId } from './schemas/functions/products';
-import { getBanners } from './schemas/functions/banner';
-import { content, contents, getContentsByProductId, getProgramContentsByContentId, getContentsByCelebId, getMainContents, getContentsByProgramId, getMainInfiniteContents } from './schemas/functions/contents';
-import { celebs, celeb, getCelebsByContentId, getCelebsByProductId, getCelebsByProgramId } from './schemas/functions/celobs';
-import { program, programs } from './schemas/functions/program';
-import { getContinueWatching } from './schemas/functions/watching';
-import { getMainSeries } from './schemas/functions/series';
-import { getMainShorts } from './schemas/functions/shorts';
-import { getMainOrigin } from './schemas/functions/origins';
+import { product, products, getProductsByContentId, getProductByCelebId } from './controller/products';
+import { getBanners } from './controller/banner';
+import { content, contents, getContentsByProductId, getProgramContentsByContentId, getContentsByCelebId, getMainContents, getMainInfiniteContents } from './controller/contents';
+import { celebs, celeb, getCelebsByContentId, getCelebsByProductId, getCelebsByProgramId } from './controller/celobs';
+import { program, programs } from './controller/program';
+import { getContinueWatching } from './controller/watching';
+import { getMainSeries } from './controller/series';
+import { getMainShorts } from './controller/shorts';
+import { getMainOrigin } from './controller/origins';
 
 import GRAPH_TYPES from './schemas/types';
 import GRAPH_ENUMS from './schemas/enums';
 
 import dayjs from 'dayjs';
 import Duration from 'dayjs/plugin/duration.js';
+import { contentsByProgramId } from './controller/util';
 dayjs.extend(Duration);
 
 export async function Graphql(query: string) {
@@ -78,7 +79,7 @@ export async function Graphql(query: string) {
     // TODO: api 연동하기
     getContentsByCelebId,
     getContentsByProgramId: async ({ id, type }: {id: string, type: string}) => {
-      return await getContentsByProgramId(id, type);
+      return await contentsByProgramId(id, type);
     },
     getProgramContentsByContentId,
     // TODO: backend 와 연결할때 다시 작업
