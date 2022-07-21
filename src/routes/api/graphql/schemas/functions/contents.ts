@@ -37,7 +37,8 @@ export const getContentsByProductId = ({ id }: { id: string }) => {
 };
 
 export const getContentsByProgramId = async (id: string, type?: string) => {
-  const response = await GET(`/video-content?programId=${id}&program=true&sort=[{"ProgramInfo": {"episode": "desc"} }]&type=${type}`);
+  const queryType = type ? '&type=' + type : '';
+  const response = await GET(`/video-content?programId=${id}&program=true&sort=[{"ProgramInfo": {"episode": "desc"} }]${queryType}`);
   const contents = response.items.map((content: VideoContent) => convertContent(content));
   return contents
     .filter((content: IContent) => {
@@ -55,6 +56,7 @@ export const getProgramContentsByContentId = async ({ id }: {id: string}) => {
     return [];
   }
   const contents = await getContentsByProgramId(programId.toString());
+  console.log(contents);
   return contents.filter((content: IContent) => content.id !== id).splice(0, 2);
 };
 
