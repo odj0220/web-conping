@@ -36,6 +36,7 @@ export let buttons: string[] = [];
     padding: 0 1.2rem;
     padding-top: constant(safe-area-inset-top);
     padding-top: snv(safe-area-inset-top);
+    position: -webkit-sticky;
     position: sticky;
     top: 0;
     z-index: 50;
