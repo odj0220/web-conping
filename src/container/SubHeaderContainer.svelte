@@ -1,8 +1,11 @@
 <script lang="ts">
+  import { goBack } from '$lib/utils/goto';
+  
   import SubHeader from '$component/SubHeader.svelte';
 
   export let title = '';
   export let share = false;
+  export let type = '';
 
   function handleClickButton(type: string) {
     switch (type) {
@@ -16,9 +19,7 @@
     }
   }
 
-  function goBack() {
-    window.history.go(-1);
-  }
+  
 </script>
 
-<SubHeader {title} {share} onClick={handleClickButton}/>
+<SubHeader {title} {share} onClick={handleClickButton} {type} />

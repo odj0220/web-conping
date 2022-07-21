@@ -6,8 +6,6 @@ import Icon from './icons/Icon.svelte';
 import { fade } from 'svelte/transition';
 
 export let videoId: string;
-export let width: number;
-export let height: number;
 export let playerVars;
 
 let displayToast = true;

@@ -2,7 +2,7 @@
   import type { ICeleb } from 'src/global/types';
 
   import Avatar from './Avatar.svelte';
-import Icon from './icons/Icon.svelte';
+  import Icon from './icons/Icon.svelte';
 
   export let data: ICeleb;
 
@@ -13,7 +13,7 @@ import Icon from './icons/Icon.svelte';
 <div class="profile-container">
   <div class="profile-visual">
     <div class="banner">
-      <img src="" alt={name} />
+      <img src="/images/celeb_banner.png" alt={name} />
     </div>
     <div class="avatar">
       <Avatar src={thumbnail} size="8.8rem" alt={name}/>
@@ -48,6 +48,14 @@ import Icon from './icons/Icon.svelte';
       width: 100%;
       padding-bottom: 94.4444%;
       background-color: yellow;
+      img {
+        position:absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
     .avatar {
       position: absolute;

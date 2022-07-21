@@ -7,11 +7,13 @@
   import ShortsGridVodList from '$component/ShortsGridVodList.svelte';
   import EmptyMessage from '$component/common/shared/EmptyMessage.svelte';
   import Title from '$component/Title.svelte';
+  import MoreButton from '$component/common/shared/MoreButton.svelte';
   
   import type { TitleElement } from 'src/global/types';
   
   export let id : string;
   export let title : TitleElement[] = [];
+  export let moreButton: boolean;
 
   const getData = async () => {
     const query = `{
@@ -36,6 +38,9 @@
   <Container>
     {#if title}
       <Title title={title}/>
+      {#if moreButton}
+        <MoreButton value="서울리안 콘텐츠 더보기" />
+      {/if}
     {/if}
     <ShortsGridVodList onClick={gotoContents} />
   </Container>

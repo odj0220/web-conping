@@ -8,6 +8,7 @@
   import CelebsProductContainer from './CelebsProductContainer.svelte';
   import CelebsContentsContainer from './CelebsContentsContainer.svelte';
   import CelebsShortsContainer from './CelebsShortsContainer.svelte';
+  import SubHeaderContainer from './SubHeaderContainer.svelte';
 
   export let id: string;
 
@@ -54,7 +55,8 @@
 {#await getData()}
 {:then data} 
   <Container margin="0" type="full">
+    <SubHeaderContainer type="transparent" />
     <CelebsProfile {data}/>
-    <Tabs items={tabItems} borderBottom={true} {id}/>
+    <Tabs items={tabItems} borderBottom={true} {id} sticky={true} />
   </Container>  
 {/await}

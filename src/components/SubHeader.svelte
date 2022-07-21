@@ -4,15 +4,17 @@
   export let onClick: (type: string) => void;
   export let title: string;
   export let share: boolean;
+  export let type = '';
+
 </script>
 
-<div class="header-wrapper">
+<div class={`header-wrapper ${type}`}>
   <div class="left-wrapper">
     <button
       type="button"
       on:click={() => onClick('back')}
     >
-      <Icon name="back"/>
+      <Icon name="back" />
     </button>
   </div>
   <div class="title-wrapper">
@@ -43,6 +45,13 @@
     padding-top: constant(safe-area-inset-top);
     padding-top: env(safe-area-inset-top);
 
+    &.transparent {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: transparent;
+    }
     .left-wrapper {
       position: absolute;
       left: 1.2rem;

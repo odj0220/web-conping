@@ -11,6 +11,7 @@
   export let items: tabItem[];
   export let programTitle = '';
   export let borderBottom = false;
+  export let sticky = false;
 
   $: selectedTab = items[0];
   
@@ -20,8 +21,8 @@
 
 </script>
 
-<div class="tab-conatainer">
-  <ul class="tab-header" class:borderBottom={'borderBottom'}>
+<div class="tab-container">
+  <ul class="tab-header" class:borderBottom={'borderBottom'} class:sticky={sticky}>
     {#each items as item, i}
       <li class={`tab-item ${selectedTab.index === i ? 'active' : ''}`} on:click={onActiveTabitem(item)}>
         {item.label}
@@ -35,8 +36,10 @@
 </div>
 
 <style lang="scss">
-.tab-conatainer {
+.tab-container {
+  position: relative;
   padding: 0 0 4rem;
+  
   .tab-header {
     display: flex;
     padding: 0 1.6rem;
@@ -44,6 +47,13 @@
     &.borderBottom {
       border-bottom: 1px solid $bg-gray-32;
       margin-bottom: 4rem;
+    }
+    &.sticky {
+      position: sticky;
+      top: 5.4rem;
+      background-color: $default-black;
+      z-index: 100;
+      padding-top: 1.7rem;
     }
     .tab-item {
       @include body1-400;

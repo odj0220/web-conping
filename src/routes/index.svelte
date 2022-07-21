@@ -13,11 +13,11 @@
 <MainHeaderContainer />
     
 <GlobalBlock>
-    <MainBannerContainer/>
-    <MainViewingVideosContainer/>
-    <PopularVideoContainer/>
-    <MainOriginalContainer />
-    <SeriesVideoContainer />
-    <MainShortsContainer/>
-    <MainVideosContainer/>
+  <MainBannerContainer/>
+  <MainViewingVideosContainer/>
+  <PopularVideoContainer/>
+  <MainOriginalContainer />
+  <SeriesVideoContainer />
+  <MainShortsContainer/>
+  <MainVideosContainer/>
 </GlobalBlock>

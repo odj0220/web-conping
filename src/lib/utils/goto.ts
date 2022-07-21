@@ -15,3 +15,7 @@ export const gotoShorts = (id: number) => {
 export const gotoCelebs = (id: string) => {
   goto(`/celebs/${id}`);
 };
+
+export const goBack = () => {
+  window.history.go(-1);
+};

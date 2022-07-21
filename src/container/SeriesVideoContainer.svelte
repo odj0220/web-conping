@@ -1,20 +1,11 @@
 <script lang="ts">
   import { graphqlApi } from '../lib/_api';
 
-  import { goto } from '$app/navigation';
-
   import Container from '$component/common/layout/Container.svelte';
   import Title from '$component/Title.svelte';
   import ImageListView from '$component/ImageListView.svelte';
   import MoreButton from '$component/common/shared/MoreButton.svelte';
-
-  const gotoPrograms = (id: string) => {
-    goto(`/programs/${id}`);
-  };
-
-  const gotoContents = (id: string) => {
-    goto(`/contents/${id}`);
-  };
+  import { gotoContents, gotoPrograms } from '$lib/utils/goto';
 
   const getData = async () => {
     const query = `{

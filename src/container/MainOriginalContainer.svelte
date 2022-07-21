@@ -1,13 +1,13 @@
 <script lang="ts">
   import { graphqlApi } from '$lib/_api';
-
-  import type { IProgram, TitleElement } from 'src/global/types';
-
-  import { gotoPrograms } from '$lib/util';
-
+  
+  import { gotoPrograms } from '$lib/utils/goto';
+  
   import ProgramList from '$component/ProgramList.svelte';
   import Title from '$component/Title.svelte';
   import Container from '$component/common/layout/Container.svelte';
+  
+  import type { IProgram, TitleElement } from 'src/global/types';
 
   const getData = async (): Promise<{programs: IProgram[]; title: TitleElement[]}> => {
     const query = `

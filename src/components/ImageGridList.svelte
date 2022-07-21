@@ -26,7 +26,7 @@
 
 <style lang="scss">
   .image-grid-list {
-    @include gridItem(1.6rem, 1.6rem);
+    @include gridItem(1.2rem, 1.2rem);
     margin-bottom: 1.6rem;
   }
 </style>

@@ -1,15 +1,11 @@
 <script lang="ts">
   import { graphqlApi } from '$lib/_api';
   
-  import { goto } from '$app/navigation';
-
+  import { gotoShorts } from '$lib/utils/goto';
+  
   import Title from '$component/Title.svelte';
   import ShortsVodList from '$component/ShortsVodList.svelte';
   import Container from '$component/common/layout/Container.svelte';
-
-  function handleClickShorts(id:string) {
-    goto(`/shorts/${id}`);
-  }
 
   async function getData() {
     const query = `{
@@ -42,7 +38,7 @@
       
       <ShortsVodList
         {contents}
-        onClick={handleClickShorts}
+        onClick={gotoShorts}
       />
     </Container>
   {/if}
