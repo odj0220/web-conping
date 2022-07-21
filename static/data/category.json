@@ -1,0 +1,32 @@
+[
+  {
+    "id": "category1",
+    "name": "뷰티",
+    "fontColor": "#0A0A0A",
+    "backColor": "#FF70E2"
+  },
+  {
+    "id": "category2",
+    "name": "IT 테크",
+    "fontColor": "#0A0A0A",
+    "backColor": "#BE65F2"
+  },
+  {
+    "id": "category3",
+    "name": "푸드",
+    "fontColor": "#0A0A0A",
+    "backColor": "#FF9B70"
+  },
+  {
+    "id": "category4",
+    "name": "일상",
+    "fontColor": "#0A0A0A",
+    "backColor": "#8CD381"
+  },
+  {
+    "id": "category5",
+    "name": "골라라",
+    "fontColor": "#0A0A0A",
+    "backColor": "#ee2554"
+  }
+]
