@@ -59,3 +59,8 @@ export interface IProduct {
   discountRate: number;
   storeUrl: string;
 }
+
+export interface ISelectItem {
+  name: string;
+  value: string;
+}
