@@ -1,6 +1,6 @@
-import { GET } from '../../../../../lib/_api';
-import { VideoContent } from '../../../../../lib/models/backend/backend';
-import { convertProgram, convertContent } from './converts';
+import { GET } from '../../../../lib/_api';
+import type { VideoContent } from '../../../../lib/models/backend/backend';
+import { convertProgram, convertContent } from './util';
 
 export const getMainSeries = async () => {
   const programId = '1';

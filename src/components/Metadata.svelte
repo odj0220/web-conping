@@ -30,8 +30,6 @@ export let option: {
   }
 };
 
-console.log('option', option);
-
 let information = [];
 let pastTime: number;
 

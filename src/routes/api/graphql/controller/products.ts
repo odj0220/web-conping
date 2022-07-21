@@ -1,9 +1,9 @@
-import productJson from '../../../../../../static/data/product.json';
-import relationJson from '../../../../../../static/data/relation.json';
-import { Product, VideoContent } from '$lib/models/backend/backend';
-import { GET } from '../../../../../lib/_api';
-import { IProduct } from '../../../../../global/types';
-import { convertProduct } from './converts';
+import productJson from '../../../../../static/data/product.json';
+import relationJson from '../../../../../static/data/relation.json';
+import type { Product, VideoContent } from '../../../../lib/models/backend/backend';
+import { GET } from '../../../../lib/_api';
+import type { IProduct } from '../../../../global/types';
+import { convertProduct } from './util';
 
 export const products = () => productJson;
 
