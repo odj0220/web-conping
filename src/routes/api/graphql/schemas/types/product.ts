@@ -7,13 +7,13 @@ const Product = `
       discountRate: Int
       image: String
       category: String
-      exposed: [[Int]]
+      exposed: [[Int]] 
       storeUrl: String
       views: Float
       createDt: Float
       celebs: [Celeb]
       contents: [Content]
-      relatedItems: [RelatedItemType]
+      relatedItems: [RelatedItem]
     }
 ` ;
 
