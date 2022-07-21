@@ -1,11 +1,9 @@
 import productJson from '../../../../../../static/data/product.json';
 import relationJson from '../../../../../../static/data/relation.json';
-import celebJson from '../../../../../../static/data/celeb.json';
-import contentsJson from '../../../../../../static/data/content.json';
-import type { Product, VideoContent } from '$lib/models/backend/backend';
+import { Product, VideoContent } from '$lib/models/backend/backend';
 import { GET } from '../../../../../lib/_api';
-import type { IProduct } from '../../../../../global/types';
-import { convertProduct } from './converts';
+import { IProduct } from '../../../../../global/types';
+import { convertProduct } from './util';
 
 export const products = ({ order, category }: {order: string, category: string}) => {
   let data: any[] = productJson;

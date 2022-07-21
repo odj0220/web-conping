@@ -1,9 +1,9 @@
-import { GET } from '../../../../../lib/_api';
-import type { VideoContent } from '../../../../../lib/models/backend/backend';
-import relationJson from '../../../../../../static/data/relation.json';
-import contentJson from '../../../../../../static/data/content.json';
-import type { IContent } from '../../../../../global/types';
-import { convertContent } from './converts';
+import { GET } from '../../../../lib/_api';
+import type { VideoContent } from '../../../../lib/models/backend/backend';
+import relationJson from '../../../../../static/data/relation.json';
+import contentJson from '../../../../../static/data/content.json';
+import type { IContent } from '../../../../global/types';
+import { contentsByProgramId, convertContent } from './util';
 
 const setOrderBy = (sortField?: string, sortOrder?: string) => {
   if (!sortField) {
@@ -36,25 +36,13 @@ export const getContentsByProductId = ({ id }: { id: string }) => {
   return contentJson.filter((content) => contentIds.includes(content.id));
 };
 
-export const getContentsByProgramId = async (id: string, type?: string) => {
-  const response = await GET(`/video-content?programId=${id}&program=true&sort=[{"ProgramInfo": {"episode": "desc"} }]`);
-  const contents = response.items.map((content: VideoContent) => convertContent(content));
-  return contents
-    .filter((content: IContent) => {
-      if (!type) {
-        return true;
-      }
-      return content.contentType === type;
-    });
-};
-
 export const getProgramContentsByContentId = async ({ id }: {id: string}) => {
   const content:VideoContent = await GET(`/video-content/${id}?program=true`);
   const programId = content?.ProgramInfo?.programId;
   if (!programId) {
     return [];
   }
-  const contents = await getContentsByProgramId(programId.toString());
+  const contents = await contentsByProgramId(programId.toString());
   return contents.filter((content: IContent) => content.id !== id).splice(0, 2);
 };
 
