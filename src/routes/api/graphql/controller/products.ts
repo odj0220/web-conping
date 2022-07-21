@@ -1,8 +1,10 @@
-import productJson from '../../../../../../static/data/product.json';
-import relationJson from '../../../../../../static/data/relation.json';
-import { Product, VideoContent } from '$lib/models/backend/backend';
-import { GET } from '../../../../../lib/_api';
-import { IProduct } from '../../../../../global/types';
+import productJson from '../../../../../static/data/product.json';
+import relationJson from '../../../../../static/data/relation.json';
+import celebJson from '../../../../../static/data/celeb.json';
+import contentsJson from '../../../../../static/data/content.json';
+import type { Product, VideoContent } from '$lib/models/backend/backend';
+import type { IProduct } from '../../../../global/types';
+import { GET } from '$lib/_api';
 import { convertProduct } from './util';
 
 export const products = ({ order, category }: {order: string, category: string}) => {

@@ -4,7 +4,7 @@
 
     onMount(async () => {
       const query = `{
-            products(order: alphabetical) {
+            products(order: alphabetical, category: "후드티") {
                 id
                 name
                 brand
