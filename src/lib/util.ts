@@ -52,3 +52,11 @@ export const appCheck = () => {
 export const gotoPrograms = (id: string) => {
   goto(`/programs/${id}`);
 };
+
+export const goLink = (path: string) => {
+  goto(path);
+};
+
+export const goBack = () => {
+  history.go(-1);
+};

@@ -8,6 +8,7 @@
   import Player from '$component/Player.svelte';
   import Metadata from '$component/Metadata.svelte';
   import ContentDetailAnotherVideosContainer from '$component/ContentDetailAnotherVideosContainer.svelte';
+  import { goto } from '$app/navigation';
 
   export let id: string;
 
@@ -60,6 +61,7 @@
         title: content.title,
         celebs,
         info: {
+          programId: content.program.id,
           programTitle: content.program.title,
           episode: content.episode,
           createDt: content.createDt,
@@ -79,6 +81,10 @@
       player.seekTo(num, true);
     }
   };
+
+  const onClickTitle = (id: string) => {
+    goto(`/programs/${id}`);
+  };
 </script>
 
 
@@ -86,9 +92,9 @@
 {:then data}
   <SubHeaderContainer title='{content?.program.title} {content?.episode}화' />
   <div class="container">
-    <Player content={content} on:get-player={setPlayer}/>
-
-    <Metadata option={metaDataOption}/>
+      <Player content={content} on:get-player={setPlayer}/>
+  
+      <Metadata option={metaDataOption} {onClickTitle}/>
 
     <ContentDetailAnotherVideosContainer contentId={id}/>
   </div>

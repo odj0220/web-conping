@@ -33,15 +33,16 @@
 
   async function loadData() {
     const query = `{
-        program(id:"${id}"){
-          id
-          title
-          description
-          banner
-          regularAiringAt
-          airingBeginAt
-          airingEndAt
-        }
+      program(id:"${id}"){
+        id
+        title
+        description
+        banner
+        regularAiringAt
+        airingBeginAt
+        airingEndAt
+        totalEpisode
+      }
 
         getCelebsByProgramId(id:"${id}"){
           thumbnail
@@ -74,6 +75,7 @@
           airingBeginAt: program.airingBeginAt,
           airingEndAt: program.airingEndAt,
           regularAiringAt: program.regularAiringAt,
+          totalEpisode: program.totalEpisode,
         },
       },
     };

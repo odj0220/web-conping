@@ -1,5 +1,6 @@
 <script lang="ts" context="module">
   import type { YouTubePlayer } from 'youtube-player/dist/types';
+  import { goto } from '$app/navigation';
   const observers = {
     map: new Map([]),
     add: function (key: string, value: {order: number; player: YouTubePlayer}) {
@@ -81,6 +82,7 @@
   };
 
   $: videoName = content.title;
+  $: programId = content.program?.id;
   $: programName = content.program?.title;
   $: programThumbnail = content.program?.thumbnail;
   $: episode = `${content.episode && `${content.episode}화`}`;
@@ -207,6 +209,12 @@
       clearInterval(interval);
     };
   });
+
+  function gotoPrograms() {
+    if (programId) {
+      return goto(`/programs/${programId}`);
+    }
+  }
 </script>
 
 <li class="preview-layout" bind:this={container} on:click={() => onClick(`${content.id}`)}>
@@ -237,9 +245,11 @@
   </span>
     </div>
     <div class="rest">
-      <Avatar size="24px" src={programThumbnail} alt={programName} />
+      <div on:click|stopPropagation={gotoPrograms}>
+        <Avatar size="24px" src={programThumbnail} alt={programName}/>
+      </div>
       <div class="info">
-        <span class="program-name">{programName}</span>
+        <span class="program-name" on:click|stopPropagation={gotoPrograms}>{programName}</span>
         <span class="episode">{episode}</span>
         {#if views}
           <span class="divider">・</span>
