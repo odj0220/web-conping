@@ -7,26 +7,38 @@
   },
   {
     "id": "category2",
-    "name": "IT 테크",
+    "name": "패션",
     "fontColor": "#0A0A0A",
-    "backColor": "#BE65F2"
+    "backColor": "#70B4F2"
   },
   {
     "id": "category3",
+    "name": "방송/연예",
+    "fontColor": "#0A0A0A",
+    "backColor": "#E5D96C"
+  },
+  {
+    "id": "category4",
     "name": "푸드",
     "fontColor": "#0A0A0A",
     "backColor": "#FF9B70"
   },
   {
-    "id": "category4",
-    "name": "일상",
+    "id": "category5",
+    "name": "자동차",
     "fontColor": "#0A0A0A",
-    "backColor": "#8CD381"
+    "backColor": "#8A8A8A"
   },
   {
     "id": "category5",
-    "name": "골라라",
+    "name": "일상",
     "fontColor": "#0A0A0A",
-    "backColor": "#ee2554"
+    "backColor": "#8DD382"
+  },
+  {
+    "id": "category5",
+    "name": "IT 테크",
+    "fontColor": "#0A0A0A",
+    "backColor": "#BE65F2"
   }
 ]
