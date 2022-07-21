@@ -1,6 +1,6 @@
-import celebJson from '../../../../../../static/data/celeb.json';
-import relationJson from '../../../../../../static/data/relation.json';
-import contentJson from '../../../../../../static/data/content.json';
+import celebJson from '../../../../../static/data/celeb.json';
+import relationJson from '../../../../../static/data/relation.json';
+import contentJson from '../../../../../static/data/content.json';
 
 export const celebs = () => celebJson;
 

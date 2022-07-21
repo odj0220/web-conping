@@ -1,5 +1,7 @@
-import { Product, Program, VideoContent } from '../../../../../lib/models/backend/backend';
+import type { Product, Program, VideoContent } from '../../../../lib/models/backend/backend';
 import dayjs from 'dayjs';
+import { GET } from '../../../../lib/_api';
+import type { IContent } from '../../../../global/types';
 
 export const convertProgram = (program?: Program) => {
   if (!program) {
@@ -63,4 +65,17 @@ export const convertProduct = (product?: Product, videoContentId?: number) => {
     id: id.toString(),
     exposed,
   }));
+};
+
+export const contentsByProgramId = async (id: string, type?: string) => {
+  const queryType = type ? '&type=' + type : '';
+  const response = await GET(`/video-content?programId=${id}&program=true&sort=[{"ProgramInfo": {"episode": "desc"} }]${queryType}`);
+  const contents = response.items.map((content: VideoContent) => convertContent(content));
+  return contents
+    .filter((content: IContent) => {
+      if (!type) {
+        return true;
+      }
+      return content.contentType === type;
+    });
 };

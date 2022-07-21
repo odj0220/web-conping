@@ -1,6 +1,6 @@
-import watchingJson from '../../../../../../static/data/watching.json';
-import contentJson from '../../../../../../static/data/content.json';
-import programJson from '../../../../../../static/data/program.json';
+import watchingJson from '../../../../../static/data/watching.json';
+import contentJson from '../../../../../static/data/content.json';
+import programJson from '../../../../../static/data/program.json';
 
 export const getContinueWatching = () => {
   return contentJson
