@@ -77,7 +77,9 @@ export async function Graphql(query: string) {
     getProductByCelebId,
     // TODO: api 연동하기
     getContentsByCelebId,
-    getContentsByProgramId,
+    getContentsByProgramId: async ({ id, type }: {id: string, type: string}) => {
+      return await getContentsByProgramId(id, type);
+    },
     getProgramContentsByContentId,
     // TODO: backend 와 연결할때 다시 작업
     getContinueWatching,

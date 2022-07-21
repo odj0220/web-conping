@@ -1,8 +1,8 @@
 import { GET } from '../../../../../lib/_api';
-import { VideoContent } from '../../../../../lib/models/backend/backend';
+import type { VideoContent } from '../../../../../lib/models/backend/backend';
 import relationJson from '../../../../../../static/data/relation.json';
 import contentJson from '../../../../../../static/data/content.json';
-import { IContent } from '../../../../../global/types';
+import type { IContent } from '../../../../../global/types';
 import { convertContent } from './converts';
 
 const setOrderBy = (sortField?: string, sortOrder?: string) => {
@@ -37,7 +37,7 @@ export const getContentsByProductId = ({ id }: { id: string }) => {
 };
 
 export const getContentsByProgramId = async (id: string, type?: string) => {
-  const response = await GET(`/video-content?programId=${id}&program=true&sort=[{"ProgramInfo": {"episode": "desc"} }]`);
+  const response = await GET(`/video-content?programId=${id}&program=true&sort=[{"ProgramInfo": {"episode": "desc"} }]&type=${type}`);
   const contents = response.items.map((content: VideoContent) => convertContent(content));
   return contents
     .filter((content: IContent) => {
