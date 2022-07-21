@@ -3,7 +3,9 @@
 
   import ContentsDetailContainer from '$container/ContentsDetailContainer.svelte';
 
-  const id = $page.params.id;
+  $: id = $page.params.id;
 </script>
 
-<ContentsDetailContainer {id} />
+{#key id}
+    <ContentsDetailContainer id={id} />
+{/key}
