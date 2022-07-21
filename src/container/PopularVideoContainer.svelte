@@ -30,6 +30,7 @@
           episode
           id
           program {
+            id
             title
             thumbnail
           }
