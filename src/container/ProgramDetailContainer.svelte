@@ -30,16 +30,16 @@
 
   async function loadData() {
     const query = `{
-        program(id:"${id}"){
-          id
-          title
-          description
-          banner
-          regularAiringAt
-          airingBeginAt
-          airingEndAt
-          totalEpisode
-        }
+      program(id:"${id}"){
+        id
+        title
+        description
+        banner
+        regularAiringAt
+        airingBeginAt
+        airingEndAt
+        totalEpisode
+      }
 
         getCelebsByProgramId(id:"${id}"){
           thumbnail

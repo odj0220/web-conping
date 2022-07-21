@@ -8,7 +8,7 @@ export const getMainOrigin = async () => {
   return {
     title: [
       {
-        text: '콜핑 오리지널',
+        text: '콘핑 오리지널',
       },
     ],
     programs: programs,

@@ -103,6 +103,7 @@
         </div>
       {/if}
     {/if}
+  </ul>
 </section>
 
 <style lang="scss">

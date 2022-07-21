@@ -3,6 +3,7 @@ import { SvelteComponent } from 'svelte';
 
 let PastTimeDelta: SvelteComponent;
 
+export let onClickTitle: (id: string) => void;
 export let option: {
   programDetail?: {
     title?: string;
@@ -20,6 +21,7 @@ export let option: {
     title?: string;
     celebs?: any[];
     info?: {
+      programId: string;
       programTitle?: string;
       episode?: number;
       view: number;
@@ -27,6 +29,8 @@ export let option: {
     };
   }
 };
+
+console.log('option', option);
 
 let information = [];
 let pastTime: number;
@@ -146,7 +150,7 @@ const getDay = (time: number) => {
     {#if isContentDetail}
       {#await getInformation()}
       {:then text}
-          <div class="info">
+          <div class="info" on:click="{() => onClickTitle(option.contentDetail.info.programId)}">
               {#if information.length > 0}
                   {text}
                   {#if PastTimeDelta}
