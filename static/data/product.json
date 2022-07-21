@@ -7,7 +7,8 @@
     "discount": 0,
     "image": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRbilaUynLYqGmr9O70AHUR7tbXpWsvox-ui01Cn4Nn8T-AGIds",
     "category": "후드티",
-    "storeUrl": "https://much-merch.com/product/detail.html?product_no=1849&utm_term=UCUj6rrhMTR9pipbAWBAMvUQ&utm_medium=product_shelf&utm_source=youtube&utm_content=YT-ACRcEUq4moZi1MS3N1L9biBM8FCsC2o2aEE4-If_MakFtL0S6T2_fQor8OOuVQB6zJGMDmEgTnPku6xYoiEX_2Bbi0mxcO0gvyzAV24j3wIO8bRi72qRS8SORn2bpCVmpauigNo2dFBOKLwTdQwSFk6cmJb-Il6kSJPGcYvZvhoB-n1ZXCZA7f8_"
+    "storeUrl": "https://much-merch.com/product/detail.html?product_no=1849&utm_term=UCUj6rrhMTR9pipbAWBAMvUQ&utm_medium=product_shelf&utm_source=youtube&utm_content=YT-ACRcEUq4moZi1MS3N1L9biBM8FCsC2o2aEE4-If_MakFtL0S6T2_fQor8OOuVQB6zJGMDmEgTnPku6xYoiEX_2Bbi0mxcO0gvyzAV24j3wIO8bRi72qRS8SORn2bpCVmpauigNo2dFBOKLwTdQwSFk6cmJb-Il6kSJPGcYvZvhoB-n1ZXCZA7f8_",
+    "createDt": 1584383040000
   },
   {
     "id": "product2",
@@ -17,7 +18,8 @@
     "discount": 0,
     "image": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTBmkO8cHTL7AS9-xty1U8nR39jd2Bo8qZG-2a5Crmpx_PS-leb",
     "category": "맨투맨",
-    "storeUrl": "https://much-merch.com/product/detail.html?product_no=1848&utm_term=UCUj6rrhMTR9pipbAWBAMvUQ&utm_medium=product_shelf&utm_source=youtube&utm_content=YT-ACRcEUqL0R-P4mLY76ChyMSr26odLUnwnx9KH7C17vt-jydpBOcAvzlpmnx747D3h2JfxFpf1ztxh-OLjTEjnQR7uT3yOT1J8zxH06wGUgpazaWaXeki6g89Hs17m_4l-OrHsTGH7I_J_MxdjnQ5Bb8FgjDMDDL8T9QnvhcIp8mbB2qCFfX54aJ8"
+    "storeUrl": "https://much-merch.com/product/detail.html?product_no=1848&utm_term=UCUj6rrhMTR9pipbAWBAMvUQ&utm_medium=product_shelf&utm_source=youtube&utm_content=YT-ACRcEUqL0R-P4mLY76ChyMSr26odLUnwnx9KH7C17vt-jydpBOcAvzlpmnx747D3h2JfxFpf1ztxh-OLjTEjnQR7uT3yOT1J8zxH06wGUgpazaWaXeki6g89Hs17m_4l-OrHsTGH7I_J_MxdjnQ5Bb8FgjDMDDL8T9QnvhcIp8mbB2qCFfX54aJ8",
+    "createDt": 1658378139199
   },
   {
     "id": "product3",
@@ -27,6 +29,7 @@
     "discount": 0,
     "category": "메모지",
     "image": "https://image1.marpple.co/files/u_1372089/2022/4/original/ffc18f8f3cdb4e84d9ecd356a1ea1393039092bc1.png?q=92&w=750&f=jpeg&bg=f6f6f6",
-    "storeUrl": "https://marpple.shop/kr/jbbj/products/10065394"
+    "storeUrl": "https://marpple.shop/kr/jbbj/products/10065394",
+    "createDt": 1621448640000
   }
 ]
