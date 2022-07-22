@@ -37,7 +37,7 @@ export async function Graphql(query: string) {
       getContentsByProductId(id:ID!): [Content]
       getCelebsByProductId(id:ID!): [Celeb]
       getCelebsByProgramId(id:ID!): [Celeb]
-      getProductByCelebId(id:ID!): [Product]
+      getProductByCelebId(id:ID! limit: Int): [Product]
       getContentsByCelebId(id:ID!, type:ContentType, limit: Int): [Content]
       getProductsByCategory(category:String!): [Product]
       getContinueWatching: [Content]
