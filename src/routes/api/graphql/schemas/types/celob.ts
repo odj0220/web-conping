@@ -5,7 +5,10 @@ const Celeb = `
       description: String
       categories: [Category]
       thumbnail: String
+      ba_thumbnail: String
       countOfFollowers: Float
+      countOfYotubeFollowers:Float
+      countOfInstagramFollowers:Float
       countOfProducts: Float
       countOfContents: Float
     }

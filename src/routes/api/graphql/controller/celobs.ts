@@ -12,13 +12,15 @@ export const celebs = () => {
     const contents: any[] = contentJson.filter((content) => relations.find((r) => r.content === content.id));
     const products: any[] = productJson.filter((product) => relations.find((r) => r.product === product.id));
     const categories: any[] = celeb.categories.map((categoryId: string) => categoryJson.find((cate) => cate.id === categoryId));
-    const follows = celeb.follows;
+    const { instagram, youtube, total } = celeb.follows as any;
 
     return {
       ...celeb,
       categories,
-      countOfFollowers: follows.length,
+      countOfFollowers: total,
       countOfProducts: products.length,
+      countOfYotubeFollowers: youtube,
+      countOfInstagramFollowers: instagram,
       countOfContents: contents.length,
     };
   });
@@ -27,7 +29,27 @@ export const celebs = () => {
 };
 
 export const celeb = ({ id }: { id: string }) => {
-  return celebJson.find((celeb) => celeb.id === id);
+  const result = {};
+  const relations: any[] = relationJson.filter((r) => r.celeb === id);
+  const foundCeleb: any = celebJson.find((celeb) => celeb.id === id);
+  const products: any[] = productJson.filter((product) => relations.find((r) => r.product === product.id));
+  const contents: any[] = contentJson.filter((content) => relations.find((r) => r.content === content.id));
+
+  if (foundCeleb) {
+    const categories = foundCeleb.categories.map((categoryId: string) => categoryJson.find((cate) => cate.id === categoryId));
+
+    return {
+      ...foundCeleb,
+      categories,
+      countOfFollowers: foundCeleb.follows.total,
+      countOfProducts: products.length,
+      countOfYotubeFollowers: foundCeleb.follows.youtube,
+      countOfInstagramFollowers: foundCeleb.follows.insetagram,
+      countOfContents: contents.length,
+    };
+  }
+
+  return result;
 };
 
 export const getCelebsByContentId = ({ id }: { id: string }) => {
