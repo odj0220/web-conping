@@ -46,11 +46,23 @@ export const getProgramContentsByContentId = async ({ id }: {id: string}) => {
   return contents.filter((content: IContent) => content.id !== id).splice(0, 2);
 };
 
-export const getContentsByCelebId = ({ id }: { id: string }) => {
+export const getContentsByCelebId = ({ id, type, limit }: { id: string, type: string, limit: number}) => {
   const contentIds = relationJson
     .filter((relation) => relation.celeb === id)
     .map((relation) => relation.content);
-  return contentJson.filter((content) => contentIds.includes(content.id));
+
+  let contents = contentJson.filter((content) => contentIds.includes(content.id))
+    .sort((contentA, contentB) => contentB.createDt - contentA.createDt);
+
+  if (type) {
+    contents = contents.filter((c) => c.contentType === type);
+  }
+
+  if (limit > 0) {
+    contents = contents.splice(0, limit);
+  }
+
+  return contents;
 };
 
 export const getMainContents = async () => {
