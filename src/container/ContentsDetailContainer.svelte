@@ -41,9 +41,14 @@
           id
           name
           description
-          categories
-          banner
+          categories {
+            id
+            name
+            fontColor
+            backColor
+          }
           thumbnail
+          ba_thumbnail
         }
       }
     `;
