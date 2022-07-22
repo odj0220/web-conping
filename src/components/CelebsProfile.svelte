@@ -76,6 +76,7 @@
       color: $disabled-8a;
       max-width: 210px;
       width: 100%;
+      white-space: pre-line;
     }
     .sns-list {
       display: flex;

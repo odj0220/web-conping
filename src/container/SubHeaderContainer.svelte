@@ -7,6 +7,8 @@
   export let share = false;
   export let type = '';
 
+  let y = 0;
+
   function handleClickButton(type: string) {
     switch (type) {
     case 'back':
@@ -19,7 +21,21 @@
     }
   }
 
-  
 </script>
 
-<SubHeader {title} {share} onClick={handleClickButton} {type} />
+<svelte:window bind:scrollY={y} />
+
+{#key y}
+  <div class={y > 0 ? 'color' : ''}>
+    <SubHeader {title} {share} onClick={handleClickButton} {type} />
+  </div>
+{/key}
+
+<style lang="scss">
+  div {
+
+
+    &.color {
+    }
+  }
+</style>
