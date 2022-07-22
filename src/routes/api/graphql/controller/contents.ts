@@ -62,8 +62,6 @@ export const getContentsByCelebId = ({ id, type, limit }: { id: string, type: st
     .filter((content) => contentIds.includes(content.id))
     .sort((contentA, contentB) => contentB.createDt - contentA.createDt);
 
-  console.log(contents);
-
   if (type) {
     contents = contents.filter((c) => c.contentType === type);
   }

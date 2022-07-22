@@ -71,6 +71,7 @@
                 programId
                 contentType
                 createDt
+                program { title }
             }
         }`;
       const response = await graphqlApi(query);
