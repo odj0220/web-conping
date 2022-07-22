@@ -32,9 +32,9 @@ export const callToast = (message: string) => {
   win['flutter_inappwebview'].callHandler('callToast', message);
 };
 
-export const callShare = async (text: string[]) => {
+export const callShare = async (type: string, id: string, title?: string) => {
   const win: any = window;
-  return await win['flutter_inappwebview'].callHandler('callShare', JSON.stringify(text));
+  return await win['flutter_inappwebview'].callHandler('callShare', JSON.stringify({ type, id, title }));
 };
 
 export const callAlert = (message: string, title?: string, subject?: string) => {
