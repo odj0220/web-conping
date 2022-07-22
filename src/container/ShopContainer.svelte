@@ -12,18 +12,22 @@
   import Sorter from '$component/Sorter.svelte';
 
   let sort = Object.keys(SORT_FIELDS)[0];
-  let isPopupVisible = true;
+  let isPopupVisible = false;
 
-  const getProducts = async (sortField: string) => {
-    console.log('//TODO: sort .. ', sortField);
-
+  const getProducts = async (sortField = '') => {
     const query = `{
-      products {
+      products(order: ${sort}) {
         id
         name
-        price
-        image
         brand
+        image
+        price
+        relatedItems {
+          thumbnail
+          title
+          type
+          id
+        }
       }
     }`;
 

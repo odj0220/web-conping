@@ -46,6 +46,19 @@ export interface ICeleb {
   banner: string;
 }
 
+export interface IRelatedItemType {
+  content: IContent,
+  celeb: ICeleb,
+  product: IProduct,
+}
+
+export interface IRelatedItem {
+  thumbnail: string,
+  title: string,
+  type: IRelatedItemType,
+  id: string,
+}
+
 export interface IProduct {
   id: string;
   name: string;
@@ -58,6 +71,7 @@ export interface IProduct {
   views: number;
   discountRate: number;
   storeUrl: string;
+  relatedItems: IRelatedItem[]
 }
 
 export interface ISelectItem {

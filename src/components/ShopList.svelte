@@ -11,3 +11,11 @@
     <ShopItem {item}/>
   {/each}
 </ul>
+
+<style lang="scss">
+  .shop-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3.2rem;
+  }
+</style>
