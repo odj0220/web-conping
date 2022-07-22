@@ -1,6 +1,6 @@
 const SocialType = `
     enum SocialType {
-        Instagram
+        instagram
     }
 `;
 

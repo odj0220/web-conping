@@ -39,6 +39,7 @@
       await getCelebs();
       await getContentsByCelebId();
       await getProductByCelebId();
+      await getSocialsByContentId();
     });
 
     async function getCelebs() {
@@ -87,6 +88,19 @@
             }
         }`;
       const response = await graphqlApi(query);
+    }
+
+    async function getSocialsByContentId() {
+      const query = `{
+            getSocialsByCelebId (id: "celeb1") {
+                id
+                type
+                board_thumbnails
+                link
+            }
+        }`;
+      const response = await graphqlApi(query);
+      console.log(response);
     }
 </script>
 
