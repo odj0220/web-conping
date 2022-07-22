@@ -37,6 +37,7 @@
         }`;
       const response = await graphqlApi(query);
       await getCelebs();
+      await getCeleb();
       await getContentsByCelebId();
       await getProductByCelebId();
       await getSocialsByContentId();
@@ -49,7 +50,34 @@
                 name
                 description
                 thumbnail
+                ba_thumbnail
                 countOfFollowers
+                countOfYotubeFollowers
+                countOfInstagramFollowers
+                countOfProducts
+                countOfContents
+                categories {
+                    id
+                    name
+                    fontColor
+                    backColor
+                }
+            }
+        }`;
+      const response = await graphqlApi(query);
+    }
+
+    async function getCeleb() {
+      const query = `{
+            celeb (id: "celeb1") {
+                id
+                name
+                description
+                thumbnail
+                ba_thumbnail
+                countOfFollowers
+                countOfYotubeFollowers
+                countOfInstagramFollowers
                 countOfProducts
                 countOfContents
                 categories {
