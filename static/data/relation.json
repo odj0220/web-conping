@@ -178,13 +178,13 @@
   },
   {
     "id": "relation31",
-    "content": "content7",
+    "content": "content9",
     "product": "product1",
     "celeb": "celeb17"
   },
   {
     "id": "relation32",
-    "content": "content7",
+    "content": "content10",
     "product": "product2",
     "celeb": "celeb17"
   },
@@ -220,7 +220,7 @@
   },
   {
     "id": "relation38",
-    "content": "content8",
+    "content": "content18",
     "product": "product2",
     "celeb": "celeb17"
   },
@@ -238,5 +238,23 @@
     "id": "relation41",
     "content": "content16",
     "celeb": "celeb20"
+  },
+  {
+    "id": "relation42",
+    "content": "content20",
+    "product": "product2",
+    "celeb": "celeb17"
+  },
+  {
+    "id": "relation43",
+    "content": "content17",
+    "product": "product3",
+    "celeb": "celeb17"
+  },
+  {
+    "id": "relation43",
+    "content": "content16",
+    "product": "product4",
+    "celeb": "celeb17"
   }
 ]

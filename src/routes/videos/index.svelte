@@ -36,8 +36,57 @@
             }
         }`;
       const response = await graphqlApi(query);
-      console.log(response);
+      await getCelebs();
+      await getContentsByCelebId();
+      await getProductByCelebId();
     });
+
+    async function getCelebs() {
+      const query = `{
+            celebs {
+                id
+                name
+                description
+                thumbnail
+                countOfFollowers
+                countOfProducts
+                countOfContents
+                categories {
+                    id
+                    name
+                    fontColor
+                    backColor
+                }
+            }
+        }`;
+      const response = await graphqlApi(query);
+    }
+
+    async function getContentsByCelebId() {
+      const query = `{
+            getContentsByCelebId (id: "celeb17", type: SHORTS, limit: 2) {
+                id
+                title
+                subtitle
+                programId
+                contentType
+                createDt
+            }
+        }`;
+      const response = await graphqlApi(query);
+    }
+
+    async function getProductByCelebId() {
+      const query = `{
+            getProductByCelebId (id: "celeb17", limit: 2) {
+             id
+                name
+                brand
+                price
+            }
+        }`;
+      const response = await graphqlApi(query);
+    }
 </script>
 
 <style lang="scss"></style>

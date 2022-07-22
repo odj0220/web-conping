@@ -3,141 +3,161 @@
     "id": "celeb1",
     "name": "장삐쭈",
     "description": "안녕하세요",
-    "categories": ["기획"],
-    "thumbnail": "/images/celob.png"
+    "categories": ["category1", "category2"],
+    "thumbnail": "/images/celob.png",
+    "follows": ["celeb2, celeb3"]
   },
   {
     "id": "celeb2",
     "name": "허혜원",
     "description": "안녕하세요",
-    "categories": ["기획"],
-    "thumbnail": "/images/celob.png"
+    "categories": ["category3"],
+    "thumbnail": "/images/celob.png",
+    "follows": ["celeb1, celeb4"]
   },
   {
     "id": "celeb3",
     "name": "지정민",
     "description": "안녕하세요",
-    "categories": ["기획"],
-    "thumbnail": "/images/celob.png"
+    "categories": ["category1", "category4"],
+    "thumbnail": "/images/celob.png",
+    "follows": []
   },
   {
     "id": "celeb4",
     "name": "류호찬",
     "description": "안녕하세요",
-    "categories": ["기획"],
-    "thumbnail": "/images/celob.png"
+    "categories": ["category4"],
+    "thumbnail": "/images/celob.png",
+    "follows": ["celeb3, celeb5", "celeb6", "celeb7"]
   },
   {
     "id": "celeb5",
     "name": "최민아",
     "description": "안녕하세요",
-    "categories": ["기획"],
-    "thumbnail": "/images/celob.png"
+    "categories": ["category2"],
+    "thumbnail": "/images/celob.png",
+    "follows": ["celeb12", "celeb13"]
   },
   {
     "id": "celeb6",
     "name": "크리스",
     "description": "안녕하세요",
-    "categories": ["2d"],
-    "thumbnail": "/images/celob.png"
+    "categories": ["category3"],
+    "thumbnail": "/images/celob.png",
+    "follows": ["celeb7", "celeb8", "celeb9", "celeb10"]
   },
   {
     "id": "celeb7",
     "name": "윤성원",
     "description": "안녕하세요",
-    "categories": ["3d"],
-    "thumbnail": "/images/celob.png"
+    "categories": ["category1"],
+    "thumbnail": "/images/celob.png",
+    "follows": []
   },
   {
     "id": "celeb8",
     "name": "포포",
     "description": "안녕하세요",
-    "categories": ["애니메이션"],
-    "thumbnail": "/images/celob.png"
+    "categories": ["category2", "category3"],
+    "thumbnail": "/images/celob.png",
+    "follows": []
   },
   {
     "id": "celeb9",
     "name": "원동우",
     "description": "안녕하세요",
-    "categories": ["애니메이션"],
-    "thumbnail": "/images/celob.png"
+    "categories": ["category4"],
+    "thumbnail": "/images/celob.png",
+    "follows": ["celeb1", "celeb2"]
   },
   {
     "id": "celeb10",
     "name": "강선영",
     "description": "안녕하세요",
-    "categories": ["애니메이션"],
-    "thumbnail": "/images/celob.png"
+    "categories": ["category3"],
+    "thumbnail": "/images/celob.png",
+    "follows": []
   },
   {
     "id": "celeb11",
     "name": "박정인",
     "description": "안녕하세요",
-    "categories": ["애니메이션"],
-    "thumbnail": "/images/celob.png"
+    "categories": ["category1", "category2"],
+    "thumbnail": "/images/celob.png",
+    "follows": ["celeb10", "celeb12"]
   },
   {
     "id": "celeb12",
     "name": "권태웅",
     "description": "안녕하세요",
-    "categories": ["성우"],
-    "thumbnail": "/images/celob.png"
+    "categories": ["category3"],
+    "thumbnail": "/images/celob.png",
+    "follows": ["celeb3", "celeb4", "celeb5"]
   },
   {
     "id": "celeb13",
     "name": "강찬",
     "description": "안녕하세요",
-    "categories": ["성우"],
-    "thumbnail": "/images/celob.png"
+    "categories": ["category1", "category4"],
+    "thumbnail": "/images/celob.png",
+    "follows": ["celeb3", "celeb4", "celeb5"]
   },
   {
     "id": "celeb14",
     "name": "J.Fla",
     "description": "안녕하세요",
-    "categories": ["음악"],
-    "thumbnail": "/images/celob.png"
+    "categories": ["category3"],
+    "thumbnail": "/images/celob.png",
+    "follows": []
   },
   {
     "id": "celeb15",
     "name": "침착맨",
     "description": "안녕하세요",
-    "categories": ["토크"],
-    "thumbnail": "/images/celob.png"
+    "categories": ["category1"],
+    "thumbnail": "/images/celob.png",
+    "follows": []
   },
   {
     "id": "celeb16",
     "name": "곽튜브",
     "description": "안녕하세요",
-    "categories": ["여행"],
-    "thumbnail": "/images/celob.png"
+    "categories": ["category2"],
+    "thumbnail": "/images/celob.png",
+    "follows": []
   },
   {
     "id": "celeb17",
     "name": "빠니보틀",
     "description": "안녕하세요",
-    "categories": ["여행"],
-    "thumbnail": "/images/celob.png"
+    "categories": ["category4"],
+    "thumbnail": "/images/celob.png",
+    "follows": []
   },
   {
     "id": "celeb18",
     "name": "박은혜",
     "description": "안녕하세요",
-    "categories": ["진행"],
-    "thumbnail": "/images/celob.png"
+    "categories": ["category3"],
+    "thumbnail": "/images/celob.png",
+    "follows": []
   },
   {
     "id": "celeb19",
     "name": "이수정",
     "description": "안녕하세요",
-    "categories": ["진행"],
-    "thumbnail": "/images/celob.png"
+    "categories": ["category2"],
+    "thumbnail": "/images/celob.png",
+    "follows": []
   },
   {
     "id": "celeb20",
     "name": "수경",
     "description": "안녕하세요",
-    "categories": ["진행"],
-    "thumbnail": "/images/celob.png"
+    "categories": ["category1", "category2", "category3", "category4", "category5"],
+    "thumbnail": "/images/celob.png",
+    "follows": ["celeb2"]
   }
 
 ]
