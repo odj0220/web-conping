@@ -38,6 +38,7 @@
       const response = await graphqlApi(query);
       await getCelebs();
       await getContentsByCelebId();
+      await getProductByCelebId();
     });
 
     async function getCelebs() {
@@ -73,7 +74,18 @@
             }
         }`;
       const response = await graphqlApi(query);
-      console.log(response);
+    }
+
+    async function getProductByCelebId() {
+      const query = `{
+            getProductByCelebId (id: "celeb17", limit: 2) {
+             id
+                name
+                brand
+                price
+            }
+        }`;
+      const response = await graphqlApi(query);
     }
 </script>
 

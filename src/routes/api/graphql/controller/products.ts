@@ -93,9 +93,15 @@ export const getProductsByContentId = async ({ id }: { id: string }) => {
   return products;
 };
 
-export const getProductByCelebId = ({ id }: { id: string }) => {
+export const getProductByCelebId = ({ id, limit }: { id: string, limit: number }) => {
   const productIds = relationJson
     .filter((relation: any) => relation.celeb === id)
     .map((relation: any) => relation.product);
-  return productJson.filter((product) => productIds.includes(product.id));
+
+  let products = productJson.filter((product) => productIds.includes(product.id));
+
+  if (limit) {
+    products = products.splice(0, limit);
+  }
+  return products;
 };
