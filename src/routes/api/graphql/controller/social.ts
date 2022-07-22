@@ -5,7 +5,7 @@ export const socials = () => socialJson;
 
 export const getSocialsByCelebId = ({ id, type }: {id: string; type: string}) => {
   const relation = relationJson.find((r) => r.celeb === id);
-  let result: any = {};
+  let result: any = [];
 
   if (relation) {
     result = socialJson.filter((s: any) => s.id === relation.social);
