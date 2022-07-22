@@ -11,12 +11,14 @@
   export let items: tabItem[];
   export let programTitle = '';
   export let borderBottom = false;
+  export let onClickTab: (category: string) => void;
 
   $: selectedTab = items[0];
   $: selectedProps = { ...selectedTab.props, programTitle };
   
   function onActiveTabitem(tabItem: tabItem) {
     selectedTab = tabItem;
+    onClickTab(selectedTab.value);
   }
 
 </script>
