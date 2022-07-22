@@ -36,8 +36,29 @@
             }
         }`;
       const response = await graphqlApi(query);
-      console.log(response);
+      await getCelebs();
     });
+
+    async function getCelebs() {
+      const query = `{
+            celebs {
+                id
+                name
+                description
+                thumbnail
+                countOfFollowers
+                countOfProducts
+                countOfContents
+                categories {
+                    id
+                    name
+                    fontColor
+                    backColor
+                }
+            }
+        }`;
+      const response = await graphqlApi(query);
+    }
 </script>
 
 <style lang="scss"></style>
