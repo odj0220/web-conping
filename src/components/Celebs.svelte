@@ -1,13 +1,15 @@
 <script lang="ts">
-import type { ICeleb } from 'src/global/types';
-import Celeb from './Celeb.svelte';
+  import Celeb from './Celeb.svelte';
+  
+  import type { ICeleb } from 'src/global/types';
 
-export let celebs: ICeleb[] = [];
-export let onClick : (id: string) => void;
+  export let data: ICeleb[] = [];
+  export let onClick : (id: string) => void;
+
 </script>
 
 <ul class="celebs">
-  {#each celebs as celeb}
+  {#each data as celeb}
     <Celeb {celeb} onClick={onClick} />
   {/each}
 </ul>
