@@ -2,6 +2,7 @@ import { GET } from '../../../../lib/_api';
 import type { VideoContent } from '../../../../lib/models/backend/backend';
 import relationJson from '../../../../../static/data/relation.json';
 import contentJson from '../../../../../static/data/content.json';
+import programJson from '../../../../../static/data/program.json';
 import type { IContent } from '../../../../global/types';
 import { contentsByProgramId, convertContent } from './util';
 
@@ -51,7 +52,14 @@ export const getContentsByCelebId = ({ id, type, limit }: { id: string, type: st
     .filter((relation) => relation.celeb === id)
     .map((relation) => relation.content);
 
-  let contents = contentJson.filter((content) => contentIds.includes(content.id))
+  let contents = contentJson
+    .map((c) => {
+      return {
+        ...c,
+        program: programJson.find((p) => p.id === c.programId),
+      };
+    })
+    .filter((content) => contentIds.includes(content.id))
     .sort((contentA, contentB) => contentB.createDt - contentA.createDt);
 
   if (type) {
