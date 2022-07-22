@@ -13,6 +13,7 @@ import PageContent from './pageContent';
 import MainOrigin from './mainOrigin';
 import RelatedItem from './relatedItem';
 import Category from './category';
+import Social from './social';
 
 const types = {
   Product,
@@ -30,6 +31,7 @@ const types = {
   MainOrigin,
   RelatedItem,
   Category,
+  Social,
 };
 
 export default Object.values(types).reduce((result: string, type: string) => result + type, '');
