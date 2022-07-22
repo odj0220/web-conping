@@ -23,7 +23,7 @@ export async function Graphql(query: string) {
     ${GRAPH_TYPES}	
     ${GRAPH_ENUMS}
     type Query {
-      products: [Product]
+      products(order: ProductOrder, category: String): [Product]
       product(id:ID!): Product
       contents(sortField: String, sortOrder: Order, type:ContentType): [Content]
       content(id:ID!): Content

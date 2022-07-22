@@ -11,6 +11,8 @@ import ContentEdge from './contentEdge';
 import PageInfo from './pageInfo';
 import PageContent from './pageContent';
 import MainOrigin from './mainOrigin';
+import RelatedItem from './relatedItem';
+import Category from './category';
 
 const types = {
   Product,
@@ -26,6 +28,8 @@ const types = {
   PageInfo,
   PageContent,
   MainOrigin,
+  RelatedItem,
+  Category,
 };
 
 export default Object.values(types).reduce((result: string, type: string) => result + type, '');

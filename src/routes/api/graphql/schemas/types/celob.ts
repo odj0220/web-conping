@@ -3,12 +3,11 @@ const Celeb = `
       id: String!
       name: String!
       description: String
-      categories: [String]
-      banner: String
+      categories: [Category]
       thumbnail: String
-      follows: [Celeb]
-      programs: [Program]
-      products: [Product]
+      countOfFollowers: Float
+      countOfProducts: Float
+      countOfContents: Float
     }
 ` ;
 
