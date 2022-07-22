@@ -48,7 +48,12 @@
       getCelebsByProgramId(id:"${id}"){
         thumbnail
         name
-        categories
+        categories {
+          id
+          name
+          fontColor
+          backColor
+        }
       }
     }`;
 
