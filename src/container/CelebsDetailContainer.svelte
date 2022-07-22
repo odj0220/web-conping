@@ -18,7 +18,6 @@
         celeb(id:"${id}"){
           name
           description
-          categories
           thumbnail
         }
       }

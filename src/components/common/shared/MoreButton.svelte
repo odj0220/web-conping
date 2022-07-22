@@ -14,5 +14,6 @@
     width: 100%;
     height: 4rem;
     color: #f2f2f2;
+    margin-top: 1.6rem;
   }
 </style>

@@ -1,9 +1,10 @@
 <script lang="ts">
+  import { openBrowser } from '$lib/util';
+  
   import Container from '$component/common/layout/Container.svelte';
   import MoreButton from '$component/common/shared/MoreButton.svelte';
-import PreviewVideos from '$component/PreviewVideos.svelte';
+  import PreviewVideos from '$component/PreviewVideos.svelte';
   import Title from '$component/Title.svelte';
-import { openBrowser } from '$lib/util';
 
   import type { TitleElement } from 'src/global/types';
 
@@ -16,7 +17,7 @@ import { openBrowser } from '$lib/util';
 
 </script>
 
-<Container type="full">
+<Container margin="5.6rem 0 0">
   <Title title={title} />
   <PreviewVideos contents={[]}/>
   {#if moreButton}

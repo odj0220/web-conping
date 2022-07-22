@@ -10,6 +10,8 @@
   import MoreButton from '$component/common/shared/MoreButton.svelte';
   
   import type { TitleElement } from 'src/global/types';
+import PreviewVideos from '$component/PreviewVideos.svelte';
+import ImageListView from '$component/ImageListView.svelte';
   
   export let id : string;
   export let title : TitleElement[] = [];
@@ -17,14 +19,26 @@
 
   const getData = async () => {
     const query = `{
-      getContentsByCelebId(id:"${id}"){
+      getContentsByCelebId(id:"celeb17"){
         id
         title
+        subtitle
+        programId
+        createDt
+        episode
+        description
+        url
+        videoId
+        thumb
+        program {
+          title
+        }
       }
     }`;
 
-    const { data: getContentsByCelebId } = await graphqlApi(query);
-
+    const result = await graphqlApi(query);
+    console.log("result", result)
+    const { data: {getContentsByCelebId} } = await graphqlApi(query);
     return getContentsByCelebId;
   };
 
@@ -33,16 +47,19 @@
 </script>
 
 {#await promise}
-{:then data} 
-{#if data.length}
+{:then contents} 
+{#if contents.length}
   <Container>
     {#if title}
       <Title title={title}/>
-      {#if moreButton}
+      <ImageListView {contents} onClick={gotoContents}/>
+    {:else} 
+      <PreviewVideos {contents} />
+    {/if}
+
+    {#if moreButton}
         <MoreButton value="서울리안 콘텐츠 더보기" />
       {/if}
-    {/if}
-    <ShortsGridVodList onClick={gotoContents} />
   </Container>
   {:else}
     <EmptyMessage text="서울리안 님의 콘텐츠" />

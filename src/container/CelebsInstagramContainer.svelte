@@ -15,7 +15,7 @@ import { openBrowser } from '$lib/util';
   };
 
 </script>
-<Container type="full">
+<Container margin="5.6rem 0 0">
   <Title title={title} />
   <ImageGridList />
   {#if moreButton}

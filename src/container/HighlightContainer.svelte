@@ -5,6 +5,7 @@
 
   import PreviewVideos from '$component/PreviewVideos.svelte';
   import Spinner from '$component/common/shared/Spinner.svelte';
+import Container from '$component/common/layout/Container.svelte';
 
   export let id: string;
   export let programTitle: string;
@@ -49,12 +50,14 @@
   <Spinner />
 {:then {contents, end, cursor}}
   {#if contents.length}
-    <PreviewVideos
-      contents={contents}
-      end={end}
-      cursor={cursor}
-      onClick={handleClickContents}
-    />
+    <Container margin="0">
+      <PreviewVideos
+        contents={contents}
+        end={end}
+        cursor={cursor}
+        onClick={handleClickContents}
+      />
+    </Container>
   {:else}
     <p class="empty-message">
       {programTitle} 하이라이트는 준비중입니다. <br/>

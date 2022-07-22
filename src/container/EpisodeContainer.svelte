@@ -7,6 +7,7 @@
 
   import Spinner from '$component/common/shared/Spinner.svelte';
   import ImageListView from '$component/ImageListView.svelte';
+import Container from '$component/common/layout/Container.svelte';
 
   export let id: string;
   export let programTitle: string;
@@ -41,10 +42,12 @@
   <Spinner />
 {:then contents}
   {#if contents.length}
-    <ImageListView
-      {contents}
-      onClick={handleClickContents}
-    />
+    <Container margin="0">
+      <ImageListView
+        {contents}
+        onClick={handleClickContents}
+      />
+    </Container>
   {:else}
     <p class="empty-message">
       {programTitle} 에피소드는 준비중입니다.<br/>

@@ -44,7 +44,6 @@
         getCelebsByProgramId(id:"${id}"){
           thumbnail
           name
-          categories
         }
       }`;
 

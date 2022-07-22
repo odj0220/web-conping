@@ -22,7 +22,7 @@
 </script>
 
 <div class="tab-container">
-  <ul class="tab-header" class:borderBottom={'borderBottom'} class:sticky={sticky}>
+  <ul class="tab-header" class:borderBottom={borderBottom} class:sticky={sticky}>
     {#each items as item, i}
       <li class={`tab-item ${selectedTab.index === i ? 'active' : ''}`} on:click={onActiveTabitem(item)}>
         {item.label}
@@ -87,7 +87,7 @@
     }
   }
   .tab-contents {
-    padding: 0 1.6rem;
+    // padding: 0 1.6rem;
   }
 }
 </style>

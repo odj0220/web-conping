@@ -1,13 +1,13 @@
 <script type="ts">
   import { graphqlApi } from '$lib/_api';
 
-  import type { TitleElement } from 'src/global/types';
-  
   import Container from '$component/common/layout/Container.svelte';
   import EmptyMessage from '$component/common/shared/EmptyMessage.svelte';
   import ProductGridList from '$component/ProductGridList.svelte';
   import Title from '$component/Title.svelte';
   import MoreButton from '$component/common/shared/MoreButton.svelte';
+  
+  import type { TitleElement } from 'src/global/types';
 
   export let title : TitleElement[] = [];
   export let id : string;
@@ -15,13 +15,16 @@
 
   const getData = async () => {
     const query = `{
-      getProductByCelebId(id:"${id}"){
+      getProductByCelebId (id: "celeb17", limit: 4) {
           id
           name
+          brand
+          price
+          image
         }
       }`;
 
-    const { data: getProductByCelebId } = await graphqlApi(query);
+    const { data: { getProductByCelebId } } = await graphqlApi(query);
 
     return getProductByCelebId;
   };
@@ -32,21 +35,19 @@
 
 {#await promise}
 {:then data} 
-  <Container>
+  <Container margin="0">
     {#if data.length}
-
       {#if title}
         <Title title={title}/>
       {/if}
 
       <ProductGridList {data}/>
 
-      {#if moreButton}
+      {#if moreButton && data.length > 4}
         <MoreButton value="서울리안 상품 더보기"/>
       {/if}
-
     {:else}
       <EmptyMessage text="서울리안 님의 상품" />
-{/if}
+  {/if}
   </Container>
 {/await}

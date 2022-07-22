@@ -18,14 +18,22 @@
 
   const getData = async () => {
     const query = `{
-      getContentsByCelebId(id:"${id}"){
+      getContentsByCelebId (id: "celeb17", type: SHORTS) {
         id
         title
+        subtitle
+        programId
+        contentType
+        createDt
+        thumb
       }
     }`;
 
-    const { data: getContentsByCelebId } = await graphqlApi(query);
+    const { data: {getContentsByCelebId} } = await graphqlApi(query);
 
+    console.log(
+      "getContentsByCelebId",getContentsByCelebId
+    )
     return getContentsByCelebId;
   };
 
@@ -33,17 +41,19 @@
 
 </script>
   {#await promise}
-  {:then data} 
-  {#if data.length}
-    <Container>    
+  {:then contents} 
+  {#if contents.length}
+    <Container type="full" margin="5.6rem 0 0">    
       {#if title}
-        <Title title={title}/>
-        <ShortsVodList />
+        <Title title={title} marginLeft="1.2rem" />
+        <ShortsVodList {contents} />
         {#if moreButton}
           <MoreButton value="서울리안 쇼츠 더보기" />
         {/if}
+        {:else}
+        <ShortsGridVodList {contents} onClick={gotoShorts} />
+
       {/if}
-      <ShortsGridVodList onClick={gotoShorts} />
     </Container>
     {:else}
       <EmptyMessage text="서울리안 님의 쇼츠" />
