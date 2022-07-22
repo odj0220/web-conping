@@ -100,7 +100,6 @@
             }
         }`;
       const response = await graphqlApi(query);
-      console.log(response);
     }
 </script>
 
