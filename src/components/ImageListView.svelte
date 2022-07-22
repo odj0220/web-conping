@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type { Content } from 'src/global/types';
+  import type { IContent } from 'src/global/types';
 
   import ListViewItem from './ListViewItem.svelte';
 
-  export let contents: Content[] = [];
+  export let contents: IContent[] = [];
   export let onClick: (id: string) => void;
 
 </script>

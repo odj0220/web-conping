@@ -14,7 +14,6 @@
     border: 1px solid #f2f2f2;
     width: 100%;
     height: 4rem;
-    box-sizing: border-box;
     color: #f2f2f2;
   }
 </style>

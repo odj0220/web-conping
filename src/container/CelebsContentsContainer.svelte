@@ -16,6 +16,9 @@
   export let title : TitleElement[] = [];
   export let moreButton: boolean;
 
+  let end = false;
+  let cursor = '';
+
   const getData = async () => {
     const query = `{
       getContentsByCelebId(id:"celeb17"){
@@ -35,9 +38,9 @@
       }
     }`;
 
-    const result = await graphqlApi(query);
-    console.log("result", result)
     const { data: {getContentsByCelebId} } = await graphqlApi(query);
+
+    console.log("getContentsByCelebId",getContentsByCelebId)
     return getContentsByCelebId;
   };
 
@@ -51,14 +54,21 @@
 {#if contents.length}
 
 <Container margin="5.6rem 0 0">
-  {#if title}
+  {#if title.length}
     <Title title={title}/>
     <ImageListView {contents} onClick={gotoContents}/>
     {#if moreButton && contents.length > 4}
       <MoreButton value="서울리안 콘텐츠 더보기" margin="1.6rem 0 0"/>
     {/if}
   {:else} 
-    <PreviewVideos {contents} />
+    <PreviewVideos
+      {contents}       
+      {end}
+      {cursor}
+      onClick={gotoContents}
+      infiniteScroll={false}
+      autoPlay={true}
+    />
   {/if}
   </Container>
 

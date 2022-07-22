@@ -37,7 +37,7 @@
 {:then data} 
   <Container margin="5.6rem 0 0">
     {#if data.length}
-      {#if title}
+      {#if title.length}
         <Title title={title}/>
       {/if}
 

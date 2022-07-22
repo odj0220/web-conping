@@ -31,31 +31,34 @@
 
     const { data: {getContentsByCelebId} } = await graphqlApi(query);
 
-    console.log(
-      "getContentsByCelebId",getContentsByCelebId
-    )
+    console.log("getContentsByCelebId",getContentsByCelebId)
     return getContentsByCelebId;
   };
 
   const promise = getData();
 
 </script>
-  {#await promise}
-  {:then contents} 
-  {#if contents.length}
-    <Container type="full" margin="5.6rem 0 0">    
-      {#if title}
-        <Title title={title} marginLeft="1.2rem" />
-        <ShortsVodList {contents} />
-        {#if moreButton}
-          <MoreButton value="서울리안 쇼츠 더보기" margin="1.6rem 1.6rem 0"/>
-        {/if}
-        {:else}
-        <ShortsGridVodList {contents} onClick={gotoShorts} />
 
+{#await promise}
+{:then contents} 
+  {#if contents.length}
+    {#if title.length}
+      <Container type="full" margin="5.6rem 0 0">    
+      <Title title={title} marginLeft="1.2rem" />
+      <ShortsVodList {contents} />
+
+      {#if moreButton}
+        <MoreButton value="서울리안 쇼츠 더보기" margin="1.6rem 1.6rem 0"/>
       {/if}
-    </Container>
+
+      </Container>
     {:else}
-      <EmptyMessage text="서울리안 님의 쇼츠" />
+    <Container margin="5.6rem 0 0">
+      <ShortsGridVodList {contents} onClick={gotoShorts} />
+
+    </Container>
     {/if}
-  {/await}
+  {:else}
+    <EmptyMessage text="서울리안 님의 쇼츠" />
+  {/if}
+{/await}
