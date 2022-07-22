@@ -37,6 +37,7 @@
         }`;
       const response = await graphqlApi(query);
       await getCelebs();
+      await getContentsByCelebId();
     });
 
     async function getCelebs() {
@@ -58,6 +59,21 @@
             }
         }`;
       const response = await graphqlApi(query);
+    }
+
+    async function getContentsByCelebId() {
+      const query = `{
+            getContentsByCelebId (id: "celeb17", type: SHORTS, limit: 2) {
+                id
+                title
+                subtitle
+                programId
+                contentType
+                createDt
+            }
+        }`;
+      const response = await graphqlApi(query);
+      console.log(response);
     }
 </script>
 
