@@ -3,7 +3,7 @@
     launchTel, launchWeb, launchSystemNotification, getUser, getNotch } from '$lib/_app_communication';
 
   let paddingTop = 0;
-  const shareString = 'share({type:"content", id:"1"})';
+  const shareString = 'share({type:"contents", id:"3"})';
 
   async function sendConfirm() {
     const boolean = await callConfirm('오키 할래 안할래?');
@@ -22,7 +22,7 @@
     callToast('토스트 전송');
   }
   function sendShare() {
-    callShare('content', '1');
+    callShare('contents', '3');
   }
   function sendAlert1() {
     callAlert('안녕하세용');
