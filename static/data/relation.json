@@ -4,301 +4,301 @@
     "content": "content1",
     "product": "product3",
     "celeb": "celeb1",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation2",
     "content": "content1",
     "product": "product3",
     "celeb": "celeb2",
-    "socialNetwork": "instagram2"
+    "social": "instagram2"
   },
   {
     "id": "relation3",
     "content": "content1",
     "product": "product3",
     "celeb": "celeb3",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation4",
     "content": "content1",
     "product": "product3",
     "celeb": "celeb4",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation5",
     "content": "content1",
     "product": "product3",
     "celeb": "celeb5",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation6",
     "content": "content1",
     "product": "product3",
     "celeb": "celeb6",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation7",
     "content": "content1",
     "product": "product3",
     "celeb": "celeb7",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation8",
     "content": "content2",
     "product": "product3",
     "celeb": "celeb1",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation9",
     "content": "content2",
     "product": "product3",
     "celeb": "celeb8",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation10",
     "content": "content2",
     "product": "product3",
     "celeb": "celeb9",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation11",
     "content": "content2",
     "product": "product3",
     "celeb": "celeb10",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation12",
     "content": "content2",
     "product": "product3",
     "celeb": "celeb11",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation13",
     "content": "content2",
     "product": "product3",
     "celeb": "celeb2",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation14",
     "content": "content2",
     "product": "product3",
     "celeb": "celeb3",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation15",
     "content": "content2",
     "product": "product3",
     "celeb": "celeb4",
-    "socialNetwork": "instagram2"
+    "social": "instagram2"
   },
   {
     "id": "relation16",
     "content": "content2",
     "product": "product3",
     "celeb": "celeb5",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation17",
     "content": "content2",
     "product": "product3",
     "celeb": "celeb12",
-    "socialNetwork": "instagram2"
+    "social": "instagram2"
   },
   {
     "id": "relation18",
     "content": "content2",
     "product": "product3",
     "celeb": "celeb13",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation19",
     "content": "content3",
     "product": "product3",
     "celeb": "celeb1",
-    "socialNetwork": "instagram2"
+    "social": "instagram2"
   },
   {
     "id": "relation20",
     "content": "content3",
     "product": "product3",
     "celeb": "celeb8",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation21",
     "content": "content3",
     "product": "product3",
     "celeb": "celeb7",
-    "socialNetwork": "instagram2"
+    "social": "instagram2"
   },
   {
     "id": "relation22",
     "content": "content3",
     "product": "product3",
     "celeb": "celeb2",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation23",
     "content": "content3",
     "product": "product3",
     "celeb": "celeb1",
-    "socialNetwork": "instagram2"
+    "social": "instagram2"
   },
   {
     "id": "relation24",
     "content": "content4",
     "celeb": "celeb14",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation25",
     "content": "content5",
     "celeb": "celeb14",
-    "socialNetwork": "instagram2"
+    "social": "instagram2"
   },
   {
     "id": "relation26",
     "content": "content6",
     "celeb": "celeb14",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation27",
     "content": "content7",
     "product": "product1",
     "celeb": "celeb15",
-    "socialNetwork": "instagram2"
+    "social": "instagram2"
   },
   {
     "id": "relation28",
     "content": "content7",
     "product": "product2",
     "celeb": "celeb15",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation29",
     "content": "content7",
     "product": "product1",
     "celeb": "celeb16",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation30",
     "content": "content7",
     "product": "product2",
     "celeb": "celeb16",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation31",
     "content": "content9",
     "product": "product1",
     "celeb": "celeb17",
-    "socialNetwork": "instagram2"
+    "social": "instagram2"
   },
   {
     "id": "relation32",
     "content": "content10",
     "product": "product2",
     "celeb": "celeb17",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation33",
     "content": "content8",
     "product": "product1",
     "celeb": "celeb15",
-    "socialNetwork": "instagram2"
+    "social": "instagram2"
   },
   {
     "id": "relation34",
     "content": "content8",
     "product": "product2",
     "celeb": "celeb15",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation35",
     "content": "content8",
     "product": "product1",
     "celeb": "celeb16",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation36",
     "content": "content8",
     "product": "product2",
     "celeb": "celeb16",
-    "socialNetwork": "instagram2"
+    "social": "instagram2"
   },
   {
     "id": "relation37",
     "content": "content8",
     "product": "product1",
     "celeb": "celeb17",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation38",
     "content": "content18",
     "product": "product2",
     "celeb": "celeb17",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation39",
     "content": "content16",
     "celeb": "celeb18",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation40",
     "content": "content16",
     "celeb": "celeb19",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation41",
     "content": "content16",
     "celeb": "celeb20",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation42",
     "content": "content20",
     "product": "product2",
     "celeb": "celeb17",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation43",
     "content": "content17",
     "product": "product3",
     "celeb": "celeb17",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   },
   {
     "id": "relation43",
     "content": "content16",
     "product": "product4",
     "celeb": "celeb17",
-    "socialNetwork": "instagram1"
+    "social": "instagram1"
   }
 ]
