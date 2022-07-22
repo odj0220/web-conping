@@ -38,15 +38,13 @@
 <style lang="scss">
 .tab-container {
   position: relative;
-  padding: 0 0 4rem;
-  
   .tab-header {
     display: flex;
     padding: 0 1.6rem;
     margin-bottom: 2.4rem;
     &.borderBottom {
       border-bottom: 1px solid $bg-gray-32;
-      margin-bottom: 4rem;
+      margin-bottom: 0;
     }
     &.sticky {
       position: sticky;

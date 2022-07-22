@@ -35,7 +35,7 @@
 
 {#await promise}
 {:then data} 
-  <Container margin="0">
+  <Container margin="5.6rem 0 0">
     {#if data.length}
       {#if title}
         <Title title={title}/>

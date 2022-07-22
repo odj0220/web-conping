@@ -48,7 +48,7 @@
         <Title title={title} marginLeft="1.2rem" />
         <ShortsVodList {contents} />
         {#if moreButton}
-          <MoreButton value="서울리안 쇼츠 더보기" />
+          <MoreButton value="서울리안 쇼츠 더보기" margin="1.6rem 1.6rem 0"/>
         {/if}
         {:else}
         <ShortsGridVodList {contents} onClick={gotoShorts} />

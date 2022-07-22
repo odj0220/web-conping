@@ -83,7 +83,7 @@
 {#await loadData()}
 {:then {program, celobs, metaDataOption}}
   <SubHeaderContainer title={program.title} />
-  <Container type="full">
+  <Container type="full" margin="0 0 4rem">
     <section class="thumbnail-wrapper">
       <img class="thumbnail" src={program.banner} alt=""/>
     </section>

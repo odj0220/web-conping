@@ -1,9 +1,10 @@
 <script lang="ts">
+  import { openBrowser } from '$lib/util';
+  
   import Container from '$component/common/layout/Container.svelte';
   import MoreButton from '$component/common/shared/MoreButton.svelte';
   import ImageGridList from '$component/ImageGridList.svelte';
   import Title from '$component/Title.svelte';
-import { openBrowser } from '$lib/util';
   
   import type { TitleElement } from 'src/global/types';
 

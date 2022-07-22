@@ -53,7 +53,7 @@
 
 {#await getData()}
 {:then data} 
-  <Container margin="0" type="full">
+  <Container margin="0 0 9.4rem" type="full">
     <SubHeaderContainer type="transparent" />
     <CelebsProfile {data}/>
     <Tabs items={tabItems} borderBottom={true} {id} sticky={true} />
