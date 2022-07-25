@@ -16,7 +16,7 @@
 
   export let id: string;
 
-  const items = [
+  const tabItems = [
     {
       label: '에피소드',
       index: 0,
@@ -34,7 +34,7 @@
     },
   ];
 
-  let selectedTab = items[0];
+  let selectedTab = tabItems[0];
 
   async function loadData() {
     const query = `{
@@ -107,8 +107,8 @@
     <Metadata option={metaDataOption}/>
 
     <Tabs
-      {items}
       {selectedTab}
+      {tabItems}
       onClickTab={handleClickTab}
     />
     <svelte:component this={selectedTab.component} category={program.title}/>

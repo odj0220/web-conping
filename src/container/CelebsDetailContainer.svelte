@@ -10,6 +10,8 @@
   import CelebsShortsContainer from './CelebsShortsContainer.svelte';
   import SubHeaderContainer from './SubHeaderContainer.svelte';
 
+  import type { ITabItem } from 'src/global/types';
+
   export let id: string;
 
   const getData = async () => {
@@ -50,7 +52,8 @@
   ];
 
   let selectedTab = tabItems[0];
-  function handleClickTab(clickedTab: any) {
+
+  function handleClickTab(clickedTab: ITabItem) {
     selectedTab = clickedTab;
   }
 
@@ -62,7 +65,7 @@
     <SubHeaderContainer type="transparent" share={true} />
     <CelebsProfile {data}/>
     <Tabs
-      items={tabItems}
+      {tabItems}
       {selectedTab}
       borderBottom={true}
       sticky={true}
