@@ -15,7 +15,7 @@ export const products = async ({ order, category }: {order: string, category: st
   const data: any[] = productJson;
 
   const query: any = {
-    sort: JSON.stringify([{ 'id': 'asc' }]),
+    sort: JSON.stringify([{ 'views': 'asc' }]),
     videoContent: true,
     celeb: true,
     size: 2,
