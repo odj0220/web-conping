@@ -8,16 +8,18 @@
   import SeriesVideoContainer from '$container/SeriesVideoContainer.svelte';
   import MainShortsContainer from '$container/MainShortsContainer.svelte';
   import MainVideosContainer from '$container/MainVideosContainer.svelte';
+  import Footer from '$component/Footer.svelte';
 </script>
-    
+
 <MainHeaderContainer />
     
 <GlobalBlock>
-  <MainBannerContainer/>
-  <MainViewingVideosContainer/>
-  <PopularVideoContainer/>
-  <MainOriginalContainer />
-  <SeriesVideoContainer />
-  <MainShortsContainer/>
-  <MainVideosContainer/>
+    <MainBannerContainer/>
+    <MainViewingVideosContainer/>
+    <PopularVideoContainer/>
+    <MainOriginalContainer />
+    <SeriesVideoContainer />
+    <MainShortsContainer/>
+    <MainVideosContainer/>
+    <Footer/>
 </GlobalBlock>
