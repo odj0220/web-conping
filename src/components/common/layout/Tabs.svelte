@@ -1,29 +1,22 @@
 <script lang="ts">
   import type { ITabItem } from 'src/global/types';
 
-  export let items: ITabItem[];
+  import Tab from './Tab.svelte';
+
+  export let tabItems: ITabItem[];
   export let onClickTab: (selected: ITabItem) => void;
   export let borderBottom = false;
   export let sticky = false;
-
-  $: selectedTab = items[0];
-
-  function clickTabitem(tabItem: ITabItem) {
-    selectedTab = tabItem;
-  
-    onClickTab(selectedTab);
-  }
-
+  export let selectedTab = tabItems[0];
 </script>
 
 <ul class="tab-header" class:sticky={sticky} class:borderBottom={borderBottom}>
-  {#each items as item, index}
-    <li
-      class:active={selectedTab.index === index}
-      on:click={clickTabitem(item)}
-    >
-      {item.label}
-    </li>
+  {#each tabItems as item, index}
+    <Tab 
+      {item}
+      isActive={selectedTab.index === index}
+      {onClickTab}
+    />
   {/each}
 </ul>
 
@@ -38,40 +31,6 @@
     &.sticky {
       position: sticky;
       top: 5.4rem;
-    }
-
-    li {
-      @include body1-400;
-      color: $disabled-8a;
-      position: relative;
-      transition: all 0.3s;
-      padding-bottom: 0.8rem;
-
-      &:not(:last-child) {
-        margin-right: 2rem;
-      }
-
-      &:after {
-        content: "";
-        position: absolute;
-        left: 50%;
-        right: 0;
-        display: block;
-        width: 0;
-        height: 3px;
-        margin-top: 0.6rem;
-        background-color: $text-white-f2;
-        transition: all 0.3s;
-      }
-
-      &.active {
-        @include body1-700;
-        color: $text-white-f2;
-        &:after {
-          left: 0;
-          width: 100%;
-        }
-      }
     }
   }
 </style>

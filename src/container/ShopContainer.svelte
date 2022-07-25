@@ -15,7 +15,6 @@
 
   let sort = Object.keys(SORT_FIELDS)[0];
   let isPopupVisible = false;
-  let category: string;
 
   const getProducts = async (order = '', category = '') => {
     const parameter = `
@@ -59,7 +58,7 @@
     sort = sortField;
   }
 
-  function setSelectItems(sortFieldsObject: { [index: string]: string }) {
+  function setsortItems(sortFieldsObject: { [index: string]: string }) {
     return Object
       .keys(sortFieldsObject)
       .map(item => {
@@ -98,19 +97,24 @@
     },
   ];
 
-  function handleClickTab(selectedTab: ITabItem) {
-    category = selectedTab.value ?? '';
-  }
+  let selectedTab = tabItems[0];
 
-  $:selectItems = setSelectItems(SORT_FIELDS);
+  function handleClickTab(clickedTab: ITabItem) {
+    selectedTab = clickedTab;
+  }
+  
+  
+  $:sortItems = setsortItems(SORT_FIELDS);
   $:sortedName = SORT_FIELDS[sort];
+  $:category = selectedTab.value;
 </script>
 
-{#await getProducts(sort)}
+{#await getProducts(sort, category)}
   <Spinner /> 
 {:then products}
   <ShopNavbar
-    items={tabItems}
+    {tabItems}
+    {selectedTab}
     onClickTab={handleClickTab}
     sort={sortedName}
     onClickSort={openPopup}
@@ -125,7 +129,7 @@
       onClickSelectButton={handleClickSelectButton}
       onClickCloseButton={closePopup}
       selected={sort}
-      selectItems={selectItems}
+      selectItems={sortItems}
     />
   </LayoutPopup>
 {/await}
