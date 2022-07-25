@@ -6,27 +6,19 @@
   export let selectedTab: any;
   export let borderBottom = false;
   export let sticky = false;
-  export let category = '';
 
 </script>
 
-<div class="tab-container">
-  <ul class="tab-header" class:sticky={sticky} class:borderBottom={borderBottom}>
-    {#each items as item, index}
-      <li
-        class:active={selectedTab.index === index}
-        on:click={onClickTab(item)}
-      >
-        {item.label}
-      </li>
-    {/each}
-  </ul>
-  <div class="tab-contents">
-    <slot>
-      <svelte:component this={selectedTab.component} category={category}/>
-    </slot>
-  </div>
-</div>
+<ul class="tab-header" class:sticky={sticky} class:borderBottom={borderBottom}>
+  {#each items as item, index}
+    <li
+      class:active={selectedTab.index === index}
+      on:click={onClickTab(item)}
+    >
+      {item.label}
+    </li>
+  {/each}
+</ul>
 
 <style lang="scss">
   .tab-header {

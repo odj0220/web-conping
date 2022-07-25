@@ -57,17 +57,17 @@
 </script>
 
 {#await getData()}
-{:then data} 
+{:then data}
   <Container margin="0 0 9.4rem" type="full">
     <SubHeaderContainer type="transparent" share={true} />
     <CelebsProfile {data}/>
-    <Tabs 
-      items={tabItems} 
-      {selectedTab} 
-      borderBottom={true} 
-      sticky={true} 
-      category={data.name}
+    <Tabs
+      items={tabItems}
+      {selectedTab}
+      borderBottom={true}
+      sticky={true}
       onClickTab={handleClickTab}
     />
-  </Container>  
+    <svelte:component this={selectedTab.component} category={data.name}/>
+  </Container>
 {/await}
