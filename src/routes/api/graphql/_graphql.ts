@@ -9,6 +9,7 @@ import { getContinueWatching } from './controller/watching';
 import { getMainSeries } from './controller/series';
 import { getMainShorts } from './controller/shorts';
 import { getMainOrigin } from './controller/origins';
+import { socials, getSocialsByCelebId } from './controller/social';
 
 import GRAPH_TYPES from './schemas/types';
 import GRAPH_ENUMS from './schemas/enums';
@@ -31,6 +32,7 @@ export async function Graphql(query: string) {
       celeb(id:ID!): Celeb
       programs: [Program]
       program(id:ID!): Program
+      socials: [Social]
       getProductsByContentId(id:ID!): [Product]
       getCelebsByContentId(id:ID!): [Celeb]
       getContentsByProgramId(id:ID!, type:ContentType): [Content]
@@ -42,6 +44,7 @@ export async function Graphql(query: string) {
       getProductsByCategory(category:String!): [Product]
       getContinueWatching: [Content]
       getProgramContentsByContentId(id:ID!): [Content]
+      getSocialsByCelebId(id: ID!, type: SocialType): [Social]
      
       getBanners: [Banner]
       getMainContents: MainContent
@@ -65,6 +68,10 @@ export async function Graphql(query: string) {
     celeb,
     programs,
     program,
+
+    socials,
+    getSocialsByCelebId,
+
     getProductsByContentId,
     // TODO: back api 생성시 업데이트
     getCelebsByContentId,

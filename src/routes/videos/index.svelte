@@ -37,8 +37,10 @@
         }`;
       const response = await graphqlApi(query);
       await getCelebs();
+      await getCeleb();
       await getContentsByCelebId();
       await getProductByCelebId();
+      await getSocialsByContentId();
     });
 
     async function getCelebs() {
@@ -48,7 +50,34 @@
                 name
                 description
                 thumbnail
+                ba_thumbnail
                 countOfFollowers
+                countOfYotubeFollowers
+                countOfInstagramFollowers
+                countOfProducts
+                countOfContents
+                categories {
+                    id
+                    name
+                    fontColor
+                    backColor
+                }
+            }
+        }`;
+      const response = await graphqlApi(query);
+    }
+
+    async function getCeleb() {
+      const query = `{
+            celeb (id: "celeb1") {
+                id
+                name
+                description
+                thumbnail
+                ba_thumbnail
+                countOfFollowers
+                countOfYotubeFollowers
+                countOfInstagramFollowers
                 countOfProducts
                 countOfContents
                 categories {
@@ -71,6 +100,7 @@
                 programId
                 contentType
                 createDt
+                program { title }
             }
         }`;
       const response = await graphqlApi(query);
@@ -83,6 +113,18 @@
                 name
                 brand
                 price
+            }
+        }`;
+      const response = await graphqlApi(query);
+    }
+
+    async function getSocialsByContentId() {
+      const query = `{
+            getSocialsByCelebId (id: "celeb1") {
+                id
+                type
+                board_thumbnails
+                link
             }
         }`;
       const response = await graphqlApi(query);

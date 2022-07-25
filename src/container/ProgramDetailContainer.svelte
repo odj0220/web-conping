@@ -44,12 +44,17 @@
         totalEpisode
       }
 
-        getCelebsByProgramId(id:"${id}"){
-          thumbnail
+      getCelebsByProgramId(id:"${id}"){
+        thumbnail
+        name
+        categories {
+          id
           name
-          categories
+          fontColor
+          backColor
         }
-      }`;
+      }
+    }`;
 
     const result = await graphqlApi(query);
     const program: IProgram = result?.data?.program;

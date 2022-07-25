@@ -3,6 +3,7 @@
     launchTel, launchWeb, launchSystemNotification, getUser, getNotch } from '$lib/_app_communication';
 
   let paddingTop = 0;
+  const shareString = 'share({type:"contents", id:"3"})';
 
   async function sendConfirm() {
     const boolean = await callConfirm('오키 할래 안할래?');
@@ -21,7 +22,7 @@
     callToast('토스트 전송');
   }
   function sendShare() {
-    callShare(['카카오', 'https://kakao.com']);
+    callShare('contents', '3');
   }
   function sendAlert1() {
     callAlert('안녕하세용');
@@ -53,7 +54,7 @@
 
 <section style="margin-top: {paddingTop}px; background-color: red">
         <button on:click={sendToast}>callToast('토스트 전송')</button>
-        <button on:click={sendShare}>callShare(['카카오', 'https://kakao.com'])</button>
+        <button on:click={sendShare}>{shareString}</button>
         <button on:click={sendAlert1}>callAlert('안녕하세용')</button>
         <button on:click={sendAlert2}>callAlert('메세지 입니다.', '타이틀이요')</button>
         <button on:click={sendAlert3}>callAlert('메세지입니다.', '타이틀 입니다', '서브젝트입니당')</button>
