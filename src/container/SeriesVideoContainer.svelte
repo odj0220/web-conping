@@ -72,6 +72,7 @@
       <MoreButton
         value="{series.title} 시리즈 보러가기"
         onClick={() => gotoPrograms(series.id)}
+        margin="1.2rem 0 0"
       />
     </Container>
   {/if}

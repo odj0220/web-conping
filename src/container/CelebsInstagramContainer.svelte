@@ -35,7 +35,12 @@
 {:then {board_thumbnails, link}} 
   <Container margin="5.6rem 0 0">
     <Title title={title} />
+    {#if board_thumbnails.length > 6}
+      <ImageGridList data={[...board_thumbnails].slice(0, 6)}/>
+    {:else}
     <ImageGridList data={board_thumbnails}/>
+    {/if}
+    
     {#if moreButton}
       <MoreButton value="인스타그램 보러가기" onClick={() => openBrowser(link)}/>
     {/if}

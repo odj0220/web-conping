@@ -47,7 +47,6 @@
     .banner {
       width: 100%;
       padding-bottom: 94.4444%;
-      background-color: yellow;
       img {
         position:absolute;
         top: 0;
