@@ -2,10 +2,17 @@
   import type { ITabItem } from 'src/global/types';
 
   export let items: ITabItem[];
-  export let onClickTab: (category: ITabItem) => void;
-  export let selectedTab: any;
+  export let onClickTab: (selected: ITabItem) => void;
   export let borderBottom = false;
   export let sticky = false;
+
+  $: selectedTab = items[0];
+
+  function clickTabitem(tabItem: ITabItem) {
+    selectedTab = tabItem;
+  
+    onClickTab(selectedTab);
+  }
 
 </script>
 
@@ -13,7 +20,7 @@
   {#each items as item, index}
     <li
       class:active={selectedTab.index === index}
-      on:click={onClickTab(item)}
+      on:click={clickTabitem(item)}
     >
       {item.label}
     </li>

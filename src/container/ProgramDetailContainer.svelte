@@ -108,7 +108,6 @@
 
     <Tabs
       {items}
-      {selectedTab}
       onClickTab={handleClickTab}
     />
     <svelte:component this={selectedTab.component} category={program.title}/>

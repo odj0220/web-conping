@@ -11,13 +11,13 @@
   import ShopList from '$component/ShopList.svelte';
   import ShopNavbar from './ShopNavbar.svelte';
 
+  import type { ITabItem } from 'src/global/types';
+
   let sort = Object.keys(SORT_FIELDS)[0];
   let isPopupVisible = false;
   let category: string;
 
   const getProducts = async (order = '', category = '') => {
-    //TODO: category 수정
-  
     const parameter = `
       order:${order}
     `;
@@ -73,33 +73,33 @@
   let tabItems = [
     {
       label: '전체',
-      value: 'all',
       index: 0,
+      value: 'all',
     },
     {
       label: '여성패션',
-      value: 'womenfashion',
       index: 1,
+      value: 'womenfashion',
     },
     {
       label: '화장품/미용',
-      value: 'cosmeticbeauty',
       index: 2,
+      value: 'cosmeticbeauty',
     },
     {
       label: '가구/인테리어',
-      value: 'interior',
       index: 3,
+      value: 'interior',
     },
     {
       label: '출산',
-      value: 'angels',
       index: 4,
+      value: 'angels',
     },
   ];
 
-  function handleClickTab(selectedTab: string) {
-    category = selectedTab;
+  function handleClickTab(selectedTab: ITabItem) {
+    category = selectedTab.value ?? '';
   }
 
   $:selectItems = setSelectItems(SORT_FIELDS);
