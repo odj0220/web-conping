@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goBack } from '$lib/utils/goto';
-  
+
   import SubHeader from '$component/SubHeader.svelte';
 
   export let title = '';
@@ -20,7 +20,6 @@
       break;
     }
   }
-
 </script>
 
 <svelte:window bind:scrollY={y} />
