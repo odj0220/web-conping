@@ -1,64 +1,131 @@
 <script lang="ts">
   import { graphqlApi } from '$lib/_api';
   
-  import type { IProduct } from 'src/global/types';
-  
-  import MainHeaderContainer from './MainHeaderContainer.svelte';
-  
+  import { SORT_FIELDS } from '$lib/contants';
+
   import Container from '$component/common/layout/Container.svelte';
   import Spinner from '$component/common/shared/Spinner.svelte';
+  import LayoutPopup from '$component/common/layout/LayoutPopup.svelte';
+  
+  import SelectPopup from '$component/SelectPopup.svelte';
   import ShopList from '$component/ShopList.svelte';
-  import Sorter from '$component/Sorter.svelte';
-  import Dimmend from '$component/common/layout/Dimmend.svelte';
+  import ShopNavbar from './ShopNavbar.svelte';
 
+  let sort = Object.keys(SORT_FIELDS)[0];
+  let isPopupVisible = false;
+  let category: string;
 
-  let products: IProduct[] = [];
-  let list: IProduct[] = [];
-  let sort = 'latest';
-
-  const getProducts = async (sortField: string) => {
-    console.log('//TODO: sort .. ', sortField);
+  const getProducts = async (order = '', category = '') => {
+    //TODO: category 수정
+  
+    const parameter = `
+      order:${order}
+    `;
 
     const query = `{
-        products {
+      products(${parameter}) {
+        id
+        name
+        brand
+        image
+        price
+        relatedItems {
+          thumbnail
+          title
+          type
           id
-          name
-          price
-          image
-          brand
         }
-      }`;
+      }
+    }`;
 
-    const { data: { products } } = await graphqlApi(query);
+    const {
+      data: {
+        products,
+      },
+    } = await graphqlApi(query);
 
     return products;
   };
 
-  const sortHandler = (sort: string) => {
-    switch (sort) {
-    case '인기순': list = products;
-    }
-  };
-
-  function handleSorterClick() {
-    console.log('click');
+  function openPopup() {
+    isPopupVisible = true;
   }
 
-  const sorter = [
+  function closePopup() {
+    isPopupVisible = false;
+  }
+
+  function handleClickSelectButton(sortField: string) {
+    sort = sortField;
+  }
+
+  function setSelectItems(sortFieldsObject: { [index: string]: string }) {
+    return Object
+      .keys(sortFieldsObject)
+      .map(item => {
+        return {
+          value: item,
+          name: SORT_FIELDS[item],
+        };
+      });
+  }
+
+  let tabItems = [
     {
-      name: '인기순',
-      handler: sortHandler,
+      label: '전체',
+      value: 'all',
+      index: 0,
+    },
+    {
+      label: '여성패션',
+      value: 'womenfashion',
+      index: 1,
+    },
+    {
+      label: '화장품/미용',
+      value: 'cosmeticbeauty',
+      index: 2,
+    },
+    {
+      label: '가구/인테리어',
+      value: 'interior',
+      index: 3,
+    },
+    {
+      label: '출산',
+      value: 'angels',
+      index: 4,
     },
   ];
+
+  function handleClickTab(selectedTab: string) {
+    category = selectedTab;
+  }
+
+  $:selectItems = setSelectItems(SORT_FIELDS);
+  $:sortedName = SORT_FIELDS[sort];
 </script>
 
 {#await getProducts(sort)}
   <Spinner /> 
 {:then products}
-  <MainHeaderContainer title="쇼핑존" />
+  <ShopNavbar
+    items={tabItems}
+    onClickTab={handleClickTab}
+    sort={sortedName}
+    onClickSort={openPopup}
+  />
   <Container >
-    <Sorter {sort} onClick={handleSorterClick} />
     <ShopList {products}/>
   </Container>
-  <Dimmend />
+  
+  <LayoutPopup visible={isPopupVisible}>
+    <SelectPopup
+      title='정렬 기준'
+      onClickSelectButton={handleClickSelectButton}
+      onClickCloseButton={closePopup}
+      selected={sort}
+      selectItems={selectItems}
+    />
+  </LayoutPopup>
 {/await}

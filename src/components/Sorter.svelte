@@ -12,9 +12,12 @@
 
 <style lang="scss">
   .sorter {
-    padding: 0.8rem 0;
+    height: 50%;
+    padding: 0 1.6rem;
     display: flex;
     align-items: center;
+    white-space: nowrap;
+    
     .sort {
       margin-left: 0.4rem;
       @include caption2-400;

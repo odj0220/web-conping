@@ -1,67 +1,49 @@
 <script lang="ts">
-  import type { SvelteComponent } from 'svelte';
+  import type { ITabItem } from 'src/global/types';
 
-  interface tabItem {
-    label: string,
-    index: number,
-    component: SvelteComponent,
-  }
-
-  export let id: any;
-  export let items: tabItem[];
-  export let programTitle = '';
-  export let borderBottom = false;
-  export let sticky = false;
+  export let items: ITabItem[];
+  export let onClickTab: (category: ITabItem) => void;
 
   $: selectedTab = items[0];
-  
-  function onActiveTabitem(tabItem: tabItem) {
+
+  function onActiveTabitem(tabItem: ITabItem) {
     selectedTab = tabItem;
+  
+    onClickTab(selectedTab);
   }
 
 </script>
 
-<div class="tab-container">
-  <ul class="tab-header" class:borderBottom={borderBottom} class:sticky={sticky}>
-    {#each items as item, i}
-      <li class={`tab-item ${selectedTab.index === i ? 'active' : ''}`} on:click={onActiveTabitem(item)}>
-        {item.label}
-      </li>
-    {/each}
-  </ul>
-
-  <div class="tab-contents">
-    <svelte:component this={selectedTab.component} {id} {programTitle}/>
-  </div>
-</div>
+<ul>
+  {#each items as item, index}
+    <li
+      class:active={selectedTab.index === index}
+      on:click={onActiveTabitem(item)}
+    >
+      {item.label}
+    </li>
+  {/each}
+</ul>
 
 <style lang="scss">
-.tab-container {
-  position: relative;
-  .tab-header {
+  ul {
     display: flex;
     padding: 0 1.6rem;
     margin-bottom: 2.4rem;
-    &.borderBottom {
-      border-bottom: 1px solid $bg-gray-32;
-      margin-bottom: 0;
-    }
-    &.sticky {
-      position: sticky;
-      top: 5.4rem;
-      background-color: $default-black;
-      z-index: 100;
-      padding-top: 1.7rem;
-    }
-    .tab-item {
+    border-bottom: 1px solid $bg-gray-32;
+    margin-bottom: 4rem;
+
+    li {
       @include body1-400;
       color: $disabled-8a;
       position: relative;
       transition: all 0.3s;
       padding-bottom: 0.8rem;
+
       &:not(:last-child) {
         margin-right: 2rem;
       }
+
       &:after {
         content: "";
         position: absolute;
@@ -74,6 +56,7 @@
         background-color: $text-white-f2;
         transition: all 0.3s;
       }
+
       &.active {
         @include body1-700;
         color: $text-white-f2;
@@ -84,8 +67,4 @@
       }
     }
   }
-  .tab-contents {
-    // padding: 0 1.6rem;
-  }
-}
 </style>
