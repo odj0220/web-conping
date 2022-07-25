@@ -8,7 +8,7 @@
   import Spinner from '$component/common/shared/Spinner.svelte';
   import ImageListView from '$component/ImageListView.svelte';
   import Container from '$component/common/layout/Container.svelte';
-import EmptyMessage from '$component/common/shared/EmptyMessage.svelte';
+  import EmptyMessage from '$component/common/shared/EmptyMessage.svelte';
 
   export let id: string;
   export let category: string;
@@ -54,7 +54,7 @@ import EmptyMessage from '$component/common/shared/EmptyMessage.svelte';
   {/if}
 {:catch error}
   <p class="error-message">
-    {programTitle} 에피소드 데이터를 <br/>
+    {category} 에피소드 데이터를 <br/>
     가져오는데 실패하였습니다.
   </p>
 {/await}

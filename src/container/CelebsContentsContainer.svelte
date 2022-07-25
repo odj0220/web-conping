@@ -39,7 +39,6 @@
       }
     }`;
 
-    
     const { data: { getContentsByCelebId } } = await graphqlApi(query);
 
     return getContentsByCelebId;
@@ -60,10 +59,10 @@
           <MoreButton value={`${category} 콘텐츠 더보기`} margin="1.6rem 0 0" />
         {/if}
       </Container>
-    {:else} 
+    {:else}
       <Container margin="5.6rem 0 0">
         <PreviewVideos
-          {contents}       
+          {contents}
           {end}
           {cursor}
           onClick={gotoContents}
