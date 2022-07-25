@@ -5,6 +5,7 @@
 
   export let contents: IContent[] = [];
   export let onClick: (id: string) => void;
+
 </script>
 
 <section>
@@ -20,10 +21,9 @@
     ul {
       display: flex;
       flex-direction: column;
-      flex-wrap: wrap;
-      justify-content: space-between;
+      flex-wrap: 'wrap';
+      justify-content: 'space-between';
       gap: 1.2rem;
-      margin-bottom: 1.2rem;
     }
   }
 </style>

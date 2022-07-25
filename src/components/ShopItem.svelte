@@ -9,7 +9,7 @@
 </script>
 
 <li class="shop-item">
-  <Thumbnail src={image} width="15.6rem" height="15.6rem"/>
+  <Thumbnail src={image} width="15.6rem" height="15.6rem" alt={name}/>
   <div class="info">
     <div class="info-top">
       <span class="brand">{brand}</span>

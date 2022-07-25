@@ -31,23 +31,23 @@
 </script>
 
 <section class="swiper-container">
-    <Swiper
-            pagination={{ clickable: true }}
-            spaceBetween={0}
-            loop={false}
-            autoplay={{ deplay: 1000 }}
-            elementClass="main-banner"
-            slideToClickedSlide={true}
-            on:click={handleClick}
-    >
-        {#each banners as banner}
-            <SwiperSlide>
-                <section class="banner-wrapper">
-                    <img src={banner.imgPath} alt="{banner.title}">
-                </section>
-            </SwiperSlide>
-        {/each}
-    </Swiper>
+  <Swiper
+    pagination={{ clickable: true }}
+    spaceBetween={0}
+    loop={false}
+    autoplay={{ deplay: 1000 }}
+    elementClass="main-banner"
+    slideToClickedSlide={true}
+    on:click={handleClick}
+  >
+    {#each banners as banner}
+      <SwiperSlide>
+        <section class="banner-wrapper">
+          <img src={banner.imgPath} alt="{banner.title}">
+        </section>
+      </SwiperSlide>
+    {/each}
+  </Swiper>
 </section>
 
 <style lang="scss">

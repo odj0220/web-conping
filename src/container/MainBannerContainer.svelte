@@ -1,26 +1,29 @@
 <script lang="ts">
-import { onMount, SvelteComponent } from 'svelte';
-import { graphqlApi } from '../lib/_api';
-import Container from '$component/common/layout/Container.svelte';
-let Banners: SvelteComponent;
+  import { onMount, SvelteComponent } from 'svelte';
 
-let banners = [];
+  import { graphqlApi } from '../lib/_api';
 
-onMount(async () => {
-  await loadBannersComponenrt();
-  await loadBannersData();
-});
+  import Container from '$component/common/layout/Container.svelte';
 
-async function loadBannersComponenrt() {
-  const module = await import('$component/Banners.svelte');
-  Banners = module.default;
-}
+  let Banners: SvelteComponent;
 
-async function loadBannersData() {
-  const query = '{getBanners{title imgPath link {to openBrowser}}}';
-  const { data: { getBanners } } = await graphqlApi(query);
-  banners = getBanners;
-}
+  let banners = [];
+
+  onMount(async () => {
+    await loadBannersComponenrt();
+    await loadBannersData();
+  });
+
+  async function loadBannersComponenrt() {
+    const module = await import('$component/Banners.svelte');
+    Banners = module.default;
+  }
+
+  async function loadBannersData() {
+    const query = '{getBanners{title imgPath link {to openBrowser}}}';
+    const { data: { getBanners } } = await graphqlApi(query);
+    banners = getBanners;
+  }
 </script>
 
 <Container type="full">

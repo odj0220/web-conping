@@ -1,33 +1,29 @@
-<script lang=ts>
+<script lang="ts">
   import { graphqlApi } from '$lib/_api';
-
-  import type { IProgram } from 'src/global/types';
-  
-  import Container from '$component/common/layout/Container.svelte';
-  import Metadata from '$component/Metadata.svelte';
-  import Tabs from '$component/Tabs.svelte';
 
   import EpisodeContainer from './EpisodeContainer.svelte';
   import HighlightContainer from './HighlightContainer.svelte';
   import ShortsContainer from './ShortsContainer.svelte';
   import SubHeaderContainer from './SubHeaderContainer.svelte';
+  import Container from '$component/common/layout/Container.svelte';
+  import Metadata from '$component/Metadata.svelte';
+  import Tabs from '$component/common/layout/Tabs.svelte';
+  
+  import type { IProgram } from 'src/global/types';
 
   export let id: string;
 
   let items = [
     { label: '에피소드',
       index: 0,
-      props: { id },
       component: EpisodeContainer,
     },
     { label: '하이라이트',
       index: 1,
-      props: { id },
       component: HighlightContainer,
     },
     { label: '쇼츠',
       index: 2,
-      props: { id },
       component: ShortsContainer,
     },
   ];
@@ -91,16 +87,16 @@
 </script>
 
 {#await loadData()}
-{:then { program, metaDataOption }}
+{:then {program, celobs, metaDataOption}}
   <SubHeaderContainer title={program.title} />
-  <Container type="full">
+  <Container type="full" margin="0 0 4rem">
     <section class="thumbnail-wrapper">
       <img class="thumbnail" src={program.banner} alt=""/>
     </section>
 
     <Metadata option={metaDataOption}/>
 
-    <Tabs {items} programTitle={program.title}/>
+    <Tabs {items} programTitle={program.title} {id}/>
   </Container>
 {/await}
 
@@ -129,4 +125,4 @@
   }
 </style>
 
-    
+  
