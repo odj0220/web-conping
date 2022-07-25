@@ -39,7 +39,7 @@
   <Spinner />
 {:then contents}
   {#if contents.length}
-    <Container margin="0">
+    <Container margin="2.4rem 0 4rem">
       <ShortsGridVodList
               {contents}
               onClick={gotoShorts}

@@ -2,6 +2,7 @@
   import { graphqlApi } from '$lib/_api';
 
   import { openBrowser } from '$lib/util';
+  import { gotoContents } from '$lib/utils/goto';
   
   import Container from '$component/common/layout/Container.svelte';
   import MoreButton from '$component/common/shared/MoreButton.svelte';
@@ -9,11 +10,11 @@
   import Title from '$component/Title.svelte';
 
   import type { TitleElement } from 'src/global/types';
-import { gotoContents } from '$lib/utils/goto';
 
   export let id: string;
   export let moreButton: boolean;
   export let title : TitleElement[] = [];
+  export let category: string;
 
   const onClickButton = () => {
     openBrowser('https://www.naver.com');
@@ -40,13 +41,15 @@ import { gotoContents } from '$lib/utils/goto';
 
 {#await getData()}
 {:then data} 
-{#if data.length}
+{#if data?.length}
   <Container margin="5.6rem 0 0">
     <Title title={title} />
     <PreviewVideos contents={data} onClick={gotoContents}/>
+
     {#if moreButton}
       <MoreButton value="유튜브 보러가기" onClick={onClickButton}/>
     {/if}
+    
   </Container>
 {/if}
 {/await}

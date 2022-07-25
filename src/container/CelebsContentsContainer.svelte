@@ -15,6 +15,7 @@
   export let id : string;
   export let title : TitleElement[] = [];
   export let moreButton: boolean;
+  export let category: string;
 
   let end = false;
   let cursor = '';
@@ -41,7 +42,6 @@
     
     const { data: { getContentsByCelebId } } = await graphqlApi(query);
 
-    console.log("getContentsByCelebId",getContentsByCelebId)
     return getContentsByCelebId;
   };
 
@@ -57,7 +57,7 @@
         <Title title={title} />
         <ImageListView contents={[...contents].slice(0, 4)} onClick={gotoContents}/>
         {#if moreButton && contents.length > 4}
-          <MoreButton value="서울리안 콘텐츠 더보기" margin="1.6rem 0 0" />
+          <MoreButton value={`${category} 콘텐츠 더보기`} margin="1.6rem 0 0" />
         {/if}
       </Container>
     {:else} 
@@ -73,8 +73,9 @@
       </Container>
     {/if}
   {:else}
-    {#if title.length = 0}
-    <EmptyMessage text="서울리안 님의 콘텐츠" />
+    {#if title.length}
+    {:else}
+    <EmptyMessage text={`${category}님의 콘텐츠`} />
     {/if}
   {/if}
 {/await}

@@ -12,10 +12,11 @@
   export let title : TitleElement[] = [];
   export let id : string;
   export let moreButton: boolean;
+  export let category: string;
 
   const getData = async () => {
     const query = `{
-      getProductByCelebId (id: "${id}", limit: 4) {
+      getProductByCelebId (id: "${id}") {
           id
           name
           brand
@@ -39,18 +40,21 @@
     <Container margin="5.6rem 0 0">
       {#if title.length}
         <Title title={title}/>
+        <ProductGridList data={[...data].slice(0, 4)}/>
+        {:else}
+        <ProductGridList {data}/>
       {/if}
 
-      <ProductGridList {data}/>
 
       {#if moreButton && data.length > 4}
-        <MoreButton value="서울리안 상품 더보기"/>
+        <MoreButton value={`${category} 상품 더보기`}/>
       {/if}
     </Container>
     {:else}
     {#if title.length}
+    
     {:else}
-      <EmptyMessage text="서울리안 님의 상품" />
+      <EmptyMessage text={`${category}님의 상품`} />
     {/if}
   {/if}
 {/await}

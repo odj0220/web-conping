@@ -15,6 +15,7 @@
   export let id : string;
   export let title : TitleElement[] = [];
   export let moreButton: boolean;
+  export let category: string;
 
   const getData = async () => {
     const query = `{
@@ -47,7 +48,7 @@
         <ShortsVodList {contents} onClick={gotoShorts} />
 
         {#if moreButton && contents.length > 4}
-          <MoreButton value="서울리안 쇼츠 더보기" margin="1.6rem 1.6rem 0"/>
+          <MoreButton value={`${category} 쇼츠 더보기`} margin="1.6rem 1.6rem 0"/>
         {/if}
 
       </Container>
@@ -59,7 +60,7 @@
   {:else}
     {#if title.length}
     {:else}
-    <EmptyMessage text="서울리안 님의 쇼츠" />
+    <EmptyMessage text={`${category}님의 쇼츠`} />
     {/if}
   {/if}
 {/await}

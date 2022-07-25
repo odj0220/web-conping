@@ -43,7 +43,7 @@ import EmptyMessage from '$component/common/shared/EmptyMessage.svelte';
   <Spinner />
 {:then contents}
   {#if contents.length}
-    <Container margin="0">
+    <Container margin="2.4rem 0 4rem">
       <ImageListView
         {contents}
         onClick={handleClickContents}

@@ -48,7 +48,7 @@
   <Spinner />
 {:then {contents, end, cursor}}
   {#if contents.length}
-    <Container margin="0">
+    <Container margin="2.4rem 0 4rem">
       <PreviewVideos
         contents={contents}
         end={end}
