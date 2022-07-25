@@ -62,7 +62,6 @@
   };
   
   const setMetadataOption = (content: any, celebs: any[]) => {
-    console.log('content', content);
     const newData = {
       contentDetail: {
         title: content.title,

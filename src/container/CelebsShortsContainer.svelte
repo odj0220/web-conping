@@ -31,7 +31,6 @@
 
     const { data: {getContentsByCelebId} } = await graphqlApi(query);
 
-    console.log("getContentsByCelebId",getContentsByCelebId)
     return getContentsByCelebId;
   };
 

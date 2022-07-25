@@ -26,16 +26,5 @@
 <svelte:window bind:scrollY={y} />
 
 {#key y}
-  <div class={y > 0 ? 'color' : ''}>
-    <SubHeader {title} {share} onClick={handleClickButton} {type} />
-  </div>
+  <SubHeader {title} {share} onClick={handleClickButton} {type} color={y > 0 ? true : false}/>
 {/key}
-
-<style lang="scss">
-  div {
-
-
-    &.color {
-    }
-  }
-</style>
