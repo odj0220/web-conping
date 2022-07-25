@@ -29,7 +29,7 @@
       }
     }`;
 
-    const { data: {getContentsByCelebId} } = await graphqlApi(query);
+    const { data: { getContentsByCelebId } } = await graphqlApi(query);
 
     return getContentsByCelebId;
   };
