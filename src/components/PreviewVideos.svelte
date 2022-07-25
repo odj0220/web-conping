@@ -19,7 +19,7 @@
   export let contents: IContent[] = [];
   export let end: boolean;
   export let cursor: string;
-  export let onClick: (id: string) => void;
+  export let onClick: (id: number) => void;
   export let infiniteScroll = false;
   export let autoPlay = false;
 

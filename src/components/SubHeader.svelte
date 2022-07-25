@@ -45,7 +45,6 @@
     background-color: $default-black;
     padding-top: constant(safe-area-inset-top);
     padding-top: env(safe-area-inset-top);
-    transition: all 0.3s;
     &.transparent {
       position: fixed;
       top: 0;

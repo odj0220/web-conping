@@ -3,35 +3,43 @@
 
   export let items: ITabItem[];
   export let onClickTab: (category: ITabItem) => void;
-
-  $: selectedTab = items[0];
-
-  function onActiveTabitem(tabItem: ITabItem) {
-    selectedTab = tabItem;
-  
-    onClickTab(selectedTab);
-  }
+  export let selectedTab: any;
+  export let borderBottom = false;
+  export let sticky = false;
+  export let category = '';
 
 </script>
 
-<ul>
-  {#each items as item, index}
-    <li
-      class:active={selectedTab.index === index}
-      on:click={onActiveTabitem(item)}
-    >
-      {item.label}
-    </li>
-  {/each}
-</ul>
+<div class="tab-container">
+  <ul class="tab-header" class:sticky={sticky} class:borderBottom={borderBottom}>
+    {#each items as item, index}
+      <li
+        class:active={selectedTab.index === index}
+        on:click={onClickTab(item)}
+      >
+        {item.label}
+      </li>
+    {/each}
+  </ul>
+  <div class="tab-contents">
+    <slot>
+      <svelte:component this={selectedTab.component} category={category}/>
+    </slot>
+  </div>
+</div>
 
 <style lang="scss">
-  ul {
+  .tab-header {
     display: flex;
     padding: 0 1.6rem;
-    margin-bottom: 2.4rem;
-    border-bottom: 1px solid $bg-gray-32;
-    margin-bottom: 4rem;
+
+    &.borderBottom {
+      border-bottom: 1px solid $bg-gray-32;
+    }
+    &.sticky {
+      position: sticky;
+      top: 5.4rem;
+    }
 
     li {
       @include body1-400;

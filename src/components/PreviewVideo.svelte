@@ -60,7 +60,7 @@
 
   export let content: IContent;
   export let order = 0;
-  export let onClick: (id: string) => void;
+  export let onClick: (id: number) => void;
   export let autoPlay: boolean;
 
   const playerId = guid();
