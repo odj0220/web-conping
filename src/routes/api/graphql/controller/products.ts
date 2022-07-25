@@ -6,9 +6,21 @@ import type { Product, VideoContent } from '$lib/models/backend/backend';
 import type { IProduct } from '../../../../global/types';
 import { GET } from '$lib/_api';
 import { convertProduct } from './util';
+import { getParams } from '../../../../lib/utils/common';
 
-export const products = ({ order, category }: {order: string, category: string}) => {
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+export const products = async ({ order, category }: {order: string, category: string}) => {
   let data: any[] = productJson;
+
+  const query: any = {
+    sort: JSON.stringify([{ 'id': 'asc' }]),
+    videoContent: true,
+    celeb: true,
+  };
+
+  const products = await getProductsFromBackend(query);
+  console.log(products);
 
   data = data.map((product) => {
     const relations: any[] = relationJson.filter((r) => r.product === product.id);
@@ -105,3 +117,20 @@ export const getProductByCelebId = ({ id, limit }: { id: string, limit: number }
   }
   return products;
 };
+
+async function getProductsFromBackend(params?: {size?: number; page?: number; sort?: string; videoContent?: boolean; productCategoryId: number; celeb: boolean}) {
+  let queries = '';
+
+  if (params) {
+    queries = getParams(params);
+  }
+
+  const response = await fetch(`${BASE_URL}/product${queries ? `?${queries}` : ''}`);
+
+  if (response.ok) {
+    const products = await response.json();
+    return products;
+  }
+
+  throw { message: 'Something went wrong' };
+}
