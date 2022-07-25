@@ -3,10 +3,11 @@
 
   import { goto } from '$app/navigation';
 
-  import type { IContent } from 'src/global/types';
-
   import Spinner from '$component/common/shared/Spinner.svelte';
   import ShortsGridVodList from '$component/ShortsGridVodList.svelte';
+  
+  import type { IContent } from 'src/global/types';
+import Container from '$component/common/layout/Container.svelte';
 
   export let id: string;
   export let programTitle: string;
@@ -41,10 +42,12 @@
   <Spinner />
 {:then contents}
   {#if contents.length}
-    <ShortsGridVodList
-            {contents}
-            onClick={handleClickShorts}
-    />
+    <Container margin="0">
+      <ShortsGridVodList
+              {contents}
+              onClick={handleClickShorts}
+      />
+    </Container>
     {:else}
     <p class="empty-message">
       {programTitle} 쇼츠는 준비중입니다. <br/>

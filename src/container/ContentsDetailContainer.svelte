@@ -1,14 +1,15 @@
 <script lang="ts">
   import { graphqlApi } from '../lib/_api';
 
-  import type { YouTubePlayer } from 'youtube-player/dist/types';
-  import type { IContent } from 'src/global/types';
+  import { goto } from '$app/navigation';
 
   import SubHeaderContainer from './SubHeaderContainer.svelte';
   import Player from '$component/Player.svelte';
   import Metadata from '$component/Metadata.svelte';
   import ContentDetailAnotherVideosContainer from '$component/ContentDetailAnotherVideosContainer.svelte';
-  import { goto } from '$app/navigation';
+
+  import type { YouTubePlayer } from 'youtube-player/dist/types';
+  import type { IContent } from 'src/global/types';
 
   export let id: string;
 
@@ -59,7 +60,7 @@
     content = result?.data?.content;
     metaDataOption = setMetadataOption(content, celebs);
   };
-
+  
   const setMetadataOption = (content: any, celebs: any[]) => {
     const newData = {
       contentDetail: {
@@ -77,14 +78,8 @@
     return newData;
   };
 
-  const setPlayer = (event) => {
+  const setPlayer = (event: any) => {
     player = event.detail.player;
-  };
-
-  const setCurrentTime = (num: number) => {
-    if (player && player.seekTo) {
-      player.seekTo(num, true);
-    }
   };
 
   const onClickTitle = (id: string) => {
@@ -97,9 +92,9 @@
 {:then data}
   <SubHeaderContainer title='{content?.program.title} {content?.episode}화' />
   <div class="container">
-      <Player content={content} on:get-player={setPlayer}/>
-  
-      <Metadata option={metaDataOption} {onClickTitle}/>
+    <Player content={content} on:get-player={setPlayer}/>
+
+    <Metadata option={metaDataOption} {onClickTitle}/>
 
     <ContentDetailAnotherVideosContainer contentId={id}/>
   </div>

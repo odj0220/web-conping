@@ -1,67 +1,67 @@
 <script lang="ts">
-    import Title from './Title.svelte';
-    import PreviewVideos from './PreviewVideos.svelte';
-    import { graphqlApi } from '../lib/_api';
-    import { goto } from '$app/navigation';
+  import Title from './Title.svelte';
+  import PreviewVideos from './PreviewVideos.svelte';
+  import { graphqlApi } from '../lib/_api';
+  import { goto } from '$app/navigation';
 
 
-    export let contentId: string;
+  export let contentId: string;
 
-    function createTitle(programName: string) {
-      const title = [
-        {
-          text: `#${programName}`,
-          type: 'primary-10',
-          style: 'color: #FF70E2;',
-        },
-        {
-          text: '다른 영상',
-        },
-      ];
+  function createTitle(programName: string) {
+    const title = [
+      {
+        text: `#${programName}`,
+        type: 'primary-10',
+        style: 'color: #FF70E2;',
+      },
+      {
+        text: '다른 영상',
+      },
+    ];
 
-      return title;
-    }
+    return title;
+  }
 
-    async function loadAnotherContents() {
-      const query = `{getProgramContentsByContentId(id:"${contentId}"){id title programId createDt episode description thumb program {id title thumbnail}}}`;
-      const { data: { getProgramContentsByContentId } } = await graphqlApi(query);
-      const contents: {data: any[]; end: boolean; cursor: string} = {
-        data: getProgramContentsByContentId,
-        end: true,
-        cursor: '',
-      };
-      const programTitle = getProgramContentsByContentId[0].program.title;
-      const programId = getProgramContentsByContentId[0].program.id;
-    
-      return {
-        programTitle,
-        programId,
-        contents,
-      };
-    }
+  async function loadAnotherContents() {
+    const query = `{getProgramContentsByContentId(id:"${contentId}"){id title programId createDt episode description thumb program {id title thumbnail}}}`;
+    const { data: { getProgramContentsByContentId } } = await graphqlApi(query);
+    const contents: {data: any[]; end: boolean; cursor: string} = {
+      data: getProgramContentsByContentId,
+      end: true,
+      cursor: '',
+    };
+    const programTitle = getProgramContentsByContentId[0].program.title;
+    const programId = getProgramContentsByContentId[0].program.id;
+  
+    return {
+      programTitle,
+      programId,
+      contents,
+    };
+  }
 
-    function handleClickContents(id: string) {
-      goto(`/contents/${id}`, {
-        replaceState: false,
-      });
-    }
+  function handleClickContents(id: string) {
+    goto(`/contents/${id}`, {
+      replaceState: false,
+    });
+  }
 </script>
 
 {#await loadAnotherContents()}
 {:then {programTitle, programId, contents}}
-    <section class="divider"></section>
-    <section class="layout">
-        <Title title={createTitle(programTitle)}/>
-        <PreviewVideos
-                contents={contents.data}
-                end={contents.end}
-                cursor={contents.cursor}
-                onClick={handleClickContents}
-        />
-        <a class="link" href={'/programs/' + programId}>
-            {programTitle} 시리즈 보러가기
-        </a>
-    </section>
+  <section class="divider"></section>
+  <section class="layout">
+      <Title title={createTitle(programTitle)}/>
+      <PreviewVideos
+              contents={contents.data}
+              end={contents.end}
+              cursor={contents.cursor}
+              onClick={handleClickContents}
+      />
+      <a class="link" href={'/programs/' + programId}>
+          {programTitle} 시리즈 보러가기
+      </a>
+  </section>
 {/await}
 
 

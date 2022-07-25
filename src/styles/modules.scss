@@ -18,3 +18,12 @@
     display: none;
   }
 }
+
+@mixin gridItem($columnGap, $rowGap) {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  column-gap: $columnGap;
+  row-gap: $rowGap;
+}

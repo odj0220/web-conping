@@ -4,6 +4,11 @@
   import Container from '$component/common/layout/Container.svelte';
   import Tabs from '$component/common/layout/Tabs.svelte';
   import CelebsProfile from '$component/CelebsProfile.svelte';
+  import CelebsAllContentsContainer from './CelebsAllContentsContainer.svelte';
+  import CelebsProductContainer from './CelebsProductContainer.svelte';
+  import CelebsContentsContainer from './CelebsContentsContainer.svelte';
+  import CelebsShortsContainer from './CelebsShortsContainer.svelte';
+  import SubHeaderContainer from './SubHeaderContainer.svelte';
 
   export let id: string;
 
@@ -13,7 +18,6 @@
         celeb(id:"${id}"){
           name
           description
-          categories
           thumbnail
         }
       }
@@ -26,26 +30,22 @@
     {
       label: '전체',
       index: 0,
-      component: '',
-      props: {},
+      component: CelebsAllContentsContainer,
     },
     {
       label: '상품',
       index: 1,
-      component: '',
-      props: {},
+      component: CelebsProductContainer,
     },
     {
       label: '콘텐츠',
       index: 2,
-      component: '',
-      props: '',
+      component: CelebsContentsContainer,
     },
     {
       label: '쇼츠',
       index: 3,
-      component: '',
-      props: '',
+      component: CelebsShortsContainer,
     },
   ];
 
@@ -53,8 +53,9 @@
 
 {#await getData()}
 {:then data} 
-<Container margin="0" type="full">
-  <CelebsProfile {data}/>
-  <Tabs items={tabItems} borderBottom={true}/>
-</Container>  
+  <Container margin="0 0 9.4rem" type="full">
+    <SubHeaderContainer type="transparent" share={true} />
+    <CelebsProfile {data}/>
+    <Tabs items={tabItems} borderBottom={true} {id} sticky={true} />
+  </Container>  
 {/await}

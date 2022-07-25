@@ -1,5 +1,4 @@
 import { launchWeb } from './_app_communication';
-import { goto } from '$app/navigation';
 
 export const guid = () => {
   const _s4 = () => {
@@ -47,16 +46,4 @@ export const openBrowser = (url: string, header?: string) => {
 export const appCheck = () => {
   const win: any = window;
   return win['flutter_inappwebview'] ? true : false;
-};
-
-export const gotoPrograms = (id: string) => {
-  goto(`/programs/${id}`);
-};
-
-export const goLink = (path: string) => {
-  goto(path);
-};
-
-export const goBack = () => {
-  history.go(-1);
 };
