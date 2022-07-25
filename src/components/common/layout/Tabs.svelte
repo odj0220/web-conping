@@ -1,62 +1,49 @@
 <script lang="ts">
-  import type { SvelteComponent } from 'svelte';
+  import type { ITabItem } from 'src/global/types';
 
-  interface tabItem {
-    label: string,
-    index: number,
-    component: SvelteComponent,
-    props: any,
-  }
-
-  export let items: tabItem[];
-  export let programTitle = '';
-  export let borderBottom = false;
-  export let onClickTab: (category: string) => void;
+  export let items: ITabItem[];
+  export let onClickTab: (category: ITabItem) => void;
 
   $: selectedTab = items[0];
-  $: selectedProps = { ...selectedTab.props, programTitle };
-  
-  function onActiveTabitem(tabItem: tabItem) {
+
+  function onActiveTabitem(tabItem: ITabItem) {
     selectedTab = tabItem;
-    onClickTab(selectedTab.value);
+  
+    onClickTab(selectedTab);
   }
 
 </script>
 
-<div class="tab-conatainer">
-  <ul class="tab-header" class:borderBottom={'borderBottom'}>
-    {#each items as item, i}
-      <li class={`tab-item ${selectedTab.index === i ? 'active' : ''}`} on:click={onActiveTabitem(item)}>
-        {item.label}
-      </li>
-    {/each}
-  </ul>
-
-  <div class="tab-contents">
-    <svelte:component this={selectedTab.component} {...selectedProps}/>
-  </div>
-</div>
+<ul>
+  {#each items as item, index}
+    <li
+      class:active={selectedTab.index === index}
+      on:click={onActiveTabitem(item)}
+    >
+      {item.label}
+    </li>
+  {/each}
+</ul>
 
 <style lang="scss">
-.tab-conatainer {
-  padding: 0 0 4rem;
-  .tab-header {
+  ul {
     display: flex;
     padding: 0 1.6rem;
     margin-bottom: 2.4rem;
-    &.borderBottom {
-      border-bottom: 1px solid $bg-gray-32;
-      margin-bottom: 4rem;
-    }
-    .tab-item {
+    border-bottom: 1px solid $bg-gray-32;
+    margin-bottom: 4rem;
+
+    li {
       @include body1-400;
       color: $disabled-8a;
       position: relative;
       transition: all 0.3s;
       padding-bottom: 0.8rem;
+
       &:not(:last-child) {
         margin-right: 2rem;
       }
+
       &:after {
         content: "";
         position: absolute;
@@ -69,6 +56,7 @@
         background-color: $text-white-f2;
         transition: all 0.3s;
       }
+
       &.active {
         @include body1-700;
         color: $text-white-f2;
@@ -79,8 +67,4 @@
       }
     }
   }
-  .tab-contents {
-    padding: 0 1.6rem;
-  }
-}
 </style>

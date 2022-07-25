@@ -1,3 +1,5 @@
+import type { SvelteComponent } from 'svelte';
+
 export interface IProgram {
   id?: string;
   title?: string;
@@ -77,4 +79,11 @@ export interface IProduct {
 export interface ISelectItem {
   name: string;
   value: string;
+}
+
+export interface ITabItem {
+  label: string,
+  index: number,
+  component: SvelteComponent,
+  props: any,
 }
