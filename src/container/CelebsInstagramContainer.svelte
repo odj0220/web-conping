@@ -10,12 +10,13 @@
   
   import type { TitleElement } from 'src/global/types';
 
+  export let id: string;
   export let moreButton: boolean;
   export let title : TitleElement[] = [];
 
   const getData = async () => {
     const query = `{
-      getSocialsByCelebId (id: "celeb1", type: instagram) {
+      getSocialsByCelebId (id: "${id}", type: instagram) {
         id
         type
         board_thumbnails

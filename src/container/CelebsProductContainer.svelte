@@ -15,7 +15,7 @@
 
   const getData = async () => {
     const query = `{
-      getProductByCelebId (id: "celeb17", limit: 4) {
+      getProductByCelebId (id: "${id}", limit: 4) {
           id
           name
           brand
@@ -35,8 +35,8 @@
 
 {#await promise}
 {:then data} 
-  <Container margin="5.6rem 0 0">
-    {#if data.length}
+  {#if data.length}
+    <Container margin="5.6rem 0 0">
       {#if title.length}
         <Title title={title}/>
       {/if}
@@ -46,8 +46,11 @@
       {#if moreButton && data.length > 4}
         <MoreButton value="서울리안 상품 더보기"/>
       {/if}
+    </Container>
+    {:else}
+    {#if title.length}
     {:else}
       <EmptyMessage text="서울리안 님의 상품" />
+    {/if}
   {/if}
-  </Container>
 {/await}

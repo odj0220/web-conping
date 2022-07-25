@@ -21,7 +21,7 @@
 
   const getData = async () => {
     const query = `{
-      getContentsByCelebId(id:"celeb17"){
+      getContentsByCelebId(id:"${id}"){
         id
         title
         subtitle
@@ -38,8 +38,10 @@
       }
     }`;
 
+    
     const { data: { getContentsByCelebId } } = await graphqlApi(query);
 
+    console.log("getContentsByCelebId",getContentsByCelebId)
     return getContentsByCelebId;
   };
 
@@ -49,30 +51,30 @@
 
 {#await promise}
 {:then contents}
-
-{#if contents.length}
-
-<Container margin="5.6rem 0 0">
-  {#if title.length}
-    <Title title={title}/>
-    <ImageListView contents={[...contents].slice(0, 4)} onClick={gotoContents}/>
-    {#if moreButton && contents.length > 4}
-      <MoreButton value="서울리안 콘텐츠 더보기" margin="1.6rem 0 0" />
+  {#if contents.length}
+    {#if title.length}
+      <Container margin="5.6rem 0 0">
+        <Title title={title} />
+        <ImageListView contents={[...contents].slice(0, 4)} onClick={gotoContents}/>
+        {#if moreButton && contents.length > 4}
+          <MoreButton value="서울리안 콘텐츠 더보기" margin="1.6rem 0 0" />
+        {/if}
+      </Container>
+    {:else} 
+      <Container margin="5.6rem 0 0">
+        <PreviewVideos
+          {contents}       
+          {end}
+          {cursor}
+          onClick={gotoContents}
+          infiniteScroll={false}
+          autoPlay={true}
+        />
+      </Container>
     {/if}
-  {:else} 
-    <PreviewVideos
-      {contents}       
-      {end}
-      {cursor}
-      onClick={gotoContents}
-      infiniteScroll={false}
-      autoPlay={true}
-    />
+  {:else}
+    {#if title.length = 0}
+    <EmptyMessage text="서울리안 님의 콘텐츠" />
+    {/if}
   {/if}
-  </Container>
-
-{:else}
-  <EmptyMessage text="서울리안 님의 콘텐츠" />
-{/if}
-
 {/await}

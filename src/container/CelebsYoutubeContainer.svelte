@@ -1,6 +1,6 @@
 <script lang="ts">
   import { graphqlApi } from '$lib/_api';
-  
+
   import { openBrowser } from '$lib/util';
   
   import Container from '$component/common/layout/Container.svelte';
@@ -9,7 +9,9 @@
   import Title from '$component/Title.svelte';
 
   import type { TitleElement } from 'src/global/types';
+import { gotoContents } from '$lib/utils/goto';
 
+  export let id: string;
   export let moreButton: boolean;
   export let title : TitleElement[] = [];
 
@@ -20,7 +22,7 @@
 
   const getData = async () => {
     const query = `{
-      getSocialsByCelebId (id: "celeb1", type: youtube) {
+      getSocialsByCelebId (id: "${id}", type: youtube) {
         id
         type
         board_thumbnails
@@ -37,13 +39,14 @@
 </script>
 
 {#await getData()}
-  
 {:then data} 
+{#if data.length}
   <Container margin="5.6rem 0 0">
     <Title title={title} />
-    <PreviewVideos contents={data}/>
+    <PreviewVideos contents={data} onClick={gotoContents}/>
     {#if moreButton}
-        <MoreButton value="유튜브 보러가기" onClick={onClickButton}/>
+      <MoreButton value="유튜브 보러가기" onClick={onClickButton}/>
     {/if}
   </Container>
+{/if}
 {/await}

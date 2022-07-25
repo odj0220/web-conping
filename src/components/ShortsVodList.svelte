@@ -4,7 +4,7 @@
   import ShortsVodItem from './ShortsVodItem.svelte';
 
   export let contents: IContent[] = [];
-  export let onClick: (id: string) => void;
+  export let onClick: (id: number) => void;
 
 </script>
 

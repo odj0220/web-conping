@@ -4,7 +4,7 @@
   import ListViewItem from './ListViewItem.svelte';
 
   export let contents: IContent[] = [];
-  export let onClick: (id: string) => void;
+  export let onClick: (id: number) => void;
 
 </script>
 
