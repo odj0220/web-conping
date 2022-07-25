@@ -42,7 +42,14 @@
           id
           name
           description
+          categories {
+            id
+            name
+            fontColor
+            backColor
+          }
           thumbnail
+          ba_thumbnail
         }
       }
     `;
