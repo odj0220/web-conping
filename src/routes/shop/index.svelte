@@ -1,10 +1,10 @@
 <script>
   import MainHeaderContainer from '$container/MainHeaderContainer.svelte';
 
-  import GlobalBlock from '$styles/GlobalBlock.svelte';
-  
+
   import ShopContainer from '$container/ShopContainer.svelte';
   import Footer from '$component/Footer.svelte';
+import GlobalBlock from '$component/common/layout/GlobalBlock.svelte';
 </script>
 
 <GlobalBlock>
