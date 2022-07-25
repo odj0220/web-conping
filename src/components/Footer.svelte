@@ -1,5 +1,9 @@
 <script lang="ts">
     import Icon from './icons/Icon.svelte';
+    import { page } from '$app/stores';
+    $: isHome = $page.url.pathname === '/';
+    $: isShop = $page.url.pathname === '/shop';
+    $: isCeleb = $page.url.pathname === '/celebs';
 </script>
 
 <footer>
@@ -7,19 +11,19 @@
         <ul>
             <li>
                 <a href="/">
-                    <Icon name="gnb_home"/>
+                    <Icon name={isHome ? 'gnb_home_on' : 'gnb_home_off'}/>
                 </a>
             </li>
 
             <li>
-                <a href="/">
-                    <Icon name="gnb_shop"/>
+                <a href="/shop">
+                    <Icon name={isShop ? 'gnb_shop_on' : 'gnb_shop_off'}/>
                 </a>
             </li>
 
             <li>
-                <a href="/">
-                    <Icon name="gnb_celeb"/>
+                <a href="/celebs">
+                    <Icon name={isCeleb ? 'gnb_celeb_on' : 'gnb_celeb_off'}/>
                 </a>
             </li>
         </ul>
@@ -32,6 +36,8 @@
       position: sticky;
       bottom: 0;
       left: 0;
+      background-color: $default-black;
+      z-index: 10;
       nav {
         width: 100%;
         ul {
