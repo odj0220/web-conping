@@ -84,5 +84,6 @@ export interface ISelectItem {
 export interface ITabItem {
   label: string;
   index: number;
-  component: SvelteComponent;
+  value?: string;
+  component?: SvelteComponent;
 }

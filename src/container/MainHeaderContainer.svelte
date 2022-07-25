@@ -7,7 +7,7 @@
   
   const BUTTONS = ['cs'];
 
-  function handleClickButton(type: string) {
+  function handleClickButton(type) {
     switch (type) {
     case 'cs':
       goto('/settings');
