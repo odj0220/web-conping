@@ -1,8 +1,9 @@
 <script lang="ts">
   import { graphqlApi } from '../lib/_api';
 
-  import { goto } from '$app/navigation';
+  import { gotoPrograms } from '$lib/utils/goto';
 
+  import Container from '$component/common/layout/Container.svelte';
   import SubHeaderContainer from './SubHeaderContainer.svelte';
   import Player from '$component/Player.svelte';
   import Metadata from '$component/Metadata.svelte';
@@ -10,7 +11,6 @@
 
   import type { YouTubePlayer } from 'youtube-player/dist/types';
   import type { IContent } from 'src/global/types';
-import Container from '$component/common/layout/Container.svelte';
 
   export let id: number;
 
@@ -83,9 +83,6 @@ import Container from '$component/common/layout/Container.svelte';
     player = event.detail.player;
   };
 
-  const onClickTitle = (id: string) => {
-    goto(`/programs/${id}`);
-  };
 </script>
 
 
@@ -95,7 +92,7 @@ import Container from '$component/common/layout/Container.svelte';
   <Container type="full" margin="0">
     <Player content={content} on:get-player={setPlayer}/>
 
-    <Metadata option={metaDataOption} {onClickTitle}/>
+    <Metadata option={metaDataOption} onClickTitle={gotoPrograms}/>
 
     <ContentDetailAnotherVideosContainer contentId={id}/>
   </Container>

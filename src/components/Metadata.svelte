@@ -3,7 +3,7 @@ import { SvelteComponent } from 'svelte';
 
 let PastTimeDelta: SvelteComponent;
 
-export let onClickTitle: (id: string) => void;
+export let onClickTitle: (id: number) => void;
 export let option: {
   programDetail?: {
     title?: string;
