@@ -49,6 +49,11 @@
     },
   ];
 
+  let selectedTab = tabItems[0];
+  function handleClickTab(clickedTab: any) {
+    selectedTab = clickedTab;
+  }
+
 </script>
 
 {#await getData()}
@@ -56,6 +61,13 @@
   <Container margin="0 0 9.4rem" type="full">
     <SubHeaderContainer type="transparent" share={true} />
     <CelebsProfile {data}/>
-    <Tabs items={tabItems} borderBottom={true} {id} sticky={true} />
+    <Tabs 
+      items={tabItems} 
+      {selectedTab} 
+      borderBottom={true} 
+      sticky={true} 
+      category={data.name}
+      onClickTab={handleClickTab}
+    />
   </Container>  
 {/await}

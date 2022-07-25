@@ -1,20 +1,17 @@
 <script lang=ts>
   import { graphqlApi } from '../lib/_api';
 
-  import { goto } from '$app/navigation';
+  import { gotoShorts } from '$lib/utils/goto';
 
   import Spinner from '$component/common/shared/Spinner.svelte';
   import ShortsGridVodList from '$component/ShortsGridVodList.svelte';
+  import Container from '$component/common/layout/Container.svelte';
+  import EmptyMessage from '$component/common/shared/EmptyMessage.svelte';
   
   import type { IContent } from 'src/global/types';
-import Container from '$component/common/layout/Container.svelte';
 
   export let id: string;
-  export let programTitle: string;
-
-  const handleClickShorts = (id: string) => {
-    goto(`/shorts/${id}`);
-  };
+  export let category: string;
 
   async function loadData(): Promise<IContent[]> {
     const query = `{
@@ -42,21 +39,18 @@ import Container from '$component/common/layout/Container.svelte';
   <Spinner />
 {:then contents}
   {#if contents.length}
-    <Container margin="0">
+    <Container margin="2.4rem 0 4rem">
       <ShortsGridVodList
               {contents}
-              onClick={handleClickShorts}
+              onClick={gotoShorts}
       />
     </Container>
     {:else}
-    <p class="empty-message">
-      {programTitle} 쇼츠는 준비중입니다. <br/>
-      조금만 기다려주세요 :)
-    </p>
+    <EmptyMessage text={`${category} 쇼츠`} />
   {/if}
 {:catch error}
   <p class="error-message">
-    {programTitle} 쇼츠 데이터를 <br/>
+    {category} 쇼츠 데이터를 <br/>
     가져오는데 실패하였습니다.
   </p>
 {/await}

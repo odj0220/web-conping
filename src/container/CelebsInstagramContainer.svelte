@@ -10,12 +10,14 @@
   
   import type { TitleElement } from 'src/global/types';
 
+  export let id: string;
   export let moreButton: boolean;
   export let title : TitleElement[] = [];
+  export let category : string;
 
   const getData = async () => {
     const query = `{
-      getSocialsByCelebId (id: "celeb1", type: instagram) {
+      getSocialsByCelebId (id: "${id}", type: instagram) {
         id
         type
         board_thumbnails
@@ -25,24 +27,26 @@
   
     const { data: { getSocialsByCelebId } } = await graphqlApi(query);
 
-    return getSocialsByCelebId[0];
+    return getSocialsByCelebId;
   };
 
 </script>
 
 {#await getData()}
   
-{:then {board_thumbnails, link}} 
-  <Container margin="5.6rem 0 0">
-    <Title title={title} />
-    {#if board_thumbnails.length > 6}
-      <ImageGridList data={[...board_thumbnails].slice(0, 6)}/>
-    {:else}
-    <ImageGridList data={board_thumbnails}/>
-    {/if}
-    
-    {#if moreButton}
-      <MoreButton value="인스타그램 보러가기" onClick={() => openBrowser(link)}/>
-    {/if}
-  </Container>
+{:then data}
+{#if data.length}
+<Container margin="5.6rem 0 0">
+  <Title title={title} />
+  {#if data.board_thumbnails.length > 6}
+    <ImageGridList data={[...data.board_thumbnails].slice(0, 6)}/>
+  {:else}
+  <ImageGridList data={data.board_thumbnails}/>
+  {/if}
+  
+  {#if moreButton}
+    <MoreButton value="인스타그램 보러가기" onClick={() => openBrowser(data.link)}/>
+  {/if}
+</Container>
+{/if}
 {/await}
