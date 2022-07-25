@@ -1,33 +1,33 @@
 <script lang="ts">
-    import { Swiper, SwiperSlide } from 'swiper/svelte';
-    import SwiperCore, { Autoplay, Pagination } from 'swiper';
-    import 'swiper/css';
-    import 'swiper/css/pagination';
-    import { goto } from '$app/navigation';
-    import { openBrowser } from '../lib/util';
+  import { Swiper, SwiperSlide } from 'swiper/svelte';
+  import SwiperCore, { Autoplay, Pagination } from 'swiper';
+  import 'swiper/css';
+  import 'swiper/css/pagination';
+  import { goto } from '$app/navigation';
+  import { openBrowser } from '../lib/util';
 
-    export let banners = [];
+  export let banners = [];
 
-    SwiperCore.use([Pagination, Autoplay]);
+  SwiperCore.use([Pagination, Autoplay]);
 
-    function handleClick(swiper, event) {
-      const bannerIndex = swiper.detail[0].realIndex;
-      const { link: { to, openBrowser: isOpenBrowser } } = banners[bannerIndex];
-    
-      if (isOpenBrowser) {
-        goPageUsingBrowser(to);
-      } else {
-        goPage(to);
-      }
+  function handleClick(swiper, event) {
+    const bannerIndex = swiper.detail[0].realIndex;
+    const { link: { to, openBrowser: isOpenBrowser } } = banners[bannerIndex];
+
+    if (isOpenBrowser) {
+      goPageUsingBrowser(to);
+    } else {
+      goPage(to);
     }
+  }
 
-    function goPage(link: string) {
-      goto(link);
-    }
+  function goPage(link: string) {
+    goto(link);
+  }
 
-    function goPageUsingBrowser(link: string) {
-      openBrowser(link);
-    }
+  function goPageUsingBrowser(link: string) {
+    openBrowser(link);
+  }
 </script>
 
 <section class="swiper-container">
