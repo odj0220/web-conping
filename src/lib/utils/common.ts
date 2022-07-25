@@ -11,3 +11,7 @@ export const returnParticle = (string: string) => {
   }
   return '는';
 };
+
+export const getParams = (params: {[key:string]: any}): string => {
+  return Object.keys(params).map((key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)).join('&');
+};
