@@ -1,14 +1,15 @@
-<div class="skeleton">
-    <div class="rect"></div>
-</div>
+<script>
+  import Container from '$component/common/layout/Container.svelte';
+  import Bar from './unit/Bar.svelte';
+  import Circle from './unit/Circle.svelte';
+  import Rect from './unit/Rect.svelte';
 
-<style lang="scss">
-  .skeleton {
-    padding: 0.8rem 1.6rem 0;
-    .rect {
-      padding-bottom: 100%;
-      border-radius: 0.4rem;
-      background-color: $bg-black-21;
-    }
-  }
-</style>
+</script>
+
+<Container margin="2rem 0 0">
+  <Rect height="190px" borderRadius="0.4rem" padding="1.6rem 1.2rem 2.6rem" margin="0 0 1.6rem">
+    <Bar margin="0 0 1.6rem" height="2rem"/>
+    <Circle size={8} margin="0 0 0.4rem" />
+    <Bar margin="0 0 1.6rem" height="2.8rem" line={2}/>
+  </Rect>
+</Container>

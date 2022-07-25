@@ -1,18 +1,9 @@
 <script>
+  import Container from '$component/common/layout/Container.svelte';
+  import Image from './unit/Image.svelte';
 
 </script>
-<div class="skeleton">
-  <div class="rect">
-  </div>
-</div>
 
-<style lang="scss">
-  .skeleton {
-    padding: 0.8rem 1.6rem 0;
-    .rect {
-      padding-bottom: 100%;
-      border-radius: 0.4rem;
-      background-color: $bg-black-21;
-    }
-  }
-</style>
+<Container margin="0.8rem 0 0">
+  <Image width="100%" height="100%" borderRadius="0.4rem" />
+</Container>
