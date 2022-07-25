@@ -17,5 +17,9 @@ export const gotoCelebs = (id: string) => {
 };
 
 export const goBack = () => {
-  window.history.go(-1);
+  if (document.referrer) {
+    window.history.go(-1);
+  } else {
+    goto('/');
+  }
 };
