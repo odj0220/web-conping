@@ -11,7 +11,7 @@
 </script>
 
 <div class="tab-container">
-  <ul class="tab-header" class:sticky={sticky}>
+  <ul class="tab-header" class:sticky={sticky} class:borderBottom={borderBottom}>
     {#each items as item, index}
       <li
         class:active={selectedTab.index === index}
