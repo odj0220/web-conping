@@ -9,13 +9,13 @@
   import SubHeaderContainer from './SubHeaderContainer.svelte';
   import Metadata from '$component/Metadata.svelte';
   import HeaderBanner from '$component/HeaderBanner.svelte';
-  
+
   import Tabs from '$component/common/layout/Tabs.svelte';
   import Container from '$component/common/layout/Container.svelte';
   import Spinner from '$component/common/shared/Spinner.svelte';
-  
+
   export let id: string;
-  
+
   const items = [
     {
       label: '에피소드',
@@ -33,7 +33,7 @@
       component: ShortsContainer,
     },
   ];
-  
+
   let selectedTab = items[0];
 
   async function loadData() {
@@ -98,7 +98,7 @@
 </script>
 
 {#await loadData()}
-  <Spinner /> 
+  <Spinner />
 {:then {program, celobs, metaDataOption}}
   <SubHeaderContainer title={program.title} />
   <Container type="full">
@@ -111,5 +111,6 @@
       {selectedTab}
       onClickTab={handleClickTab}
     />
+    <svelte:component this={selectedTab.component} category={program.title}/>
   </Container>
 {/await}
