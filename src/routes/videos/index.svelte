@@ -3,6 +3,16 @@
     import { graphqlApi } from '../../lib/_api';
 
     onMount(async () => {
+      await getCategories();
+      // await getProducts();
+      // await getCelebs();
+      // await getCeleb();
+      // await getContentsByCelebId();
+      // await getProductByCelebId();
+      // await getSocialsByContentId();
+    });
+
+    async function getProducts() {
       const query = `{
             products(order: alphabetical, category: "후드티") {
                 id
@@ -36,12 +46,18 @@
             }
         }`;
       const response = await graphqlApi(query);
-      await getCelebs();
-      await getCeleb();
-      await getContentsByCelebId();
-      await getProductByCelebId();
-      await getSocialsByContentId();
-    });
+    }
+
+    async function getCategories() {
+      const query = `{
+        categories(type: "PRODUCT") {
+            id
+            name
+        }
+      }`;
+      const response = await graphqlApi(query);
+      console.log(response);
+    }
 
     async function getCelebs() {
       const query = `{
