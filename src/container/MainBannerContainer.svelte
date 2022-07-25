@@ -15,15 +15,19 @@
     return getBanners;
   }
 
-  async function promises() {
-    const component = await loadBannersComponent();
-    const data = await loadBannersData();
-    return { component, data };
+  async function loadInitialData() {
+    const promises = [loadBannersComponent(), loadBannersData()];
+    const [component, data] = await Promise.all(promises);
+
+    return {
+      component,
+      data,
+    };
   }
 
 </script>
 
-{#await promises()}
+{#await loadInitialData()}
 <MainBannerSkeleton />
 {:then {component, data}}
 <Container type="full">
