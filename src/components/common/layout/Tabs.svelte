@@ -3,14 +3,7 @@
 
   export let items: ITabItem[];
   export let onClickTab: (category: ITabItem) => void;
-
-  $: selectedTab = items[0];
-
-  function onActiveTabitem(tabItem: ITabItem) {
-    selectedTab = tabItem;
-  
-    onClickTab(selectedTab);
-  }
+  export let selectedTab = items[0];
 
 </script>
 
@@ -18,7 +11,7 @@
   {#each items as item, index}
     <li
       class:active={selectedTab.index === index}
-      on:click={onActiveTabitem(item)}
+      on:click={onClickTab(item)}
     >
       {item.label}
     </li>

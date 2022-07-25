@@ -108,9 +108,10 @@
 
     <Tabs
       {items}
+      {selectedTab}
       programTitle={program.title}
       onClickTab={handleClickTab}
     />
-    <svelte:component this={selectedTab.component}/>
+    <svelte:component this={selectedTab.component} category={program.title}/>
   </Container>
 {/await}
