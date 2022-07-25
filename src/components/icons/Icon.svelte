@@ -87,7 +87,7 @@ const icons = [
   },
   {
     name: 'check',
-    svg: `<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.4299 11.8501H26.4299" stroke=${color} stroke-width="1.7" stroke-linecap="square" stroke-linejoin="round"/><path d="M14.4299 25.0303H26.4299" stroke=${color} stroke-width="1.7" stroke-linecap="square" stroke-linejoin="round"/><path d="M14.4299 18.4399H26.4299" stroke=${color} stroke-width="1.7" stroke-linecap="square" stroke-linejoin="round"/><path d="M9.85 12.7C10.3194 12.7 10.7 12.3194 10.7 11.85C10.7 11.3806 10.3194 11 9.85 11C9.38056 11 9 11.3806 9 11.85C9 12.3194 9.38056 12.7 9.85 12.7Z" fill=${color}/><path d="M9.85 19.2898C10.3194 19.2898 10.7 18.9093 10.7 18.4398C10.7 17.9704 10.3194 17.5898 9.85 17.5898C9.38056 17.5898 9 17.9704 9 18.4398C9 18.9093 9.38056 19.2898 9.85 19.2898Z" fill=${color}/><path d="M9.85 25.8802C10.3194 25.8802 10.7 25.4996 10.7 25.0302C10.7 24.5607 10.3194 24.1802 9.85 24.1802C9.38056 24.1802 9 24.5607 9 25.0302C9 25.4996 9.38056 25.8802 9.85 25.8802Z" fill=${color}/></svg>`,
+    svg: '<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M28.9698 10.2201L14.2498 24.9L7.02978 17.7201" stroke="#AE3EEF" stroke-width="1.7" stroke-linejoin="round"/></svg>',
   },
   {
     name: 'comment',

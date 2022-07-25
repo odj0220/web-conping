@@ -1,32 +1,40 @@
 <script lang="ts">
   import { graphqlApi } from '$lib/_api';
 
+  import type { IProgram, ITabItem } from 'src/global/types';
+
   import EpisodeContainer from './EpisodeContainer.svelte';
   import HighlightContainer from './HighlightContainer.svelte';
   import ShortsContainer from './ShortsContainer.svelte';
   import SubHeaderContainer from './SubHeaderContainer.svelte';
-  import Container from '$component/common/layout/Container.svelte';
   import Metadata from '$component/Metadata.svelte';
-  import Tabs from '$component/common/layout/Tabs.svelte';
+  import HeaderBanner from '$component/HeaderBanner.svelte';
   
-  import type { IProgram } from 'src/global/types';
-
+  import Tabs from '$component/common/layout/Tabs.svelte';
+  import Container from '$component/common/layout/Container.svelte';
+  import Spinner from '$component/common/shared/Spinner.svelte';
+  
   export let id: string;
-
-  let items = [
-    { label: '에피소드',
+  
+  const items = [
+    {
+      label: '에피소드',
       index: 0,
       component: EpisodeContainer,
     },
-    { label: '하이라이트',
+    {
+      label: '하이라이트',
       index: 1,
       component: HighlightContainer,
     },
-    { label: '쇼츠',
+    {
+      label: '쇼츠',
       index: 2,
       component: ShortsContainer,
     },
   ];
+  
+  let selectedTab = items[0];
 
   async function loadData() {
     const query = `{
@@ -58,13 +66,11 @@
     const celobs = result?.data.getCelebsByProgramId;
     const metaDataOption = setMetadataOption(program, celobs);
 
-    return new Promise((resolve, reject) => {
-      resolve({
-        program,
-        celobs,
-        metaDataOption,
-      });
-    });
+    return {
+      program,
+      celobs,
+      metaDataOption,
+    };
   }
 
   function setMetadataOption (program: any, celebs: any[]) {
@@ -84,45 +90,27 @@
 
     return newData;
   }
+
+  function handleClickTab(clickedTab: ITabItem) {
+    selectedTab = clickedTab;
+  }
+
 </script>
 
 {#await loadData()}
+  <Spinner /> 
 {:then {program, celobs, metaDataOption}}
   <SubHeaderContainer title={program.title} />
-  <Container type="full" margin="0 0 4rem">
-    <section class="thumbnail-wrapper">
-      <img class="thumbnail" src={program.banner} alt=""/>
-    </section>
+  <Container type="full">
+    <HeaderBanner imagePath={program.banner} />
 
     <Metadata option={metaDataOption}/>
 
-    <Tabs {items} programTitle={program.title} {id}/>
+    <Tabs
+      {items}
+      programTitle={program.title}
+      onClickTab={handleClickTab}
+    />
+    <svelte:component this={selectedTab.component}/>
   </Container>
 {/await}
-
-<style lang="scss">
-  .thumbnail-wrapper {
-    border-radius: 4px;
-    overflow: hidden;
-    margin: 0.8rem 1.6rem;
-    height: 0;
-    padding-bottom: 141%;
-    position: relative;
-    img.thumbnail {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-    }
-  }
-  .gap {
-    width: 100%;
-    height: 8px;
-    background-color: $bg-black-21;
-  }
-</style>
-
-  
