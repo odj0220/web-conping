@@ -15,5 +15,7 @@
     position: relative;
     background-color: $bg-black-21;
     box-sizing: border-box;
+    display: flex;
+
   }
 </style>
