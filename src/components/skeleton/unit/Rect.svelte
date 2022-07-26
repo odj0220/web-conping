@@ -16,6 +16,7 @@
     background-color: $bg-black-21;
     box-sizing: border-box;
     display: flex;
-
+    flex-direction: column;
+    overflow: hidden;
   }
 </style>
