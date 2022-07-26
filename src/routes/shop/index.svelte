@@ -10,5 +10,5 @@ import GlobalBlock from '$component/common/layout/GlobalBlock.svelte';
 <GlobalBlock>
   <MainHeaderContainer title="쇼핑존" />
   <ShopContainer />
-  <Footer/>
 </GlobalBlock>
+<Footer/>
