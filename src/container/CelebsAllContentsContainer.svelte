@@ -1,10 +1,10 @@
 <script>
-  import GlobalBlock from '$styles/GlobalBlock.svelte';
   import CelebsProductContainer from './CelebsProductContainer.svelte';
   import CelebsContentsContainer from './CelebsContentsContainer.svelte';
   import CelebsShortsContainer from './CelebsShortsContainer.svelte';
   import CelebsYoutubeContainer from './CelebsYoutubeContainer.svelte';
   import CelebsInstagramContainer from './CelebsInstagramContainer.svelte';
+import GlobalBlock from '$component/common/layout/GlobalBlock.svelte';
 
   export let id = '';
   export let category = '';

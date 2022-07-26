@@ -5,10 +5,12 @@
   import Container from '$component/common/layout/Container.svelte';
   import Title from '$component/Title.svelte';
   import ViewingVodList from '$component/ViewingVodList.svelte';
+  import MainViewingVideosSkeleton from '$component/skeleton/MainViewingVideosSkeleton.svelte';
 
 </script>
 
 {#await getContinueWatchingList()}
+<MainViewingVideosSkeleton />
 {:then contents}
   {#if contents.length > 0}
     <Container type="grayBox wide" margin="2rem 1.6rem 0">
