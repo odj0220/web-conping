@@ -9,11 +9,44 @@
   import CelebsContentsContainer from './CelebsContentsContainer.svelte';
   import CelebsShortsContainer from './CelebsShortsContainer.svelte';
   import SubHeaderContainer from './SubHeaderContainer.svelte';
+  import { onMount } from 'svelte';
 
   import type { ITabItem } from 'src/global/types';
   import { callShare } from '../lib/_app_communication';
 
   export let id: string;
+
+  onMount(async () => {
+    const query = `{
+      contents (limit: 2, afterCursor: 1) {
+        totalCount,
+        edges {
+            cursor
+            node {
+              id
+              title
+              programId
+              program {
+                  id
+                  title
+                  thumbnail
+              }
+              createDt
+              episode
+              videoId
+              thumb
+              views
+            }
+        }
+        pageInfo {
+            hasNextPage
+            startCursor
+        }
+      }
+    }`;
+    const response = await graphqlApi(query);
+    console.log(response);
+  });
 
   const getData = async () => {
     const query = `
@@ -76,6 +109,6 @@
       sticky={true}
       onClickTab={handleClickTab}
     />
-    <svelte:component this={selectedTab.component} category={data.name}/>
+    <svelte:component this={selectedTab.component} category={data.name} {id}/>
   </Container>
 {/await}
