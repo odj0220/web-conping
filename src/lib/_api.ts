@@ -1,6 +1,6 @@
 
 const GRAPHQL_URL = '/api/graphql';
-const BACKEND_URL = 'https://gollala-backend-6hnxk7lkqq-du.a.run.app';
+const BACKEND_URL = 'https://gollala-backend-wzsqjexeka-du.a.run.app';
 
 interface fetchOption {
   method: string;
@@ -16,6 +16,10 @@ const defaultOption = {
   },
 };
 
+export const createParams = (params: any): string => {
+  return new URLSearchParams(params).toString();
+};
+
 
 export function graphqlApi(query: string) {
   const body = { query };
@@ -26,7 +30,15 @@ export function graphqlApi(query: string) {
 }
 
 export function backEndApi(url: string, option: fetchOption) {
-  return fetch(`${BACKEND_URL}${url}`, {
+  let params = '';
+  let requestUrl = `${BACKEND_URL}${url}`;
+
+  if (option.params) {
+    params = createParams(option.params);
+    requestUrl += `?${params}`;
+  }
+
+  return fetch(requestUrl, {
     ...option,
     body: option.body ? JSON.stringify(option.body) : null,
   })

@@ -6,7 +6,6 @@ const Product = `
       price: Int
       discountRate: Int
       image: String
-      category: String
       exposed: [[Int]] 
       storeUrl: String
       views: Float

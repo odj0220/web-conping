@@ -17,7 +17,7 @@ export const convertProgram = (program?: Program) => {
   };
 };
 
-const getThumbnail = (videoId?: string) => `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+export const getThumbnail = (videoId?: string) => `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
 export const convertContent = (content?: VideoContent) => {
   if (!content) {
     return ;
