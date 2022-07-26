@@ -55,6 +55,10 @@
       padding: 0 1.6rem;
       border-radius: 0.4rem;
       overflow: hidden;
+      :global(.swiper) {
+        width: 100%;
+        max-width: 100%;
+      }
       :global(.swiper-pagination ) {
         display: flex;
         align-items: center;
