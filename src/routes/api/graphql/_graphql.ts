@@ -10,6 +10,7 @@ import { getMainSeries } from './controller/series';
 import { getMainShorts } from './controller/shorts';
 import { getMainOrigin } from './controller/origins';
 import { socials, getSocialsByCelebId } from './controller/social';
+import { categories } from './controller/categories';
 
 import GRAPH_TYPES from './schemas/types';
 import GRAPH_ENUMS from './schemas/enums';
@@ -24,7 +25,7 @@ export async function Graphql(query: string) {
     ${GRAPH_TYPES}	
     ${GRAPH_ENUMS}
     type Query {
-      products(order: ProductOrder, category: String): [Product]
+      products(order: ProductOrder, category: Int, limit: Int, page: Int): PageProduct
       product(id:ID!): Product
       contents(sortField: String, sortOrder: Order, type:ContentType): [Content]
       content(id:ID!): Content
@@ -33,6 +34,7 @@ export async function Graphql(query: string) {
       programs: [Program]
       program(id:ID!): Program
       socials: [Social]
+      categories(type: String): [Category]
       getProductsByContentId(id:ID!): [Product]
       getCelebsByContentId(id:ID!): [Celeb]
       getContentsByProgramId(id:ID!, type:ContentType): [Content]
@@ -70,6 +72,10 @@ export async function Graphql(query: string) {
     program,
 
     socials,
+
+    categories,
+
+
     getSocialsByCelebId,
 
     getProductsByContentId,
