@@ -1,18 +1,17 @@
 <script lang="ts">
   import { graphqlApi } from '$lib/_api';
 
-  import type { IProgram, ITabItem } from 'src/global/types';
-
   import EpisodeContainer from './EpisodeContainer.svelte';
   import HighlightContainer from './HighlightContainer.svelte';
   import ShortsContainer from './ShortsContainer.svelte';
   import SubHeaderContainer from './SubHeaderContainer.svelte';
   import Metadata from '$component/Metadata.svelte';
   import HeaderBanner from '$component/HeaderBanner.svelte';
-
   import Tabs from '$component/common/layout/Tabs.svelte';
   import Container from '$component/common/layout/Container.svelte';
   import Spinner from '$component/common/shared/Spinner.svelte';
+
+  import type { IProgram, ITabItem } from 'src/global/types';
 
   export let id: string;
 
