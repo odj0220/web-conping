@@ -40,9 +40,6 @@
     contents = [...contents, ...newContents];
     end = !getInfiniteCelebs.pageInfo.hasNextPage;
     cursor = getInfiniteCelebs.pageInfo.startCursor;
-    console.log('contents', contents);
-    console.log('cursor', cursor);
-    console.log('end', end);
   };
 
   async function runInfiniteScrolling(event) {

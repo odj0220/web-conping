@@ -57,9 +57,6 @@
       contents = [...contents, ...newContents];
       end = !getMainInfiniteContents.pageInfo.hasNextPage;
       cursor = getMainInfiniteContents.pageInfo.startCursor;
-      console.log('contents', contents);
-      console.log('cursor', cursor);
-      console.log('end', end);
     } catch (error) {
       console.log(error);
     }
