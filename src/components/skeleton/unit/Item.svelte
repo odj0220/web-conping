@@ -1,16 +1,17 @@
 <script lang="ts">
-  export let marginRight = '0';
-  export let align = 'right';
+  export let margin = '0';
+  export let align = 'center';
+  export let display = 'block';
+  export let direction = 'column';
 </script>
 
-<div class="item" style="margin-right: {marginRight}; align: {align}">
+<li class="item" style="display:{display}; margin: {margin}; align-items: {align}; flex-direction:{direction}">
   <slot></slot>
-</div>
+</li>
 
 <style lang="scss">
   .item {
     display: flex;
-    align-items: center;
     flex-direction: column;
   }
 </style>

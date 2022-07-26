@@ -1,11 +1,12 @@
 <script lang="ts">
   import { graphqlApi } from '$lib/_api';
-  
+
   import { gotoContents } from '$lib/utils/goto';
-  
+
   import Container from '$component/common/layout/Container.svelte';
   import Title from '$component/Title.svelte';
   import PreviewVideos from '$component/PreviewVideos.svelte';
+import PopularVideoSkeleton from '$component/skeleton/PopularVideoSkeleton.svelte';
 
   let end = false;
   let cursor = '';
@@ -16,7 +17,7 @@
         title {
           text
           type
-        } 
+        }
         contents {
           thumb
           title
@@ -34,7 +35,7 @@
         }
       }
     }`;
-  
+
     const {
       data: {
         getMainContents: {
@@ -49,6 +50,7 @@
 </script>
 
 {#await getMainContents()}
+<PopularVideoSkeleton />
 {:then { title, contents }}
   {#if contents?.length }
     <Container margin="4rem 0 0 0">

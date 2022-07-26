@@ -12,7 +12,6 @@
 {#await getContinueWatchingList()}
 <MainViewingVideosSkeleton />
 {:then contents}
-<!-- <MainViewingVideosSkeleton /> -->
   {#if contents.length > 0}
     <Container type="grayBox wide" margin="2rem 1.6rem 0">
       <Title

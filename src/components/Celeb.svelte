@@ -12,18 +12,17 @@
 <li class="item" on:click="{() => onClick(id)}">
   <Avatar size="72px" src={thumbnail} alt={name}/>
   <div class="info">
-    <div class="info-top"> 
+    <div class="info-top">
       <h6 class="name">{name}</h6>
       <ul class="categories">
-        {#each categories as category} 
+        {#each categories as category}
           <li class="category" style="background-color: {category.backColor}; color: {category.textColor}">{category.name}</li>
         {/each}
-          
+
       </ul>
     </div>
 
     <ul class="info-list">
-
       {#if countOfFollowers}
         <li class="info-item">
           <span class="key">팔로워</span>
@@ -64,7 +63,7 @@
     .info-top {
       display: flex;
       align-items: center;
-      margin-bottom: 7px;
+
       .name {
         @include body1-700;
         flex-shrink: 0;
@@ -94,6 +93,7 @@
       .info-item {
         color: $gray-ab;
         font-size: 0;
+        margin-top: 0.7rem;
         &:not(:last-child) {
           margin-right: 8px;
         }
