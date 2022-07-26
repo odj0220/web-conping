@@ -1,9 +1,15 @@
 <script lang="ts">
     import Device from 'svelte-device-info';
-    import { SvelteComponent } from 'svelte';
+    import { onMount, SvelteComponent } from 'svelte';
+
+    export let scrollToIndex = 0;
 
     let horizontalScroller: SvelteComponent | null = null;
     let position: any = { scrollLeft: 0, clientX: 0 };
+
+    onMount(() => {
+      horizontalScroller.scrollLeft = scrollToIndex;
+    });
 
     function removeStyleInMovingStart() {
       horizontalScroller.style.scrollBehavior = 'auto';

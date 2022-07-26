@@ -13,6 +13,35 @@
 
   import type { ITabItem } from 'src/global/types';
 
+  //TODO: 카테고리 API로 변경
+  const TAB_ITEMS = [
+    {
+      label: '전체',
+      index: 0,
+      value: 'all',
+    },
+    {
+      label: '여성패션',
+      index: 1,
+      value: 'womenfashion',
+    },
+    {
+      label: '화장품/미용',
+      index: 2,
+      value: 'cosmeticbeauty',
+    },
+    {
+      label: '가구/인테리어',
+      index: 3,
+      value: 'interior',
+    },
+    {
+      label: '출산',
+      index: 4,
+      value: 'angels',
+    },
+  ];
+
   let sort = Object.keys(SORT_FIELDS)[0];
   let isPopupVisible = false;
 
@@ -58,6 +87,10 @@
     sort = sortField;
   }
 
+  /**
+   * 정렬
+   * @param sortFieldsObject
+   */
   function setsortItems(sortFieldsObject: { [index: string]: string }) {
     return Object
       .keys(sortFieldsObject)
@@ -69,35 +102,9 @@
       });
   }
 
-  let tabItems = [
-    {
-      label: '전체',
-      index: 0,
-      value: 'all',
-    },
-    {
-      label: '여성패션',
-      index: 1,
-      value: 'womenfashion',
-    },
-    {
-      label: '화장품/미용',
-      index: 2,
-      value: 'cosmeticbeauty',
-    },
-    {
-      label: '가구/인테리어',
-      index: 3,
-      value: 'interior',
-    },
-    {
-      label: '출산',
-      index: 4,
-      value: 'angels',
-    },
-  ];
+  
 
-  let selectedTab = tabItems[0];
+  let selectedTab = TAB_ITEMS[0];
 
   function handleClickTab(clickedTab: ITabItem) {
     selectedTab = clickedTab;
@@ -107,14 +114,16 @@
   $:sortItems = setsortItems(SORT_FIELDS);
   $:sortedName = SORT_FIELDS[sort];
   $:category = selectedTab.value;
+  $:scrollToIndex = selectedTab.index * 50;
 </script>
 
 {#await getProducts(sort, category)}
   <Spinner /> 
 {:then products}
   <ShopNavbar
-    {tabItems}
+    tabItems={TAB_ITEMS}
     {selectedTab}
+    {scrollToIndex}
     onClickTab={handleClickTab}
     sort={sortedName}
     onClickSort={openPopup}
