@@ -14,35 +14,46 @@
 
     async function getProducts() {
       const query = `{
-            products {
-                id
-                name
-                brand
-                price
-                discountRate
-                image
-                storeUrl
-                views
-                createDt
-                contents {
-                   id
-                   title
-                   subtitle
-                   description
-                   thumb
-                }
-                celebs {
+          products (order: alphabetical) {
+             totalCount
+             pageInfo {
+                page
+                totalPage
+                hasNextPage
+             }
+             edges {
+               cursor
+               node {
+                 id
+                 name
+                 brand
+                 price
+                 discountRate
+                 image
+                 storeUrl
+                 views
+                 createDt
+                 contents {
+                    id
+                    title
+                    subtitle
+                    description
+                    thumb
+                 }
+                 celebs {
                     id
                     name
                     thumbnail
-                }
-                relatedItems {
+                 }
+                 relatedItems {
                     thumbnail
                     title
                     type
                     id
-                }
-            }
+                 }
+               }
+             }
+          }
         }`;
       const response = await graphqlApi(query);
       console.log(response);
