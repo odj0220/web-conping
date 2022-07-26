@@ -16,6 +16,10 @@ const defaultOption = {
   },
 };
 
+export const createParams = (params: any): string => {
+  return new URLSearchParams(params).toString();
+};
+
 
 export function graphqlApi(query: string) {
   const body = { query };
@@ -26,7 +30,15 @@ export function graphqlApi(query: string) {
 }
 
 export function backEndApi(url: string, option: fetchOption) {
-  return fetch(`${BACKEND_URL}${url}`, {
+  let params = '';
+  let requestUrl = `${BACKEND_URL}${url}`;
+
+  if (option.params) {
+    params = createParams(option.params);
+    requestUrl += `?${params}`;
+  }
+
+  return fetch(requestUrl, {
     ...option,
     body: option.body ? JSON.stringify(option.body) : null,
   })
