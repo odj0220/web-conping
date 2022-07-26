@@ -1,13 +1,13 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  
+
   import { graphqlApi } from '../lib/_api';
-  
+
   import { gotoContents } from '$lib/utils/goto';
 
   import PreviewVideos from '$component/PreviewVideos.svelte';
   import Container from '$component/common/layout/Container.svelte';
-  
+
   import type { IContent } from 'src/global/types';
 
   let contents: IContent[] = [];
@@ -57,6 +57,9 @@
       contents = [...contents, ...newContents];
       end = !getMainInfiniteContents.pageInfo.hasNextPage;
       cursor = getMainInfiniteContents.pageInfo.startCursor;
+      console.log('contents', contents);
+      console.log('cursor', cursor);
+      console.log('end', end);
     } catch (error) {
       console.log(error);
     }
