@@ -53,7 +53,7 @@
   }
 
   function goSite () {
-    const host = siteUrl ? `http://${siteUrl}:3000` : 'https://https://gollala-frontend-web-wzsqjexeka-du.a.run.app';
+    const host = siteUrl ? `http://${siteUrl}:3000` : 'https://gollala-frontend-web-wzsqjexeka-du.a.run.app';
     window.location.href = host;
   }
 </script>
