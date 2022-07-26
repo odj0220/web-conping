@@ -2,7 +2,16 @@ import { buildSchema, graphql } from 'graphql';
 import type { GraphQLSchema } from 'graphql/type/schema';
 import { product, products, getProductsByContentId, getProductByCelebId } from './controller/products';
 import { getBanners } from './controller/banner';
-import { content, contents, getContentsByProductId, getProgramContentsByContentId, getContentsByCelebId, getMainContents, getMainInfiniteContents } from './controller/contents';
+import {
+  content,
+  contents,
+  getContentsByProductId,
+  getProgramContentsByContentId,
+  getContentsByCelebId,
+  getMainContents,
+  getMainInfiniteContents,
+  getInfiniteCelebs,
+} from './controller/contents';
 import { celebs, celeb, getCelebsByContentId, getCelebsByProductId, getCelebsByProgramId } from './controller/celobs';
 import { program, programs } from './controller/program';
 import { getContinueWatching } from './controller/watching';
@@ -54,6 +63,8 @@ export async function Graphql(query: string) {
       getMainShorts: MainContent
       getMainInfiniteContents(first: Int, afterCursor: String): PageContent
       getMainOrigin: MainOrigin
+      
+      getInfiniteCelebs(first: Int, afterCursor: String): PageCeleb
   }`);
 
   const rootValue = {
@@ -103,6 +114,8 @@ export async function Graphql(query: string) {
     getMainShorts,
     getMainOrigin,
     getMainInfiniteContents,
+
+    getInfiniteCelebs,
   };
 
   return graphql({

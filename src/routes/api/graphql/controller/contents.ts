@@ -1,10 +1,10 @@
 import { GET } from '../../../../lib/_api';
-import type { VideoContent } from '../../../../lib/models/backend/backend';
+import type { Celeb, VideoContent } from '../../../../lib/models/backend/backend';
 import relationJson from '../../../../../static/data/relation.json';
 import contentJson from '../../../../../static/data/content.json';
 import programJson from '../../../../../static/data/program.json';
 import type { IContent } from '../../../../global/types';
-import { contentsByProgramId, convertContent } from './util';
+import { contentsByProgramId, convertCeleb, convertContent } from './util';
 
 const setOrderBy = (sortField?: string, sortOrder?: string) => {
   if (!sortField) {
@@ -99,6 +99,42 @@ export const getMainInfiniteContents = async ({ first, afterCursor }: {
   const response = await GET(`/video-content?size=${first}&cursor=${afterCursor || 0}&type=FULL,HIGHLIGHT&program=true`);
   const edges = response.items.map((content: VideoContent) => {
     const node = convertContent(content);
+    return {
+      node,
+      cursor: node.id,
+    };
+  });
+
+  let startCursor = 0;
+  if (edges.length > 0) {
+    startCursor = edges[edges.length - 1].node.id;
+  }
+  const hasNextPage = edges.length >= first;
+
+  return {
+    totalCount: 0,
+    edges,
+    pageInfo: {
+      startCursor,
+      hasNextPage,
+    },
+  };
+};
+
+export const getInfiniteCelebs = async ({ first, afterCursor }: {
+  first: number;
+  afterCursor: string;
+}) => {
+  const response = await GET('/celeb', {
+    params: {
+      category: true,
+      followerCount: true,
+      productCount: true,
+      sort: JSON.stringify([{ createdAt: 'desc' }]),
+    },
+  });
+  const edges = response.map((celeb: Celeb) => {
+    const node = convertCeleb(celeb);
     return {
       node,
       cursor: node.id,
