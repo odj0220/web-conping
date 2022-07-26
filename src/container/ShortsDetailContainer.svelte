@@ -7,6 +7,7 @@
   import ShortsDetailInfo from '$component/ShortsDetailInfo.svelte';
   import BottomSheet from '$component/common/layout/BottomSheet.svelte';
   import RelatedProduct from '$component/RelatedProduct.svelte';
+  import { callShare } from '../lib/_app_communication';
 
   export let id: string;
 
@@ -50,6 +51,7 @@
 
   const onClickShare = (e: TouchEvent) => {
     e.stopPropagation();
+    callShare('shorts', id);
   };
 
   const onClickCart = (e: TouchEvent) => {
