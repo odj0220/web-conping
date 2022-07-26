@@ -6,7 +6,7 @@
   import Container from '$component/common/layout/Container.svelte';
   import Title from '$component/Title.svelte';
   import PreviewVideos from '$component/PreviewVideos.svelte';
-import PopularVideoSkeleton from '$component/skeleton/PopularVideoSkeleton.svelte';
+import PopularVideoSkeleton from '$component/skeleton/container/PopularVideoSkeleton.svelte';
 
   let end = false;
   let cursor = '';

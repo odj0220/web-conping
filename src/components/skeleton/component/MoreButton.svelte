@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Rect from './Rect.svelte';
+  import Rect from '../unit/Rect.svelte';
 
   export let bgColor = 'bg-black-21';
   export let margin = '1.2rem 0 0 0';

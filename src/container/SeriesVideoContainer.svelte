@@ -6,7 +6,7 @@
   import ImageListView from '$component/ImageListView.svelte';
   import MoreButton from '$component/common/shared/MoreButton.svelte';
   import { gotoContents, gotoPrograms } from '$lib/utils/goto';
-import SeriesVideoSkeleton from '$component/skeleton/SeriesVideoSkeleton.svelte';
+import SeriesVideoSkeleton from '$component/skeleton/container/SeriesVideoSkeleton.svelte';
 
   const getData = async () => {
     const query = `{

@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Bar from './Bar.svelte';
-  import Circle from './Circle.svelte';
-  import Image from './Image.svelte';
-  import Rect from './Rect.svelte';
+  import Bar from '../unit/Bar.svelte';
+  import Circle from '../unit/Circle.svelte';
+  import Image from '../unit/Image.svelte';
+  import Rect from '../unit/Rect.svelte';
 
 </script>
 

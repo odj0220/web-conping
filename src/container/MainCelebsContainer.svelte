@@ -8,7 +8,7 @@ import Celebs from '$component/Celebs.svelte';
 import MoreButton from '$component/common/shared/MoreButton.svelte';
 import Container from '$component/common/layout/Container.svelte';
 import { goto } from '$app/navigation';
-import MainCelebsSkeleton from '$component/skeleton/MainCelebsSkeleton.svelte';
+import MainCelebsSkeleton from '$component/skeleton/container/MainCelebsSkeleton.svelte';
 import { gotoCelebs } from '$lib/utils/goto';
 
 let celebs: ICeleb[] = [];

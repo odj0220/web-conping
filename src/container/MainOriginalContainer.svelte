@@ -6,7 +6,7 @@
   import ProgramList from '$component/ProgramList.svelte';
   import Title from '$component/Title.svelte';
   import Container from '$component/common/layout/Container.svelte';
-  import MainOriginalSkeleton from '$component/skeleton/MainOriginalSkeleton.svelte';
+  import MainOriginalSkeleton from '$component/skeleton/container/MainOriginalSkeleton.svelte';
 
   import type { IProgram, TitleElement } from 'src/global/types';
 

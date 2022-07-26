@@ -5,7 +5,7 @@
   import Container from '$component/common/layout/Container.svelte';
   import Title from '$component/Title.svelte';
   import ViewingVodList from '$component/ViewingVodList.svelte';
-  import MainViewingVideosSkeleton from '$component/skeleton/MainViewingVideosSkeleton.svelte';
+  import MainViewingVideosSkeleton from '$component/skeleton/container/MainViewingVideosSkeleton.svelte';
 
 </script>
 

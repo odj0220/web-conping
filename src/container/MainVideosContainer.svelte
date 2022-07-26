@@ -1,15 +1,13 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
   import { graphqlApi } from '../lib/_api';
 
   import { gotoContents } from '$lib/utils/goto';
 
   import PreviewVideos from '$component/PreviewVideos.svelte';
   import Container from '$component/common/layout/Container.svelte';
+  import MainVideoSkeleton from '$component/skeleton/container/MainVideoSkeleton.svelte';
 
   import type { IContent } from 'src/global/types';
-import MainVideoSkeleton from '$component/skeleton/MainVideoSkeleton.svelte';
 
   let contents: IContent[] = [];
   let end = false;

@@ -1,9 +1,9 @@
 <script>
 import Container from '$component/common/layout/Container.svelte';
-import Bar from './unit/Bar.svelte';
-import Item from './unit/Item.svelte';
-import List from './unit/List.svelte';
-import Rect from './unit/Rect.svelte';
+import Bar from '../unit/Bar.svelte';
+import Item from '../unit/Item.svelte';
+import List from '../unit/List.svelte';
+import Rect from '../unit/Rect.svelte';
 
 </script>
 <Container margin="5.6rem 0 0">
