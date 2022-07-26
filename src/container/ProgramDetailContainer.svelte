@@ -10,6 +10,7 @@
   import Tabs from '$component/common/layout/Tabs.svelte';
   import Container from '$component/common/layout/Container.svelte';
   import Spinner from '$component/common/shared/Spinner.svelte';
+  import { callShare } from '../lib/_app_communication';
 
   import type { IProgram, ITabItem } from 'src/global/types';
 
@@ -33,7 +34,7 @@
     },
   ];
 
-  let selectedTab = tabItems[0];
+  let selectedTab:ITabItem = tabItems[0];
 
   async function loadData() {
     const query = `{
@@ -94,12 +95,16 @@
     selectedTab = clickedTab;
   }
 
+  function onClickShare() {
+    callShare('programs', id);
+  }
+
 </script>
 
 {#await loadData()}
   <Spinner />
 {:then {program, celobs, metaDataOption}}
-  <SubHeaderContainer title={program.title} />
+  <SubHeaderContainer title={program.title} onClickShare={onClickShare}/>
   <Container type="full">
     <HeaderBanner imagePath={program.banner} />
 

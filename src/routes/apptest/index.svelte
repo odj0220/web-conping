@@ -3,6 +3,7 @@
     launchTel, launchWeb, launchSystemNotification, getUser, getNotch } from '$lib/_app_communication';
 
   let paddingTop = 0;
+  let siteUrl = '';
   const shareString = 'share({type:"contents", id:"3"})';
 
   async function sendConfirm() {
@@ -50,6 +51,11 @@
     const { top } = await getNotch();
     paddingTop = top;
   }
+
+  function goSite () {
+    const host = siteUrl ? `http://${siteUrl}:3000` : 'https://https://gollala-frontend-web-wzsqjexeka-du.a.run.app';
+    window.location.href = host;
+  }
 </script>
 
 <section style="margin-top: {paddingTop}px; background-color: red">
@@ -68,6 +74,10 @@
         <button on:click={launchSystemNotification}>launchSystemNotification</button>
         <button on:click={getUser}>getUser</button>
         <button on:click={callNotch}>getNotch</button>
+</section>
+
+<section style="margin-top: {paddingTop}px; background-color: red">
+        <input type="text" placeholder="아이피 입력 포트는 3000" bind:value={siteUrl}> <button on:click={goSite}>연결!!</button>
 </section>
 
 
