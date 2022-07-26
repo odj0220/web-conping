@@ -3,22 +3,30 @@
   import HorizontalScroller from '$component/HorizontalScroller.svelte';
   import Sorter from '$component/Sorter.svelte';
 
-  export let items = [];
+  import type { ITabItem } from 'src/global/types';
+
+  export let tabItems: ITabItem[];
+  export let selectedTab: ITabItem;
   export let sort = '';
-  export let onClickTab: (category: string) => void;
+  export let onClickTab: (selectedTab: ITabItem) => void;
   export let onClickSort: () => void;
+  export let scrollToIndex: number;
 </script>
 
 <div class="header">
   <div class="header-item">
-    <HorizontalScroller>
-      <Tabs {items} {onClickTab} />
+    <HorizontalScroller {scrollToIndex}>
+      <Tabs
+        {tabItems}
+        {selectedTab}
+        {onClickTab}
+      />
     </HorizontalScroller>
   </div>
   <div class="header-item">
     <Sorter
-    sort={sort}
-    onClick={onClickSort}
+      sort={sort}
+      onClick={onClickSort}
     />
   </div>
 </div>

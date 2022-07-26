@@ -27,7 +27,8 @@
 
 <style lang="scss">
   .shop-item {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 1.6rem;
     height: 15.6rem;
 

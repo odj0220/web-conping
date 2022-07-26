@@ -11,13 +11,41 @@
   import ShopList from '$component/ShopList.svelte';
   import ShopNavbar from './ShopNavbar.svelte';
 
+  import type { ITabItem } from 'src/global/types';
+
+  //TODO: 카테고리 API로 변경
+  const TAB_ITEMS = [
+    {
+      label: '전체',
+      index: 0,
+      value: 'all',
+    },
+    {
+      label: '여성패션',
+      index: 1,
+      value: 'womenfashion',
+    },
+    {
+      label: '화장품/미용',
+      index: 2,
+      value: 'cosmeticbeauty',
+    },
+    {
+      label: '가구/인테리어',
+      index: 3,
+      value: 'interior',
+    },
+    {
+      label: '출산',
+      index: 4,
+      value: 'angels',
+    },
+  ];
+
   let sort = Object.keys(SORT_FIELDS)[0];
   let isPopupVisible = false;
-  let category: string;
 
   const getProducts = async (order = '', category = '') => {
-    //TODO: category 수정
-  
     const parameter = `
       order:${order}
     `;
@@ -59,7 +87,11 @@
     sort = sortField;
   }
 
-  function setSelectItems(sortFieldsObject: { [index: string]: string }) {
+  /**
+   * 정렬
+   * @param sortFieldsObject
+   */
+  function setsortItems(sortFieldsObject: { [index: string]: string }) {
     return Object
       .keys(sortFieldsObject)
       .map(item => {
@@ -70,47 +102,28 @@
       });
   }
 
-  let tabItems = [
-    {
-      label: '전체',
-      value: 'all',
-      index: 0,
-    },
-    {
-      label: '여성패션',
-      value: 'womenfashion',
-      index: 1,
-    },
-    {
-      label: '화장품/미용',
-      value: 'cosmeticbeauty',
-      index: 2,
-    },
-    {
-      label: '가구/인테리어',
-      value: 'interior',
-      index: 3,
-    },
-    {
-      label: '출산',
-      value: 'angels',
-      index: 4,
-    },
-  ];
+  
 
-  function handleClickTab(selectedTab: string) {
-    category = selectedTab;
+  let selectedTab = TAB_ITEMS[0];
+
+  function handleClickTab(clickedTab: ITabItem) {
+    selectedTab = clickedTab;
   }
-
-  $:selectItems = setSelectItems(SORT_FIELDS);
+  
+  
+  $:sortItems = setsortItems(SORT_FIELDS);
   $:sortedName = SORT_FIELDS[sort];
+  $:category = selectedTab.value;
+  $:scrollToIndex = selectedTab.index * 50;
 </script>
 
-{#await getProducts(sort)}
+{#await getProducts(sort, category)}
   <Spinner /> 
 {:then products}
   <ShopNavbar
-    items={tabItems}
+    tabItems={TAB_ITEMS}
+    {selectedTab}
+    {scrollToIndex}
     onClickTab={handleClickTab}
     sort={sortedName}
     onClickSort={openPopup}
@@ -125,7 +138,7 @@
       onClickSelectButton={handleClickSelectButton}
       onClickCloseButton={closePopup}
       selected={sort}
-      selectItems={selectItems}
+      selectItems={sortItems}
     />
   </LayoutPopup>
 {/await}

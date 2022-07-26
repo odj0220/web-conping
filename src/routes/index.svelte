@@ -1,5 +1,5 @@
 <script>
-  import GlobalBlock from '$styles/GlobalBlock.svelte';
+  import GlobalBlock from '$component/common/layout/GlobalBlock.svelte';
   import MainHeaderContainer from '$container/MainHeaderContainer.svelte';
   import MainBannerContainer from '$container/MainBannerContainer.svelte';
   import MainViewingVideosContainer from '$container/MainViewingVideosContainer.svelte';
@@ -12,7 +12,7 @@
 </script>
 
 <MainHeaderContainer />
-    
+
 <GlobalBlock>
   <MainBannerContainer/>
   <MainViewingVideosContainer/>

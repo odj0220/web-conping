@@ -10,6 +10,9 @@
   import CelebsShortsContainer from './CelebsShortsContainer.svelte';
   import SubHeaderContainer from './SubHeaderContainer.svelte';
 
+  import type { ITabItem } from 'src/global/types';
+  import { callShare } from '../lib/_app_communication';
+
   export let id: string;
 
   const getData = async () => {
@@ -49,9 +52,14 @@
     },
   ];
 
-  let selectedTab = tabItems[0];
-  function handleClickTab(clickedTab: any) {
+  let selectedTab:ITabItem = tabItems[0];
+
+  function handleClickTab(clickedTab: ITabItem) {
     selectedTab = clickedTab;
+  }
+
+  function onClickShare() {
+    callShare('celebs', id);
   }
 
 </script>
@@ -59,10 +67,10 @@
 {#await getData()}
 {:then data}
   <Container margin="0 0 9.4rem" type="full">
-    <SubHeaderContainer type="transparent" share={true} />
+    <SubHeaderContainer type="transparent" share={true} {onClickShare}/>
     <CelebsProfile {data}/>
     <Tabs
-      items={tabItems}
+      {tabItems}
       {selectedTab}
       borderBottom={true}
       sticky={true}
