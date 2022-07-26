@@ -27,7 +27,7 @@ export async function Graphql(query: string) {
     type Query {
       products(order: ProductOrder, category: Int, limit: Int, page: Int): PageProduct
       product(id:ID!): Product
-      contents(sortField: String, sortOrder: Order, type:ContentType): [Content]
+      contents(sortField: String, sortOrder: Order, type:ContentType, limit: Int, afterCursor: Int, celeb: Int, program: Int): PageContent
       content(id:ID!): Content
       celebs: [Celeb]
       celeb(id:ID!): Celeb

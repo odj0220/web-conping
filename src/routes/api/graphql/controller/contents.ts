@@ -7,22 +7,92 @@ import type { IContent } from '../../../../global/types';
 import { contentsByProgramId, convertContent } from './util';
 
 const setOrderBy = (sortField?: string, sortOrder?: string) => {
-  if (!sortField) {
+  if (
+    !sortField ||
+      (
+        sortField !== 'latest' &&
+          sortField !== 'popularity' &&
+          sortField !== 'alphabetical'
+      )
+  ) {
     return ;
   }
+
+  let field = '';
+
+  switch (sortField) {
+  case 'latest':
+    field = 'createdAt';
+    break;
+  case 'popularity':
+    field = 'views';
+    break;
+  case 'alphabetical':
+    field = 'title';
+    break;
+  }
+
   const obj:any = {};
   obj[sortField] = sortOrder || 'asc';
   return JSON.stringify(obj);
 };
 
-export const contents = async ({ sortField, sortOrder, type }: { sortField: string, sortOrder: 'desc' | 'asc', type: string }) => {
+export const contents = async ({ sortField, sortOrder, type, limit, afterCursor, celeb, program }: {
+  sortField: string,
+  sortOrder: 'desc' | 'asc',
+  type: string,
+  limit: number,
+  afterCursor: string
+  celeb: number;
+  program: number;
+}) => {
   const sort = setOrderBy(sortField, sortOrder);
-  const params = JSON.parse(JSON.stringify({
-    type,
-    sort,
-  }));
-  const contents = await GET(`/video-content?${new URLSearchParams(params).toString()}`);
-  return contents.map((content: VideoContent) => convertContent(content));
+
+  const params: any = {
+    program: true,
+    celeb: true,
+    sort: JSON.stringify([{ 'views': 'desc' }]),
+    cursor: afterCursor || '0',
+    size: limit || 10,
+  };
+
+  if (type) {
+    params['type'] = type;
+  }
+
+  if (celeb) {
+    params['celebId'] = celeb;
+  }
+
+  if (program) {
+    params['programId'] = program;
+  }
+
+  const response = await GET('/video-content', { method: 'GET', params });
+
+  const edges = response.items.map((content: any) => {
+    const node = convertContent(content);
+    const cursor = node.id;
+    return {
+      node,
+      cursor,
+    };
+  });
+
+  let startCursor = 0;
+  if (edges.length > 0) {
+    startCursor = edges[edges.length - 1].node.id;
+  }
+  const hasNextPage = edges.length >= limit;
+
+  return {
+    totalCount: 0,
+    edges,
+    pageInfo: {
+      startCursor,
+      hasNextPage,
+    },
+  };
 };
 
 export const content = async ({ id }: { id: string }) => {
