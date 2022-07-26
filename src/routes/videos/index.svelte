@@ -14,7 +14,7 @@
 
     async function getProducts() {
       const query = `{
-          products (order: alphabetical) {
+          products (order: alphabetical, category: 10) {
              totalCount
              pageInfo {
                 page
