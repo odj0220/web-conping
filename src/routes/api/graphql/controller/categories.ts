@@ -1,18 +1,18 @@
-import { getParams } from '$lib/utils/common';
+import { GET } from '../../../../lib/_api';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const categories = async ({ type }: {type?: string}) => {
-  const query: any = {
+  const params: any = {
     sort: JSON.stringify([{ 'id': 'asc' }]),
     cursor: 0,
   };
 
   if (type) {
-    query['type'] = type;
+    params['type'] = type;
   }
 
-  const data = await getCategoriesFromBackend(query);
+  const data = await GET('/category', { method: 'GET', params });
 
   return data.map((cate: any) => {
     return {
@@ -22,21 +22,4 @@ export const categories = async ({ type }: {type?: string}) => {
       backColor: cate.backColor,
     };
   });
-};
-
-export const getCategoriesFromBackend = async (params: any) => {
-  let queries = '';
-
-  if (params) {
-    queries = getParams(params);
-  }
-
-  const response = await fetch(`${BASE_URL}/category${queries ? `?${queries}` : ''}`);
-
-  if (response.ok) {
-    const products = await response.json();
-    return products;
-  }
-
-  throw { message: 'Something went wrong' };
 };
