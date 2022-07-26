@@ -1,16 +1,19 @@
 <script lang="ts">
   import { graphqlApi } from '../lib/_api';
 
-  import type { YouTubePlayer } from 'youtube-player/dist/types';
-  import type { IContent } from 'src/global/types';
+  import { goto } from '$app/navigation';
 
   import SubHeaderContainer from './SubHeaderContainer.svelte';
   import Player from '$component/Player.svelte';
   import Metadata from '$component/Metadata.svelte';
   import ContentDetailAnotherVideosContainer from '$component/ContentDetailAnotherVideosContainer.svelte';
-  import { goto } from '$app/navigation';
 
-  export let id: string;
+  import type { YouTubePlayer } from 'youtube-player/dist/types';
+  import type { IContent } from 'src/global/types';
+import Container from '$component/common/layout/Container.svelte';
+  import { callShare } from '../lib/_app_communication';
+
+  export let id: number;
 
   let player: YouTubePlayer | null = null;
   let content: IContent;
@@ -31,9 +34,9 @@
           }
           programId
           episode
-          thumb 
-          videoId 
-          duration 
+          thumb
+          videoId
+          duration
           currentTime
         }
 
@@ -41,16 +44,21 @@
           id
           name
           description
-          categories
-          banner
+          categories {
+            id
+            name
+            fontColor
+            backColor
+          }
           thumbnail
+          banner
         }
       }
     `;
 
     const result = await graphqlApi(query);
     const celebs = result.data.getCelebsByContentId;
-  
+
     content = result?.data?.content;
     metaDataOption = setMetadataOption(content, celebs);
   };
@@ -72,30 +80,28 @@
     return newData;
   };
 
-  const setPlayer = (event) => {
+  const setPlayer = (event: any) => {
     player = event.detail.player;
-  };
-
-  const setCurrentTime = (num: number) => {
-    if (player && player.seekTo) {
-      player.seekTo(num, true);
-    }
   };
 
   const onClickTitle = (id: string) => {
     goto(`/programs/${id}`);
+  };
+
+  const onClickShare = () => {
+    callShare('contents', id.toString());
   };
 </script>
 
 
 {#await getData()}
 {:then data}
-  <SubHeaderContainer title='{content?.program.title} {content?.episode}화' />
-  <div class="container">
-      <Player content={content} on:get-player={setPlayer}/>
-  
-      <Metadata option={metaDataOption} {onClickTitle}/>
+  <SubHeaderContainer title='{content?.program.title} {content?.episode}화' onClickShare={onClickShare}/>
+  <Container type="full" margin="0">
+    <Player content={content} on:get-player={setPlayer}/>
+
+    <Metadata option={metaDataOption} {onClickTitle}/>
 
     <ContentDetailAnotherVideosContainer contentId={id}/>
-  </div>
+  </Container>
 {/await}

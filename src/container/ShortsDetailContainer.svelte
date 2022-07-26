@@ -1,12 +1,13 @@
 <script lang="ts">
   import { graphqlApi } from '$lib/_api';
-
-  import { goto } from '$app/navigation';
+  
+  import { goBack, gotoPrograms } from '$lib/utils/goto';
 
   import ShortsFullScreen from '$component/ShortsFullScreen.svelte';
   import ShortsDetailInfo from '$component/ShortsDetailInfo.svelte';
   import BottomSheet from '$component/common/layout/BottomSheet.svelte';
   import RelatedProduct from '$component/RelatedProduct.svelte';
+  import { callShare } from '../lib/_app_communication';
 
   export let id: string;
 
@@ -34,9 +35,7 @@
       }
     }`;
 
-    const result = await graphqlApi(query);
-  
-    const { data: { content } } = result;
+    const { data: { content } } = await graphqlApi(query);
   
     return content;
 };
@@ -47,11 +46,12 @@
 
   const onClickClose = (e: TouchEvent) => {
     e.stopPropagation();
-    history.back();
+    goBack();
   };
 
   const onClickShare = (e: TouchEvent) => {
     e.stopPropagation();
+    callShare('shorts', id);
   };
 
   const onClickCart = (e: TouchEvent) => {
@@ -59,13 +59,9 @@
     setOffsetTop(176);
   };
 
-  const move = (targetUrl: string) => {
-    goto(targetUrl);
-  };
-
   const onClickProfile = (e: TouchEvent, id: string) => {
     e.stopPropagation();
-    move(`/programs/${id}`);
+    gotoPrograms(id);
   };
 
 

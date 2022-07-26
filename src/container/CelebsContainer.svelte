@@ -21,7 +21,7 @@
 {:then data} 
 <MainHeaderContainer title="셀럽존" />
 
-<Container margin="8px 0 0 0">
+<Container margin="8px 0 1.6rem 0 ">
   <Celebs {data} onClick={onClickCeleb}/>
 </Container>
 {/await}

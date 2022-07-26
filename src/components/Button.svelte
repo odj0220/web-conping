@@ -1,10 +1,11 @@
 <script lang="ts">
   export let buttonName : string;
   export let onClick : () => void;
+  export let theme = 'default';
 </script>
 
 <div
-  class="button"
+  class="button {theme}"
   role="button"
   on:click={() => onClick()}
 >
@@ -24,6 +25,10 @@
     
     &:active {
       background-color: #9E04EA;
+    }
+
+    &.none {
+      border: none;
     }
   }
 </style>

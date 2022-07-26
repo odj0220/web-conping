@@ -2,15 +2,17 @@
   import type { IContent } from 'src/global/types';
 
   export let content: IContent;
-  export let onClick: (id: string) => void;
+  export let onClick: (id: number) => void;
   export let width = '100%';
   export let height = '166%';
+
+  const { id, title, thumb } = content;
 </script>
 
-<li class="container" on:click={() => onClick(`${content.id}`)} style="width: {width}; padding-bottom:{height}">
-  <img src={content.thumb} alt="shorts-preview" />
+<li class="container" on:click={() => onClick(id)} style="width: {width}; padding-bottom:{height}">
+  <img src={thumb} alt="shorts-preview" />
   <h6 class="title">
-    {content.title}
+    {title}
   </h6>
 </li>
 

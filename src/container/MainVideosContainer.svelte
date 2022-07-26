@@ -3,12 +3,12 @@
   
   import { graphqlApi } from '../lib/_api';
   
-  import { goto } from '$app/navigation';
+  import { gotoContents } from '$lib/utils/goto';
 
-  import type { IContent } from 'src/global/types';
-  
   import PreviewVideos from '$component/PreviewVideos.svelte';
   import Container from '$component/common/layout/Container.svelte';
+  
+  import type { IContent } from 'src/global/types';
 
   let contents: IContent[] = [];
   let end = false;
@@ -62,12 +62,6 @@
     }
   }
 
-  const handleClickContents = (id: string) => {
-    goto(`/contents/${id}`, {
-      replaceState: false,
-    });
-  };
-
   async function runInfiniteScrolling(event) {
     const detail = event.detail;
     await loadContents(6, cursor);
@@ -82,7 +76,7 @@
     {cursor}
     infiniteScroll={true}
     autoPlay={true}
-    onClick={handleClickContents}
+    onClick={gotoContents}
     on:request-more={runInfiniteScrolling}
   />
 </Container>

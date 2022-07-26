@@ -177,13 +177,17 @@ export type ProductEvent = {
 export type Celeb = {
   id: number
   name: string
-  imageUrl: string
-  backImageUrl: string
+  image: string
+  backImage: string
   description: string | null
   youtubeUrl: string | null
   instagramUrl: string | null
   gender: Gender
   nationality: Nationality
+
+  snsFollowerCount?: number
+  productCount?: number
+  videoContentCount?: number
 
   // relation table
   CelebFollower?: CelebFollower[]
@@ -191,6 +195,8 @@ export type Celeb = {
   CelebCategory?: CelebCategory[]
   VideoContentCast?: VideoContentCast[]
   ProgramCast?: ProgramCast[]
+  createdAt: Date
+  updatedAt: Date
 }
 
 /**

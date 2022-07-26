@@ -16,6 +16,7 @@ export let title = '';
 
   .container {
     padding: 0 1.6rem;
+    box-sizing: border-box;
     &.grayBox {
       border-radius: 0.4rem;
       background-color: $bg-black-21;

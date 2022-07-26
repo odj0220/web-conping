@@ -1,11 +1,11 @@
 <script lang="ts">
-import type { ICeleb } from 'src/global/types';
-import Avatar from './Avatar.svelte';
+  import type { ICeleb } from 'src/global/types';
+  import Avatar from './Avatar.svelte';
 
-export let celeb: ICeleb;
-export let onClick : (id: string) => void;
+  export let celeb: ICeleb;
+  export let onClick : (id: string) => void;
 
-const { id, name, thumbnail, categories, countOfFollowers, countOfProducts, countOfContents } = celeb;
+  const { id, name, thumbnail, categories, countOfFollowers, countOfProducts, countOfContents } = celeb;
 
 </script>
 
@@ -21,19 +21,30 @@ const { id, name, thumbnail, categories, countOfFollowers, countOfProducts, coun
           
       </ul>
     </div>
+
     <ul class="info-list">
-      <li class="info-item">
-        <span class="key">팔로워</span>
-        <span class="value">{countOfFollowers.toLocaleString()}명</span>
-      </li>
-      <li class="info-item">
-        <span class="key">콘텐츠</span>
-        <span class="value">{countOfProducts.toLocaleString()}</span>
-      </li>
-      <li class="info-item">
-        <span class="key">상품</span>
-        <span class="value">{countOfContents.toLocaleString()}</span>
-      </li>
+
+      {#if countOfFollowers}
+        <li class="info-item">
+          <span class="key">팔로워</span>
+          <span class="value">{countOfFollowers.toLocaleString()}명</span>
+        </li>
+      {/if}
+
+      {#if countOfProducts}
+        <li class="info-item">
+          <span class="key">콘텐츠</span>
+          <span class="value">{countOfProducts.toLocaleString()}</span>
+        </li>
+      {/if}
+
+      {#if countOfContents}
+        <li class="info-item">
+          <span class="key">상품</span>
+          <span class="value">{countOfContents.toLocaleString()}</span>
+        </li>
+      {/if}
+
     </ul>
   </div>
 </li>

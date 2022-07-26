@@ -1,17 +1,15 @@
 <script lang=ts>
   import { graphqlApi } from '../lib/_api';
 
-  import { goto } from '$app/navigation';
+  import { gotoContents } from '$lib/utils/goto';
 
   import PreviewVideos from '$component/PreviewVideos.svelte';
   import Spinner from '$component/common/shared/Spinner.svelte';
+  import Container from '$component/common/layout/Container.svelte';
+  import EmptyMessage from '$component/common/shared/EmptyMessage.svelte';
 
   export let id: string;
-  export let programTitle: string;
-
-  const handleClickContents = (contentsId: string) => {
-    goto(`/contents/${contentsId}`);
-  };
+  export let category: string;
 
   async function loadHighlight() {
     const query = `{
@@ -32,6 +30,7 @@
     }`;
     try {
       const result = await graphqlApi(query);
+
       const data:any = {
         contents: result.data.getContentsByProgramId,
         end: false,
@@ -49,21 +48,20 @@
   <Spinner />
 {:then {contents, end, cursor}}
   {#if contents.length}
-    <PreviewVideos
-      contents={contents}
-      end={end}
-      cursor={cursor}
-      onClick={handleClickContents}
-    />
+    <Container margin="2.4rem 0 4rem">
+      <PreviewVideos
+        contents={contents}
+        end={end}
+        cursor={cursor}
+        onClick={gotoContents}
+      />
+    </Container>
   {:else}
-    <p class="empty-message">
-      {programTitle} 하이라이트는 준비중입니다. <br/>
-      조금만 기다려주세요 :)
-    </p>
+  <EmptyMessage text={`${category} 하이라이트`} />
   {/if}
 {:catch error}
   <p class="error-message">
-    {programTitle} 하이라이트 데이터를 <br/>
+    {category} 하이라이트 데이터를 <br/>
     가져오는데 실패하였습니다.
   </p>
 {/await}

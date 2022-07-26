@@ -26,7 +26,7 @@
         loop: 1,
         mute: 0,
       };
-    
+
       const option: any = {
         videoId: content.videoId,
         playerVars,
@@ -101,6 +101,7 @@
         });
       });
     };
+
 </script>
 
 <div class="player-wrap">

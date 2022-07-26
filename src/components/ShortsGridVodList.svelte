@@ -5,7 +5,7 @@
 
   export let contents: IContent[] = [];
 
-  export let onClick: (id: string) => void;
+  export let onClick: (id: number) => void;
 </script>
 
 <ul>
@@ -19,12 +19,6 @@
 
 <style lang="scss">
   ul {
-    width: 100%;
-    display: grid;
-    flex-wrap: wrap;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    row-gap: 2.4rem;
-    column-gap: 1.2rem;
+    @include gridItem(1.2rem, 2.4rem);
   }
 </style>

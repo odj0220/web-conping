@@ -1,3 +1,5 @@
+import type { SvelteComponent } from 'svelte';
+
 export interface IProgram {
   id?: string;
   title?: string;
@@ -29,8 +31,8 @@ export interface IContent {
 }
 
 export interface TitleElement {
-  text: string,
-  type?: string,
+  text: string;
+  type?: string;
   style?: string;
 }
 
@@ -46,6 +48,19 @@ export interface ICeleb {
   banner: string;
 }
 
+export interface IRelatedItemType {
+  content: IContent;
+  celeb: ICeleb;
+  product: IProduct;
+}
+
+export interface IRelatedItem {
+  thumbnail: string;
+  title: string;
+  type: IRelatedItemType;
+  id: string;
+}
+
 export interface IProduct {
   id: string;
   name: string;
@@ -58,4 +73,17 @@ export interface IProduct {
   views: number;
   discountRate: number;
   storeUrl: string;
+  relatedItems: IRelatedItem[];
+}
+
+export interface ISelectItem {
+  name: string;
+  value: string;
+}
+
+export interface ITabItem {
+  label: string;
+  index: number;
+  value?: string;
+  component?: SvelteComponent;
 }

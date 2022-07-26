@@ -2,10 +2,15 @@
   {
     "id": "celeb1",
     "name": "장삐쭈",
-    "description": "안녕하세요",
+    "description": "국내 테크리뷰 유튜버. 어려서부터 기계에 관심이 많아서 뜯어 고쳐보곤 하다가 평소 취미인 영상 콘텐츠 제작으로 이어졌다. 폭 넓고 다양한 제품군을 다루지만 그 중에서도 모바일과 애플 제품 관련 영상이 많이 올라오고 있다.",
     "categories": ["category1", "category2"],
     "thumbnail": "/images/celob.png",
-    "follows": ["celeb2, celeb3"]
+    "banner": "/images/bg_profile_01.png",
+    "follows": {
+      "instagram": 1000,
+      "youtube": 1200,
+      "total": 2200
+    }
   },
   {
     "id": "celeb2",
@@ -13,7 +18,12 @@
     "description": "안녕하세요",
     "categories": ["category3"],
     "thumbnail": "/images/celob.png",
-    "follows": ["celeb1, celeb4"]
+    "banner": "/images/bg_profile_02.png",
+    "follows": {
+      "instagram": 10000,
+      "youtube": 22000,
+      "total": 32000
+    }
   },
   {
     "id": "celeb3",
@@ -21,7 +31,12 @@
     "description": "안녕하세요",
     "categories": ["category1", "category4"],
     "thumbnail": "/images/celob.png",
-    "follows": []
+    "banner": "/images/bg_profile_03.png",
+    "follows": {
+      "instagram": 10,
+      "youtube": 1,
+      "total": 11
+    }
   },
   {
     "id": "celeb4",
@@ -29,7 +44,12 @@
     "description": "안녕하세요",
     "categories": ["category4"],
     "thumbnail": "/images/celob.png",
-    "follows": ["celeb3, celeb5", "celeb6", "celeb7"]
+    "banner": "/images/bg_profile_04.png",
+    "follows": {
+      "instagram": 150,
+      "youtube": 220,
+      "total": 370
+    }
   },
   {
     "id": "celeb5",
@@ -37,7 +57,12 @@
     "description": "안녕하세요",
     "categories": ["category2"],
     "thumbnail": "/images/celob.png",
-    "follows": ["celeb12", "celeb13"]
+    "banner": "/images/bg_profile_05.png",
+    "follows": {
+      "instagram": 150,
+      "youtube": 220,
+      "total": 370
+    }
   },
   {
     "id": "celeb6",
@@ -45,7 +70,12 @@
     "description": "안녕하세요",
     "categories": ["category3"],
     "thumbnail": "/images/celob.png",
-    "follows": ["celeb7", "celeb8", "celeb9", "celeb10"]
+    "banner": "/images/bg_profile_06.png",
+    "follows": {
+      "instagram": 150,
+      "youtube": 220,
+      "total": 370
+    }
   },
   {
     "id": "celeb7",
@@ -53,7 +83,12 @@
     "description": "안녕하세요",
     "categories": ["category1"],
     "thumbnail": "/images/celob.png",
-    "follows": []
+    "banner": "/images/bg_profile_07.png",
+    "follows": {
+      "instagram": 150,
+      "youtube": 220,
+      "total": 370
+    }
   },
   {
     "id": "celeb8",
@@ -61,7 +96,12 @@
     "description": "안녕하세요",
     "categories": ["category2", "category3"],
     "thumbnail": "/images/celob.png",
-    "follows": []
+    "banner": "/images/bg_profile_01.png",
+    "follows": {
+      "instagram": 0,
+      "youtube": 0,
+      "total": 0
+    }
   },
   {
     "id": "celeb9",
@@ -69,7 +109,12 @@
     "description": "안녕하세요",
     "categories": ["category4"],
     "thumbnail": "/images/celob.png",
-    "follows": ["celeb1", "celeb2"]
+    "banner": "/images/bg_profile_02.png",
+    "follows": {
+      "instagram": 0,
+      "youtube": 1,
+      "total": 1
+    }
   },
   {
     "id": "celeb10",
@@ -77,7 +122,12 @@
     "description": "안녕하세요",
     "categories": ["category3"],
     "thumbnail": "/images/celob.png",
-    "follows": []
+    "banner": "/images/bg_profile_03.png",
+    "follows": {
+      "instagram": 3000000,
+      "youtube": 4000000,
+      "total": 7000000
+    }
   },
   {
     "id": "celeb11",
@@ -85,7 +135,12 @@
     "description": "안녕하세요",
     "categories": ["category1", "category2"],
     "thumbnail": "/images/celob.png",
-    "follows": ["celeb10", "celeb12"]
+    "banner": "/images/bg_profile_04.png",
+    "follows": {
+      "instagram": 3000000,
+      "youtube": 4000000,
+      "total": 7000000
+    }
   },
   {
     "id": "celeb12",
@@ -93,7 +148,12 @@
     "description": "안녕하세요",
     "categories": ["category3"],
     "thumbnail": "/images/celob.png",
-    "follows": ["celeb3", "celeb4", "celeb5"]
+    "banner": "/images/bg_profile_05.png",
+    "follows": {
+      "instagram": 3000000,
+      "youtube": 4000000,
+      "total": 7000000
+    }
   },
   {
     "id": "celeb13",
@@ -101,7 +161,12 @@
     "description": "안녕하세요",
     "categories": ["category1", "category4"],
     "thumbnail": "/images/celob.png",
-    "follows": ["celeb3", "celeb4", "celeb5"]
+    "banner": "/images/bg_profile_06.png",
+    "follows": {
+      "instagram": 3000000,
+      "youtube": 4000000,
+      "total": 7000000
+    }
   },
   {
     "id": "celeb14",
@@ -109,7 +174,12 @@
     "description": "안녕하세요",
     "categories": ["category3"],
     "thumbnail": "/images/celob.png",
-    "follows": []
+    "banner": "/images/bg_profile_07.png",
+    "follows": {
+      "instagram": 3000000,
+      "youtube": 4000000,
+      "total": 7000000
+    }
   },
   {
     "id": "celeb15",
@@ -117,7 +187,12 @@
     "description": "안녕하세요",
     "categories": ["category1"],
     "thumbnail": "/images/celob.png",
-    "follows": []
+    "banner": "/images/bg_profile_01.png",
+    "follows": {
+      "instagram": 13000000,
+      "youtube": 14000000,
+      "total": 27000000
+    }
   },
   {
     "id": "celeb16",
@@ -125,7 +200,12 @@
     "description": "안녕하세요",
     "categories": ["category2"],
     "thumbnail": "/images/celob.png",
-    "follows": []
+    "banner": "/images/bg_profile_02.png",
+    "follows": {
+      "instagram": 0,
+      "youtube": 0,
+      "total": 0
+    }
   },
   {
     "id": "celeb17",
@@ -133,7 +213,12 @@
     "description": "안녕하세요",
     "categories": ["category4"],
     "thumbnail": "/images/celob.png",
-    "follows": []
+    "banner": "/images/bg_profile_03.png",
+    "follows": {
+      "instagram": 0,
+      "youtube": 0,
+      "total": 0
+    }
   },
   {
     "id": "celeb18",
@@ -141,7 +226,12 @@
     "description": "안녕하세요",
     "categories": ["category3"],
     "thumbnail": "/images/celob.png",
-    "follows": []
+    "banner": "/images/bg_profile_04.png",
+    "follows": {
+      "instagram": 0,
+      "youtube": 0,
+      "total": 0
+    }
   },
   {
     "id": "celeb19",
@@ -149,7 +239,12 @@
     "description": "안녕하세요",
     "categories": ["category2"],
     "thumbnail": "/images/celob.png",
-    "follows": []
+    "banner": "/images/bg_profile_05.png",
+    "follows": {
+      "instagram": 0,
+      "youtube": 0,
+      "total": 0
+    }
   },
   {
     "id": "celeb20",
@@ -157,7 +252,11 @@
     "description": "안녕하세요",
     "categories": ["category1", "category2", "category3", "category4", "category5"],
     "thumbnail": "/images/celob.png",
-    "follows": ["celeb2"]
+    "banner": "/images/bg_profile_06.png",
+    "follows": {
+      "instagram": 0,
+      "youtube": 0,
+      "total": 0
+    }
   }
-
 ]

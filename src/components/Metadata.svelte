@@ -3,7 +3,7 @@ import { SvelteComponent } from 'svelte';
 
 let PastTimeDelta: SvelteComponent;
 
-export let onClickTitle: (id: string) => void;
+export let onClickTitle: (id: number) => void;
 export let option: {
   programDetail?: {
     title?: string;
@@ -208,6 +208,7 @@ const getDay = (time: number) => {
       .description {
         @include caption1-400;
         margin: 24px 0 0;
+        white-space: pre-line;
       }
 
       .profile-list {

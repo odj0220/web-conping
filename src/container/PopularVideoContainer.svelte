@@ -1,7 +1,7 @@
 <script lang="ts">
   import { graphqlApi } from '$lib/_api';
   
-  import { goto } from '$app/navigation';
+  import { gotoContents } from '$lib/utils/goto';
   
   import Container from '$component/common/layout/Container.svelte';
   import Title from '$component/Title.svelte';
@@ -9,12 +9,6 @@
 
   let end = false;
   let cursor = '';
-
-  const handleClickContents = (id: string) => {
-    goto(`/contents/${id}`, {
-      replaceState: false,
-    });
-  };
 
   async function getMainContents() {
     const query = `{
@@ -65,7 +59,7 @@
         {contents}
         {end}
         {cursor}
-        onClick={handleClickContents}
+        onClick={gotoContents}
         infiniteScroll={false}
         autoPlay={true}
       />

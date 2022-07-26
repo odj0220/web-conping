@@ -1,24 +1,22 @@
 <script lang="ts">
+  import { goBack } from '$lib/utils/goto';
+
   import SubHeader from '$component/SubHeader.svelte';
 
   export let title = '';
-  export let share = false;
+  export let share = true;
+  export let type = '';
+  export let onClickShare: () => void;
 
-  function handleClickButton(type: string) {
-    switch (type) {
-    case 'back':
-      goBack();
-      break;
-    case 'share':
-      break;
-    default:
-      break;
-    }
-  }
+  let y = 0;
 
-  function goBack() {
-    window.history.go(-1);
+  function onClickBack() {
+    goBack();
   }
 </script>
 
-<SubHeader {title} {share} onClick={handleClickButton}/>
+<svelte:window bind:scrollY={y} />
+
+{#key y}
+  <SubHeader {title} {share} onClickBack={onClickBack} onClickShare={onClickShare} {type} color={y > 0 ? true : false}/>
+{/key}
