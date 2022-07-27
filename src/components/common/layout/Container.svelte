@@ -1,14 +1,14 @@
 <script lang="ts">
-export let margin = '8px 0 0 ';
-export let type = '';
-export let title = '';
+  export let margin = '8px 0 0 ';
+  export let type = '';
+  export let title = '';
 </script>
 
 <section class="container {type}" style="margin: {margin};">
   {#if title}
     <h3 class="title">{title}</h3>
   {/if}
-  <slot></slot>  
+  <slot></slot>
 </section>
 
 <style lang="scss">

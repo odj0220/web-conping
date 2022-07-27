@@ -6,6 +6,7 @@
   import ImageListView from '$component/ImageListView.svelte';
   import MoreButton from '$component/common/shared/MoreButton.svelte';
   import { gotoContents, gotoPrograms } from '$lib/utils/goto';
+import SeriesVideoSkeleton from '$component/skeleton/container/SeriesVideoSkeleton.svelte';
 
   const getData = async () => {
     const query = `{
@@ -55,7 +56,8 @@
 </script>
 
 {#await getData()}
-{:then {title, series, contents}} 
+<SeriesVideoSkeleton />
+{:then {title, series, contents}}
   {#if contents?.length}
     <Container type="grayBox" margin="5.6rem 1.6rem 0">
       <Title
@@ -63,12 +65,12 @@
         {title}
         marginBottom="1.6rem"
       />
-      
+
       <ImageListView
         {contents}
         onClick={gotoContents}
       />
-      
+
       <MoreButton
         value="{series.title} 시리즈 보러가기"
         onClick={() => gotoPrograms(series.id)}

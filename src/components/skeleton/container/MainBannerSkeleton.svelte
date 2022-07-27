@@ -1,6 +1,6 @@
 <script>
   import Container from '$component/common/layout/Container.svelte';
-  import Image from './unit/Image.svelte';
+  import Image from '../unit/Image.svelte';
 
 </script>
 

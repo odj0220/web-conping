@@ -23,3 +23,7 @@ export const goBack = () => {
     goto('/');
   }
 };
+
+export const goPath = (path: string) => {
+  goto(path);
+};

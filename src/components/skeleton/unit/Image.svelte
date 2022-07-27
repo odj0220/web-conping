@@ -1,9 +1,9 @@
 <script lang="ts">
   import Icon from '$component/icons/Icon.svelte';
 
-  export let width: string;
-  export let height: string;
-  export let borderRadius: string;
+  export let width = '100%';
+  export let height = 'auto';
+  export let borderRadius = '0';
 
 </script>
 

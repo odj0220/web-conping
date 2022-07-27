@@ -2,7 +2,7 @@
   import { graphqlApi } from '../lib/_api';
 
   import Container from '$component/common/layout/Container.svelte';
-  import MainBannerSkeleton from '$component/skeleton/MainBannerSkeleton.svelte';
+  import MainBannerSkeleton from '$component/skeleton/container/MainBannerSkeleton.svelte';
 
   async function loadBannersComponent() {
     const module = await import('$component/Banners.svelte');

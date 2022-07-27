@@ -1,22 +1,17 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
   import { graphqlApi } from '../lib/_api';
 
   import { gotoContents } from '$lib/utils/goto';
 
   import PreviewVideos from '$component/PreviewVideos.svelte';
   import Container from '$component/common/layout/Container.svelte';
+  import MainVideoSkeleton from '$component/skeleton/container/MainVideoSkeleton.svelte';
 
   import type { IContent } from 'src/global/types';
 
   let contents: IContent[] = [];
   let end = false;
   let cursor = '';
-
-  onMount(async () => {
-    await loadContents(2);
-  });
 
   async function loadContents(num: number, inputedCursor?: string): Promise<any> {
     const query = `{
@@ -53,10 +48,11 @@
     try {
       const { data: { getMainInfiniteContents } } = await graphqlApi(query);
       const newContents = getMainInfiniteContents.edges.map((edge) => edge.node);
-
       contents = [...contents, ...newContents];
       end = !getMainInfiniteContents.pageInfo.hasNextPage;
       cursor = getMainInfiniteContents.pageInfo.startCursor;
+
+      return getMainInfiniteContents;
     } catch (error) {
       console.log(error);
     }
@@ -69,14 +65,18 @@
   }
 </script>
 
-<Container margin="5.6rem 0 0 0">
-  <PreviewVideos
-    {contents}
-    {end}
-    {cursor}
-    infiniteScroll={true}
-    autoPlay={true}
-    onClick={gotoContents}
-    on:request-more={runInfiniteScrolling}
-  />
-</Container>
+{#await loadContents(2)}
+<MainVideoSkeleton />
+{:then data}
+  <Container margin="5.6rem 0 0 0">
+    <PreviewVideos
+      {contents}
+      {end}
+      {cursor}
+      infiniteScroll={true}
+      autoPlay={true}
+      onClick={gotoContents}
+      on:request-more={runInfiniteScrolling}
+    />
+  </Container>
+{/await}

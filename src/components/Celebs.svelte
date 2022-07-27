@@ -18,7 +18,7 @@
 
   import type { ICeleb } from 'src/global/types';
 
-  export let data: ICeleb[] = [];
+  export let celebs: ICeleb[] = [];
   export let onClick : (id: string) => void;
   export let end: boolean;
   export let cursor: string;
@@ -48,7 +48,7 @@
     io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          if (!data?.length) {
+          if (!celebs?.length) {
             return;
           }
 
@@ -81,7 +81,7 @@
 </script>
 
 <ul class="celebs">
-  {#each data as celeb}
+  {#each celebs as celeb}
     <Celeb {celeb} onClick={onClick} />
   {/each}
 
