@@ -38,7 +38,7 @@ export const products = async ({ order, category, limit, page }: {order: 'latest
   };
 
   if (category) {
-    params['category'] = category;
+    params['categoryId'] = category;
   }
 
 

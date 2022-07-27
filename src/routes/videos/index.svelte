@@ -14,7 +14,7 @@
 
     async function getProducts() {
       const query = `{
-          products (order: alphabetical) {
+          products (order: alphabetical, category: 10) {
              totalCount
              pageInfo {
                 page
@@ -77,7 +77,7 @@
                 name
                 description
                 thumbnail
-                ba_thumbnail
+                banner
                 countOfFollowers
                 countOfYotubeFollowers
                 countOfInstagramFollowers
@@ -101,7 +101,7 @@
                 name
                 description
                 thumbnail
-                ba_thumbnail
+                banner
                 countOfFollowers
                 countOfYotubeFollowers
                 countOfInstagramFollowers

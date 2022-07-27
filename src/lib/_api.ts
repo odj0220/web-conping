@@ -3,7 +3,7 @@ const GRAPHQL_URL = '/api/graphql';
 const BACKEND_URL = 'https://gollala-backend-wzsqjexeka-du.a.run.app';
 
 interface fetchOption {
-  method: string;
+  method?: string;
   body?: any;
   params?: any;
   headers?: any;
@@ -43,6 +43,7 @@ export function backEndApi(url: string, option: fetchOption) {
     body: option.body ? JSON.stringify(option.body) : null,
   })
     .then(res => {
+      console.log(res.url);
       if (option.responseType === 'text') {
         return res.text();
       }
