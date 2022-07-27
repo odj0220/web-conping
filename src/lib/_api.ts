@@ -43,7 +43,6 @@ export function backEndApi(url: string, option: fetchOption) {
     body: option.body ? JSON.stringify(option.body) : null,
   })
     .then(res => {
-      console.log(res.url);
       if (option.responseType === 'text') {
         return res.text();
       }

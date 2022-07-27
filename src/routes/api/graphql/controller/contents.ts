@@ -6,8 +6,8 @@ import type {
 import relationJson from '../../../../../static/data/relation.json';
 import contentJson from '../../../../../static/data/content.json';
 import programJson from '../../../../../static/data/program.json';
-import type { IContent } from '../../../../global/types';
-import { contentsByProgramId, convertCeleb, convertContent } from './util';
+import type { ICeleb, IContent } from '../../../../global/types';
+import { celebById, contentsByProgramId, convertCeleb, convertContent } from './util';
 
 const setOrderBy = (sortField?: string, sortOrder?: string) => {
   if (!sortField) {
@@ -155,47 +155,16 @@ export const getMainInfiniteContents = async ({
   };
 };
 
-export const getInfiniteCelebs = async ({
-  first,
-  afterCursor,
-}: {
-  first: number;
-  afterCursor: string;
-}) => {
-  const params: any = {
-    category: true,
-    followerCount: true,
-    productCount: true,
-    sort: JSON.stringify([{ createdAt: 'desc' }]),
-    cursor: afterCursor || 0,
-  };
 
-  if (first) {
-    params['size'] = first;
-  }
-  const response = await GET('/celeb', {
-    method: 'GET', params,
-  });
-  const edges = response.map((celeb: Celeb) => {
-    const node = convertCeleb(celeb);
-    return {
-      node,
-      cursor: node.id,
-    };
-  });
-
-  let startCursor = 0;
-  if (edges.length > 0) {
-    startCursor = edges[edges.length - 1].node.id;
-  }
-  const hasNextPage = edges.length >= first;
-
+export const getYoutubeContentsByCelebId = async ({ id }: {id: string}) => {
+  const celeb: ICeleb = await celebById(id);
   return {
-    totalCount: 0,
-    edges,
-    pageInfo: {
-      startCursor,
-      hasNextPage,
-    },
+    title: [
+      {
+        text: `${celeb.name} 유튜브`,
+      },
+    ],
+    contents: celeb.youtubeContents,
+    url: `https://www.youtube.com/channel/${celeb.youtubeChannelId}`,
   };
 };

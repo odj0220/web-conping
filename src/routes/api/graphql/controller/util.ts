@@ -1,7 +1,8 @@
 import type { Product, Program, VideoContent, Celeb } from '../../../../lib/models/backend/backend';
 import dayjs from 'dayjs';
 import { GET } from '../../../../lib/_api';
-import type { IContent } from '../../../../global/types';
+import type { ICeleb, IContent } from '../../../../global/types';
+import type { YoutubeVideo } from '../../../../global/types';
 
 export const convertProgram = (program?: Program) => {
   if (!program) {
@@ -68,40 +69,22 @@ export const convertProduct = (product?: Product, videoContentId?: number) => {
 };
 
 export const convertCeleb = (celeb?: Celeb) => {
-  /*type Celeb {
-    id: String!
-    name: String!
-    description: String
-    categories: [Category]
-    thumbnail: String
-    banner: String
-    countOfFollowers: Float
-    countOfYotubeFollowers:Float
-    countOfInstagramFollowers:Float
-    countOfProducts: Float
-    countOfContents: Float
-
-    youtubeUrl: String
-    instagramUrl: String
-    gender: String
-    nationality: String
-  }
-  */
-
   if (!celeb) {
     return ;
   }
   const { id, image, backImage, CelebCategory, snsFollowerCount, productCount, videoContentCount } = celeb;
   const thumbnail = image;
-  const banner = backImage;
+  let banner = backImage;
   const countOfFollowers = snsFollowerCount || 0;
   const countOfProducts = productCount || 0;
   const countOfContents = videoContentCount || 0;
 
   let categories:any[] = [];
-
   if (CelebCategory) {
     categories = CelebCategory.map(celebCategory => celebCategory.Category);
+    if (!banner) {
+      banner = categories[0].backImage;
+    }
   }
 
   return JSON.parse(JSON.stringify({
@@ -127,4 +110,52 @@ export const contentsByProgramId = async (id: string, type?: string) => {
       }
       return content.contentType === type;
     });
+};
+
+export const celebById = async (id: string) => {
+  const params: any = {
+    category: true,
+    snsFollowerCount: true,
+    productCount: true,
+    videoContentCount: true,
+  };
+  const response = await GET(`/celeb/${id}`, { params });
+  const celeb: ICeleb = convertCeleb(response);
+  let youtubeContents, countOfYoutubeFollowers;
+  if (celeb.youtubeChannelId) {
+    const youtube = await GET(`/youtube/channel/${celeb.youtubeChannelId}`);
+    countOfYoutubeFollowers = youtube?.statistics?.subscriberCount;
+    const videos: any[] = await GET(`/youtube/channel/${celeb.youtubeChannelId}/video?f=true`) || [];
+
+    const promises: any[] = [];
+    for (let i = 0; i < videos.length; i++) {
+      promises.push(youtubeToContent(videos[i]));
+    }
+    const response = await Promise.allSettled(promises);
+    youtubeContents = response
+      .filter((res: any) => res.status === 'fulfilled')
+      .map((res: any) => res?.value);
+  }
+  return JSON.parse(JSON.stringify({
+    ...celeb,
+    countOfYoutubeFollowers,
+    youtubeContents,
+  }));
+};
+
+export const youtubeToContent = async ({ id, snippet }: YoutubeVideo) => {
+  if (!id || !snippet) {
+    return ;
+  }
+  const { videoId } = id;
+  const { title, description, publishedAt } = snippet;
+  const videoInfo: any = await GET(`/youtube/video/${videoId}`);
+  return JSON.parse(JSON.stringify({
+    videoId,
+    title,
+    description,
+    createDt: +dayjs(publishedAt),
+    duration: dayjs.duration(videoInfo?.contentDetails?.duration || 0).asSeconds(),
+    views: videoInfo?.statistics?.viewCount,
+  }));
 };
