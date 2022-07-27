@@ -74,7 +74,7 @@ export const shortsByCelebId = async (id: string, cursor: number, limit: number)
     cursor: cursor || '0',
     size: limit || 10,
     celebId: id,
-    type: 'FULL',
+    type: 'SHORTS',
   };
 
   const response: any = await GET('/video-content', { method: 'GET', params });
