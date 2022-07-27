@@ -132,8 +132,6 @@
       ...shopingProducts,
       ...shopItems,
     ];
-
-    console.log(shopingProducts);
   }
 
   function getBadge({ sort, index } : {sort: string, index: number}) {
