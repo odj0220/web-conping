@@ -10,7 +10,7 @@
 
 </script>
 
-<Item margin="0 0 1.2rem 0" display="flex" direction="row">
+<Item margin={margin} display={display} direction={direction}>
   <Thumbnail width="12rem" height="6.8rem" borderRadius="0.2rem" bgColor="bg-gray-32"/>
   <Rect margin="0 0 0 1.2rem">
     <Bar width="8rem" height="1.2rem" margin="0 0 0.6rem" />

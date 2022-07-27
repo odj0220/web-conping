@@ -6,6 +6,7 @@
   import Title from '$component/Title.svelte';
   import ShortsVodList from '$component/ShortsVodList.svelte';
   import Container from '$component/common/layout/Container.svelte';
+  import MainShortsSkeleton from '$component/skeleton/container/MainShortsSkeleton.svelte';
 
   async function getData() {
     const query = `{
@@ -31,7 +32,7 @@
 </script>
 
 {#await getData()}
-<ShortsGridListSkeleton />
+<MainShortsSkeleton />
 {:then {title, contents}}
   {#if contents?.length }
     <Container type="full" margin="5.6rem 0 0 0">
