@@ -1,12 +1,12 @@
 <script lang="ts">
-  export let imagePath = '';
+  import Image from './common/shared/Image.svelte';
+
+  export let src = '';
+  export let alt = '';
 </script>
 
 <section>
-  <img
-    src={imagePath}
-    alt="프로그램 배너 이미지"
-  />
+  <Image src={src} alt={alt} height="auto" defaultHeight="141%" />
 </section>
 
 <style lang="scss">
@@ -14,9 +14,5 @@
     border-radius: 4px;
     overflow: hidden;
     margin: 0.8rem 1.6rem;
-    img {
-      width: 100%;
-    }
-
   }
 </style>

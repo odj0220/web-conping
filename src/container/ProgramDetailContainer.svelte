@@ -1,18 +1,19 @@
 <script lang="ts">
   import { graphqlApi } from '$lib/_api';
 
+  import { callShare } from '../lib/_app_communication';
+
   import EpisodeContainer from './EpisodeContainer.svelte';
   import HighlightContainer from './HighlightContainer.svelte';
   import ShortsContainer from './ShortsContainer.svelte';
   import SubHeaderContainer from './SubHeaderContainer.svelte';
   import Metadata from '$component/Metadata.svelte';
-  import HeaderBanner from '$component/HeaderBanner.svelte';
+  import ProgramDetailBanner from '$component/ProgramDetailBanner.svelte';
   import Tabs from '$component/common/layout/Tabs.svelte';
   import Container from '$component/common/layout/Container.svelte';
-  import Spinner from '$component/common/shared/Spinner.svelte';
-  import { callShare } from '../lib/_app_communication';
+  import ProgramDetailSkeleton from '$component/skeleton/container/ProgramDetailSkeleton.svelte';
 
-  import type { IProgram, ITabItem } from 'src/global/types';
+  import type { ITabItem } from 'src/global/types';
 
   export let id: string;
 
@@ -61,34 +62,12 @@
       }
     }`;
 
-    const result = await graphqlApi(query);
-    const program: IProgram = result?.data?.program;
-    const celobs = result?.data.getCelebsByProgramId;
-    const metaDataOption = setMetadataOption(program, celobs);
+    const { data: { program, getCelebsByProgramId: celebs } } = await graphqlApi(query);
 
     return {
       program,
-      celobs,
-      metaDataOption,
+      celebs,
     };
-  }
-
-  function setMetadataOption (program: any, celebs: any[]) {
-    const newData = {
-      programDetail: {
-        title: program.title,
-        description: program.description,
-        celebs,
-        info: {
-          airingBeginAt: program.airingBeginAt,
-          airingEndAt: program.airingEndAt,
-          regularAiringAt: program.regularAiringAt,
-          totalEpisode: program.totalEpisode,
-        },
-      },
-    };
-
-    return newData;
   }
 
   function handleClickTab(clickedTab: ITabItem) {
@@ -102,13 +81,13 @@
 </script>
 
 {#await loadData()}
-  <Spinner />
-{:then {program, celobs, metaDataOption}}
+<ProgramDetailSkeleton />
+{:then {program, celebs}}
   <SubHeaderContainer title={program.title} onClickShare={onClickShare}/>
   <Container type="full">
-    <HeaderBanner imagePath={program.banner} />
+    <ProgramDetailBanner src={program.banner} alt={program.title} />
 
-    <Metadata option={metaDataOption}/>
+    <Metadata {program} {celebs}/>
 
     <Tabs
       {selectedTab}

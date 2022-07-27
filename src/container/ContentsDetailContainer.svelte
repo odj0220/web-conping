@@ -1,23 +1,20 @@
 <script lang="ts">
   import { graphqlApi } from '../lib/_api';
 
-  import { goto } from '$app/navigation';
+  import { gotoPrograms } from '$lib/utils/goto';
+  import { callShare } from '../lib/_app_communication';
 
   import SubHeaderContainer from './SubHeaderContainer.svelte';
   import Player from '$component/Player.svelte';
   import Metadata from '$component/Metadata.svelte';
   import ContentDetailAnotherVideosContainer from '$component/ContentDetailAnotherVideosContainer.svelte';
+  import Container from '$component/common/layout/Container.svelte';
 
   import type { YouTubePlayer } from 'youtube-player/dist/types';
-  import type { IContent } from 'src/global/types';
-import Container from '$component/common/layout/Container.svelte';
-  import { callShare } from '../lib/_app_communication';
 
   export let id: number;
 
   let player: YouTubePlayer | null = null;
-  let content: IContent;
-  let metaDataOption: any = {};
 
   const getData = async () => {
     const query = `
@@ -56,36 +53,13 @@ import Container from '$component/common/layout/Container.svelte';
       }
     `;
 
-    const result = await graphqlApi(query);
-    const celebs = result.data.getCelebsByContentId;
+    const { data: { content, getCelebsByContentId: celebs } } = await graphqlApi(query);
 
-    content = result?.data?.content;
-    metaDataOption = setMetadataOption(content, celebs);
-  };
-
-  const setMetadataOption = (content: any, celebs: any[]) => {
-    const newData = {
-      contentDetail: {
-        title: content.title,
-        celebs,
-        info: {
-          programId: content.program.id,
-          programTitle: content.program.title,
-          episode: content.episode,
-          createDt: content.createDt,
-        },
-      },
-    };
-
-    return newData;
+    return { content, celebs };
   };
 
   const setPlayer = (event: any) => {
     player = event.detail.player;
-  };
-
-  const onClickTitle = (id: string) => {
-    goto(`/programs/${id}`);
   };
 
   const onClickShare = () => {
@@ -95,12 +69,13 @@ import Container from '$component/common/layout/Container.svelte';
 
 
 {#await getData()}
-{:then data}
+{:then {content, celebs}}
   <SubHeaderContainer title='{content?.program.title} {content?.episode}화' onClickShare={onClickShare}/>
+
   <Container type="full" margin="0">
     <Player content={content} on:get-player={setPlayer}/>
 
-    <Metadata option={metaDataOption} {onClickTitle}/>
+    <Metadata {content} {celebs} onClickTitle={gotoPrograms}/>
 
     <ContentDetailAnotherVideosContainer contentId={id}/>
   </Container>

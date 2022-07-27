@@ -30,6 +30,9 @@ class:flex={flex}
     &.bg-gray-32 {
       background-color: $bg-gray-32;
     }
+    &.transparent {
+      background-color: transparent;
+    }
     &.flex {
       flex-direction: row;
       align-items: center;

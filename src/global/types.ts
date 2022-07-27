@@ -87,3 +87,10 @@ export interface ITabItem {
   value?: string;
   component?: SvelteComponent;
 }
+
+export interface IMetadata {
+  title: string;
+  description?: string;
+  info: any[];
+  programTitle?: string;
+}
