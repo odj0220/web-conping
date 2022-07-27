@@ -71,7 +71,7 @@ export interface IProductEdge {
   cursor: string;
 }
 
-export interface PageInfo {
+export interface IPageInfo {
     startCursor: string;
     hasNextPage: boolean;
     page: number;
@@ -81,7 +81,7 @@ export interface PageInfo {
 export interface IPageProduct {
   totalCount: string;
   edges: [IProductEdge];
-  pageInfo: PageInfo
+  pageInfo: IPageInfo
 }
 
 export interface IProduct {
@@ -97,7 +97,7 @@ export interface IProduct {
   discountRate: number;
   storeUrl: string;
   relatedItems: IRelatedItem[];
-  badge: IBadge;
+  badge?: IBadge;
 }
 
 export interface ISelectItem {
