@@ -50,7 +50,7 @@
             backColor
           }
           thumbnail
-          ba_thumbnail
+          banner
         }
       }
     `;

@@ -77,7 +77,7 @@
                 name
                 description
                 thumbnail
-                ba_thumbnail
+                banner
                 countOfFollowers
                 countOfYotubeFollowers
                 countOfInstagramFollowers
@@ -101,7 +101,7 @@
                 name
                 description
                 thumbnail
-                ba_thumbnail
+                banner
                 countOfFollowers
                 countOfYotubeFollowers
                 countOfInstagramFollowers

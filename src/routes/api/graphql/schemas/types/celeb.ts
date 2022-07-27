@@ -5,12 +5,17 @@ const Celeb = `
       description: String
       categories: [Category]
       thumbnail: String
-      ba_thumbnail: String
+      banner: String
       countOfFollowers: Float
       countOfYotubeFollowers:Float
       countOfInstagramFollowers:Float
       countOfProducts: Float
       countOfContents: Float
+      
+      youtubeUrl: String
+      instagramUrl: String
+      gender: String
+      nationality: String
     }
 ` ;
 
