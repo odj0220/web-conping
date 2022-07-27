@@ -13,7 +13,8 @@
 
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
-import Spinner from './common/shared/Spinner.svelte';
+
+  import Spinner from '$component/common/shared/Spinner.svelte';
 
   export let end: boolean;
 

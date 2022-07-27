@@ -10,8 +10,7 @@
   import Spinner from '$component/common/shared/Spinner.svelte';
   import LayoutPopup from '$component/common/layout/LayoutPopup.svelte';
   import Container from '$component/common/layout/Container.svelte';
-  
-  import InfiniteScroll from '$component/InfiniteScroll.svelte';
+  import InfiniteScroll from '$component/common/layout/InfiniteScroll.svelte';
   
   import SelectPopup from '$component/SelectPopup.svelte';
   import ShopList from '$component/ShopList.svelte';
