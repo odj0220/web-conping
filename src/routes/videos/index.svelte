@@ -79,7 +79,7 @@
                 thumbnail
                 banner
                 countOfFollowers
-                countOfYotubeFollowers
+                countOfYoutubeFollowers
                 countOfInstagramFollowers
                 countOfProducts
                 countOfContents
@@ -103,7 +103,7 @@
                 thumbnail
                 banner
                 countOfFollowers
-                countOfYotubeFollowers
+                countOfYoutubeFollowers
                 countOfInstagramFollowers
                 countOfProducts
                 countOfContents

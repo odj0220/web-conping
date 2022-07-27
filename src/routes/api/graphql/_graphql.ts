@@ -9,9 +9,9 @@ import {
   getProgramContentsByContentId,
   getMainContents,
   getMainInfiniteContents,
-  getInfiniteCelebs,
+  getYoutubeContentsByCelebId,
 } from './controller/contents';
-import { celebs, celeb, getCelebsByContentId, getCelebsByProductId, getCelebsByProgramId } from './controller/celobs';
+import { celebs, celeb, getCelebsByContentId, getCelebsByProductId, getCelebsByProgramId, getInfiniteCelebs } from './controller/celebs';
 import { program, programs } from './controller/program';
 import { getContinueWatching } from './controller/watching';
 import { getMainSeries } from './controller/series';
@@ -65,6 +65,7 @@ export async function Graphql(query: string) {
       getMainOrigin: MainOrigin
       
       getInfiniteCelebs(first: Int, afterCursor: String): PageCeleb
+      getYoutubeContentsByCelebId(id: ID!): YoutubeContents
   }`);
 
   const rootValue = {
@@ -121,6 +122,7 @@ export async function Graphql(query: string) {
     getMainInfiniteContents,
 
     getInfiniteCelebs,
+    getYoutubeContentsByCelebId,
   };
 
   return graphql({

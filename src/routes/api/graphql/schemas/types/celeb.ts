@@ -7,7 +7,7 @@ const Celeb = `
       thumbnail: String
       banner: String
       countOfFollowers: Float
-      countOfYotubeFollowers:Float
+      countOfYoutubeFollowers:Float
       countOfInstagramFollowers:Float
       countOfProducts: Float
       countOfContents: Float
@@ -16,6 +16,8 @@ const Celeb = `
       instagramUrl: String
       gender: String
       nationality: String
+      youtubeChannelId: String
+      contents: [Content]
     }
 ` ;
 
