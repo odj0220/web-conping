@@ -12,13 +12,13 @@
 <li class="item" on:click="{() => onClick(id)}">
   <Avatar size="72px" src={thumbnail} alt={name}/>
   <div class="info">
-    <div class="info-top"> 
+    <div class="info-top">
       <h6 class="name">{name}</h6>
       <ul class="categories">
-        {#each categories as category} 
+        {#each categories as category}
           <li class="category" style="background-color: {category.backColor}; color: {category.textColor}">{category.name}</li>
         {/each}
-          
+
       </ul>
     </div>
 
@@ -33,14 +33,14 @@
 
       {#if countOfProducts}
         <li class="info-item">
-          <span class="key">콘텐츠</span>
+          <span class="key">상품</span>
           <span class="value">{countOfProducts.toLocaleString()}</span>
         </li>
       {/if}
 
       {#if countOfContents}
         <li class="info-item">
-          <span class="key">상품</span>
+          <span class="key">콘텐츠</span>
           <span class="value">{countOfContents.toLocaleString()}</span>
         </li>
       {/if}
