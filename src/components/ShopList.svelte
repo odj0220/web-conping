@@ -7,7 +7,7 @@
 </script>
 
 <ul class="shop-list">
-  {#each products as product}
+  {#each products as product (product.id)}
     <ShopItem
       item={product}
     />
