@@ -59,6 +59,6 @@
 <MainHeaderContainer title="셀럽존" />
 
 <Container margin="8px 0 1.6rem 0 ">
-  <Celebs data={contents} onClick={gotoCelebs} {end} {cursor} infiniteScroll={true} on:request-more={runInfiniteScrolling}/>
+  <Celebs celebs={contents} onClick={gotoCelebs} {end} {cursor} infiniteScroll={true} on:request-more={runInfiniteScrolling}/>
 </Container>
 <!-- {/await} -->

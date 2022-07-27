@@ -8,9 +8,10 @@
   export let tabItems: ITabItem[];
   export let selectedTab: ITabItem;
   export let sort = '';
-  export let onClickTab: (selectedTab: ITabItem) => void;
+  export let onClickTab: (selectedIndex: number) => void;
   export let onClickSort: () => void;
-  export let scrollToIndex: number;
+  
+  $:scrollToIndex = selectedTab?.index * 50 || 0;
 </script>
 
 <div class="header">
@@ -33,6 +34,8 @@
 
 <style lang="scss">
   .header {
+    position: sticky;
+    top: 10;
     display: grid;
     grid-template-columns: 3fr 1fr;
     height: 5.2rem;

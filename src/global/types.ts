@@ -70,19 +70,43 @@ export interface IRelatedItem {
   id: string;
 }
 
+export interface IBadge {
+  rank: string;
+  iconTheme: string;
+}
+
+export interface IProductEdge {
+  node: IProduct;
+  cursor: string;
+}
+
+export interface PageInfo {
+    startCursor: string;
+    hasNextPage: boolean;
+    page: number;
+    totalPage: number;
+}
+
+export interface IPageProduct {
+  totalCount: string;
+  edges: [IProductEdge];
+  pageInfo: PageInfo
+}
+
 export interface IProduct {
   id: string;
   name: string;
   brand: string;
   price: number;
-  discount: number;
-  category: string;
+  discount?: number;
+  category?: string;
   exposed: [[number]];
   image: string;
   views: number;
   discountRate: number;
   storeUrl: string;
   relatedItems: IRelatedItem[];
+  badge: IBadge;
 }
 
 export interface ISelectItem {
@@ -93,7 +117,7 @@ export interface ISelectItem {
 export interface ITabItem {
   label: string;
   index: number;
-  value?: string;
+  id?: number;
   component?: SvelteComponent;
 }
 

@@ -10,10 +10,32 @@ import type { ICeleb, IContent } from '../../../../global/types';
 import { celebById, contentsByProgramId, convertCeleb, convertContent } from './util';
 
 const setOrderBy = (sortField?: string, sortOrder?: string) => {
-  if (!sortField) {
-    return;
+  if (
+    !sortField ||
+      (
+        sortField !== 'latest' &&
+          sortField !== 'popularity' &&
+          sortField !== 'alphabetical'
+      )
+  ) {
+    return ;
   }
-  const obj: any = {};
+
+  let field = '';
+
+  switch (sortField) {
+  case 'latest':
+    field = 'createdAt';
+    break;
+  case 'popularity':
+    field = 'views';
+    break;
+  case 'alphabetical':
+    field = 'title';
+    break;
+  }
+
+  const obj:any = {};
   obj[sortField] = sortOrder || 'asc';
   return JSON.stringify(obj);
 };
@@ -62,40 +84,6 @@ export const getProgramContentsByContentId = async ({ id }: { id: string }) => {
   return contents.filter((content: IContent) => content.id !== id).splice(0, 2);
 };
 
-export const getContentsByCelebId = ({
-  id,
-  type,
-  limit,
-}: {
-  id: string;
-  type: string;
-  limit: number;
-}) => {
-  const contentIds = relationJson
-    .filter((relation) => relation.celeb === id)
-    .map((relation) => relation.content);
-
-  let contents = contentJson
-    .map((c) => {
-      return {
-        ...c,
-        program: programJson.find((p) => p.id === c.programId),
-      };
-    })
-    .filter((content) => contentIds.includes(content.id))
-    .sort((contentA, contentB) => contentB.createDt - contentA.createDt);
-
-  if (type) {
-    contents = contents.filter((c) => c.contentType === type);
-  }
-
-  if (limit > 0) {
-    contents = contents.splice(0, limit);
-  }
-
-  return contents;
-};
-
 export const getMainContents = async () => {
   const contents = await GET(
     '/video-content?sort=[{views:desc}]&cursor=0&size=2&program=true',
@@ -119,35 +107,22 @@ export const getMainContents = async () => {
   };
 };
 
-export const getMainInfiniteContents = async ({
-  first,
-  afterCursor,
-}: {
-  first: number;
-  afterCursor: string;
+export const getMainInfiniteContents = async ({ limit, cursor }: {
+  limit: number;
+  cursor: string;
 }) => {
-  const response = await GET(
-    `/video-content?size=${first}&cursor=${
-      afterCursor || 0
-    }&type=FULL,HIGHLIGHT&program=true`,
-  );
-  const edges = response.items.map((content: VideoContent) => {
-    const node = convertContent(content);
-    return {
-      node,
-      cursor: node.id,
-    };
-  });
+  const response = await GET(`/video-content?size=${limit}&cursor=${cursor || 0}&type=FULL,HIGHLIGHT&program=true`);
+  const contents: any[] = response.items.map((content: any) => convertContent(content));
 
   let startCursor = 0;
-  if (edges.length > 0) {
-    startCursor = edges[edges.length - 1].node.id;
+  if (contents.length > 0) {
+    startCursor = contents.slice(-1)[0].id;
   }
-  const hasNextPage = edges.length >= first;
+  const hasNextPage = contents.length >= limit;
 
   return {
     totalCount: 0,
-    edges,
+    contents,
     pageInfo: {
       startCursor,
       hasNextPage,
