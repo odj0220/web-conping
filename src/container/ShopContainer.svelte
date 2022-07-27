@@ -1,67 +1,60 @@
 <script lang="ts">
   import { graphqlApi } from '$lib/_api';
+
+  import type { IProductEdge, ITabItem } from 'src/global/types';
   
   import { SORT_FIELDS } from '$lib/contants';
 
-  import Container from '$component/common/layout/Container.svelte';
+  import ShopNavbar from '$container/ShopNavbar.svelte';
+  
   import Spinner from '$component/common/shared/Spinner.svelte';
   import LayoutPopup from '$component/common/layout/LayoutPopup.svelte';
+  import Container from '$component/common/layout/Container.svelte';
   
   import SelectPopup from '$component/SelectPopup.svelte';
   import ShopList from '$component/ShopList.svelte';
-  import ShopNavbar from './ShopNavbar.svelte';
 
-  import type { ITabItem } from 'src/global/types';
-
-  //TODO: 카테고리 API로 변경
-  const TAB_ITEMS = [
-    {
-      label: '전체',
-      index: 0,
-      value: 'all',
-    },
-    {
-      label: '여성패션',
-      index: 1,
-      value: 'womenfashion',
-    },
-    {
-      label: '화장품/미용',
-      index: 2,
-      value: 'cosmeticbeauty',
-    },
-    {
-      label: '가구/인테리어',
-      index: 3,
-      value: 'interior',
-    },
-    {
-      label: '출산',
-      index: 4,
-      value: 'angels',
-    },
-  ];
-
-  let sort = Object.keys(SORT_FIELDS)[0];
-  let isPopupVisible = false;
-
-  const getProducts = async (order = '', category = '') => {
-    const parameter = `
-      order:${order}
-    `;
-
+  async function getCategories() {
     const query = `{
-      products(${parameter}) {
+      categories(type: "PRODUCT") {
         id
-        name
-        brand
-        image
-        price
-        relatedItems {
-          thumbnail
-          title
-          type
-          id
+        label: name
+      }
+    }`;
+  
+    const {
+      data: {
+        categories,
+      },
+    } = await graphqlApi(query);
+
+    return categories;
+  }
+  
+  async function getProducts({ sort = 'alphabetical', category = 0 } : {sort: string, category: number}) {
+    const query = `{
+      products (order: ${sort}, category: ${category}) {
+        totalCount
+        pageInfo {
+          page
+          totalPage
+          hasNextPage
+        }
+        edges {
+          cursor
+          node {
+            id
+            name
+            brand
+            image
+            price
+            relatedItems {
+              thumbnail
+              title
+              type
+              id
+            }
+          }
         }
       }
     }`;
@@ -72,25 +65,97 @@
       },
     } = await graphqlApi(query);
 
-    return products;
-  };
+    return { products };
+  }
 
+  async function getTabItems() {
+    const categories = await getCategories();
+
+    const tabItems = setTabItems({ categories });
+
+    return { tabItems };
+  }
+
+  async function getShopItems({ sort, category } : {sort: string, category: number}) {
+    const {
+      products: {
+        edges,
+      },
+    } = await getProducts({ sort, category });
+
+    const shopItems = setShopItems({ products: edges, sort });
+
+    return { shopItems };
+  }
+
+  function setTabItems({ categories } : {categories : ITabItem[]}) {
+    const defaultCategory = {
+      id: 0,
+      label: '전체',
+      index: 0,
+    };
+  
+    return [defaultCategory, ...categories]
+      .map((category, index) => {
+        return {
+          ...category,
+          index,
+        };
+      });
+  }
+
+  function setShopItems({ products, sort }: { products: IProductEdge[], sort: string }) {
+    return products
+      .map(({ node }) => node)
+      .map((product, index) => {
+        return {
+          ...product,
+          badge: getBadge({ sort, index }),
+        };
+      })
+    ;
+  }
+
+  function getBadge({ sort, index } : {sort: string, index: number}) {
+    if (sort !== 'popularity') {
+      return '';
+    }
+
+    const rank = index + 1;
+  
+    if (index < 3) {
+      return {
+        rank,
+        iconTheme: 'Primary',
+      };
+    }
+  
+    if (index < 10) {
+      return {
+        rank,
+        iconTheme: 'Secondary',
+      };
+    }
+  
+    return '';
+  }
+
+  function handleClickTab(clickedTab: ITabItem) {
+    selectedTab = clickedTab;
+  }
+  
   function openPopup() {
     isPopupVisible = true;
   }
-
+  
   function closePopup() {
     isPopupVisible = false;
   }
-
+  
   function handleClickSelectButton(sortField: string) {
     sort = sortField;
   }
-
-  /**
-   * 정렬
-   * @param sortFieldsObject
-   */
+  
   function setsortItems(sortFieldsObject: { [index: string]: string }) {
     return Object
       .keys(sortFieldsObject)
@@ -101,37 +166,35 @@
         };
       });
   }
-
   
-
-  let selectedTab = TAB_ITEMS[0];
-
-  function handleClickTab(clickedTab: ITabItem) {
-    selectedTab = clickedTab;
-  }
+  let selectedTab: ITabItem;
+  let sort = Object.keys(SORT_FIELDS)[0];
+  let isPopupVisible = false;
   
-  
-  $:sortItems = setsortItems(SORT_FIELDS);
   $:sortedName = SORT_FIELDS[sort];
-  $:category = selectedTab.value;
-  $:scrollToIndex = selectedTab.index * 50;
+  $:sortItems = setsortItems(SORT_FIELDS);
+  $:category = selectedTab?.id || 0;
 </script>
 
-{#await getProducts(sort, category)}
-  <Spinner /> 
-{:then products}
+{#await getTabItems()}
+  <Spinner />
+{:then {tabItems}}
   <ShopNavbar
-    tabItems={TAB_ITEMS}
+    {tabItems}
     {selectedTab}
-    {scrollToIndex}
-    onClickTab={handleClickTab}
     sort={sortedName}
+    onClickTab={handleClickTab}
     onClickSort={openPopup}
   />
-  <Container >
-    <ShopList {products}/>
+{/await}
+
+{#await getShopItems({ sort, category })}
+  <Spinner />
+{:then {shopItems} }
+  <Container>
+    <ShopList products={shopItems} />
   </Container>
-  
+
   <LayoutPopup visible={isPopupVisible}>
     <SelectPopup
       title='정렬 기준'

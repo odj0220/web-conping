@@ -11,10 +11,10 @@
 </script>
 
 <ul class="tab-header" class:sticky={sticky} class:borderBottom={borderBottom}>
-  {#each tabItems as item, index}
+  {#each tabItems as item}
     <Tab 
       {item}
-      isActive={selectedTab.index === index}
+      isActive={selectedTab.index === item.index}
       {onClickTab}
     />
   {/each}
