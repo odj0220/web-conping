@@ -3,12 +3,12 @@
 
   export let item: ITabItem;
   export let isActive: boolean;
-  export let onClickTab: (selected: ITabItem) => void;
+  export let onClickTab: (selectedIndex: number) => void;
 </script>
 
 <li
   class:active={isActive}
-  on:click={() => onClickTab(item)}
+  on:click={() => onClickTab(item.index)}
 >
   {item.label}
 </li>

@@ -16,13 +16,11 @@
   async function loadContents(num: number, inputedCursor?: string): Promise<any> {
     const query = `{
           getMainInfiniteContents(
-              first: ${num},
-              ${inputedCursor ? `afterCursor: "${inputedCursor}"` : ''}
+              limit: ${num},
+              ${inputedCursor ? `cursor: "${inputedCursor}"` : ''}
           ) {
               totalCount,
-              edges {
-                  cursor
-                  node {
+              contents {
                     id
                     title
                     programId
@@ -36,7 +34,6 @@
                     videoId
                     thumb
                     views
-                  }
               }
               pageInfo {
                   hasNextPage
@@ -47,12 +44,11 @@
 
     try {
       const { data: { getMainInfiniteContents } } = await graphqlApi(query);
-      const newContents = getMainInfiniteContents.edges.map((edge) => edge.node);
+      const newContents = getMainInfiniteContents.contents;
+
       contents = [...contents, ...newContents];
       end = !getMainInfiniteContents.pageInfo.hasNextPage;
       cursor = getMainInfiniteContents.pageInfo.startCursor;
-
-      return getMainInfiniteContents;
     } catch (error) {
       console.log(error);
     }
@@ -66,17 +62,18 @@
 </script>
 
 {#await loadContents(2)}
-<MainVideoSkeleton />
-{:then data}
+  <MainVideoSkeleton />
+{:then}
   <Container margin="5.6rem 0 0 0">
     <PreviewVideos
-      {contents}
-      {end}
-      {cursor}
-      infiniteScroll={true}
-      autoPlay={true}
-      onClick={gotoContents}
-      on:request-more={runInfiniteScrolling}
+            {contents}
+            {end}
+            {cursor}
+            infiniteScroll={true}
+            autoPlay={true}
+            onClick={gotoContents}
+            on:request-more={runInfiniteScrolling}
     />
   </Container>
 {/await}
+

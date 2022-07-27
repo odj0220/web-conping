@@ -1,11 +1,14 @@
 <script lang="ts">
   import Icon from '$component/icons/Icon.svelte';
+  import RankBadge from './RankBadge.svelte';
 
   export let src = '';
   export let alt = '';
   export let width = '';
   export let height = '';
   export let borderRadius = '0.4rem';
+  export let rank: string;
+  export let iconTheme: string;
 
   const setImageSrc = (value: string) => {
     src = value;
@@ -15,11 +18,14 @@
 
 <div class="thumbnail" style="width: {width}; padding-bottom: {height}; border-radius:{borderRadius}">
   {#if src}
-  <img src={src} alt={alt} on:error="{() => setImageSrc("")}"/>
+    <img src={src} alt={alt} on:error="{() => setImageSrc("")}"/>
+    {#if rank }
+      <RankBadge {rank} {iconTheme} />
+    {/if}
   {:else}
-  <div class="empty">
-    <Icon name="loading_small" />
-  </div>
+    <div class="empty">
+      <Icon name="loading_small" />
+    </div>
   {/if}
 </div>
 

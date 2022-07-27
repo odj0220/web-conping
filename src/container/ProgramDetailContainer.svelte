@@ -35,8 +35,6 @@
     },
   ];
 
-  let selectedTab:ITabItem = tabItems[0];
-
   async function loadData() {
     const query = `{
       program(id:"${id}"){
@@ -69,9 +67,10 @@
       celebs,
     };
   }
+  let selectedTab:ITabItem = tabItems[0];
 
-  function handleClickTab(clickedTab: ITabItem) {
-    selectedTab = clickedTab;
+  function handleClickTab(index: number) {
+    selectedTab = tabItems[index];
   }
 
   function onClickShare() {
@@ -94,6 +93,6 @@
       {tabItems}
       onClickTab={handleClickTab}
     />
-    <svelte:component this={selectedTab.component} category={program.title}/>
+    <svelte:component this={selectedTab.component} category={program.title} {id}/>
   </Container>
 {/await}

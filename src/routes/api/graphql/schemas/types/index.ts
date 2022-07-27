@@ -18,6 +18,7 @@ import PageCeleb from './pageCeleb';
 import CelebEdge from './celebEdge';
 import ProductEdge from './productEdge';
 import pageProduct from './pageProduct';
+import YoutubeContents from './youtubeContents';
 
 const types = {
   Product,
@@ -41,6 +42,7 @@ const types = {
   CelebEdge,
   ProductEdge,
   pageProduct,
+  YoutubeContents,
 };
 
 export default Object.values(types).reduce((result: string, type: string) => result + type, '');
