@@ -162,18 +162,18 @@ export const getMainContents = async () => {
   };
 };
 
-export const getMainInfiniteContents = async ({ first, afterCursor }: {
-  first: number;
-  afterCursor: string;
+export const getMainInfiniteContents = async ({ limit, cursor }: {
+  limit: number;
+  cursor: string;
 }) => {
-  const response = await GET(`/video-content?size=${first}&cursor=${afterCursor || 0}&type=FULL,HIGHLIGHT&program=true`);
+  const response = await GET(`/video-content?size=${limit}&cursor=${cursor || 0}&type=FULL,HIGHLIGHT&program=true`);
   const contents: any[] = response.items.map((content: any) => convertContent(content));
 
   let startCursor = 0;
   if (contents.length > 0) {
     startCursor = contents.slice(-1)[0].id;
   }
-  const hasNextPage = contents.length >= first;
+  const hasNextPage = contents.length >= limit;
 
   return {
     totalCount: 0,

@@ -52,7 +52,7 @@ export async function Graphql(query: string) {
       getMainContents: MainContent
       getMainSeries: MainSeries
       getMainShorts: MainContent
-      getMainInfiniteContents(first: Int, afterCursor: String): PageContent
+      getMainInfiniteContents(limit: Int, cursor: String): PageContent
       getMainOrigin: MainOrigin
   }`);
 
@@ -90,8 +90,8 @@ export async function Graphql(query: string) {
     // TODO: api 연동하기
     getProductByCelebId,
     // TODO: api 연동하기
-    getContentsByCelebId: async ({ id, cursor, limit, shorts }: {id: string; cursor: number; limit: number, shorts: boolean}) => {
-      return await contentsByCelebId(id, cursor, limit, !!shorts);
+    getContentsByCelebId: async ({ id, cursor, limit }: {id: string; cursor: number; limit: number}) => {
+      return await contentsByCelebId(id, cursor, limit);
     },
     getContentsByProgramId: async ({ id, type }: {id: string, type: string}) => {
       return await contentsByProgramId(id, type);

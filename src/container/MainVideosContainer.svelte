@@ -21,8 +21,8 @@
   async function loadContents(num: number, inputedCursor?: string): Promise<any> {
     const query = `{
           getMainInfiniteContents(
-              first: ${num},
-              ${inputedCursor ? `afterCursor: "${inputedCursor}"` : ''}
+              limit: ${num},
+              ${inputedCursor ? `cursor: "${inputedCursor}"` : ''}
           ) {
               totalCount,
               contents {
