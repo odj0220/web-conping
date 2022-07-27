@@ -172,6 +172,7 @@
   }
 
   function handleClickSelectButton(sortField: string) {
+    shopingProducts = [];
     sort = sortField;
   }
 
@@ -208,13 +209,15 @@
 {#await getTabItems()}
   <Spinner />
 {:then}
-  <ShopNavbar
-    {tabItems}
-    {selectedTab}
-    sort={sortedName}
-    onClickTab={handleClickTab}
-    onClickSort={openPopup}
-  />
+  {#if tabItems?.length }
+    <ShopNavbar
+      {tabItems}
+      {selectedTab}
+      sort={sortedName}
+      onClickTab={handleClickTab}
+      onClickSort={openPopup}
+    />
+  {/if}
 {/await}
 
 {#await getShopItems({ sort, category })}
