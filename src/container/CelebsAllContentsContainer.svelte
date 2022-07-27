@@ -13,7 +13,13 @@
 </script>
 
 <GlobalBlock>
-  <CelebsProductContainer {id} title={[{ text: '상품' }]} moreButton={true} {category}/>
+  <CelebsProductContainer
+          {id}
+          title={[{ text: '상품' }]}
+          moreButton={true}
+          {category}
+          onClickMoreButton={onClickMoreButton}
+  />
   <CelebsContentsContainer
           {id}
           {category}

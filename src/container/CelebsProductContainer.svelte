@@ -12,6 +12,7 @@
   export let id : string;
   export let moreButton: boolean;
   export let category: string;
+  export let onClickMoreButton: (index: number) => void;
 
   let products: IProduct[] = [];
   let end = false;
@@ -65,7 +66,7 @@
             <ProductGridList data={products}/>
             {#if moreButton }
                 {#if products.length >= 4}
-                    <MoreButton value={`${category} 상품 더보기`}/>
+                    <MoreButton value={`${category} 상품 더보기`} onClick={() => onClickMoreButton(1)}/>
                     {:else}
                     <section class="gap"></section>
                 {/if}
