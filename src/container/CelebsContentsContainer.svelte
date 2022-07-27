@@ -1,6 +1,5 @@
 <script type="ts">
   import { graphqlApi } from '$lib/_api';
-
   import { gotoContents } from '$lib/utils/goto';
 
   import Container from '$component/common/layout/Container.svelte';
@@ -11,18 +10,18 @@
   import ImageListView from '$component/ImageListView.svelte';
 
   import type { IContent, TitleElement } from 'src/global/types';
-  import { gotoPrograms } from '$lib/utils/goto';
 
   export let id : string;
   export let title : TitleElement[] = [];
   export let moreButton: boolean;
   export let category: string;
+  export let onClickMoreButton: (index: number) => void;
 
   let contents: IContent[] = [];
   let end = false;
   let cursor = '';
 
-  $: num = title.length ? 3 : 3;
+  $: num = title.length ? 4 : 3;
   $: infiniteScroll = !title.length;
 
   function initialContentsLoad() {
@@ -86,7 +85,7 @@
         <ImageListView contents={[...contents].slice(0, 4)} onClick={gotoContents}/>
         {#if moreButton}
           {#if contents.length >= 4}
-              <MoreButton value={`${category} 콘텐츠 더보기`} margin="1.6rem 0 0" />
+              <MoreButton value={`${category} 콘텐츠 더보기`} margin="1.6rem 0 0" onClick={() => onClickMoreButton(2)}/>
             {:else}
               <section class="gap"></section>
           {/if}
