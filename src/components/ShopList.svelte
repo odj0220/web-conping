@@ -7,8 +7,10 @@
 </script>
 
 <ul class="shop-list">
-  {#each products as item}
-    <ShopItem {item}/>
+  {#each products as product}
+    <ShopItem
+      item={product}
+    />
   {/each}
 </ul>
 
