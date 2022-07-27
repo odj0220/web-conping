@@ -25,9 +25,7 @@
               ${inputedCursor ? `afterCursor: "${inputedCursor}"` : ''}
           ) {
               totalCount,
-              edges {
-                  cursor
-                  node {
+              contents {
                     id
                     title
                     programId
@@ -41,7 +39,6 @@
                     videoId
                     thumb
                     views
-                  }
               }
               pageInfo {
                   hasNextPage
@@ -52,8 +49,8 @@
 
     try {
       const { data: { getMainInfiniteContents } } = await graphqlApi(query);
-      const newContents = getMainInfiniteContents.edges.map((edge) => edge.node);
-
+      const newContents = getMainInfiniteContents.contents;
+  
       contents = [...contents, ...newContents];
       end = !getMainInfiniteContents.pageInfo.hasNextPage;
       cursor = getMainInfiniteContents.pageInfo.startCursor;

@@ -167,23 +167,17 @@ export const getMainInfiniteContents = async ({ first, afterCursor }: {
   afterCursor: string;
 }) => {
   const response = await GET(`/video-content?size=${first}&cursor=${afterCursor || 0}&type=FULL,HIGHLIGHT&program=true`);
-  const edges = response.items.map((content: VideoContent) => {
-    const node = convertContent(content);
-    return {
-      node,
-      cursor: node.id,
-    };
-  });
+  const contents: any[] = response.items.map((content: any) => convertContent(content));
 
   let startCursor = 0;
-  if (edges.length > 0) {
-    startCursor = edges[edges.length - 1].node.id;
+  if (contents.length > 0) {
+    startCursor = contents.slice(-1)[0].id;
   }
-  const hasNextPage = edges.length >= first;
+  const hasNextPage = contents.length >= first;
 
   return {
     totalCount: 0,
-    edges,
+    contents,
     pageInfo: {
       startCursor,
       hasNextPage,
