@@ -15,10 +15,9 @@
     <div class="info-top">
       <h6 class="name">{name}</h6>
       <ul class="categories">
-        {#each categories as category}
-          <li class="category" style="background-color: {category.backColor}; color: {category.textColor}">{category.name}</li>
-        {/each}
-
+        {#if categories?.length}
+          <li class="category" style="background-color: {categories[0].backColor}; color: {categories[0].textColor}">{categories[0].name}</li>
+        {/if}
       </ul>
     </div>
 
