@@ -13,7 +13,7 @@ import PopularVideoSkeleton from '$component/skeleton/container/PopularVideoSkel
 
   async function getMainContents() {
     const query = `{
-      getMainContents{
+      getMainContents {
         title {
           text
           type

@@ -1,4 +1,4 @@
-const event = {
+const event2 = {
   type: 'video, celeb, celebList, scrap, highlight, shorts, user, program, shorts, banner, share, icon',
   target: 'fullscreen, exitfullscreen, comment, commentRemove, moreProgram',
   status: 'READY, ENDED, PLAYING, PAUSED, BUFFERING, CUED',

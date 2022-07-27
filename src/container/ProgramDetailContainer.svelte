@@ -91,8 +91,8 @@
     return newData;
   }
 
-  function handleClickTab(clickedTab: ITabItem) {
-    selectedTab = clickedTab;
+  function handleClickTab(index: number) {
+    selectedTab = tabItems[index];
   }
 
   function onClickShare() {

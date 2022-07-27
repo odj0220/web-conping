@@ -1,4 +1,5 @@
 import type { SvelteComponent } from 'svelte';
+import contents from '../fixtures/contents';
 
 export interface IProgram {
   id?: string;
@@ -40,12 +41,20 @@ export interface ICeleb {
   id: string;
   name: string;
   description: string;
-  categories: string[];
-  thumbnail: string;
-  follows: ICeleb[];
-  programs: IProgram[];
-  products: IProduct[];
-  banner: string;
+  categories?: string[];
+  thumbnail?: string;
+  banner?: string;
+  countOfFollowers?: number;
+  countOfYoutubeFollowers?: number;
+  countOfInstagramFollowers?: number;
+  countOfProducts?: number;
+  countOfContents?: number;
+  youtubeUrl?: string
+  instagramUrl?: string
+  gender?: string
+  nationality?: string
+  youtubeChannelId?: string
+  youtubeContents?: IContent[]
 }
 
 export interface IRelatedItemType {
@@ -110,4 +119,39 @@ export interface ITabItem {
   index: number;
   id?: number;
   component?: SvelteComponent;
+}
+
+export interface YoutubeVideo {
+  kind: string;
+  etag: string;
+  id: {
+    kind: string;
+    videoId: string;
+  },
+  snippet: {
+    publishedAt: Date;
+    channelId: string;
+    title: string;
+    description: string;
+    thumbnails: {
+      default: {
+        url: string
+        width: number,
+        height: number
+      },
+      medium: {
+        url: string
+        width: number,
+        height: number
+      },
+      high: {
+        url: string
+        width: number,
+        height: number
+      }
+    },
+    channelTitle: string,
+    liveBroadcastContent: string,
+    publishTime: Date
+  }
 }
