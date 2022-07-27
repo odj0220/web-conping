@@ -1,7 +1,7 @@
 const PageContent = `
     type PageContent {
       totalCount: String
-      edges: [ContentEdge]
+      contents: [Content]
       pageInfo: PageInfo
     }
 `;

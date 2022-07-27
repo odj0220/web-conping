@@ -7,7 +7,6 @@ import {
   contents,
   getContentsByProductId,
   getProgramContentsByContentId,
-  getContentsByCelebId,
   getMainContents,
   getMainInfiniteContents,
   getInfiniteCelebs,
@@ -26,7 +25,7 @@ import GRAPH_ENUMS from './schemas/enums';
 
 import dayjs from 'dayjs';
 import Duration from 'dayjs/plugin/duration.js';
-import { contentsByProgramId } from './controller/util';
+import { contentsByProgramId, contentsByCelebId, shortsByCelebId } from './controller/util';
 dayjs.extend(Duration);
 
 export async function Graphql(query: string) {
@@ -36,7 +35,7 @@ export async function Graphql(query: string) {
     type Query {
       products(order: ProductOrder, category: Int, limit: Int, page: Int): PageProduct
       product(id:ID!): Product
-      contents(sortField: String, sortOrder: Order, type:ContentType): [Content]
+      contents(sortField: String, sortOrder: Order, type:ContentType, limit: Int, afterCursor: Int, celeb: Int, program: Int): PageContent
       content(id:ID!): Content
       celebs: [Celeb]
       celeb(id:ID!): Celeb
@@ -51,7 +50,8 @@ export async function Graphql(query: string) {
       getCelebsByProductId(id:ID!): [Celeb]
       getCelebsByProgramId(id:ID!): [Celeb]
       getProductByCelebId(id:ID! limit: Int): [Product]
-      getContentsByCelebId(id:ID!, type:ContentType, limit: Int): [Content]
+      getContentsByCelebId(id:ID!, cursor: Int, limit: Int, shorts: Boolean): PageContent
+      getShortsByCelebId(id:ID!, cursor: Int, limit: Int, shorts: Boolean): PageContent
       getProductsByCategory(category:String!): [Product]
       getContinueWatching: [Content]
       getProgramContentsByContentId(id:ID!): [Content]
@@ -61,7 +61,7 @@ export async function Graphql(query: string) {
       getMainContents: MainContent
       getMainSeries: MainSeries
       getMainShorts: MainContent
-      getMainInfiniteContents(first: Int, afterCursor: String): PageContent
+      getMainInfiniteContents(limit: Int, cursor: String): PageContent
       getMainOrigin: MainOrigin
       
       getInfiniteCelebs(first: Int, afterCursor: String): PageCeleb
@@ -101,7 +101,12 @@ export async function Graphql(query: string) {
     // TODO: api 연동하기
     getProductByCelebId,
     // TODO: api 연동하기
-    getContentsByCelebId,
+    getShortsByCelebId: async ({ id, cursor, limit }: {id: string; cursor: number; limit: number}) => {
+      return await shortsByCelebId(id, cursor, limit);
+    },
+    getContentsByCelebId: async ({ id, cursor, limit }: {id: string; cursor: number; limit: number}) => {
+      return await contentsByCelebId(id, cursor, limit);
+    },
     getContentsByProgramId: async ({ id, type }: {id: string, type: string}) => {
       return await contentsByProgramId(id, type);
     },

@@ -2,15 +2,15 @@
   import { graphqlApi } from '$lib/_api';
 
   import type { IProductEdge, ITabItem } from 'src/global/types';
-  
+
   import { SORT_FIELDS } from '$lib/contants';
 
   import ShopNavbar from '$container/ShopNavbar.svelte';
-  
+
   import Spinner from '$component/common/shared/Spinner.svelte';
   import LayoutPopup from '$component/common/layout/LayoutPopup.svelte';
   import Container from '$component/common/layout/Container.svelte';
-  
+
   import SelectPopup from '$component/SelectPopup.svelte';
   import ShopList from '$component/ShopList.svelte';
 
@@ -21,7 +21,7 @@
         label: name
       }
     }`;
-  
+
     const {
       data: {
         categories,
@@ -30,7 +30,7 @@
 
     return categories;
   }
-  
+
   async function getProducts({ sort = 'alphabetical', category = 0 } : {sort: string, category: number}) {
     const query = `{
       products (order: ${sort}, category: ${category}) {
@@ -94,7 +94,7 @@
       label: '전체',
       index: 0,
     };
-  
+
     return [defaultCategory, ...categories]
       .map((category, index) => {
         return {
@@ -122,40 +122,40 @@
     }
 
     const rank = index + 1;
-  
+
     if (index < 3) {
       return {
         rank,
         iconTheme: 'Primary',
       };
     }
-  
+
     if (index < 10) {
       return {
         rank,
         iconTheme: 'Secondary',
       };
     }
-  
+
     return '';
   }
 
   function handleClickTab(clickedTab: ITabItem) {
     selectedTab = clickedTab;
   }
-  
+
   function openPopup() {
     isPopupVisible = true;
   }
-  
+
   function closePopup() {
     isPopupVisible = false;
   }
-  
+
   function handleClickSelectButton(sortField: string) {
     sort = sortField;
   }
-  
+
   function setsortItems(sortFieldsObject: { [index: string]: string }) {
     return Object
       .keys(sortFieldsObject)
@@ -170,7 +170,7 @@
   let selectedTab: ITabItem;
   let sort = Object.keys(SORT_FIELDS)[0];
   let isPopupVisible = false;
-  
+
   $:sortedName = SORT_FIELDS[sort];
   $:sortItems = setsortItems(SORT_FIELDS);
   $:category = selectedTab?.id || 0;

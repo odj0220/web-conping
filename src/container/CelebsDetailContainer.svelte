@@ -54,14 +54,14 @@
 
   let selectedTab:ITabItem = tabItems[0];
 
-  function handleClickTab(clickedTab: ITabItem) {
-    selectedTab = clickedTab;
+  function handleClickTab(index: number) {
+    selectedTab = tabItems[index];
+    window.scrollTo(0, 0);
   }
 
   function onClickShare() {
     callShare('celebs', id);
   }
-
 </script>
 
 {#await getData()}
@@ -76,6 +76,26 @@
       sticky={true}
       onClickTab={handleClickTab}
     />
-    <svelte:component this={selectedTab.component} category={data.name}/>
+
+    {#if selectedTab.index === 0}
+      <CelebsAllContentsContainer
+              {id}
+              onClickMoreButton={handleClickTab}
+              category={data.name}
+      />
+    {/if}
+
+    {#if selectedTab.index === 1}
+      <CelebsProductContainer {id} category={data.name}/>
+    {/if}
+
+
+    {#if selectedTab.index === 2}
+      <CelebsContentsContainer {id} category={data.name}/>
+    {/if}
+
+    {#if selectedTab.index === 3}
+      <CelebsShortsContainer {id} category={data.name}/>
+    {/if}
   </Container>
 {/await}

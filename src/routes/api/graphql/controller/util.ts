@@ -116,6 +116,66 @@ export const convertCeleb = (celeb?: Celeb) => {
   }));
 };
 
+export const shortsByCelebId = async (id: string, cursor: number, limit: number) => {
+  const params: any = {
+    program: true,
+    sort: JSON.stringify([{ 'createdAt': 'desc' }]),
+    cursor: cursor || '0',
+    size: limit || 10,
+    celebId: id,
+    type: 'SHORTS',
+  };
+
+  const response: any = await GET('/video-content', { method: 'GET', params });
+
+  const contents: any[] = response.items.map((content: any) => convertContent(content));
+
+  let startCursor = 0;
+  if (contents.length > 0) {
+    startCursor = contents.slice(-1)[0].id;
+  }
+  const hasNextPage = contents.length >= limit;
+
+  return {
+    totalCount: 0,
+    contents,
+    pageInfo: {
+      startCursor,
+      hasNextPage,
+    },
+  };
+};
+
+export const contentsByCelebId = async (id: string, cursor: number, limit: number) => {
+  const params: any = {
+    program: true,
+    sort: JSON.stringify([{ 'createdAt': 'desc' }]),
+    cursor: cursor || '0',
+    size: limit || 10,
+    celebId: id,
+    type: 'FULL,HIGHLIGHT',
+  };
+
+  const response: any = await GET('/video-content', { method: 'GET', params });
+
+  const contents: any[] = response.items.map((content: any) => convertContent(content));
+
+  let startCursor = 0;
+  if (contents.length > 0) {
+    startCursor = contents.slice(-1)[0].id;
+  }
+  const hasNextPage = contents.length >= limit;
+
+  return {
+    totalCount: 0,
+    contents,
+    pageInfo: {
+      startCursor,
+      hasNextPage,
+    },
+  };
+};
+
 export const contentsByProgramId = async (id: string, type?: string) => {
   const queryType = type ? '&type=' + type : '';
   const response = await GET(`/video-content?programId=${id}&program=true&sort=[{"ProgramInfo": {"episode": "desc"} }]${queryType}`);
