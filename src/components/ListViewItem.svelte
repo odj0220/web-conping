@@ -20,9 +20,7 @@
 </script>
 
 <li class="grid-item" on:click={() => onClick(id)}>
-  <div class="left">
-    <Thumbnail src={thumb} width="12rem" height="6.8rem"/>
-  </div>
+  <Thumbnail src={thumb} width="12rem" height="6.8rem" borderRadius="0.2rem" />
 
   <div class="right">
     <span class="head-line">{metaDataContent}</span>
@@ -35,11 +33,6 @@
     display: flex;
     align-items: center;
     gap: 1.2rem;
-    .left {
-      border-radius: 2px;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
 
     .right {
       display: flex;

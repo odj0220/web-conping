@@ -1,5 +1,4 @@
 import type { SvelteComponent } from 'svelte';
-import contents from '../fixtures/contents';
 
 export interface IProgram {
   id?: string;
@@ -49,12 +48,12 @@ export interface ICeleb {
   countOfInstagramFollowers?: number;
   countOfProducts?: number;
   countOfContents?: number;
-  youtubeUrl?: string
-  instagramUrl?: string
-  gender?: string
-  nationality?: string
-  youtubeChannelId?: string
-  youtubeContents?: IContent[]
+  youtubeUrl?: string;
+  instagramUrl?: string;
+  gender?: string;
+  nationality?: string;
+  youtubeChannelId?: string;
+  youtubeContents?: IContent[];
 }
 
 export interface IRelatedItemType {
@@ -121,13 +120,20 @@ export interface ITabItem {
   component?: SvelteComponent;
 }
 
+export interface IMetadata {
+  title: string;
+  description?: string;
+  info: any[];
+  programTitle?: string;
+}
+
 export interface YoutubeVideo {
   kind: string;
   etag: string;
   id: {
     kind: string;
     videoId: string;
-  },
+  };
   snippet: {
     publishedAt: Date;
     channelId: string;
@@ -135,23 +141,23 @@ export interface YoutubeVideo {
     description: string;
     thumbnails: {
       default: {
-        url: string
-        width: number,
-        height: number
-      },
+        url: string;
+        width: number;
+        height: number;
+      };
       medium: {
-        url: string
-        width: number,
-        height: number
-      },
+        url: string;
+        width: number;
+        height: number;
+      };
       high: {
-        url: string
-        width: number,
-        height: number
-      }
-    },
-    channelTitle: string,
-    liveBroadcastContent: string,
-    publishTime: Date
-  }
+        url: string;
+        width: number;
+        height: number;
+      };
+    };
+    channelTitle: string;
+    liveBroadcastContent: string;
+    publishTime: Date;
+  };
 }

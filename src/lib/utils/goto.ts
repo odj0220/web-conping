@@ -17,13 +17,24 @@ export const gotoCelebs = (id: string) => {
 };
 
 export const goBack = () => {
-  if (document.referrer) {
-    window.history.go(-1);
-  } else {
-    goto('/');
-  }
+  historyBack(-1, () => goto('/'));
 };
 
 export const goPath = (path: string) => {
   goto(path);
+};
+
+const historyBack = (count: number, fallback: any) => {
+  let hasHistory = false;
+  window.history.go(count);
+
+  const stateChange = (e: any) => hasHistory = true;
+  window.addEventListener('popstate', stateChange);
+
+  setTimeout(function() {
+    if (!hasHistory) {
+      fallback();
+      window.removeEventListener('popstate', stateChange);
+    }
+  }, 200);
 };

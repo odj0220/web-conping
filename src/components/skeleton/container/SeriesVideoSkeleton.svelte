@@ -7,7 +7,7 @@
 
 </script>
 
-<Container margin="5.6rem 0 0">
+<Container margin="5.6rem 1.6rem 0" type="grayBox full">
   <Rect borderRadius="0.4rem" padding="1.6rem 1.2rem">
     <Bar width="23.5rem" height="2rem" margin="0 0 1.6rem" />
     <VideoList />
