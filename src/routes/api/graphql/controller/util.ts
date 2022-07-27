@@ -172,6 +172,47 @@ export const contentsByProgramId = async (id: string, type?: string) => {
     });
 };
 
+export const productsByCelebId = async (id: string, limit: number, cursor: number) => {
+  const params:any = {
+    pagingType: 'cursor',
+    cursor: cursor || 0,
+    sort: '[{"createdAt":"desc"}]',
+    size: limit || 10,
+    celeb: true,
+    celebId: id,
+  };
+  const response: any = await GET('/product', { params: params });
+  const products = response.elements.map((product: any) => {
+    return {
+      id: product.id,
+      name: product.name,
+      brand: product.Brand.name,
+      price: product.price,
+      discountRate: product.discountRate,
+      storeUrl: product.storeUrl,
+      image: product.image,
+      views: product.views,
+      createDt: +new Date(product.createdAt),
+    };
+  });
+
+  let startCursor = 0;
+  if (products.length > 0) {
+    startCursor = products.slice(-1)[0].id;
+  }
+
+  const hasNextPage = products.length >= limit;
+
+  return {
+    totalCount: 0,
+    products,
+    pageInfo: {
+      startCursor,
+      hasNextPage,
+    },
+  };
+};
+
 export const celebById = async (id: string) => {
   const params: any = {
     category: true,

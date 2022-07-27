@@ -25,7 +25,7 @@ import GRAPH_ENUMS from './schemas/enums';
 
 import dayjs from 'dayjs';
 import Duration from 'dayjs/plugin/duration.js';
-import { contentsByProgramId, contentsByCelebId, shortsByCelebId } from './controller/util';
+import { contentsByProgramId, contentsByCelebId, shortsByCelebId, productsByCelebId } from './controller/util';
 dayjs.extend(Duration);
 
 export async function Graphql(query: string) {
@@ -47,6 +47,7 @@ export async function Graphql(query: string) {
       getCelebsByContentId(id:ID!): [Celeb]
       getContentsByProgramId(id:ID!, type:ContentType): [Content]
       getContentsByProductId(id:ID!): [Content]
+      getProductsByCelebId(id: ID!, cursor: Int, limit: Int): PageProduct
       getCelebsByProductId(id:ID!): [Celeb]
       getCelebsByProgramId(id:ID!): [Celeb]
       getProductByCelebId(id:ID! limit: Int): [Product]
@@ -107,6 +108,9 @@ export async function Graphql(query: string) {
     },
     getContentsByCelebId: async ({ id, cursor, limit }: {id: string; cursor: number; limit: number}) => {
       return await contentsByCelebId(id, cursor, limit);
+    },
+    getProductsByCelebId: async ({ id, limit, cursor }: {id: string; limit:number; cursor: number}) => {
+      return await productsByCelebId(id, limit, cursor);
     },
     getContentsByProgramId: async ({ id, type }: {id: string, type: string}) => {
       return await contentsByProgramId(id, type);
