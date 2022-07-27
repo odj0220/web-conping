@@ -48,7 +48,7 @@
     io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          if (!data?.length) {
+          if (!celebs?.length) {
             return;
           }
 
