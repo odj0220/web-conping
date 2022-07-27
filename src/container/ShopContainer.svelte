@@ -160,6 +160,7 @@
 
   function handleClickTab(clickedTabIndex: number) {
     selectedTab = tabItems[clickedTabIndex];
+    shopingProducts = [];
   }
 
   function openPopup() {
