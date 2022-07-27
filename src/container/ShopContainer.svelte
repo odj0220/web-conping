@@ -106,8 +106,8 @@
 
   let selectedTab = TAB_ITEMS[0];
 
-  function handleClickTab(clickedTab: ITabItem) {
-    selectedTab = clickedTab;
+  function handleClickTab(index: number) {
+    selectedTab = TAB_ITEMS[index];
   }
   
   
