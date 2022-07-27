@@ -3,7 +3,6 @@
 
   export let rank: string;
   export let iconTheme: string;
-  console.log(iconTheme);
 
   function getIconName(theme:string) {
     return `badge_rank_${theme.toLowerCase()}`;
