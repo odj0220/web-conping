@@ -21,7 +21,8 @@
         celeb(id:"${id}"){
           name
           description
-          thumbnail
+          thumbnail,
+          countOfYoutubeFollowers
         }
       }
     `;
