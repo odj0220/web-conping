@@ -19,6 +19,7 @@
   let page = 1;
   let shopingProducts:IProduct[] = [];
 
+  let tabItems: ITabItem[];
   let selectedTab: ITabItem;
   let sort = Object.keys(SORT_FIELDS)[0];
   let isPopupVisible = false;
@@ -80,9 +81,7 @@
   async function getTabItems() {
     const categories = await getCategories();
 
-    const tabItems = setTabItems({ categories });
-
-    return { tabItems };
+    tabItems = setTabItems({ categories });
   }
 
   async function getShopItems({ sort, category, page } : {sort: string, category: number, page: number}) {
@@ -95,12 +94,7 @@
 
     setPageInfo(pageInfo);
 
-    const shopItems = setShopItems({ products: edges, sort });
-
-    shopingProducts = [
-      ...shopingProducts,
-      ...shopItems,
-    ];
+    setShopItems({ products: edges, sort });
   }
 
   function setPageInfo(pageInfo: IPageInfo) {
@@ -125,7 +119,7 @@
   }
 
   function setShopItems({ products, sort }: { products: IProductEdge[], sort: string }) {
-    return products
+    const shopItems = products
       .map(({ node }) => node)
       .map((product, index) => {
         return {
@@ -133,6 +127,11 @@
           badge: getBadge({ sort, index }),
         };
       });
+
+    shopingProducts = [
+      ...shopingProducts,
+      ...shopItems,
+    ];
   }
 
   function getBadge({ sort, index } : {sort: string, index: number}) {
@@ -159,8 +158,8 @@
     return '';
   }
 
-  function handleClickTab(clickedTab: ITabItem) {
-    selectedTab = clickedTab;
+  function handleClickTab(clickedTabIndex: number) {
+    selectedTab = tabItems[clickedTabIndex];
   }
 
   function openPopup() {
@@ -205,7 +204,7 @@
 
 {#await getTabItems()}
   <Spinner />
-{:then {tabItems}}
+{:then}
   <ShopNavbar
     {tabItems}
     {selectedTab}
