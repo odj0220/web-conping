@@ -11,8 +11,7 @@
   import ImageListView from '$component/ImageListView.svelte';
 
   import type { IContent, TitleElement } from 'src/global/types';
-  import type { ITabItem } from 'src/global/types';
-  import { onMount } from 'svelte';
+  import { gotoPrograms } from '$lib/utils/goto';
 
   export let id : string;
   export let title : TitleElement[] = [];
@@ -23,7 +22,7 @@
   let end = false;
   let cursor = '';
 
-  $: num = title.length ? 2 : 3;
+  $: num = title.length ? 3 : 3;
   $: infiniteScroll = !title.length;
 
   function initialContentsLoad() {
@@ -85,24 +84,44 @@
 {#await initialContentsLoad()}
 {:then}
   {#if contents.length}
-    <Container margin="5.6rem 0 0">
-      {#if title.length}
+    {#if title.length}
+      <Container margin="5.6rem 0 0">
         <Title title={title} />
-      {/if}
-      <PreviewVideos
-              contents={contents}
-              {end}
-              {cursor}
-              onClick={gotoContents}
-              infiniteScroll={infiniteScroll}
-              autoPlay={false}
-              on:request-more={runInfiniteScrolling}
-      />
-    </Container>
+        <ImageListView contents={[...contents].slice(0, 4)} onClick={gotoContents}/>
+        {#if moreButton}
+          {#if contents.length >= 4}
+              <MoreButton value={`${category} 콘텐츠 더보기`} margin="1.6rem 0 0" />
+            {:else}
+              <section class="gap"></section>
+          {/if}
+        {/if}
+      </Container>
+    {:else}
+      <Container margin="5.6rem 0 0">
+        <PreviewVideos
+                contents={contents}
+                {end}
+                {cursor}
+                onClick={gotoContents}
+                infiniteScroll={infiniteScroll}
+                autoPlay={false}
+                on:request-more={runInfiniteScrolling}
+        />
+      </Container>
+    {/if}
   {:else}
     {#if title.length}
     {:else}
-    <EmptyMessage text={`${category}님의 콘텐츠는 준비중입니다. 조금만 기다려주세요 :)`} />
+      <EmptyMessage text={`${category}님의 콘텐츠`} />
     {/if}
   {/if}
 {/await}
+
+<style lang="scss">
+  .gap {
+    width: 100vw;
+    margin-left: -1.6rem;
+    margin-right: -1.6rem;
+    margin-top: 3.2rem;
+  }
+</style>
