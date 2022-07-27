@@ -1,6 +1,6 @@
 import { goto } from '$app/navigation';
 
-export const gotoPrograms = (id: number) => {
+export const gotoPrograms = (id: string) => {
   goto(`/programs/${id}`);
 };
 

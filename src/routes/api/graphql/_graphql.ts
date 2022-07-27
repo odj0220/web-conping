@@ -2,7 +2,16 @@ import { buildSchema, graphql } from 'graphql';
 import type { GraphQLSchema } from 'graphql/type/schema';
 import { product, products, getProductsByContentId, getProductByCelebId } from './controller/products';
 import { getBanners } from './controller/banner';
-import { content, contents, getContentsByProductId, getProgramContentsByContentId, getContentsByCelebId, getMainContents, getMainInfiniteContents } from './controller/contents';
+import {
+  content,
+  contents,
+  getContentsByProductId,
+  getProgramContentsByContentId,
+  getContentsByCelebId,
+  getMainContents,
+  getMainInfiniteContents,
+  getInfiniteCelebs,
+} from './controller/contents';
 import { celebs, celeb, getCelebsByContentId, getCelebsByProductId, getCelebsByProgramId } from './controller/celobs';
 import { program, programs } from './controller/program';
 import { getContinueWatching } from './controller/watching';
@@ -10,6 +19,7 @@ import { getMainSeries } from './controller/series';
 import { getMainShorts } from './controller/shorts';
 import { getMainOrigin } from './controller/origins';
 import { socials, getSocialsByCelebId } from './controller/social';
+import { categories } from './controller/categories';
 
 import GRAPH_TYPES from './schemas/types';
 import GRAPH_ENUMS from './schemas/enums';
@@ -24,7 +34,7 @@ export async function Graphql(query: string) {
     ${GRAPH_TYPES}	
     ${GRAPH_ENUMS}
     type Query {
-      products(order: ProductOrder, category: String): [Product]
+      products(order: ProductOrder, category: Int, limit: Int, page: Int): PageProduct
       product(id:ID!): Product
       contents(sortField: String, sortOrder: Order, type:ContentType): [Content]
       content(id:ID!): Content
@@ -33,6 +43,7 @@ export async function Graphql(query: string) {
       programs: [Program]
       program(id:ID!): Program
       socials: [Social]
+      categories(type: String): [Category]
       getProductsByContentId(id:ID!): [Product]
       getCelebsByContentId(id:ID!): [Celeb]
       getContentsByProgramId(id:ID!, type:ContentType): [Content]
@@ -52,6 +63,8 @@ export async function Graphql(query: string) {
       getMainShorts: MainContent
       getMainInfiniteContents(first: Int, afterCursor: String): PageContent
       getMainOrigin: MainOrigin
+      
+      getInfiniteCelebs(first: Int, afterCursor: String): PageCeleb
   }`);
 
   const rootValue = {
@@ -70,6 +83,10 @@ export async function Graphql(query: string) {
     program,
 
     socials,
+
+    categories,
+
+
     getSocialsByCelebId,
 
     getProductsByContentId,
@@ -97,6 +114,8 @@ export async function Graphql(query: string) {
     getMainShorts,
     getMainOrigin,
     getMainInfiniteContents,
+
+    getInfiniteCelebs,
   };
 
   return graphql({

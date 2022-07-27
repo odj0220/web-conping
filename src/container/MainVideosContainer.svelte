@@ -13,10 +13,6 @@
   let end = false;
   let cursor = '';
 
-  // onMount(async () => {
-  //   await loadContents(2);
-  // });
-
   async function loadContents(num: number, inputedCursor?: string): Promise<any> {
     const query = `{
           getMainInfiniteContents(

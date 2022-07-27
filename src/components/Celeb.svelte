@@ -32,14 +32,14 @@
 
       {#if countOfProducts}
         <li class="info-item">
-          <span class="key">콘텐츠</span>
+          <span class="key">상품</span>
           <span class="value">{countOfProducts.toLocaleString()}</span>
         </li>
       {/if}
 
       {#if countOfContents}
         <li class="info-item">
-          <span class="key">상품</span>
+          <span class="key">콘텐츠</span>
           <span class="value">{countOfContents.toLocaleString()}</span>
         </li>
       {/if}

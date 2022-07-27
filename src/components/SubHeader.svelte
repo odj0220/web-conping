@@ -1,7 +1,8 @@
 <script lang="ts">
   import Icon from './icons/Icon.svelte';
 
-  export let onClick: (type: string) => void;
+  export let onClickBack: (type: string) => void;
+  export let onClickShare: () => void;
   export let title: string;
   export let share: boolean;
   export let type = '';
@@ -13,7 +14,7 @@
   <div class="left-wrapper">
     <button
       type="button"
-      on:click={() => onClick('back')}
+      on:click={() => onClickBack('back')}
     >
       <Icon name="back" />
     </button>
@@ -25,7 +26,7 @@
   <div class="right-wrapper">
     <button
       type="button"
-      on:click={() => onClick('share')}
+      on:click={() => onClickShare()}
     >
       <Icon name="share" />
     </button>
@@ -43,7 +44,6 @@
     top: 0;
     z-index: 50;
     background-color: $default-black;
-    padding-top: constant(safe-area-inset-top);
     padding-top: env(safe-area-inset-top);
     &.transparent {
       position: fixed;

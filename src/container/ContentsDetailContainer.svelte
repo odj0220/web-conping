@@ -11,6 +11,7 @@
   import type { YouTubePlayer } from 'youtube-player/dist/types';
   import type { IContent } from 'src/global/types';
 import Container from '$component/common/layout/Container.svelte';
+  import { callShare } from '../lib/_app_communication';
 
   export let id: number;
 
@@ -50,7 +51,7 @@ import Container from '$component/common/layout/Container.svelte';
             backColor
           }
           thumbnail
-          ba_thumbnail
+          banner
         }
       }
     `;
@@ -86,12 +87,16 @@ import Container from '$component/common/layout/Container.svelte';
   const onClickTitle = (id: string) => {
     goto(`/programs/${id}`);
   };
+
+  const onClickShare = () => {
+    callShare('contents', id.toString());
+  };
 </script>
 
 
 {#await getData()}
 {:then data}
-  <SubHeaderContainer title='{content?.program.title} {content?.episode}화' />
+  <SubHeaderContainer title='{content?.program.title} {content?.episode}화' onClickShare={onClickShare}/>
   <Container type="full" margin="0">
     <Player content={content} on:get-player={setPlayer}/>
 

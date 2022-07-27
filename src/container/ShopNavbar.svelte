@@ -10,11 +10,12 @@
   export let sort = '';
   export let onClickTab: (selectedTab: ITabItem) => void;
   export let onClickSort: () => void;
+  export let scrollToIndex: number;
 </script>
 
 <div class="header">
   <div class="header-item">
-    <HorizontalScroller>
+    <HorizontalScroller {scrollToIndex}>
       <Tabs
         {tabItems}
         {selectedTab}
@@ -24,8 +25,8 @@
   </div>
   <div class="header-item">
     <Sorter
-    sort={sort}
-    onClick={onClickSort}
+      sort={sort}
+      onClick={onClickSort}
     />
   </div>
 </div>
