@@ -38,38 +38,34 @@
   async function loadContents(): Promise<any> {
     const query = `{
           getContentsByCelebId(
-              id: 1
+              id: 2
               limit: ${num},
               ${cursor ? `cursor: ${cursor}` : ''}
           ) {
-            totalCount,
-            edges {
-                cursor
-                node {
+            contents {
+                id
+                title
+                programId
+                program {
                     id
                     title
-                    programId
-                    program {
-                        id
-                        title
-                        thumbnail
-                    }
-                    createDt
-                    episode
-                    videoId
-                    thumb
-                    views
-                    }
+                    thumbnail
                 }
-                pageInfo {
-                    hasNextPage
-                    startCursor
-                }
+                createDt
+                episode
+                videoId
+                thumb
+                views
             }
+            pageInfo {
+                hasNextPage
+                startCursor
+            }
+          }
         }`;
     try {
       const { data: { getContentsByCelebId } }: any = await graphqlApi(query);
-      const newContents = getContentsByCelebId.edges.map((edge) => edge.node);
+      const newContents = getContentsByCelebId.contents;
 
       contents = [...contents, ...newContents];
       cursor = getContentsByCelebId.pageInfo.startCursor;

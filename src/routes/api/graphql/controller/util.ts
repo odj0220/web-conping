@@ -67,36 +67,29 @@ export const convertProduct = (product?: Product, videoContentId?: number) => {
   }));
 };
 
-export const contentsByCelebId = async (id: string, cursor: number, limit: number, shorts?: boolean) => {
+export const contentsByCelebId = async (id: string, cursor: number, limit: number) => {
   const params: any = {
     program: true,
     sort: JSON.stringify([{ 'createdAt': 'desc' }]),
     cursor: cursor || '0',
     size: limit || 10,
     celebId: id,
-    type: shorts ? 'SHORTS' : 'FULL,HIGHLIGHT',
+    type: 'FULL,HIGHLIGHT',
   };
 
   const response: any = await GET('/video-content', { method: 'GET', params });
 
-  const edges: any[] = response.items.map((content: any) => {
-    const node = convertContent(content);
-    const cursor = node.id;
-    return {
-      node,
-      cursor,
-    };
-  });
+  const contents: any[] = response.items.map((content: any) => convertContent(content));
 
   let startCursor = 0;
-  if (edges.length > 0) {
-    startCursor = edges[edges.length - 1].node.id;
+  if (contents.length > 0) {
+    startCursor = contents.slice(-1)[0].id;
   }
-  const hasNextPage = edges.length >= limit;
+  const hasNextPage = contents.length >= limit;
 
   return {
     totalCount: 0,
-    edges,
+    contents,
     pageInfo: {
       startCursor,
       hasNextPage,
