@@ -8,7 +8,7 @@
 </script>
 <List direction="column">
   <Item margin="0 0 1.6rem 0" display="flex" direction="row">
-    <Rect width="100%" padding="1.2rem 1.6rem" flex={true} borderRadius="0.4rem">
+    <Rect width="100%" padding="1.2rem 1.6rem" flex={true} borderRadius="0.4rem" bgColor="bg-black-21">
       <Circle size={7.2} />
       <Rect margin="0 0 0 1.2rem">
         <Bar width="4.2rem" height="2rem" margin="0 0 0.7rem" />
@@ -17,7 +17,7 @@
     </Rect>
   </Item>
   <Item margin="0 0 1.6rem 0" display="flex" direction="row">
-    <Rect width="100%" padding="1.2rem 1.6rem" flex={true} borderRadius="0.4rem">
+    <Rect width="100%" padding="1.2rem 1.6rem" flex={true} borderRadius="0.4rem"  bgColor="bg-black-21">
       <Circle size={7.2} />
       <Rect margin="0 0 0 1.2rem">
         <Bar width="4.2rem" height="2rem" margin="0 0 0.7rem" />
@@ -26,7 +26,7 @@
     </Rect>
   </Item>
   <Item display="flex" direction="row">
-    <Rect width="100%" padding="1.2rem 1.6rem" flex={true} borderRadius="0.4rem">
+    <Rect width="100%" padding="1.2rem 1.6rem" flex={true} borderRadius="0.4rem"  bgColor="bg-black-21">
       <Circle size={7.2} />
       <Rect margin="0 0 0 1.2rem">
         <Bar width="4.2rem" height="2rem" margin="0 0 0.7rem" />

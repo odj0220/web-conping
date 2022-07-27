@@ -1,14 +1,14 @@
 <script lang=ts>
   import { graphqlApi } from '../lib/_api';
 
-  import type { IContent } from 'src/global/types';
-
-  import { goto } from '$app/navigation';
+  import { gotoContents } from '$lib/utils/goto';
 
   import Spinner from '$component/common/shared/Spinner.svelte';
   import ImageListView from '$component/ImageListView.svelte';
   import Container from '$component/common/layout/Container.svelte';
   import EmptyMessage from '$component/common/shared/EmptyMessage.svelte';
+
+  import type { IContent } from 'src/global/types';
 
   export let id: string;
   export let category: string;
@@ -29,14 +29,13 @@
 
     const result = await graphqlApi(query);
 
+    console.log('result', result);
+
     const contents = result.data.getContentsByProgramId;
-  
+
     return contents;
   }
 
-  const handleClickContents = (contentsId: string) => {
-    goto(`/contents/${contentsId}`);
-  };
 </script>
 
 {#await loadContents()}
@@ -46,7 +45,7 @@
     <Container margin="2.4rem 0 4rem">
       <ImageListView
         {contents}
-        onClick={handleClickContents}
+        onClick={gotoContents}
       />
     </Container>
   {:else}

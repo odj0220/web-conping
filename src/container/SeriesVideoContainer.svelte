@@ -1,12 +1,13 @@
 <script lang="ts">
   import { graphqlApi } from '../lib/_api';
 
+  import { gotoContents, gotoPrograms } from '$lib/utils/goto';
+
   import Container from '$component/common/layout/Container.svelte';
   import Title from '$component/Title.svelte';
   import ImageListView from '$component/ImageListView.svelte';
   import MoreButton from '$component/common/shared/MoreButton.svelte';
-  import { gotoContents, gotoPrograms } from '$lib/utils/goto';
-import SeriesVideoSkeleton from '$component/skeleton/container/SeriesVideoSkeleton.svelte';
+  import SeriesVideoSkeleton from '$component/skeleton/container/SeriesVideoSkeleton.svelte';
 
   const getData = async () => {
     const query = `{
@@ -58,6 +59,8 @@ import SeriesVideoSkeleton from '$component/skeleton/container/SeriesVideoSkelet
 {#await getData()}
 <SeriesVideoSkeleton />
 {:then {title, series, contents}}
+
+
   {#if contents?.length}
     <Container type="grayBox" margin="5.6rem 1.6rem 0">
       <Title
