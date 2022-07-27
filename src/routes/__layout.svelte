@@ -6,7 +6,7 @@
   onMount(() => {
     const onDynamicLinkMessage = onMessageFromApp('onDynamicLinkMessage');
     onDynamicLinkMessage(({ type, id }: {type: string, id: string}) => {
-      goPath(`/${type}/${id}`);
+      window.location.href = `/${type}/${id}`;
     });
   });
 </script>
