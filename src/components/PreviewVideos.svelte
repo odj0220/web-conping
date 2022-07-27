@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
   import { writable } from 'svelte/store';
   const scrolling = writable(false);
-  
+
   export function startScrolling () {
     scrolling.set(true);
   }
@@ -113,12 +113,12 @@
     .infinite-scroll {
       padding-bottom: 2rem;
     }
-    
+
     .contents-container {
       display: flex;
       flex-wrap: wrap;
       flex-direction: column;
-      gap: 2rem;
+      gap: 1.6rem;
       justify-content: space-between;
     }
 
@@ -143,5 +143,5 @@
       }
     }
   }
-  
+
 </style>

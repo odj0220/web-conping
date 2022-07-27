@@ -51,7 +51,7 @@ import Container from '$component/common/layout/Container.svelte';
             backColor
           }
           thumbnail
-          ba_thumbnail
+          banner
         }
       }
     `;

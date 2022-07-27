@@ -5,7 +5,7 @@
     "description": "국내 테크리뷰 유튜버. 어려서부터 기계에 관심이 많아서 뜯어 고쳐보곤 하다가 평소 취미인 영상 콘텐츠 제작으로 이어졌다. 폭 넓고 다양한 제품군을 다루지만 그 중에서도 모바일과 애플 제품 관련 영상이 많이 올라오고 있다.",
     "categories": ["category1", "category2"],
     "thumbnail": "/images/celob.png",
-    "ba_thumbnail": "/images/bg_profile_01.png",
+    "banner": "/images/bg_profile_01.png",
     "follows": {
       "instagram": 1000,
       "youtube": 1200,
@@ -18,7 +18,7 @@
     "description": "안녕하세요",
     "categories": ["category3"],
     "thumbnail": "/images/celob.png",
-    "ba_thumbnail": "/images/bg_profile_02.png",
+    "banner": "/images/bg_profile_02.png",
     "follows": {
       "instagram": 10000,
       "youtube": 22000,
@@ -31,7 +31,7 @@
     "description": "안녕하세요",
     "categories": ["category1", "category4"],
     "thumbnail": "/images/celob.png",
-    "ba_thumbnail": "/images/bg_profile_03.png",
+    "banner": "/images/bg_profile_03.png",
     "follows": {
       "instagram": 10,
       "youtube": 1,
@@ -44,7 +44,7 @@
     "description": "안녕하세요",
     "categories": ["category4"],
     "thumbnail": "/images/celob.png",
-    "ba_thumbnail": "/images/bg_profile_04.png",
+    "banner": "/images/bg_profile_04.png",
     "follows": {
       "instagram": 150,
       "youtube": 220,
@@ -57,7 +57,7 @@
     "description": "안녕하세요",
     "categories": ["category2"],
     "thumbnail": "/images/celob.png",
-    "ba_thumbnail": "/images/bg_profile_05.png",
+    "banner": "/images/bg_profile_05.png",
     "follows": {
       "instagram": 150,
       "youtube": 220,
@@ -70,7 +70,7 @@
     "description": "안녕하세요",
     "categories": ["category3"],
     "thumbnail": "/images/celob.png",
-    "ba_thumbnail": "/images/bg_profile_06.png",
+    "banner": "/images/bg_profile_06.png",
     "follows": {
       "instagram": 150,
       "youtube": 220,
@@ -83,7 +83,7 @@
     "description": "안녕하세요",
     "categories": ["category1"],
     "thumbnail": "/images/celob.png",
-    "ba_thumbnail": "/images/bg_profile_07.png",
+    "banner": "/images/bg_profile_07.png",
     "follows": {
       "instagram": 150,
       "youtube": 220,
@@ -96,7 +96,7 @@
     "description": "안녕하세요",
     "categories": ["category2", "category3"],
     "thumbnail": "/images/celob.png",
-    "ba_thumbnail": "/images/bg_profile_01.png",
+    "banner": "/images/bg_profile_01.png",
     "follows": {
       "instagram": 0,
       "youtube": 0,
@@ -109,7 +109,7 @@
     "description": "안녕하세요",
     "categories": ["category4"],
     "thumbnail": "/images/celob.png",
-    "ba_thumbnail": "/images/bg_profile_02.png",
+    "banner": "/images/bg_profile_02.png",
     "follows": {
       "instagram": 0,
       "youtube": 1,
@@ -122,7 +122,7 @@
     "description": "안녕하세요",
     "categories": ["category3"],
     "thumbnail": "/images/celob.png",
-    "ba_thumbnail": "/images/bg_profile_03.png",
+    "banner": "/images/bg_profile_03.png",
     "follows": {
       "instagram": 3000000,
       "youtube": 4000000,
@@ -135,7 +135,7 @@
     "description": "안녕하세요",
     "categories": ["category1", "category2"],
     "thumbnail": "/images/celob.png",
-    "ba_thumbnail": "/images/bg_profile_04.png",
+    "banner": "/images/bg_profile_04.png",
     "follows": {
       "instagram": 3000000,
       "youtube": 4000000,
@@ -148,7 +148,7 @@
     "description": "안녕하세요",
     "categories": ["category3"],
     "thumbnail": "/images/celob.png",
-    "ba_thumbnail": "/images/bg_profile_05.png",
+    "banner": "/images/bg_profile_05.png",
     "follows": {
       "instagram": 3000000,
       "youtube": 4000000,
@@ -161,7 +161,7 @@
     "description": "안녕하세요",
     "categories": ["category1", "category4"],
     "thumbnail": "/images/celob.png",
-    "ba_thumbnail": "/images/bg_profile_06.png",
+    "banner": "/images/bg_profile_06.png",
     "follows": {
       "instagram": 3000000,
       "youtube": 4000000,
@@ -174,7 +174,7 @@
     "description": "안녕하세요",
     "categories": ["category3"],
     "thumbnail": "/images/celob.png",
-    "ba_thumbnail": "/images/bg_profile_07.png",
+    "banner": "/images/bg_profile_07.png",
     "follows": {
       "instagram": 3000000,
       "youtube": 4000000,
@@ -187,7 +187,7 @@
     "description": "안녕하세요",
     "categories": ["category1"],
     "thumbnail": "/images/celob.png",
-    "ba_thumbnail": "/images/bg_profile_01.png",
+    "banner": "/images/bg_profile_01.png",
     "follows": {
       "instagram": 13000000,
       "youtube": 14000000,
@@ -200,7 +200,7 @@
     "description": "안녕하세요",
     "categories": ["category2"],
     "thumbnail": "/images/celob.png",
-    "ba_thumbnail": "/images/bg_profile_02.png",
+    "banner": "/images/bg_profile_02.png",
     "follows": {
       "instagram": 0,
       "youtube": 0,
@@ -213,7 +213,7 @@
     "description": "안녕하세요",
     "categories": ["category4"],
     "thumbnail": "/images/celob.png",
-    "ba_thumbnail": "/images/bg_profile_03.png",
+    "banner": "/images/bg_profile_03.png",
     "follows": {
       "instagram": 0,
       "youtube": 0,
@@ -226,7 +226,7 @@
     "description": "안녕하세요",
     "categories": ["category3"],
     "thumbnail": "/images/celob.png",
-    "ba_thumbnail": "/images/bg_profile_04.png",
+    "banner": "/images/bg_profile_04.png",
     "follows": {
       "instagram": 0,
       "youtube": 0,
@@ -239,7 +239,7 @@
     "description": "안녕하세요",
     "categories": ["category2"],
     "thumbnail": "/images/celob.png",
-    "ba_thumbnail": "/images/bg_profile_05.png",
+    "banner": "/images/bg_profile_05.png",
     "follows": {
       "instagram": 0,
       "youtube": 0,
@@ -252,7 +252,7 @@
     "description": "안녕하세요",
     "categories": ["category1", "category2", "category3", "category4", "category5"],
     "thumbnail": "/images/celob.png",
-    "ba_thumbnail": "/images/bg_profile_06.png",
+    "banner": "/images/bg_profile_06.png",
     "follows": {
       "instagram": 0,
       "youtube": 0,

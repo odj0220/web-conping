@@ -6,17 +6,36 @@
 
   export let item:IProduct;
 
-  const { name, brand, image, price, relatedItems } = item;
+  const {
+    name,
+    brand,
+    image,
+    price,
+    relatedItems,
+    badge,
+  } = item;
+
+  $:rank = badge.rank;
+  $:iconTheme = badge.iconTheme;
 </script>
 
 <li class="shop-item">
-  <Thumbnail src={image} width="15.6rem" height="15.6rem" alt={name}/>
+  <Thumbnail
+    src={image}
+    alt={name}
+    width="15.6rem"
+    height="15.6rem"
+    {rank}
+    {iconTheme}
+  />
+
   <div class="info">
     <div class="info-top">
       <span class="brand">{brand}</span>
       <h6 class="name">{name}</h6>
       <span class="price">{price.toLocaleString()}원</span>
     </div>
+
     {#if relatedItems?.length }
       <div class="info-bottom">
         <RelatedItems {relatedItems} />

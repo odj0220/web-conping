@@ -1,4 +1,4 @@
-import type { Product, Program, VideoContent } from '../../../../lib/models/backend/backend';
+import type { Product, Program, VideoContent, Celeb } from '../../../../lib/models/backend/backend';
 import dayjs from 'dayjs';
 import { GET } from '../../../../lib/_api';
 import type { IContent } from '../../../../global/types';
@@ -64,6 +64,55 @@ export const convertProduct = (product?: Product, videoContentId?: number) => {
     ...product,
     id: id.toString(),
     exposed,
+  }));
+};
+
+export const convertCeleb = (celeb?: Celeb) => {
+  /*type Celeb {
+    id: String!
+    name: String!
+    description: String
+    categories: [Category]
+    thumbnail: String
+    banner: String
+    countOfFollowers: Float
+    countOfYotubeFollowers:Float
+    countOfInstagramFollowers:Float
+    countOfProducts: Float
+    countOfContents: Float
+
+    youtubeUrl: String
+    instagramUrl: String
+    gender: String
+    nationality: String
+  }
+  */
+
+  if (!celeb) {
+    return ;
+  }
+  const { id, image, backImage, CelebCategory, snsFollowerCount, productCount, videoContentCount } = celeb;
+  const thumbnail = image;
+  const banner = backImage;
+  const countOfFollowers = snsFollowerCount || 0;
+  const countOfProducts = productCount || 0;
+  const countOfContents = videoContentCount || 0;
+
+  let categories:any[] = [];
+
+  if (CelebCategory) {
+    categories = CelebCategory.map(celebCategory => celebCategory.Category);
+  }
+
+  return JSON.parse(JSON.stringify({
+    ...celeb,
+    id: id.toString(),
+    thumbnail,
+    banner,
+    categories,
+    countOfFollowers,
+    countOfProducts,
+    countOfContents,
   }));
 };
 
