@@ -12,7 +12,7 @@
 
   async function getMainContents() {
     const query = `{
-      getMainContents{
+      getMainContents {
         title {
           text
           type
