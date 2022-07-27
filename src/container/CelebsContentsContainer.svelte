@@ -10,71 +10,99 @@
   import PreviewVideos from '$component/PreviewVideos.svelte';
   import ImageListView from '$component/ImageListView.svelte';
 
-  import type { TitleElement } from 'src/global/types';
+  import type { IContent, TitleElement } from 'src/global/types';
+  import type { ITabItem } from 'src/global/types';
+  import { onMount } from 'svelte';
 
   export let id : string;
   export let title : TitleElement[] = [];
   export let moreButton: boolean;
   export let category: string;
 
+  let contents: IContent[] = [];
   let end = false;
   let cursor = '';
 
-  const getData = async () => {
+  $: num = title.length ? 2 : 3;
+  $: infiniteScroll = !title.length;
+
+  function initialContentsLoad() {
+    return loadContents();
+  }
+
+  async function runInfiniteScrolling(event) {
+    const detail = event.detail;
+    await loadContents();
+    detail.stop();
+  }
+
+  async function loadContents(): Promise<any> {
     const query = `{
-      getContentsByCelebId(id:"${id}"){
-        id
-        title
-        subtitle
-        programId
-        createDt
-        episode
-        description
-        url
-        videoId
-        thumb
-        program {
-          title
-        }
-      }
-    }`;
+          getContentsByCelebId(
+              id: 1
+              limit: ${num},
+              ${cursor ? `cursor: ${cursor}` : ''}
+          ) {
+            totalCount,
+            edges {
+                cursor
+                node {
+                    id
+                    title
+                    programId
+                    program {
+                        id
+                        title
+                        thumbnail
+                    }
+                    createDt
+                    episode
+                    videoId
+                    thumb
+                    views
+                    }
+                }
+                pageInfo {
+                    hasNextPage
+                    startCursor
+                }
+            }
+        }`;
+    try {
+      const { data: { getContentsByCelebId } }: any = await graphqlApi(query);
+      const newContents = getContentsByCelebId.edges.map((edge) => edge.node);
 
-    const { data: { getContentsByCelebId } } = await graphqlApi(query);
-
-    return getContentsByCelebId;
-  };
-
-  const promise = getData();
+      contents = [...contents, ...newContents];
+      cursor = getContentsByCelebId.pageInfo.startCursor;
+      end = !getContentsByCelebId.pageInfo.hasNextPage;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
 </script>
 
-{#await promise}
-{:then contents}
+{#await initialContentsLoad()}
+{:then}
   {#if contents.length}
-    {#if title.length}
-      <Container margin="5.6rem 0 0">
+    <Container margin="5.6rem 0 0">
+      {#if title.length}
         <Title title={title} />
-        <ImageListView contents={[...contents].slice(0, 4)} onClick={gotoContents}/>
-        {#if moreButton && contents.length > 4}
-          <MoreButton value={`${category} 콘텐츠 더보기`} margin="1.6rem 0 0" />
-        {/if}
-      </Container>
-    {:else}
-      <Container margin="5.6rem 0 0">
-        <PreviewVideos
-          {contents}
-          {end}
-          {cursor}
-          onClick={gotoContents}
-          infiniteScroll={false}
-          autoPlay={true}
-        />
-      </Container>
-    {/if}
+      {/if}
+      <PreviewVideos
+              contents={contents}
+              {end}
+              {cursor}
+              onClick={gotoContents}
+              infiniteScroll={infiniteScroll}
+              autoPlay={false}
+              on:request-more={runInfiniteScrolling}
+      />
+    </Container>
   {:else}
     {#if title.length}
     {:else}
-    <EmptyMessage text={`${category}님의 콘텐츠`} />
+    <EmptyMessage text={`${category}님의 콘텐츠는 준비중입니다. 조금만 기다려주세요 :)`} />
     {/if}
   {/if}
 {/await}
