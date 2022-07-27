@@ -22,7 +22,7 @@
 
   const getData = async () => {
     const query = `{
-              getProductsByCelebId (id: "1", limit: ${num}) {
+              getProductsByCelebId (id: "${id}", limit: ${num}) {
                     products {
                         id
                         name
@@ -45,8 +45,8 @@
     const { data: { getProductsByCelebId } } = await graphqlApi(query);
   
     products = [...products, ...getProductsByCelebId.products];
-    let end = getProductsByCelebId.pageInfo.hasNextPage;
-    let cursor = getProductsByCelebId.pageInfo.startCursor;
+    end = !getProductsByCelebId.pageInfo.hasNextPage;
+    cursor = getProductsByCelebId.pageInfo.startCursor;
   };
 
   async function runInfiniteScrolling(event) {
@@ -63,8 +63,12 @@
         {#if title.length}
             <Title title={title}/>
             <ProductGridList data={products}/>
-            {#if moreButton && products.length >= 4}
-              <MoreButton value={`${category} 상품 더보기`}/>
+            {#if moreButton }
+                {#if products.length >= 4}
+                    <MoreButton value={`${category} 상품 더보기`}/>
+                    {:else}
+                    <section class="gap"></section>
+                {/if}
             {/if}
         {:else}
           <ProductGridList
@@ -84,4 +88,10 @@
 {/await}
 
 <style lang="scss">
+    .gap {
+      margin-left: -1.6rem;
+      margin-right: -1.6rem;
+      width: 100vw;
+      margin-top: 1.6rem;
+    }
 </style>
