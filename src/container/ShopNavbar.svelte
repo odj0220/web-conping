@@ -8,7 +8,7 @@
   export let tabItems: ITabItem[];
   export let selectedTab: ITabItem;
   export let sort = '';
-  export let onClickTab: (selectedTab: ITabItem) => void;
+  export let onClickTab: (selectedIndex: number) => void;
   export let onClickSort: () => void;
   export let scrollToIndex: number;
 </script>
