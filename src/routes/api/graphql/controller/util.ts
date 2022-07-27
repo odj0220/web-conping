@@ -67,6 +67,43 @@ export const convertProduct = (product?: Product, videoContentId?: number) => {
   }));
 };
 
+export const contentsByCelebId = async (id: string, cursor: number, limit: number, shorts?: boolean) => {
+  const params: any = {
+    program: true,
+    sort: JSON.stringify([{ 'createdAt': 'desc' }]),
+    cursor: cursor || '0',
+    size: limit || 10,
+    celebId: id,
+    type: shorts ? 'SHORTS' : 'FULL,HIGHLIGHT',
+  };
+
+  const response: any = await GET('/video-content', { method: 'GET', params });
+
+  const edges: any[] = response.items.map((content: any) => {
+    const node = convertContent(content);
+    const cursor = node.id;
+    return {
+      node,
+      cursor,
+    };
+  });
+
+  let startCursor = 0;
+  if (edges.length > 0) {
+    startCursor = edges[edges.length - 1].node.id;
+  }
+  const hasNextPage = edges.length >= limit;
+
+  return {
+    totalCount: 0,
+    edges,
+    pageInfo: {
+      startCursor,
+      hasNextPage,
+    },
+  };
+};
+
 export const contentsByProgramId = async (id: string, type?: string) => {
   const queryType = type ? '&type=' + type : '';
   const response = await GET(`/video-content?programId=${id}&program=true&sort=[{"ProgramInfo": {"episode": "desc"} }]${queryType}`);
