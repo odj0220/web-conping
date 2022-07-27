@@ -5,12 +5,14 @@
   import RelatedItems from './RelatedItems.svelte';
 
   export let item:IProduct;
+  export let onClickProductItem: (url: string) => void;
 
   const {
     name,
     brand,
     image,
     price,
+    storeUrl,
     relatedItems,
     badge,
   } = item;
@@ -27,10 +29,15 @@
     height="15.6rem"
     {rank}
     {iconTheme}
+    onClick={onClickProductItem}
+    targetUrl={storeUrl}
   />
 
   <div class="info">
-    <div class="info-top">
+    <div
+      class="info-top"
+      on:click={() => onClickProductItem(storeUrl)}
+    >
       <span class="brand">{brand}</span>
       <h6 class="name">{name}</h6>
       <span class="price">{price.toLocaleString()}원</span>

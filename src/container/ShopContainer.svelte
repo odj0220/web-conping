@@ -58,6 +58,7 @@
             brand
             image
             price
+            storeUrl
             relatedItems {
               thumbnail
               title
@@ -158,22 +159,27 @@
     return '';
   }
 
+  
+  function openPopup() {
+    isPopupVisible = true;
+  }
+  
+  function closePopup() {
+    isPopupVisible = false;
+  }
+
   function handleClickTab(clickedTabIndex: number) {
     selectedTab = tabItems[clickedTabIndex];
     shopingProducts = [];
   }
 
-  function openPopup() {
-    isPopupVisible = true;
-  }
-
-  function closePopup() {
-    isPopupVisible = false;
-  }
-
   function handleClickSelectButton(sortField: string) {
     shopingProducts = [];
     sort = sortField;
+  }
+  
+  function handleClickProductItem(storeUrl) {
+    console.log(storeUrl);
   }
 
   function setsortItems(sortFieldsObject: { [index: string]: string }) {
@@ -229,7 +235,10 @@
       end={!hasNextPage}
       on:request-more={runInfiniteScrolling}
     >
-      <ShopList products={shopingProducts} />
+      <ShopList
+        products={shopingProducts}
+        onClickProductItem={handleClickProductItem}
+      />
     </InfiniteScroll>
   </Container>
 
