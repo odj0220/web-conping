@@ -17,7 +17,7 @@ import GRAPH_ENUMS from './schemas/enums';
 
 import dayjs from 'dayjs';
 import Duration from 'dayjs/plugin/duration.js';
-import { contentsByProgramId, contentsByCelebId } from './controller/util';
+import { contentsByProgramId, contentsByCelebId, shortsByCelebId } from './controller/util';
 dayjs.extend(Duration);
 
 export async function Graphql(query: string) {
@@ -43,6 +43,7 @@ export async function Graphql(query: string) {
       getCelebsByProgramId(id:ID!): [Celeb]
       getProductByCelebId(id:ID! limit: Int): [Product]
       getContentsByCelebId(id:ID!, cursor: Int, limit: Int, shorts: Boolean): PageContent
+      getShortsByCelebId(id:ID!, cursor: Int, limit: Int, shorts: Boolean): PageContent
       getProductsByCategory(category:String!): [Product]
       getContinueWatching: [Content]
       getProgramContentsByContentId(id:ID!): [Content]
@@ -90,6 +91,9 @@ export async function Graphql(query: string) {
     // TODO: api 연동하기
     getProductByCelebId,
     // TODO: api 연동하기
+    getShortsByCelebId: async ({ id, cursor, limit }: {id: string; cursor: number; limit: number}) => {
+      return await shortsByCelebId(id, cursor, limit);
+    },
     getContentsByCelebId: async ({ id, cursor, limit }: {id: string; cursor: number; limit: number}) => {
       return await contentsByCelebId(id, cursor, limit);
     },

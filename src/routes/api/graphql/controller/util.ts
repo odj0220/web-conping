@@ -67,6 +67,36 @@ export const convertProduct = (product?: Product, videoContentId?: number) => {
   }));
 };
 
+export const shortsByCelebId = async (id: string, cursor: number, limit: number) => {
+  const params: any = {
+    program: true,
+    sort: JSON.stringify([{ 'createdAt': 'desc' }]),
+    cursor: cursor || '0',
+    size: limit || 10,
+    celebId: id,
+    type: 'FULL',
+  };
+
+  const response: any = await GET('/video-content', { method: 'GET', params });
+
+  const contents: any[] = response.items.map((content: any) => convertContent(content));
+
+  let startCursor = 0;
+  if (contents.length > 0) {
+    startCursor = contents.slice(-1)[0].id;
+  }
+  const hasNextPage = contents.length >= limit;
+
+  return {
+    totalCount: 0,
+    contents,
+    pageInfo: {
+      startCursor,
+      hasNextPage,
+    },
+  };
+};
+
 export const contentsByCelebId = async (id: string, cursor: number, limit: number) => {
   const params: any = {
     program: true,
