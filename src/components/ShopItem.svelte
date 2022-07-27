@@ -15,8 +15,8 @@
     badge,
   } = item;
 
-  $:rank = badge.rank;
-  $:iconTheme = badge.iconTheme;
+  $:rank = badge?.rank;
+  $:iconTheme = badge?.iconTheme;
 </script>
 
 <li class="shop-item">

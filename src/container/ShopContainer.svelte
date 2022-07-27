@@ -84,7 +84,7 @@
     tabItems = setTabItems({ categories });
   }
 
-  async function getShopItems({ sort, category, page } : {sort: string, category: number, page: number}) {
+  async function getShopItems({ sort, category, page = 0 } : {sort: string, category: number, page?: number}) {
     const {
       products: {
         edges,
@@ -94,7 +94,7 @@
 
     setPageInfo(pageInfo);
 
-    setShopItems({ products: edges, sort });
+    setShopingProducts({ products: edges, sort });
   }
 
   function setPageInfo(pageInfo: IPageInfo) {
@@ -118,7 +118,7 @@
       });
   }
 
-  function setShopItems({ products, sort }: { products: IProductEdge[], sort: string }) {
+  function setShopingProducts({ products, sort }: { products: IProductEdge[], sort: string }) {
     const shopItems = products
       .map(({ node }) => node)
       .map((product, index) => {
@@ -132,6 +132,8 @@
       ...shopingProducts,
       ...shopItems,
     ];
+
+    console.log(shopingProducts);
   }
 
   function getBadge({ sort, index } : {sort: string, index: number}) {
@@ -195,11 +197,13 @@
     }
   
     page++;
+    getShopItems({ sort, category, page });
   }
   
   $:sortedName = SORT_FIELDS[sort];
   $:sortItems = setsortItems(SORT_FIELDS);
   $:category = selectedTab?.id || 0;
+  $:infiniteScrollActive = !!shopingProducts?.length;
 </script>
 
 {#await getTabItems()}
@@ -214,11 +218,12 @@
   />
 {/await}
 
-{#await getShopItems({ sort, category, page })}
+{#await getShopItems({ sort, category })}
   <Spinner />
 {:then}
   <Container>
     <InfiniteScroll
+      {infiniteScrollActive}
       end={!hasNextPage}
       on:request-more={runInfiniteScrolling}
     >
