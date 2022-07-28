@@ -4,11 +4,11 @@ export const gotoPrograms = (id: string) => {
   goto(`/programs/${id}`);
 };
 
-export const gotoContents = (id: number) => {
+export const gotoContents = (id: string) => {
   goto(`/contents/${id}`);
 };
 
-export const gotoShorts = (id: number) => {
+export const gotoShorts = (id: string) => {
   goto(`/shorts/${id}`);
 };
 
@@ -28,10 +28,10 @@ export const historyBack = (count: number, fallback: any) => {
   let hasHistory = false;
   window.history.go(count);
 
-  const stateChange = (e: any) => hasHistory = true;
+  const stateChange = (e: any) => (hasHistory = true);
   window.addEventListener('popstate', stateChange);
 
-  setTimeout(function() {
+  setTimeout(function () {
     if (!hasHistory) {
       fallback();
       window.removeEventListener('popstate', stateChange);

@@ -5,7 +5,7 @@
 
   export let selected: string;
   export let selectItems: ISelectItem[];
-  export let onClickSelectButton: (sortField: string) => void;
+  export let onClickSelectButton: (e, sortField: string) => void;
 </script>
 
 <ul>
@@ -22,6 +22,6 @@
   ul {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    padding-top: 0.7rem;
   }
 </style>

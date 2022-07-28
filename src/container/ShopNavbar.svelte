@@ -10,17 +10,19 @@
   export let sort = '';
   export let onClickTab: (selectedIndex: number) => void;
   export let onClickSort: () => void;
-  
+
   $:scrollToIndex = selectedTab?.index * 50 || 0;
 </script>
 
 <div class="header">
-  <div class="header-item">
+  <div class="header-item tabs">
     <HorizontalScroller {scrollToIndex}>
       <Tabs
         {tabItems}
         {selectedTab}
         {onClickTab}
+        borderBottom={true}
+        gap="1.6rem"
       />
     </HorizontalScroller>
   </div>
@@ -34,14 +36,24 @@
 
 <style lang="scss">
   .header {
-    position: sticky;
-    top: 10;
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    height: 5.2rem;
-
+    display: flex;
+    align-items: center;
+    width: 100%;
     .header-item {
-      height: 5.2rem;
+      &.tabs {
+        padding-top: 1.6rem;
+        position: relative;
+        &:after {
+          content: "";
+          width: 1.6rem;
+          background-color: red;
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 1px;
+          background: linear-gradient(90deg, rgba(10, 10, 10, 0) 0%, #0A0A0A 100%);
+        }
+      }
     }
   }
 </style>

@@ -1,20 +1,22 @@
 <script lang="ts">
   import { graphqlApi } from '$lib/_api';
 
+  import { gotoCelebs, gotoContents } from '$lib/utils/goto';
+  import { openBrowser } from '$lib/util';
+
   import type { IPageInfo, IProduct, ITabItem } from 'src/global/types';
 
   import { SORT_FIELDS } from '$lib/contants';
-  import { openBrowser } from '../lib/util';
 
-  import ShopNavbar from '$container/ShopNavbar.svelte';
-
-  import Spinner from '$component/common/shared/Spinner.svelte';
   import LayoutPopup from '$component/common/layout/LayoutPopup.svelte';
   import Container from '$component/common/layout/Container.svelte';
   import InfiniteScroll from '$component/common/layout/InfiniteScroll.svelte';
 
+  import ShopNavbar from '$container/ShopNavbar.svelte';
   import SelectPopup from '$component/SelectPopup.svelte';
   import ShopList from '$component/ShopList.svelte';
+  import ShopSekeleton from '$component/skeleton/container/ShopSekeleton.svelte';
+  // import ShopNavBarSkeleton from '$component/skeleton/container/ShopNavBarSkeleton.svelte';
 
   let hasNextPage: boolean;
   let cursor = 0;
@@ -82,7 +84,7 @@
         },
       },
     } = await graphqlApi(query);
-  
+
     return { products, pageInfo };
   }
 
@@ -144,13 +146,15 @@
     shopingProducts = [];
   }
 
-  function handleClickSelectButton(sortField: string) {
+  function handleClickSelectButton(e, sortField: string) {
+    e.stopPropagation();
     shopingProducts = [];
     sort = sortField;
     closePopup();
   }
 
   function handleClickProductItem(event) {
+    console.log('event', event);
     openBrowser(event.detail.targetUrl);
   }
 
@@ -173,7 +177,7 @@
     if (!hasNextPage) {
       return;
     }
-  
+
     getShopItems({ sort, category, cursor });
   }
 
@@ -181,10 +185,20 @@
   $:sortItems = setsortItems(SORT_FIELDS);
   $:category = selectedTab?.id || 0;
   $:infiniteScrollActive = !!shopingProducts?.length;
+
+  const onClickRelatedItem = (e: any, type: string, id: string) => {
+    e.stopPropagation();
+    if (type === 'Celeb') {
+      gotoCelebs(id);
+    } else {
+      gotoContents(id);
+    }
+  };
+
 </script>
 
 {#await getTabItems()}
-  <Spinner />
+<!-- <ShopNavBarSkeleton /> -->
 {:then}
   {#if tabItems?.length }
     <ShopNavbar
@@ -198,9 +212,9 @@
 {/await}
 
 {#await getShopItems({ sort, category })}
-  <Spinner />
+<ShopSekeleton />
 {:then}
-  <Container>
+  <Container margin="3.2rem 0 4rem">
     <InfiniteScroll
       {infiniteScrollActive}
       end={!hasNextPage}
@@ -208,12 +222,13 @@
     >
       <ShopList
         products={shopingProducts}
+        {onClickRelatedItem}
         on:go-link={handleClickProductItem}
       />
     </InfiniteScroll>
   </Container>
 
-  <LayoutPopup visible={isPopupVisible}>
+  <LayoutPopup visible={isPopupVisible} {closePopup}>
     <SelectPopup
       title='정렬 기준'
       onClickSelectButton={handleClickSelectButton}

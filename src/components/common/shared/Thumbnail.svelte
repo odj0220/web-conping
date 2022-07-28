@@ -1,24 +1,14 @@
 <script lang="ts">
   import Icon from '$component/icons/Icon.svelte';
   import RankBadge from './RankBadge.svelte';
-  import { createEventDispatcher } from 'svelte';
 
   export let src = '';
   export let alt = '';
   export let width = '';
   export let height = '';
   export let borderRadius = '0.4rem';
-  export let rank: string;
-  export let iconTheme: string;
-  export let targetUrl: string;
-
-  const dispatch = createEventDispatcher<{'go-link': {targetUrl: string}}>();
-
-  function goProductPage() {
-    dispatch('go-link', {
-      targetUrl,
-    });
-  }
+  export let rank = '';
+  export let iconTheme = '';
 
   const setImageSrc = (value: string) => {
     src = value;
@@ -29,7 +19,6 @@
 <div
   class="thumbnail"
   style="width: {width}; padding-bottom: {height}; border-radius:{borderRadius}"
-  on:click={goProductPage}
   >
   {#if src}
     <img src={src} alt={alt} on:error="{() => setImageSrc("")}"/>
@@ -42,9 +31,10 @@
       <RankBadge {rank} {iconTheme} />
     {/if}
   </div>
-  
+
 <style lang="scss">
   .thumbnail {
+    flex-shrink: 0;
     position: relative;
     overflow: hidden;
     background-color: $bg-black-21;

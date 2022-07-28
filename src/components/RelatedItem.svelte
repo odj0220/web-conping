@@ -5,17 +5,20 @@
   import Thumbnail from './common/shared/Thumbnail.svelte';
 
   export let relatedItem: IRelatedItem;
+  export let onClickRelatedItem: () => void;
 
   $:type = relatedItem.type;
+  $:id = relatedItem.id;
   $:thumbnail = relatedItem.thumbnail;
   $:title = relatedItem.title;
+
 </script>
 
-<div class="container">
+<div class="container" on:click="{(e) => onClickRelatedItem(e, type, id)}">
   {#if type.toUpperCase() === 'CELEB'}
-    <Avatar size="4rem" src={thumbnail} alt="셀럽 섬네일" />
+    <Avatar size={4} src={thumbnail} alt="셀럽 섬네일" />
   {:else}
-    <Thumbnail src={thumbnail} width="4rem" height="4rem"/>
+    <Thumbnail src={thumbnail} width="4rem" height="4rem" borderRadius="0.2rem"/>
   {/if}
 
   <div class="right">
@@ -29,7 +32,6 @@
     display: flex;
     gap: 0.8rem;
     align-items: center;
-    justify-content: flex-start;
 
     .right {
       @include caption2-400;
