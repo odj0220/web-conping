@@ -19,6 +19,7 @@
 <style lang="scss">
   .badge {
     position: absolute;
+    top: 0;
     left: 1.2rem;
     
     .number {
