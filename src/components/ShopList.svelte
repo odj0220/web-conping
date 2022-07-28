@@ -4,12 +4,14 @@
   import ShopItem from './ShopItem.svelte';
 
   export let products: IProduct[];
+  export let onClickProductItem: (url: string) => void;
 </script>
 
 <ul class="shop-list">
   {#each products as product (product.id)}
     <ShopItem
       item={product}
+      {onClickProductItem}
     />
   {/each}
 </ul>
