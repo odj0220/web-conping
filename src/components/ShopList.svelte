@@ -12,6 +12,7 @@
     <ShopItem
       item={product}
       {onClickProductItem}
+      on:go-link
     />
   {/each}
 </ul>

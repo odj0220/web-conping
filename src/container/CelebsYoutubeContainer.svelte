@@ -58,7 +58,7 @@
 {#await getData()}
 {:then data} 
 {#if data?.contents.length}
-  <Container margin="5.6rem 0 0">
+  <Container margin="0 0 5.6rem">
     <Title title={data.title} />
     <PreviewVideos contents={data.contents} onClick={gotoYoutube}/>
 
