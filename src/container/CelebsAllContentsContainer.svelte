@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { ITabItem } from '../global/types';
   import CelebsProductContainer from './CelebsProductContainer.svelte';
   import CelebsContentsContainer from './CelebsContentsContainer.svelte';
   import CelebsShortsContainer from './CelebsShortsContainer.svelte';
@@ -23,7 +22,7 @@
   <CelebsContentsContainer
           {id}
           {category}
-          title={[{ text: `${category}님의 유튜브` }]}
+          title={[{ text: '콘텐츠' }]}
           moreButton={true}
           onClickMoreButton={onClickMoreButton}
   />
@@ -34,6 +33,6 @@
           moreButton={true}
           onClickMoreButton={onClickMoreButton}
   />
-  <CelebsYoutubeContainer {id}  title={[{ text: '서울리안 유튜브' }]} moreButton={true} {category}/>
-  <CelebsInstagramContainer {id} title={[{ text: '서울리안 인스타그램' }]} moreButton={true} {category}/>
+  <CelebsYoutubeContainer {id} moreButton={true} {category}/>
+  <CelebsInstagramContainer {id} moreButton={true} {category}/>
 </GlobalBlock>

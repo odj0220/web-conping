@@ -4,7 +4,6 @@
   import ShopItem from './ShopItem.svelte';
 
   export let products: IProduct[];
-  export let onClickProductItem: (url: string) => void;
   export let onClickRelatedItem: () => void;
 </script>
 
@@ -12,8 +11,8 @@
   {#each products as product (product.id)}
     <ShopItem
       item={product}
-      {onClickProductItem}
       {onClickRelatedItem}
+      on:go-link
     />
   {/each}
 </ul>

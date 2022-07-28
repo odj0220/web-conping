@@ -80,7 +80,7 @@
 {:then}
   {#if contents.length}
     {#if title.length}
-      <Container type="full" margin="5.6rem 0 0">
+      <Container type="full" margin="0 0 5.6rem">
         <Title title={title} marginLeft="1.2rem" />
         <ShortsVodList {contents} onClick={gotoShorts} />
 
@@ -89,7 +89,7 @@
         {/if}
       </Container>
     {:else}
-      <Container margin="5.6rem 0 0">
+      <Container margin="0 0 5.6rem">
         <ShortsGridVodList
                 {contents}
                 {end}

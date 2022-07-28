@@ -36,7 +36,7 @@
   
 {:then data}
 {#if data.length}
-<Container margin="5.6rem 0 0">
+<Container margin="0 0 5.6rem">
   <Title title={title} />
   {#if data.board_thumbnails.length > 6}
     <ImageGridList data={[...data.board_thumbnails].slice(0, 6)}/>

@@ -1,13 +1,20 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { onMessageFromApp } from '../lib/_app_communication';
+  import { onMessageFromApp, onAndroidExit, onInitialized } from '../lib/_app_communication';
   import { goto } from '$app/navigation';
+  import { historyBack } from '../lib/utils/goto';
 
   onMount(() => {
-    const onDynamicLinkMessage = onMessageFromApp('onDynamicLinkMessage');
-    onDynamicLinkMessage(({ type, id }: {type: string, id: string}) => {
-      //window.location.href = `/${type}/${id}`;
-      goto(`/${type}/${id}`, { state: { foo: 'dynamicLink' } });
+    onInitialized(() => {
+      const onDynamicLinkMessage = onMessageFromApp('onDynamicLinkMessage');
+      onDynamicLinkMessage(({ type, id }: {type: string, id: string}) => {
+        goto(`/${type}/${id}`);
+      });
+
+      const onAndroidBackKeyMessage = onMessageFromApp('onAndroidBackKeyMessage');
+      onAndroidBackKeyMessage(() => {
+        historyBack(-1, () => onAndroidExit());
+      });
     });
   });
 </script>

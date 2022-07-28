@@ -58,6 +58,10 @@
             image
             price
             storeUrl
+            badge {
+              rank
+              iconTheme
+           }
             relatedItems {
               thumbnail
               title
@@ -178,8 +182,9 @@
     closePopup();
   }
 
-  function handleClickProductItem(storeUrl: string) {
-    openBrowser(storeUrl);
+  function handleClickProductItem(event) {
+    console.log('event', event);
+    openBrowser(event.detail.targetUrl);
   }
 
   function setsortItems(sortFieldsObject: { [index: string]: string }) {
@@ -202,7 +207,6 @@
       return;
     }
 
-    // page++;
     getShopItems({ sort, category, cursor });
   }
 
@@ -247,8 +251,8 @@
     >
       <ShopList
         products={shopingProducts}
-        onClickProductItem={handleClickProductItem}
         {onClickRelatedItem}
+        on:go-link={handleClickProductItem}
       />
     </InfiniteScroll>
   </Container>

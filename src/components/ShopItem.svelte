@@ -1,11 +1,12 @@
 <script lang="ts">
+  import { createEventDispatcher } from 'svelte';
+
   import type { IProduct } from 'src/global/types';
 
   import Thumbnail from './common/shared/Thumbnail.svelte';
   import RelatedItems from './RelatedItems.svelte';
 
   export let item:IProduct;
-  export let onClickProductItem: (url: string) => void;
   export let onClickRelatedItem: () => void;
 
   const {
@@ -13,16 +14,25 @@
     brand,
     image,
     price,
-    storeUrl,
+    storeUrl: targetUrl,
     relatedItems,
     badge,
   } = item;
 
+  const dispatch = createEventDispatcher<{'go-link': {targetUrl: string}}>();
+
+  function goProductPage() {
+    dispatch('go-link', {
+      targetUrl,
+    });
+  }
+
   $:rank = badge?.rank;
   $:iconTheme = badge?.iconTheme;
+
 </script>
 
-<li class="shop-item" on:click="{() => onClickProductItem(storeUrl)}">
+<li class="shop-item" on:click={goProductPage}>
   <Thumbnail
     src={image}
     alt={name}
@@ -35,7 +45,6 @@
   <div class="info">
     <div
       class="info-top"
-      on:click={() => onClickProductItem(storeUrl)}
     >
       <span class="brand">{brand}</span>
       <h6 class="name">{name}</h6>

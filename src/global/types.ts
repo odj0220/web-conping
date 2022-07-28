@@ -99,7 +99,7 @@ export interface IProduct {
   price: number;
   discount?: number;
   category?: string;
-  exposed: [[number]];
+  exposed: number[][];
   image: string;
   views: number;
   discountRate: number;

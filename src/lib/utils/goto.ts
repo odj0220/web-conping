@@ -24,7 +24,7 @@ export const goPath = (path: string) => {
   goto(path);
 };
 
-const historyBack = (count: number, fallback: any) => {
+export const historyBack = (count: number, fallback: any) => {
   let hasHistory = false;
   window.history.go(count);
 

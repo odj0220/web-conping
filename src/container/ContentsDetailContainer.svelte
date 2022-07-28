@@ -11,6 +11,7 @@
   import Container from '$component/common/layout/Container.svelte';
 
   import type { YouTubePlayer } from 'youtube-player/dist/types';
+  import RelatedProductContainer from './RelatedProductContainer.svelte';
 
   export let id: number;
 
@@ -62,6 +63,13 @@
     player = event.detail.player;
   };
 
+  const setCurrentTimeInPlayer = (event) => {
+    const currentTime = event.detail.currentTime;
+    if (player) {
+      player.seekTo(currentTime, true);
+    }
+  };
+
   const onClickShare = () => {
     callShare('contents', id.toString());
   };
@@ -77,6 +85,7 @@
 
     <Metadata {content} {celebs} onClickTitle={gotoPrograms}/>
 
+    <RelatedProductContainer {id} timelineButtonVisible={true} on:set-video-current-time={setCurrentTimeInPlayer}></RelatedProductContainer>
     <ContentDetailAnotherVideosContainer contentId={id}/>
   </Container>
 {/await}

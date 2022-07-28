@@ -19,6 +19,7 @@ import CelebEdge from './celebEdge';
 import ProductEdge from './productEdge';
 import pageProduct from './pageProduct';
 import YoutubeContents from './youtubeContents';
+import Badge from './badge';
 
 const types = {
   Product,
@@ -37,12 +38,12 @@ const types = {
   RelatedItem,
   Category,
   Social,
-
   PageCeleb,
   CelebEdge,
   ProductEdge,
   pageProduct,
   YoutubeContents,
+  Badge,
 };
 
 export default Object.values(types).reduce((result: string, type: string) => result + type, '');

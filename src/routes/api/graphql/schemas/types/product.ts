@@ -13,6 +13,7 @@ const Product = `
       celebs: [Celeb]
       contents: [Content]
       relatedItems: [RelatedItem]
+      badge: Badge
     }
 ` ;
 

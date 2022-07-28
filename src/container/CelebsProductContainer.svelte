@@ -60,7 +60,7 @@
 {#await getData()}
 {:then}
   {#if products.length}
-      <Container margin="5.6rem 0 0">
+      <Container margin="0 0 5.6rem">
         {#if title.length}
             <Title title={title}/>
             <ProductGridList data={products}/>
