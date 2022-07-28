@@ -11,7 +11,6 @@
   export let rank: string;
   export let iconTheme: string;
   export let targetUrl: string;
-  export let onClick: (url: string) => void;
 
   const dispatch = createEventDispatcher<{'go-link': {targetUrl: string}}>();
 
