@@ -16,7 +16,7 @@
   import ShopList from '$component/ShopList.svelte';
 
   let hasNextPage: boolean;
-  let page = 1;
+  let cursor = 0;
   let shopingProducts:IProduct[] = [];
 
   let tabItems: ITabItem[];
@@ -41,9 +41,9 @@
     return categories;
   }
 
-  async function getProducts({ sort = 'alphabetical', category = 0, page = 1 } : {sort: string, category: number, page: number}) {
+  async function getProducts({ sort = 'alphabetical', category = 0, cursor = 0 } : {sort: string, category: number, cursor: number}) {
     const query = `{
-      getInfiniteProducts (order: ${sort}, category: ${category}) {
+      getInfiniteProducts (order: ${sort}, category: ${category}, cursor: ${cursor}) {
         pageInfo {
           startCursor
           hasNextPage
@@ -72,9 +72,7 @@
         },
       },
     } = await graphqlApi(query);
-
-    console.log(products);
-
+  
     return { products, pageInfo };
   }
 
@@ -84,11 +82,11 @@
     tabItems = setTabItems({ categories });
   }
 
-  async function getShopItems({ sort, category, page = 0 } : {sort: string, category: number, page?: number}) {
+  async function getShopItems({ sort, category, cursor = 0 } : {sort: string, category: number, cursor?: number}) {
     const {
       products,
-      pageInfo
-    } = await getProducts({ sort, category, page });
+      pageInfo,
+    } = await getProducts({ sort, category, cursor });
 
     setPageInfo(pageInfo);
 
@@ -97,7 +95,7 @@
 
   function setPageInfo(pageInfo: IPageInfo) {
     hasNextPage = pageInfo.hasNextPage;
-    page = pageInfo.page;
+    cursor = +pageInfo.startCursor;
   }
 
   function setTabItems({ categories } : {categories : ITabItem[]}) {
@@ -121,7 +119,7 @@
       .map((product, index) => {
         return {
           ...product,
-          badge: getBadge({ sort, index }),
+          badge: getBadge({ sort, index }) as any,
         };
       });
 
@@ -198,8 +196,8 @@
       return;
     }
 
-    page++;
-    getShopItems({ sort, category, page });
+    // page++;
+    getShopItems({ sort, category, cursor });
   }
 
   $:sortedName = SORT_FIELDS[sort];
