@@ -1,19 +1,22 @@
 <script lang="ts">
   import { graphqlApi } from '$lib/_api';
 
-  import type { IPageInfo, IProduct, IProductEdge, ITabItem } from 'src/global/types';
+  import { gotoCelebs, gotoContents } from '$lib/utils/goto';
+  import { openBrowser } from '$lib/util';
+
+  import type { IPageInfo, IProduct, ITabItem } from 'src/global/types';
 
   import { SORT_FIELDS } from '$lib/contants';
 
-  import ShopNavbar from '$container/ShopNavbar.svelte';
-
-  import Spinner from '$component/common/shared/Spinner.svelte';
   import LayoutPopup from '$component/common/layout/LayoutPopup.svelte';
   import Container from '$component/common/layout/Container.svelte';
   import InfiniteScroll from '$component/common/layout/InfiniteScroll.svelte';
 
+  import ShopNavbar from '$container/ShopNavbar.svelte';
   import SelectPopup from '$component/SelectPopup.svelte';
   import ShopList from '$component/ShopList.svelte';
+  import ShopNavBarSkeleton from '$component/skeleton/container/ShopNavBarSkeleton.svelte';
+  import ShopSekeleton from '$component/skeleton/container/ShopSekeleton.svelte';
 
   let hasNextPage: boolean;
   let cursor = 0;
@@ -54,6 +57,7 @@
             brand
             image
             price
+            storeUrl
             relatedItems {
               thumbnail
               title
@@ -72,7 +76,7 @@
         },
       },
     } = await graphqlApi(query);
-  
+
     return { products, pageInfo };
   }
 
@@ -167,13 +171,15 @@
     shopingProducts = [];
   }
 
-  function handleClickSelectButton(sortField: string) {
+  function handleClickSelectButton(e, sortField: string) {
+    e.stopPropagation();
     shopingProducts = [];
     sort = sortField;
+    closePopup();
   }
 
-  function handleClickProductItem(storeUrl) {
-    console.log(storeUrl);
+  function handleClickProductItem(storeUrl: string) {
+    openBrowser(storeUrl);
   }
 
   function setsortItems(sortFieldsObject: { [index: string]: string }) {
@@ -204,10 +210,20 @@
   $:sortItems = setsortItems(SORT_FIELDS);
   $:category = selectedTab?.id || 0;
   $:infiniteScrollActive = !!shopingProducts?.length;
+
+  const onClickRelatedItem = (type: string, id: string) => {
+    if (type === 'Celeb') {
+      gotoCelebs(id);
+    } else {
+      gotoContents(id);
+    }
+  };
+
+  console.log('visible', isPopupVisible);
 </script>
 
 {#await getTabItems()}
-  <Spinner />
+<ShopNavBarSkeleton />
 {:then}
   {#if tabItems?.length }
     <ShopNavbar
@@ -221,9 +237,9 @@
 {/await}
 
 {#await getShopItems({ sort, category })}
-  <Spinner />
+<ShopSekeleton />
 {:then}
-  <Container>
+  <Container margin="3.2rem 0 4rem">
     <InfiniteScroll
       {infiniteScrollActive}
       end={!hasNextPage}
@@ -232,11 +248,12 @@
       <ShopList
         products={shopingProducts}
         onClickProductItem={handleClickProductItem}
+        {onClickRelatedItem}
       />
     </InfiniteScroll>
   </Container>
 
-  <LayoutPopup visible={isPopupVisible}>
+  <LayoutPopup visible={isPopupVisible} {closePopup}>
     <SelectPopup
       title='정렬 기준'
       onClickSelectButton={handleClickSelectButton}

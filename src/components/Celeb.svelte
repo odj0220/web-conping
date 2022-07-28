@@ -10,7 +10,7 @@
 </script>
 
 <li class="item" on:click="{() => onClick(id)}">
-  <Avatar size="72px" src={thumbnail} alt={name}/>
+  <Avatar size={7.2} src={thumbnail} alt={name}/>
   <div class="info">
     <div class="info-top">
       <h6 class="name">{name}</h6>

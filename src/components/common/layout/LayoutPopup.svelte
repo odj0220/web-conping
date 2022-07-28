@@ -1,15 +1,21 @@
 <script lang="ts">
-  import { fade } from 'svelte/transition';
+  import { fly, fade } from 'svelte/transition';
+
 
   export let visible = false;
+  export let closePopup: () => void;
 </script>
 
 {#if visible}
   <div
     class="wall"
-    out:fade
+    on:click={closePopup}
+    out:fade="{{ duration: 300 }}"
+    in:fade="{{ duration: 300 }}"
   >
+  <div transition:fly="{{ y: 200, duration: 300 }}">
     <slot />
+  </div>
   </div>
 {/if}
 
@@ -24,6 +30,6 @@
     justify-content: flex-end;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.66);
+    background: rgba(0, 0, 0, 0.5);
   }
 </style>

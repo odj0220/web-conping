@@ -1,13 +1,13 @@
 <script lang="ts">
   import type { ISelectItem } from 'src/global/types';
-  
+
   import SelectItems from './SelectItems.svelte';
   import Button from './Button.svelte';
 
   export let title: string;
   export let selected: string;
   export let selectItems: ISelectItem[];
-  export let onClickSelectButton: (sortField: string) => void;
+  export let onClickSelectButton: (e, sortField: string) => void;
   export let onClickCloseButton: () => void;
 </script>
 
@@ -29,9 +29,10 @@
 
 <style lang="scss">
   .container {
-    padding: 0 2.4rem;
+    padding: 0 1.2rem;
     background-color: $bg-gray-32;
-    border-radius: 0.8rem;
+    border-top-left-radius: 0.8rem;
+    border-top-right-radius: 0.8rem;
     display: flex;
     flex-direction: column;
 
@@ -39,10 +40,9 @@
       font-weight: 700;
       font-size: 1.2rem;
       color: $disabled-8a;
-      height: 6rem;
-
       display: flex;
       align-items: center;
+      padding: 2.4rem 1.2rem 1.6rem;
     }
   }
 </style>

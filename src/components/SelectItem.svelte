@@ -5,14 +5,14 @@
 
   export let selected: string;
   export let selectItem: ISelectItem;
-  export let onClickSelectButton: (sortField: string) => void;
+  export let onClickSelectButton: (e, sortField: string) => void;
 
   $:name = selectItem.name;
   $:value = selectItem.value;
   $:isSelected = selected === value;
 </script>
 
-<li on:click={() => onClickSelectButton(value)}>
+<li on:click={(e) => onClickSelectButton(e, value)}>
   <span class={isSelected ? 'selected' : '' }>
     {name}
   </span>
@@ -29,11 +29,12 @@
     align-items: center;
     height: 3.6rem;
     font-size: 1.4rem;
-
+    padding: 0 1.2rem;
+    border-radius: 0.4rem;
     &:active {
       background-color: #9E04EA;
     }
-   
+
     span {
       &.selected {
         color: $primary-40;

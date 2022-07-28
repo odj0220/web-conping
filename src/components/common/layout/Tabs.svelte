@@ -8,11 +8,13 @@
   export let borderBottom = false;
   export let sticky = false;
   export let selectedTab = tabItems[0];
+  export let gap = '0.8rem';
 </script>
 
 <ul class="tab-header" class:sticky={sticky} class:borderBottom={borderBottom}>
   {#each tabItems as item}
-    <Tab 
+    <Tab
+     {gap}
       {item}
       isActive={selectedTab.index === item.index}
       {onClickTab}

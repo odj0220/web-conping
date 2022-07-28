@@ -1,10 +1,11 @@
 <script lang="ts">
   import type { IProduct } from 'src/global/types';
-  
+
   import ShopItem from './ShopItem.svelte';
 
   export let products: IProduct[];
   export let onClickProductItem: (url: string) => void;
+  export let onClickRelatedItem: (url: string) => void;
 </script>
 
 <ul class="shop-list">
@@ -12,6 +13,7 @@
     <ShopItem
       item={product}
       {onClickProductItem}
+      {onClickRelatedItem}
     />
   {/each}
 </ul>

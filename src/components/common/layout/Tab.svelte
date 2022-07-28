@@ -4,9 +4,11 @@
   export let item: ITabItem;
   export let isActive: boolean;
   export let onClickTab: (selectedIndex: number) => void;
+  export let gap = '0.8rem';
 </script>
 
 <li
+style="padding-bottom: {gap};"
   class:active={isActive}
   on:click={() => onClickTab(item.index)}
 >
@@ -19,8 +21,6 @@
     color: $disabled-8a;
     position: relative;
     transition: all 0.3s;
-    padding-bottom: 0.8rem;
-
     &:not(:last-child) {
       margin-right: 2rem;
     }
@@ -30,6 +30,7 @@
       position: absolute;
       left: 50%;
       right: 0;
+      bottom: 0;
       display: block;
       width: 0;
       height: 3px;

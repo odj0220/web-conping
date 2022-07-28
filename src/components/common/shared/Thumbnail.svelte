@@ -9,8 +9,6 @@
   export let borderRadius = '0.4rem';
   export let rank: string;
   export let iconTheme: string;
-  export let targetUrl: string;
-  export let onClick: (url: string) => void;
 
   const setImageSrc = (value: string) => {
     src = value;
@@ -21,7 +19,6 @@
 <div
   class="thumbnail"
   style="width: {width}; padding-bottom: {height}; border-radius:{borderRadius}"
-  on:click={() => onClick(targetUrl)}
   >
   {#if src}
     <img src={src} alt={alt} on:error="{() => setImageSrc("")}"/>
@@ -34,9 +31,10 @@
       <RankBadge {rank} {iconTheme} />
     {/if}
   </div>
-  
+
 <style lang="scss">
   .thumbnail {
+    flex-shrink: 0;
     position: relative;
     overflow: hidden;
     background-color: $bg-black-21;
