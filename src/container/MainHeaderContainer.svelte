@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
-
   import Header from '$component/Header.svelte';
+  import { onSettingTap } from '../lib/_app_communication';
 
   export let title = '';
   
@@ -10,7 +9,7 @@
   function handleClickButton(type) {
     switch (type) {
     case 'cs':
-      goto('/settings');
+      onSettingTap();
       break;
 
     default:
