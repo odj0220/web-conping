@@ -12,6 +12,7 @@
 
   import type { ITabItem } from 'src/global/types';
   import { callShare } from '../lib/_app_communication';
+import CelebsDetailSkeleton from '$component/skeleton/container/CelebsDetailSkeleton.svelte';
 
   export let id: string;
 
@@ -66,6 +67,7 @@
 </script>
 
 {#await getData()}
+<CelebsDetailSkeleton />
 {:then data}
   <Container margin="0 0 9.4rem" type="full">
     <SubHeaderContainer type="transparent" share={true} {onClickShare}/>

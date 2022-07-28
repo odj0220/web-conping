@@ -6,9 +6,9 @@
   import Celebs from '$component/Celebs.svelte';
   import Container from '$component/common/layout/Container.svelte';
   import MainHeaderContainer from '$container/MainHeaderContainer.svelte';
+  import CelebsSkeleton from '$component/skeleton/container/CelebsSkeleton.svelte';
 
   import type { ICeleb } from 'src/global/types';
-import CelebsSkeleton from '$component/skeleton/container/CelebsSkeleton.svelte';
 
   let contents: ICeleb[] = [];
   let end = false;

@@ -16,7 +16,7 @@
       <img src="/images/celeb_banner.png" alt={name} />
     </div>
     <div class="avatar">
-      <Avatar src={thumbnail} size="8.8rem" alt={name}/>
+      <Avatar src={thumbnail} size={8.8} alt={name}/>
     </div>
   </div>
   <div class="profile-info">
