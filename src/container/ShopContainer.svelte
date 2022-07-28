@@ -15,8 +15,8 @@
   import ShopNavbar from '$container/ShopNavbar.svelte';
   import SelectPopup from '$component/SelectPopup.svelte';
   import ShopList from '$component/ShopList.svelte';
-  import ShopNavBarSkeleton from '$component/skeleton/container/ShopNavBarSkeleton.svelte';
   import ShopSekeleton from '$component/skeleton/container/ShopSekeleton.svelte';
+  import ShopNavBarSkeleton from '$component/skeleton/container/ShopNavBarSkeleton.svelte';
 
   let hasNextPage: boolean;
   let cursor = 0;
