@@ -80,7 +80,7 @@
 {:then}
   {#if contents.length}
     {#if title.length}
-      <Container margin="5.6rem 0 0">
+      <Container margin="0 0 5.6rem">
         <Title title={title} />
         <ImageListView contents={[...contents].slice(0, 4)} onClick={gotoContents}/>
         {#if moreButton}
@@ -92,7 +92,7 @@
         {/if}
       </Container>
     {:else}
-      <Container margin="5.6rem 0 0">
+      <Container margin="0 0 5.6rem">
         <PreviewVideos
                 contents={contents}
                 {end}
