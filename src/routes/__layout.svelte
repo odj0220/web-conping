@@ -5,16 +5,16 @@
   import { historyBack } from '../lib/utils/goto';
 
   onMount(() => {
-    onInitialized();
-  
-    const onDynamicLinkMessage = onMessageFromApp('onDynamicLinkMessage');
-    onDynamicLinkMessage(({ type, id }: {type: string, id: string}) => {
-      goto(`/${type}/${id}`);
-    });
-  
-    const onAndroidBackKeyMessage = onMessageFromApp('onAndroidBackKeyMessage');
-    onAndroidBackKeyMessage(() => {
-      historyBack(-1, () => onAndroidExit());
+    onInitialized(() => {
+      const onDynamicLinkMessage = onMessageFromApp('onDynamicLinkMessage');
+      onDynamicLinkMessage(({ type, id }: {type: string, id: string}) => {
+        goto(`/${type}/${id}`);
+      });
+
+      const onAndroidBackKeyMessage = onMessageFromApp('onAndroidBackKeyMessage');
+      onAndroidBackKeyMessage(() => {
+        historyBack(-1, () => onAndroidExit());
+      });
     });
   });
 </script>
