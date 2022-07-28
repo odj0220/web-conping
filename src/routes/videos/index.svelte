@@ -3,7 +3,8 @@
     import { graphqlApi } from '../../lib/_api';
 
     onMount(async () => {
-      await getCategories();
+      // await getProductsByCelebId();
+      // await getCategories();
       await getProducts();
       // await getCelebs();
       // await getCeleb();
@@ -12,47 +13,57 @@
       // await getSocialsByContentId();
     });
 
+    async function getProductsByCelebId() {
+      const query = `{
+              getProductsByCelebId (id: "1") {
+                    products {
+                        id
+                        name
+                        brand
+                        price
+                        discountRate
+                        storeUrl
+                        image
+                        views
+                        createDt
+                    }
+                    pageInfo {
+                        startCursor
+                        hasNextPage
+                    }
+                }
+            }
+        `;
+
+      const response = await graphqlApi(query);
+      console.log(response);
+    }
+
     async function getProducts() {
       const query = `{
-          products (order: alphabetical, category: 10) {
+          getInfiniteProducts (order: alphabetical, limit: 5) {
              totalCount
              pageInfo {
-                page
-                totalPage
+                startCursor
                 hasNextPage
              }
-             edges {
-               cursor
-               node {
-                 id
-                 name
-                 brand
-                 price
-                 discountRate
-                 image
-                 storeUrl
-                 views
-                 createDt
-                 contents {
-                    id
-                    title
-                    subtitle
-                    description
-                    thumb
-                 }
-                 celebs {
-                    id
-                    name
-                    thumbnail
-                 }
-                 relatedItems {
-                    thumbnail
-                    title
-                    type
-                    id
-                 }
-               }
-             }
+             products {
+               id
+               name
+               brand
+               price
+               discountRate
+               image
+               storeUrl
+               views
+               createDt
+               relatedItems {
+                  thumbnail
+                  title
+                  type
+                  id
+                }
+              }
           }
         }`;
       const response = await graphqlApi(query);

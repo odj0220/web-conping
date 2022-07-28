@@ -1,7 +1,7 @@
 const pageProduct = `
     type PageProduct {
       totalCount: String
-      edges: [ProductEdge]
+      products: [Product]
       pageInfo: PageInfo
     }
 `;
