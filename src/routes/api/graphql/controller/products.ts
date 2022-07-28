@@ -157,13 +157,30 @@ export const getInfiniteProducts = async ({ order, category, limit, cursor }: {o
   }
 
 
-  const response: any = await GET('/product', { method: 'GET', params: params });
-  const products = response.elements.map((product: any) => convertProduct(product));
 
+  const response: any = await GET('/product', { method: 'GET', params: params });
+  const products: IProduct[] = response.elements.map((product: Product, index: number) => {
+    let result = { ...convertProduct(product) };
+
+    if (order === 'popularity' && !cursor) {
+      const rank = index + 1;
+      const badge = {
+        rank,
+        iconTheme: rank <= 3 ? 'primary' : 'secondary',
+      };
+
+      result = {
+        ...result,
+        badge,
+      };
+    }
+
+    return result;
+  });
 
   let startCursor = 0;
   if (products.length > 0) {
-    startCursor = products.slice(-1)[0].id;
+    startCursor = +products.slice(-1)[0].id;
   }
 
   const hasNextPage = products.length >= (limit || 10);

@@ -56,6 +56,10 @@
             image
             price
             storeUrl
+            badge {
+              rank
+              iconTheme
+           }
             relatedItems {
               thumbnail
               title
