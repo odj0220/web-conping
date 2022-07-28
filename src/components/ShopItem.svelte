@@ -29,14 +29,13 @@
     height="15.6rem"
     {rank}
     {iconTheme}
-    onClick={onClickProductItem}
     targetUrl={storeUrl}
+    on:go-link
   />
 
   <div class="info">
     <div
       class="info-top"
-      on:click={() => onClickProductItem(storeUrl)}
     >
       <span class="brand">{brand}</span>
       <h6 class="name">{name}</h6>

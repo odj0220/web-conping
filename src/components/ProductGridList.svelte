@@ -16,6 +16,7 @@
 
   import type { IProduct } from 'src/global/types';
   import { createEventDispatcher, onMount } from 'svelte';
+  import { openBrowser } from '../lib/util';
 
   export let data:IProduct[] = [];
   export let end: boolean;
@@ -76,12 +77,15 @@
     }, 1000);
   }
 
-
+  function goProduct(event) {
+    const url = event.detail.targetUrl;
+    openBrowser(url);
+  }
 </script>
 
 <ul class="product-grid-list">
   {#each data as item}
-    <ProductGridItem data={item}/>
+    <ProductGridItem data={item} on:go-link={goProduct}/>
   {/each}
 </ul>
 

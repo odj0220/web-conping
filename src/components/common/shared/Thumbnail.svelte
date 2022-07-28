@@ -1,6 +1,7 @@
 <script lang="ts">
   import Icon from '$component/icons/Icon.svelte';
   import RankBadge from './RankBadge.svelte';
+  import { createEventDispatcher } from 'svelte';
 
   export let src = '';
   export let alt = '';
@@ -12,6 +13,14 @@
   export let targetUrl: string;
   export let onClick: (url: string) => void;
 
+  const dispatch = createEventDispatcher<{'go-link': {targetUrl: string}}>();
+
+  function goProductPage() {
+    dispatch('go-link', {
+      targetUrl,
+    });
+  }
+
   const setImageSrc = (value: string) => {
     src = value;
   };
@@ -21,7 +30,7 @@
 <div
   class="thumbnail"
   style="width: {width}; padding-bottom: {height}; border-radius:{borderRadius}"
-  on:click={() => onClick(targetUrl)}
+  on:click={goProductPage}
   >
   {#if src}
     <img src={src} alt={alt} on:error="{() => setImageSrc("")}"/>

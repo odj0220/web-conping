@@ -5,12 +5,12 @@
 
   export let data: IProduct;
 
-  const { name, price, image } = data;
+  const { name, price, image, storeUrl } = data;
 
 </script>
 
 <li class="product-grid-item">
-  <Thumbnail src={image} alt={name} width="100%" height="100%"/>
+  <Thumbnail src={image} alt={name} targetUrl={storeUrl} width="100%" height="100%" on:go-link/>
   <div class="info">
     <h6 class="name">{name}</h6>
     <span class="price">{price.toLocaleString()}</span>

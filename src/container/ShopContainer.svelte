@@ -4,6 +4,7 @@
   import type { IPageInfo, IProduct, IProductEdge, ITabItem } from 'src/global/types';
 
   import { SORT_FIELDS } from '$lib/contants';
+  import { openBrowser } from '../lib/util';
 
   import ShopNavbar from '$container/ShopNavbar.svelte';
 
@@ -54,6 +55,7 @@
             brand
             image
             price
+            storeUrl
             relatedItems {
               thumbnail
               title
@@ -172,8 +174,8 @@
     sort = sortField;
   }
 
-  function handleClickProductItem(storeUrl) {
-    console.log(storeUrl);
+  function handleClickProductItem(event) {
+    openBrowser(event.detail.targetUrl);
   }
 
   function setsortItems(sortFieldsObject: { [index: string]: string }) {
@@ -195,8 +197,7 @@
     if (!hasNextPage) {
       return;
     }
-
-    // page++;
+  
     getShopItems({ sort, category, cursor });
   }
 
@@ -231,7 +232,7 @@
     >
       <ShopList
         products={shopingProducts}
-        onClickProductItem={handleClickProductItem}
+        on:go-link={handleClickProductItem}
       />
     </InfiniteScroll>
   </Container>
