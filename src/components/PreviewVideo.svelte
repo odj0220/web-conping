@@ -11,11 +11,11 @@
     },
     remove: function(key: string) {
       const removedElement = this.map.get(key);
-  
+
       if (removedElement && removedElement.player) {
         removedElement.player.pauseVideo();
       }
-  
+
       this.map.delete(key);
     },
     sort: function() {
@@ -55,7 +55,7 @@
   import { guid, toHHMMSS } from '$lib/util';
   import { onMount, SvelteComponent } from 'svelte';
   import YP from 'youtube-player';
-  import Avatar from './Avatar.svelte';
+  import Avatar from './common/shared/Avatar.svelte';
   import type { IContent } from 'src/global/types';
 
   export let content: IContent;
@@ -245,17 +245,21 @@
   </span>
     </div>
     <div class="rest">
+      {#if programId}
       <div on:click|stopPropagation={gotoPrograms}>
         <Avatar size="24px" src={programThumbnail} alt={programName}/>
       </div>
+      {/if}
       <div class="info">
-        <span class="program-name" on:click|stopPropagation={gotoPrograms}>{programName}</span>
-        <span class="episode">{episode}</span>
-        {#if views}
+        {#if programId}
+          <span class="program-name" on:click|stopPropagation={gotoPrograms}>{programName}</span>
+          <span class="episode">{episode}</span>
           <span class="divider">・</span>
-          <span class="views">{views}</span>
         {/if}
-        <span class="divider">・</span>
+        {#if views}
+          <span class="views">{views}</span>
+          <span class="divider">・</span>
+        {/if}
         <svelte:component this={PastTimeDelta} pastTime={createdAt}></svelte:component>
       </div>
     </div>

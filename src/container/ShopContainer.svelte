@@ -1,7 +1,7 @@
 <script lang="ts">
   import { graphqlApi } from '$lib/_api';
 
-  import type { IProduct, IProductEdge, ITabItem } from 'src/global/types';
+  import type { IPageInfo, IProduct, IProductEdge, ITabItem } from 'src/global/types';
 
   import { SORT_FIELDS } from '$lib/contants';
 
@@ -10,9 +10,19 @@
   import Spinner from '$component/common/shared/Spinner.svelte';
   import LayoutPopup from '$component/common/layout/LayoutPopup.svelte';
   import Container from '$component/common/layout/Container.svelte';
+  import InfiniteScroll from '$component/common/layout/InfiniteScroll.svelte';
 
   import SelectPopup from '$component/SelectPopup.svelte';
   import ShopList from '$component/ShopList.svelte';
+
+  let hasNextPage: boolean;
+  let page = 1;
+  let shopingProducts:IProduct[] = [];
+
+  let tabItems: ITabItem[];
+  let selectedTab: ITabItem;
+  let sort = Object.keys(SORT_FIELDS)[0];
+  let isPopupVisible = false;
 
   async function getCategories() {
     const query = `{
@@ -31,7 +41,7 @@
     return categories;
   }
 
-  async function getProducts({ sort = 'alphabetical', category = 0 } : {sort: string, category: number}) {
+  async function getProducts({ sort = 'alphabetical', category = 0, page = 1 } : {sort: string, category: number, page: number}) {
     const query = `{
       getInfiniteProducts (order: ${sort}, category: ${category}) {
         pageInfo {
@@ -53,36 +63,41 @@
           }
       }
     }`;
-  
+
     const {
       data: {
         getInfiniteProducts: {
           products,
+          pageInfo,
         },
       },
     } = await graphqlApi(query);
 
     console.log(products);
 
-    return { products };
+    return { products, pageInfo };
   }
 
   async function getTabItems() {
     const categories = await getCategories();
 
-    const tabItems = setTabItems({ categories });
-
-    return { tabItems };
+    tabItems = setTabItems({ categories });
   }
 
-  async function getShopItems({ sort, category } : {sort: string, category: number}) {
+  async function getShopItems({ sort, category, page = 0 } : {sort: string, category: number, page?: number}) {
     const {
       products,
-    } = await getProducts({ sort, category });
+      pageInfo
+    } = await getProducts({ sort, category, page });
 
-    const shopItems = setShopItems({ products, sort });
+    setPageInfo(pageInfo);
 
-    return { shopItems };
+    setShopingProducts({ products, sort });
+  }
+
+  function setPageInfo(pageInfo: IPageInfo) {
+    hasNextPage = pageInfo.hasNextPage;
+    page = pageInfo.page;
   }
 
   function setTabItems({ categories } : {categories : ITabItem[]}) {
@@ -101,14 +116,19 @@
       });
   }
 
-  function setShopItems({ products, sort }: { products: IProduct[], sort: string }) {
-    return products.map((product, index) => {
-      return {
-        ...product,
-        badge: getBadge({ sort, index }),
-      };
-    })
-    ;
+  function setShopingProducts({ products, sort }: { products: IProduct[], sort: string }) {
+    const shopItems = products
+      .map((product, index) => {
+        return {
+          ...product,
+          badge: getBadge({ sort, index }),
+        };
+      });
+
+    shopingProducts = [
+      ...shopingProducts,
+      ...shopItems,
+    ];
   }
 
   function getBadge({ sort, index } : {sort: string, index: number}) {
@@ -135,9 +155,6 @@
     return '';
   }
 
-  function handleClickTab(clickedTab: ITabItem) {
-    selectedTab = clickedTab;
-  }
 
   function openPopup() {
     isPopupVisible = true;
@@ -147,8 +164,18 @@
     isPopupVisible = false;
   }
 
+  function handleClickTab(clickedTabIndex: number) {
+    selectedTab = tabItems[clickedTabIndex];
+    shopingProducts = [];
+  }
+
   function handleClickSelectButton(sortField: string) {
+    shopingProducts = [];
     sort = sortField;
+  }
+
+  function handleClickProductItem(storeUrl) {
+    console.log(storeUrl);
   }
 
   function setsortItems(sortFieldsObject: { [index: string]: string }) {
@@ -161,33 +188,54 @@
         };
       });
   }
-  
-  let selectedTab: ITabItem;
-  let sort = Object.keys(SORT_FIELDS)[0];
-  let isPopupVisible = false;
+
+  async function runInfiniteScrolling(event) {
+    const detail = event.detail;
+
+    detail.stop();
+
+    if (!hasNextPage) {
+      return;
+    }
+
+    page++;
+    getShopItems({ sort, category, page });
+  }
 
   $:sortedName = SORT_FIELDS[sort];
   $:sortItems = setsortItems(SORT_FIELDS);
   $:category = selectedTab?.id || 0;
+  $:infiniteScrollActive = !!shopingProducts?.length;
 </script>
 
 {#await getTabItems()}
   <Spinner />
-{:then {tabItems}}
-  <ShopNavbar
-    {tabItems}
-    {selectedTab}
-    sort={sortedName}
-    onClickTab={handleClickTab}
-    onClickSort={openPopup}
-  />
+{:then}
+  {#if tabItems?.length }
+    <ShopNavbar
+      {tabItems}
+      {selectedTab}
+      sort={sortedName}
+      onClickTab={handleClickTab}
+      onClickSort={openPopup}
+    />
+  {/if}
 {/await}
 
 {#await getShopItems({ sort, category })}
   <Spinner />
-{:then {shopItems} }
+{:then}
   <Container>
-    <ShopList products={shopItems} />
+    <InfiniteScroll
+      {infiniteScrollActive}
+      end={!hasNextPage}
+      on:request-more={runInfiniteScrolling}
+    >
+      <ShopList
+        products={shopingProducts}
+        onClickProductItem={handleClickProductItem}
+      />
+    </InfiniteScroll>
   </Container>
 
   <LayoutPopup visible={isPopupVisible}>

@@ -1,12 +1,12 @@
 <script type="ts">
   import type { ICeleb } from 'src/global/types';
 
-  import Avatar from './Avatar.svelte';
+  import Avatar from './common/shared/Avatar.svelte';
   import Icon from './icons/Icon.svelte';
 
   export let data: ICeleb;
 
-  const { thumbnail, name, description } = data;
+  const { thumbnail, name, description, countOfYoutubeFollowers } = data;
 
 </script>
 
@@ -27,7 +27,7 @@
         <span class="sns-icon">
           <Icon name="youtube" />
         </span>
-        <span class="sns-follows">140만 명</span>
+        <span class="sns-follows">{countOfYoutubeFollowers || 0} 명</span>
       </li>
       <li class="sns-item">
         <span class="sns-icon">

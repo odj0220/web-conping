@@ -3,7 +3,6 @@
 
   export let rank: string;
   export let iconTheme: string;
-  console.log(iconTheme);
 
   function getIconName(theme:string) {
     return `badge_rank_${theme.toLowerCase()}`;
@@ -20,6 +19,7 @@
 <style lang="scss">
   .badge {
     position: absolute;
+    top: 0;
     left: 1.2rem;
     
     .number {

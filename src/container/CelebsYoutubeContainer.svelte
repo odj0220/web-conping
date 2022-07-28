@@ -15,25 +15,41 @@
   export let moreButton: boolean;
   export let title : TitleElement[] = [];
   export let category: string;
+  let url;
 
   const onClickButton = () => {
-    openBrowser('https://www.naver.com');
+    openBrowser(url);
+  };
+
+  const gotoYoutube = (videoId: string) => {
+    openBrowser(`https://www.youtube.com/watch?v=${videoId}`);
   };
 
 
   const getData = async () => {
     const query = `{
-      getSocialsByCelebId (id: "${id}", type: youtube) {
-        id
-        type
-        board_thumbnails
-        link
+      getYoutubeContentsByCelebId (id: "${id}") {
+        title {
+          text
+        }
+        contents {
+          id
+          title
+          description
+          videoId
+          duration
+          createDt
+          views
+          thumb
+        }
+        url
       }
     }`;
   
-    const { data: { getSocialsByCelebId } } = await graphqlApi(query);
+    const { data: { getYoutubeContentsByCelebId } } = await graphqlApi(query);
+    url = getYoutubeContentsByCelebId.url;
 
-    return getSocialsByCelebId[0];
+    return getYoutubeContentsByCelebId;
   };
 
 
@@ -41,10 +57,10 @@
 
 {#await getData()}
 {:then data} 
-{#if data?.length}
+{#if data?.contents.length}
   <Container margin="5.6rem 0 0">
-    <Title title={title} />
-    <PreviewVideos contents={data} onClick={gotoContents}/>
+    <Title title={data.title} />
+    <PreviewVideos contents={data.contents} onClick={gotoYoutube}/>
 
     {#if moreButton}
       <MoreButton value="유튜브 보러가기" onClick={onClickButton}/>

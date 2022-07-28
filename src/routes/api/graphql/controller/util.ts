@@ -289,11 +289,13 @@ export const youtubeToContent = async ({ id, snippet }: YoutubeVideo) => {
   const { title, description, publishedAt } = snippet;
   const videoInfo: any = await GET(`/youtube/video/${videoId}`);
   return JSON.parse(JSON.stringify({
+    id: videoId,
     videoId,
     title,
     description,
     createDt: +dayjs(publishedAt),
     duration: dayjs.duration(videoInfo?.contentDetails?.duration || 0).asSeconds(),
     views: videoInfo?.statistics?.viewCount,
+    thumb: getThumbnail(videoId),
   }));
 };

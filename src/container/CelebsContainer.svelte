@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
   import { graphqlApi } from '$lib/_api';
 
   import { gotoCelebs } from '$lib/utils/goto';
@@ -48,17 +46,13 @@
     detail.stop();
   }
 
-  onMount(async () => {
-    await getData(8);
-  });
-
 </script>
 
-<!-- {#await getData()}
-{:then data} -->
+{#await getData(8)}
+{:then data}
 <MainHeaderContainer title="셀럽존" />
 
 <Container margin="8px 0 1.6rem 0 ">
   <Celebs celebs={contents} onClick={gotoCelebs} {end} {cursor} infiniteScroll={true} on:request-more={runInfiniteScrolling}/>
 </Container>
-<!-- {/await} -->
+{/await}
