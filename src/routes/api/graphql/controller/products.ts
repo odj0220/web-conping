@@ -6,8 +6,6 @@ import { GET } from '$lib/_api';
 import { convertProduct } from './util';
 import { getThumbnail } from './util';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
-
 export const products = async ({ order, category, limit, page }: {order: 'latest' | 'popularity' | 'highPrice' | 'lowPrice' | 'alphabetical', category: number, limit:number, page: number}) => {
   let sort: any[] = [{ 'views': 'asc' }];
 
@@ -119,6 +117,65 @@ export const products = async ({ order, category, limit, page }: {order: 'latest
 
 export const product = async ({ id }: {id: string}) => {
   return productJson.find((product) => product.id === id);
+};
+
+export const getInfiniteProducts = async ({ order, category, limit, cursor }: {order: 'latest' | 'popularity' | 'highPrice' | 'lowPrice' | 'alphabetical', category: number, limit:number, cursor: number}) => {
+  let sort: any[] = [{ 'views': 'asc' }];
+
+  switch (order) {
+  case 'latest':
+    sort = [{ 'createdAt': 'asc' }];
+    break;
+  case 'popularity':
+    sort = [{ 'views': 'asc' }];
+    break;
+  case 'highPrice':
+    sort = [{ 'price': 'desc' }];
+    break;
+  case 'lowPrice':
+    sort = [{ 'price': 'asc' }];
+    break;
+  case 'alphabetical':
+    sort = [{ 'name': 'asc' }];
+    break;
+  }
+
+  const params:any = {
+    pagingType: 'cursor',
+    sort: JSON.stringify(sort),
+    videoContent: true,
+    celeb: true,
+    size: limit || 10,
+  };
+
+  if (cursor) {
+    params['cursor'] = cursor;
+  }
+
+  if (category) {
+    params['categoryId'] = category;
+  }
+
+
+  const response: any = await GET('/product', { method: 'GET', params: params });
+
+  const products = response.elements.map((product: any) => convertProduct(product));
+
+  let startCursor = 0;
+  if (products.length > 0) {
+    startCursor = products.slice(-1)[0].id;
+  }
+
+  const hasNextPage = products.length >= (limit || 10);
+
+  return {
+    totalCount: response.totalElements,
+    products,
+    pageInfo: {
+      startCursor,
+      hasNextPage,
+    },
+  };
 };
 
 export const getProductsByContentId = async ({ id }: { id: string }) => {

@@ -1,6 +1,12 @@
 import { buildSchema, graphql } from 'graphql';
 import type { GraphQLSchema } from 'graphql/type/schema';
-import { product, products, getProductsByContentId, getProductByCelebId } from './controller/products';
+import {
+  product,
+  products,
+  getProductsByContentId,
+  getProductByCelebId,
+  getInfiniteProducts,
+} from './controller/products';
 import { getBanners } from './controller/banner';
 import {
   content,
@@ -65,6 +71,7 @@ export async function Graphql(query: string) {
       getMainInfiniteContents(limit: Int, cursor: String): PageContent
       getMainOrigin: MainOrigin
       
+      getInfiniteProducts(order: ProductOrder, category: Int, limit: Int, cursor: Int): PageProduct
       getInfiniteCelebs(first: Int, afterCursor: String): PageCeleb
       getYoutubeContentsByCelebId(id: ID!): YoutubeContents
   }`);
@@ -126,6 +133,7 @@ export async function Graphql(query: string) {
     getMainInfiniteContents,
 
     getInfiniteCelebs,
+    getInfiniteProducts,
     getYoutubeContentsByCelebId,
   };
 
