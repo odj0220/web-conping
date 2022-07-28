@@ -104,5 +104,14 @@ export const onAndroidExit = () => {
 
 export const onInitialized = () => {
   const win: any = window;
-  win['flutter_inappwebview'].callHandler('onInitialized');
+  const initCheck = false;
+  const interval = setInterval(() => {
+    console.info('onInitialized call');
+    if (initCheck) {
+      clearInterval(interval);
+    }
+    if (win['flutter_inappwebview']) {
+      win['flutter_inappwebview'].callHandler('onInitialized');
+    }
+  }, 200);
 };
