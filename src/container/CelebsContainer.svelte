@@ -52,10 +52,9 @@ import CelebsSkeleton from '$component/skeleton/container/CelebsSkeleton.svelte'
 {#await getData(8)}
 <CelebsSkeleton />
 {:then data}
-<CelebsSkeleton />
-<!-- <MainHeaderContainer title="셀럽존" />
+<MainHeaderContainer title="셀럽존" />
 
 <Container margin="8px 0 1.6rem 0 ">
   <Celebs celebs={contents} onClick={gotoCelebs} {end} {cursor} infiniteScroll={true} on:request-more={runInfiniteScrolling}/>
-</Container> -->
+</Container>
 {/await}
