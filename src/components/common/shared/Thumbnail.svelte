@@ -7,8 +7,8 @@
   export let width = '';
   export let height = '';
   export let borderRadius = '0.4rem';
-  export let rank: string;
-  export let iconTheme: string;
+  export let rank = '';
+  export let iconTheme = '';
 
   const setImageSrc = (value: string) => {
     src = value;
