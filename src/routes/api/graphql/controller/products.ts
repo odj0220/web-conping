@@ -3,7 +3,7 @@ import relationJson from '../../../../../static/data/relation.json';
 import type { Product, VideoContent } from '$lib/models/backend/backend';
 import type { IProduct } from '../../../../global/types';
 import { GET } from '$lib/_api';
-import { convertProduct } from './util';
+import { convertProduct, EXPOSED_DEFAULT_DURATION } from './util';
 import { getThumbnail } from './util';
 
 export const products = async ({ order, category, limit, page }: {order: 'latest' | 'popularity' | 'highPrice' | 'lowPrice' | 'alphabetical', category: number, limit:number, page: number}) => {
@@ -188,7 +188,7 @@ export const getProductsByContentId = async ({ id }: { id: string }) => {
       if (videoContentProduct?.VideoExposureTime) {
         exposed = videoContentProduct.VideoExposureTime.map(videoExposureTime => {
           const begin = videoExposureTime.exposedOffsetBeginMs;
-          const end = videoExposureTime.exposedOffsetEndMs || begin;
+          const end = videoExposureTime.exposedOffsetEndMs || begin + EXPOSED_DEFAULT_DURATION;
           return [(+begin / 1000), (+end / 1000)];
         });
       }
