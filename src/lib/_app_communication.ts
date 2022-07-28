@@ -106,7 +106,6 @@ export const onInitialized = (callback: () => void) => {
   const win: any = window;
   let initCheck = false;
   const interval = setInterval(() => {
-    console.info('onInitialized call');
     if (initCheck) {
       clearInterval(interval);
     }
