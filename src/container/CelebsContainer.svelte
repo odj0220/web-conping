@@ -6,6 +6,7 @@
   import Celebs from '$component/Celebs.svelte';
   import Container from '$component/common/layout/Container.svelte';
   import MainHeaderContainer from '$container/MainHeaderContainer.svelte';
+  import CelebsSkeleton from '$component/skeleton/container/CelebsSkeleton.svelte';
 
   import type { ICeleb } from 'src/global/types';
 
@@ -49,6 +50,7 @@
 </script>
 
 {#await getData(8)}
+<CelebsSkeleton />
 {:then data}
 <MainHeaderContainer title="셀럽존" />
 

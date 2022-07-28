@@ -247,7 +247,7 @@
     <div class="rest">
       {#if programId}
       <div on:click|stopPropagation={gotoPrograms}>
-        <Avatar size="24px" src={programThumbnail} alt={programName}/>
+        <Avatar size={2.4} src={programThumbnail} alt={programName}/>
       </div>
       {/if}
       <div class="info">
