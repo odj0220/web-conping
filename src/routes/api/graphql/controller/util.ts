@@ -79,7 +79,6 @@ export const convertProduct = (product?: Product, videoContentId?: number) => {
     }
   }
 
-
   if (CelebProduct && CelebProduct.length) {
     const celeb = convertCeleb(CelebProduct[0].Celeb);
     relatedItems.push({
@@ -90,19 +89,21 @@ export const convertProduct = (product?: Product, videoContentId?: number) => {
     });
   }
 
-  return {
-    id: id.toString(),
-    name: product.name,
-    brand: product.Brand.name,
-    price: product.price,
-    discountRate: product.discountRate,
-    image: product.image,
-    exposed,
-    storeUrl: product.storeUrl,
-    views: product.views,
-    createDt: +new Date(product.createdAt),
-    relatedItems,
-  };
+  return JSON.parse(JSON.stringify(
+    {
+      id: id.toString(),
+      name: product?.name,
+      brand: product?.Brand?.name,
+      price: product?.price,
+      discountRate: product?.discountRate,
+      image: product?.image,
+      exposed,
+      storeUrl: product?.storeUrl,
+      views: product?.views,
+      createDt: +new Date(product?.createdAt),
+      relatedItems,
+    },
+  ));
 };
 
 export const convertCeleb = (celeb?: Celeb) => {

@@ -179,13 +179,24 @@ export const getInfiniteProducts = async ({ order, category, limit, cursor }: {o
 };
 
 export const getProductsByContentId = async ({ id }: { id: string }) => {
-  const content:VideoContent = await GET(`/video-content/${id}?product=true`);
+  const content:VideoContent = await GET(`/video-content/${id}`, { params: { exposure: true, product: true } });
   const products: IProduct[] = [];
   if (content.VideoContentProduct) {
     content.VideoContentProduct.forEach(videoContentProduct => {
-      const product: IProduct | undefined = convertProduct(videoContentProduct.Product, +id);
+      const product = convertProduct(videoContentProduct.Product, +id);
+      let exposed:any[] = [];
+      if (videoContentProduct?.VideoExposureTime) {
+        exposed = videoContentProduct.VideoExposureTime.map(videoExposureTime => {
+          const begin = videoExposureTime.exposedOffsetBeginMs;
+          const end = videoExposureTime.exposedOffsetEndMs || begin;
+          return [(+begin / 1000), (+end / 1000)];
+        });
+      }
       if (product) {
-        products.push(product);
+        products.push({
+          ...product,
+          exposed,
+        });
       }
     });
   }

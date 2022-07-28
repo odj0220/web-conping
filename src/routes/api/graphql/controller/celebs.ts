@@ -2,7 +2,7 @@ import celebJson from '../../../../../static/data/celeb.json';
 import relationJson from '../../../../../static/data/relation.json';
 import contentJson from '../../../../../static/data/content.json';
 import { GET } from '../../../../lib/_api';
-import type { Celeb } from '../../../../lib/models/backend/backend';
+import type { Celeb, VideoContentCast } from '../../../../lib/models/backend/backend';
 import { celebById, convertCeleb } from './util';
 
 export const celebs = async () => {
@@ -24,11 +24,10 @@ export const celeb = async ({ id }: { id: string }) => {
   return await celebById(id);
 };
 
-export const getCelebsByContentId = ({ id }: { id: string }) => {
-  const celebIds = relationJson
-    .filter((relation) => relation.content === id)
-    .map((relation) => relation.celeb);
-  return celebJson.filter((celeb) => celebIds.includes(celeb.id));
+export const getCelebsByContentId = async ({ id }: { id: string }) => {
+  const celebsResponse = await GET('/celeb', { params: { videoContentId: id } });
+  const celebs = celebsResponse.map((celeb: Celeb) => convertCeleb(celeb));
+  return celebs;
 };
 
 export const getCelebsByProductId = ({ id }: { id: string }) => {
@@ -38,14 +37,10 @@ export const getCelebsByProductId = ({ id }: { id: string }) => {
   return celebJson.filter((celeb) => celebIds.includes(celeb.id));
 };
 
-export const getCelebsByProgramId = ({ id }: { id: string }) => {
-  const contents = contentJson
-    .filter((content) => content.programId === id)
-    .map((content) => content.id);
-  const celebIds = relationJson
-    .filter((relation) => contents.includes(relation.content))
-    .map((relation) => relation.celeb);
-  return celebJson.filter((celeb) => celebIds.includes(celeb.id));
+export const getCelebsByProgramId = async ({ id }: { id: string }) => {
+  const celebsResponse = await GET('/celeb', { params: { programId: id } });
+  const celebs = celebsResponse.map((celeb: Celeb) => convertCeleb(celeb));
+  return celebs;
 };
 
 export const getInfiniteCelebs = async ({
