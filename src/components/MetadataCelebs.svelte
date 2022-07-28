@@ -1,7 +1,7 @@
 <script lang="ts">
   import Container from './common/layout/Container.svelte';
   import Title from './Title.svelte';
-  import Avatar from './Avatar.svelte';
+  import Avatar from './common/shared/Avatar.svelte';
 
   import type { ICeleb } from 'src/global/types';
 

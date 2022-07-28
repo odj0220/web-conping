@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { IContent } from 'src/global/types';
-import Avatar from './Avatar.svelte';
+import Avatar from './common/shared/Avatar.svelte';
 import Icon from './icons/Icon.svelte';
 
 export let onClickClose: (e: TouchEvent) => void;
@@ -16,7 +16,7 @@ export let buttons: any[] = [];
     on:click={onClickClose}
   >
     <Icon name="close" />
-  </button>    
+  </button>
   <div class="contents">
     <div class="info">
       <h6 class="title">

@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { IRelatedItem } from 'src/global/types';
-  
-  import Avatar from './Avatar.svelte';
+
+  import Avatar from './common/shared/Avatar.svelte';
   import Thumbnail from './common/shared/Thumbnail.svelte';
 
   export let relatedItem: IRelatedItem;
