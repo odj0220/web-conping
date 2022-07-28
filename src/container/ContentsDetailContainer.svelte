@@ -11,6 +11,7 @@
   import Container from '$component/common/layout/Container.svelte';
 
   import type { YouTubePlayer } from 'youtube-player/dist/types';
+  import RelatedProductContainer from './RelatedProductContainer.svelte';
 
   export let id: number;
 
@@ -77,6 +78,7 @@
 
     <Metadata {content} {celebs} onClickTitle={gotoPrograms}/>
 
+    <RelatedProductContainer {id}></RelatedProductContainer>
     <ContentDetailAnotherVideosContainer contentId={id}/>
   </Container>
 {/await}
