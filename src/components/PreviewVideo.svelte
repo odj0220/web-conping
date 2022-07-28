@@ -245,17 +245,21 @@
   </span>
     </div>
     <div class="rest">
+      {#if programId}
       <div on:click|stopPropagation={gotoPrograms}>
         <Avatar size="24px" src={programThumbnail} alt={programName}/>
       </div>
+      {/if}
       <div class="info">
-        <span class="program-name" on:click|stopPropagation={gotoPrograms}>{programName}</span>
-        <span class="episode">{episode}</span>
-        {#if views}
+        {#if programId}
+          <span class="program-name" on:click|stopPropagation={gotoPrograms}>{programName}</span>
+          <span class="episode">{episode}</span>
           <span class="divider">・</span>
-          <span class="views">{views}</span>
         {/if}
-        <span class="divider">・</span>
+        {#if views}
+          <span class="views">{views}</span>
+          <span class="divider">・</span>
+        {/if}
         <svelte:component this={PastTimeDelta} pastTime={createdAt}></svelte:component>
       </div>
     </div>
