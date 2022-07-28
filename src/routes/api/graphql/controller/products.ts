@@ -179,7 +179,7 @@ export const getInfiniteProducts = async ({ order, category, limit, cursor }: {o
 };
 
 export const getProductsByContentId = async ({ id }: { id: string }) => {
-  const content:VideoContent = await GET(`/video-content/${id}?product=true`);
+  const content:VideoContent = await GET(`/video-content/${id}`, { params: { exposure: true, product: true } });
   const products: IProduct[] = [];
   if (content.VideoContentProduct) {
     content.VideoContentProduct.forEach(videoContentProduct => {
