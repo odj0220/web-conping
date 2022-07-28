@@ -6,7 +6,6 @@
   export let id: string;
   export let moreButton = true;
   export let timelineButtonVisible: boolean;
-  export let onClickTimeButton: (num: number) => void;
 
   const getRelatedProducts = async () => {
     const query = `{
@@ -32,8 +31,8 @@
         <RelatedProduct
                 data={productList}
                 {moreButton}
-                {onClickTimeButton}
                 {timelineButtonVisible}
+                on:set-video-current-time
         />
     {/if}
 {/await}

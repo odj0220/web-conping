@@ -1,17 +1,25 @@
 <script lang="ts">
 import { toHHMMSS } from '../lib/util';
+import { createEventDispatcher } from 'svelte';
 
 export let timelineButtonVisible: boolean;
 export let name:string;
 export let price: number;
 export let exposed: any[] = [];
-export let onClickTimeButton : (num: number) => void;
+
+const dispatch = createEventDispatcher<{'set-video-current-time': {currentTime: number}}>();
 
 const timelines = () => {
   let arr: any[] = [];
   exposed.map(el => arr.push(el[0]));
   return arr;
 };
+
+function setCurrentTime(time: number) {
+  dispatch('set-video-current-time', {
+    currentTime: time,
+  });
+}
 </script>
 
 <li class="container">
@@ -25,7 +33,7 @@ const timelines = () => {
         {#if timelineButtonVisible }
         <ul class="time-stamps">
             {#each timelines() as timeline}
-            <li on:click="{() => onClickTimeButton(timeline)}" class="time-stamp">
+            <li on:click="{() => setCurrentTime(timeline)}" class="time-stamp">
                 {toHHMMSS(timeline)}
             </li>
             {/each}

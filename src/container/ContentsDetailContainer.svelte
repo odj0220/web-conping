@@ -63,6 +63,13 @@
     player = event.detail.player;
   };
 
+  const setCurrentTimeInPlayer = (event) => {
+    const currentTime = event.detail.currentTime;
+    if (player) {
+      player.seekTo(currentTime, true);
+    }
+  };
+
   const onClickShare = () => {
     callShare('contents', id.toString());
   };
@@ -78,7 +85,7 @@
 
     <Metadata {content} {celebs} onClickTitle={gotoPrograms}/>
 
-    <RelatedProductContainer {id}></RelatedProductContainer>
+    <RelatedProductContainer {id} timelineButtonVisible={true} on:set-video-current-time={setCurrentTimeInPlayer}></RelatedProductContainer>
     <ContentDetailAnotherVideosContainer contentId={id}/>
   </Container>
 {/await}
