@@ -1,12 +1,13 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { onMessageFromApp } from '../lib/_app_communication';
-  import { goPath } from '../lib/utils/goto';
+  import { goto } from '$app/navigation';
 
   onMount(() => {
     const onDynamicLinkMessage = onMessageFromApp('onDynamicLinkMessage');
     onDynamicLinkMessage(({ type, id }: {type: string, id: string}) => {
-      window.location.href = `/${type}/${id}`;
+      //window.location.href = `/${type}/${id}`;
+      goto(`/${type}/${id}`, { state: { foo: 'dynamicLink' } });
     });
   });
 </script>

@@ -11,11 +11,11 @@
     },
     remove: function(key: string) {
       const removedElement = this.map.get(key);
-  
+
       if (removedElement && removedElement.player) {
         removedElement.player.pauseVideo();
       }
-  
+
       this.map.delete(key);
     },
     sort: function() {
@@ -55,7 +55,7 @@
   import { guid, toHHMMSS } from '$lib/util';
   import { onMount, SvelteComponent } from 'svelte';
   import YP from 'youtube-player';
-  import Avatar from './Avatar.svelte';
+  import Avatar from './common/shared/Avatar.svelte';
   import type { IContent } from 'src/global/types';
 
   export let content: IContent;
@@ -247,7 +247,7 @@
     <div class="rest">
       {#if programId}
       <div on:click|stopPropagation={gotoPrograms}>
-        <Avatar size="24px" src={programThumbnail} alt={programName}/>
+        <Avatar size={2.4} src={programThumbnail} alt={programName}/>
       </div>
       {/if}
       <div class="info">

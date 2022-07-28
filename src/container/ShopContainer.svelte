@@ -2,7 +2,7 @@
   import { graphqlApi } from '$lib/_api';
 
   import type { IPageInfo, IProduct, IProductEdge, ITabItem } from 'src/global/types';
-  
+
   import { SORT_FIELDS } from '$lib/contants';
 
   import ShopNavbar from '$container/ShopNavbar.svelte';
@@ -11,12 +11,12 @@
   import LayoutPopup from '$component/common/layout/LayoutPopup.svelte';
   import Container from '$component/common/layout/Container.svelte';
   import InfiniteScroll from '$component/common/layout/InfiniteScroll.svelte';
-  
+
   import SelectPopup from '$component/SelectPopup.svelte';
   import ShopList from '$component/ShopList.svelte';
 
   let hasNextPage: boolean;
-  let page = 1;
+  let cursor = 0;
   let shopingProducts:IProduct[] = [];
 
   let tabItems: ITabItem[];
@@ -40,19 +40,15 @@
 
     return categories;
   }
-  
-  async function getProducts({ sort = 'alphabetical', category = 0, page = 1 } : {sort: string, category: number, page: number}) {
+
+  async function getProducts({ sort = 'alphabetical', category = 0, cursor = 0 } : {sort: string, category: number, cursor: number}) {
     const query = `{
-      products (order: ${sort}, category: ${category}, page: ${page}) {
-        totalCount
+      getInfiniteProducts (order: ${sort}, category: ${category}, cursor: ${cursor}) {
         pageInfo {
-          page
-          totalPage
+          startCursor
           hasNextPage
         }
-        edges {
-          cursor
-          node {
+        products {
             id
             name
             brand
@@ -65,17 +61,19 @@
               id
             }
           }
-        }
       }
     }`;
 
     const {
       data: {
-        products,
+        getInfiniteProducts: {
+          products,
+          pageInfo,
+        },
       },
     } = await graphqlApi(query);
-
-    return { products };
+  
+    return { products, pageInfo };
   }
 
   async function getTabItems() {
@@ -84,22 +82,20 @@
     tabItems = setTabItems({ categories });
   }
 
-  async function getShopItems({ sort, category, page = 0 } : {sort: string, category: number, page?: number}) {
+  async function getShopItems({ sort, category, cursor = 0 } : {sort: string, category: number, cursor?: number}) {
     const {
-      products: {
-        edges,
-        pageInfo,
-      },
-    } = await getProducts({ sort, category, page });
+      products,
+      pageInfo,
+    } = await getProducts({ sort, category, cursor });
 
     setPageInfo(pageInfo);
 
-    setShopingProducts({ products: edges, sort });
+    setShopingProducts({ products, sort });
   }
 
   function setPageInfo(pageInfo: IPageInfo) {
     hasNextPage = pageInfo.hasNextPage;
-    page = pageInfo.page;
+    cursor = +pageInfo.startCursor;
   }
 
   function setTabItems({ categories } : {categories : ITabItem[]}) {
@@ -118,13 +114,12 @@
       });
   }
 
-  function setShopingProducts({ products, sort }: { products: IProductEdge[], sort: string }) {
+  function setShopingProducts({ products, sort }: { products: IProduct[], sort: string }) {
     const shopItems = products
-      .map(({ node }) => node)
       .map((product, index) => {
         return {
           ...product,
-          badge: getBadge({ sort, index }),
+          badge: getBadge({ sort, index }) as any,
         };
       });
 
@@ -158,10 +153,6 @@
     return '';
   }
 
-  function handleClickTab(clickedTabIndex: number) {
-    selectedTab = tabItems[clickedTabIndex];
-    shopingProducts = [];
-  }
 
   function openPopup() {
     isPopupVisible = true;
@@ -171,8 +162,18 @@
     isPopupVisible = false;
   }
 
+  function handleClickTab(clickedTabIndex: number) {
+    selectedTab = tabItems[clickedTabIndex];
+    shopingProducts = [];
+  }
+
   function handleClickSelectButton(sortField: string) {
+    shopingProducts = [];
     sort = sortField;
+  }
+
+  function handleClickProductItem(storeUrl) {
+    console.log(storeUrl);
   }
 
   function setsortItems(sortFieldsObject: { [index: string]: string }) {
@@ -188,17 +189,17 @@
 
   async function runInfiniteScrolling(event) {
     const detail = event.detail;
-  
+
     detail.stop();
-  
+
     if (!hasNextPage) {
       return;
     }
-  
-    page++;
-    getShopItems({ sort, category, page });
+
+    // page++;
+    getShopItems({ sort, category, cursor });
   }
-  
+
   $:sortedName = SORT_FIELDS[sort];
   $:sortItems = setsortItems(SORT_FIELDS);
   $:category = selectedTab?.id || 0;
@@ -208,13 +209,15 @@
 {#await getTabItems()}
   <Spinner />
 {:then}
-  <ShopNavbar
-    {tabItems}
-    {selectedTab}
-    sort={sortedName}
-    onClickTab={handleClickTab}
-    onClickSort={openPopup}
-  />
+  {#if tabItems?.length }
+    <ShopNavbar
+      {tabItems}
+      {selectedTab}
+      sort={sortedName}
+      onClickTab={handleClickTab}
+      onClickSort={openPopup}
+    />
+  {/if}
 {/await}
 
 {#await getShopItems({ sort, category })}
@@ -226,7 +229,10 @@
       end={!hasNextPage}
       on:request-more={runInfiniteScrolling}
     >
-      <ShopList products={shopingProducts} />
+      <ShopList
+        products={shopingProducts}
+        onClickProductItem={handleClickProductItem}
+      />
     </InfiniteScroll>
   </Container>
 

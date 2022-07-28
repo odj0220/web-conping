@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { ICeleb } from 'src/global/types';
-  import Avatar from './Avatar.svelte';
+  import Avatar from './common/shared/Avatar.svelte';
 
   export let celeb: ICeleb;
   export let onClick : (id: string) => void;
