@@ -53,11 +53,12 @@ export const convertProduct = (product?: Product, videoContentId?: number) => {
   if (!product) {
     return ;
   }
+
   const { id, VideoContentProduct, CelebProduct } = product;
   let exposed: number[][] = [];
   const relatedItems: any[] = [];
 
-  if (VideoContentProduct) {
+  if (VideoContentProduct && VideoContentProduct.length) {
     const content = convertContent(VideoContentProduct[0].VideoContent);
     relatedItems.push({
       id: content.id,
@@ -79,7 +80,7 @@ export const convertProduct = (product?: Product, videoContentId?: number) => {
   }
 
 
-  if (CelebProduct) {
+  if (CelebProduct && CelebProduct.length) {
     const celeb = convertCeleb(CelebProduct[0].Celeb);
     relatedItems.push({
       id: celeb.id,
@@ -89,8 +90,7 @@ export const convertProduct = (product?: Product, videoContentId?: number) => {
     });
   }
 
-
-  return JSON.parse(JSON.stringify({
+  return {
     id: id.toString(),
     name: product.name,
     brand: product.Brand.name,
@@ -102,7 +102,7 @@ export const convertProduct = (product?: Product, videoContentId?: number) => {
     views: product.views,
     createDt: +new Date(product.createdAt),
     relatedItems,
-  }));
+  };
 };
 
 export const convertCeleb = (celeb?: Celeb) => {
