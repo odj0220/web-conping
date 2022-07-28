@@ -1,13 +1,17 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { onMessageFromApp } from '../lib/_app_communication';
+  import { onMessageFromApp, onAndroidExit } from '../lib/_app_communication';
   import { goto } from '$app/navigation';
+  import { historyBack } from '../lib/utils/goto';
 
   onMount(() => {
     const onDynamicLinkMessage = onMessageFromApp('onDynamicLinkMessage');
+    const onAndroidBackKeyMessage = onMessageFromApp('onAndroidBackKeyMessage');
     onDynamicLinkMessage(({ type, id }: {type: string, id: string}) => {
-      //window.location.href = `/${type}/${id}`;
-      goto(`/${type}/${id}`, { state: { foo: 'dynamicLink' } });
+      goto(`/${type}/${id}`);
+    });
+    onAndroidBackKeyMessage(() => {
+      historyBack(-1, () => onAndroidExit());
     });
   });
 </script>
@@ -21,3 +25,5 @@
 </svelte:head>
 
 <slot />
+
+<button>asafdfasdfsadf</button>
