@@ -4,6 +4,8 @@ import { GET } from '../../../../lib/_api';
 import type { ICeleb, IContent } from '../../../../global/types';
 import type { YoutubeVideo } from '../../../../global/types';
 
+export const EXPOSED_DEFAULT_DURATION = 3000;
+
 export const convertProgram = (program?: Program) => {
   if (!program) {
     return ;
@@ -15,6 +17,7 @@ export const convertProgram = (program?: Program) => {
     regularAiringAt: regularAiringAt ? +dayjs(regularAiringAt) : 0,
     airingBeginAt: airingBeginAt ? +dayjs(airingBeginAt) : 0,
     airingEndAt: airingEndAt ? +dayjs(airingEndAt) : 0,
+
   };
 };
 
@@ -72,7 +75,7 @@ export const convertProduct = (product?: Product, videoContentId?: number) => {
       if (videoContentProduct?.VideoExposureTime) {
         exposed = videoContentProduct.VideoExposureTime.map(videoExposureTime => {
           const begin = videoExposureTime.exposedOffsetBeginMs;
-          const end = videoExposureTime.exposedOffsetEndMs || begin;
+          const end = videoExposureTime.exposedOffsetEndMs || begin + EXPOSED_DEFAULT_DURATION;
           return [(+begin / 1000), (+end / 1000)];
         });
       }

@@ -44,7 +44,11 @@
     return categories;
   }
 
-  async function getProducts({ sort = 'alphabetical', category = 0, cursor = 0 } : {sort: string, category: number, cursor: number}) {
+  async function getProducts(
+    { sort = 'alphabetical', category = 0, cursor = 0 }
+    :
+    { sort: string, category: number, cursor: number },
+  ) {
     const query = `{
       getInfiniteProducts (order: ${sort}, category: ${category}, cursor: ${cursor}) {
         pageInfo {
@@ -122,45 +126,12 @@
       });
   }
 
-  function setShopingProducts({ products, sort }: { products: IProduct[], sort: string }) {
-    const shopItems = products
-      .map((product, index) => {
-        return {
-          ...product,
-          badge: getBadge({ sort, index }) as any,
-        };
-      });
-
+  function setShopingProducts({ products }: { products: IProduct[], sort: string }) {
     shopingProducts = [
       ...shopingProducts,
-      ...shopItems,
+      ...products,
     ];
   }
-
-  function getBadge({ sort, index } : {sort: string, index: number}) {
-    if (sort !== 'popularity') {
-      return '';
-    }
-
-    const rank = index + 1;
-
-    if (index < 3) {
-      return {
-        rank,
-        iconTheme: 'Primary',
-      };
-    }
-
-    if (index < 10) {
-      return {
-        rank,
-        iconTheme: 'Secondary',
-      };
-    }
-
-    return '';
-  }
-
 
   function openPopup() {
     isPopupVisible = true;
