@@ -151,7 +151,10 @@ export type Product = {
   createdAt: Date
   updatedAt: Date
   storeUrl: string
-
+  Brand: {
+    id: number;
+    name: string;
+  }
   // relation table
   VideoContentProduct?: VideoContentProduct[]
   UserFavoriteProduct?: UserFavoriteProduct[]
