@@ -25,5 +25,3 @@
 </svelte:head>
 
 <slot />
-
-<button>asafdfasdfsadf</button>
