@@ -5,7 +5,7 @@
 
   export let products: IProduct[];
   export let onClickProductItem: (url: string) => void;
-  export let onClickRelatedItem: (url: string) => void;
+  export let onClickRelatedItem: () => void;
 </script>
 
 <ul class="shop-list">

@@ -6,7 +6,7 @@
 
   export let item:IProduct;
   export let onClickProductItem: (url: string) => void;
-  export let onClickRelatedItem: (url: string) => void;
+  export let onClickRelatedItem: () => void;
 
   const {
     name,

@@ -10,7 +10,7 @@
   import RelatedItem from './RelatedItem.svelte';
 
   export let relatedItems: IRelatedItem[];
-  export let onClickRelatedItem: (id: string) => void;
+  export let onClickRelatedItem: () => void;
 
   SwiperCore.use([Pagination]);
 </script>

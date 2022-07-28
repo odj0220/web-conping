@@ -211,7 +211,8 @@
   $:category = selectedTab?.id || 0;
   $:infiniteScrollActive = !!shopingProducts?.length;
 
-  const onClickRelatedItem = (type: string, id: string) => {
+  const onClickRelatedItem = (e: any, type: string, id: string) => {
+    e.stopPropagation();
     if (type === 'Celeb') {
       gotoCelebs(id);
     } else {
@@ -219,7 +220,6 @@
     }
   };
 
-  console.log('visible', isPopupVisible);
 </script>
 
 {#await getTabItems()}
