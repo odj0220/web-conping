@@ -158,8 +158,8 @@ export const getInfiniteProducts = async ({ order, category, limit, cursor }: {o
 
 
   const response: any = await GET('/product', { method: 'GET', params: params });
-
   const products = response.elements.map((product: any) => convertProduct(product));
+
 
   let startCursor = 0;
   if (products.length > 0) {
