@@ -91,3 +91,8 @@ export const getNotch = async () => {
   const win: any = window;
   return await win['flutter_inappwebview'].callHandler('getNotch');
 };
+
+export const onAndroidExit = () => {
+  const win: any = window;
+  win['flutter_inappwebview'].callHandler('onAndroidExit');
+};
