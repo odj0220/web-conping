@@ -3,9 +3,9 @@
     import { graphqlApi } from '../../lib/_api';
 
     onMount(async () => {
-      await getProductsByCelebId();
+      // await getProductsByCelebId();
       // await getCategories();
-      // await getProducts();
+      await getProducts();
       // await getCelebs();
       // await getCeleb();
       // await getContentsByCelebId();
@@ -41,45 +41,29 @@
 
     async function getProducts() {
       const query = `{
-          products (order: alphabetical, category: 10) {
+          getInfiniteProducts (order: alphabetical, limit: 5) {
              totalCount
              pageInfo {
-                page
-                totalPage
+                startCursor
                 hasNextPage
              }
-             edges {
-               cursor
-               node {
-                 id
-                 name
-                 brand
-                 price
-                 discountRate
-                 image
-                 storeUrl
-                 views
-                 createDt
-                 contents {
-                    id
-                    title
-                    subtitle
-                    description
-                    thumb
-                 }
-                 celebs {
-                    id
-                    name
-                    thumbnail
-                 }
-                 relatedItems {
-                    thumbnail
-                    title
-                    type
-                    id
-                 }
-               }
-             }
+             products {
+               id
+               name
+               brand
+               price
+               discountRate
+               image
+               storeUrl
+               views
+               createDt
+               relatedItems {
+                  thumbnail
+                  title
+                  type
+                  id
+                }
+              }
           }
         }`;
       const response = await graphqlApi(query);
