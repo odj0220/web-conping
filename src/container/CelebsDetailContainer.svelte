@@ -80,25 +80,33 @@ import CelebsDetailSkeleton from '$component/skeleton/container/CelebsDetailSkel
       onClickTab={handleClickTab}
     />
 
-    {#if selectedTab.index === 0}
-      <CelebsAllContentsContainer
-              {id}
-              onClickMoreButton={handleClickTab}
-              category={data.name}
-      />
-    {/if}
+    <section class="container">
+      {#if selectedTab.index === 0}
+        <CelebsAllContentsContainer
+                {id}
+                onClickMoreButton={handleClickTab}
+                category={data.name}
+        />
+      {/if}
 
-    {#if selectedTab.index === 1}
-      <CelebsProductContainer {id} category={data.name}/>
-    {/if}
+      {#if selectedTab.index === 1}
+        <CelebsProductContainer {id} category={data.name}/>
+      {/if}
 
 
-    {#if selectedTab.index === 2}
-      <CelebsContentsContainer {id} category={data.name}/>
-    {/if}
+      {#if selectedTab.index === 2}
+        <CelebsContentsContainer {id} category={data.name}/>
+      {/if}
 
-    {#if selectedTab.index === 3}
-      <CelebsShortsContainer {id} category={data.name}/>
-    {/if}
+      {#if selectedTab.index === 3}
+        <CelebsShortsContainer {id} category={data.name}/>
+      {/if}
+    </section>
   </Container>
 {/await}
+
+<style lang="scss">
+  .container {
+    padding-top: 4rem;
+  }
+</style>
