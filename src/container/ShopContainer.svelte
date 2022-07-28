@@ -1,7 +1,7 @@
 <script lang="ts">
   import { graphqlApi } from '$lib/_api';
 
-  import type { IProductEdge, ITabItem } from 'src/global/types';
+  import type { IProduct, IProductEdge, ITabItem } from 'src/global/types';
 
   import { SORT_FIELDS } from '$lib/contants';
 
@@ -33,16 +33,12 @@
 
   async function getProducts({ sort = 'alphabetical', category = 0 } : {sort: string, category: number}) {
     const query = `{
-      products (order: ${sort}, category: ${category}) {
-        totalCount
+      getInfiniteProducts (order: ${sort}, category: ${category}) {
         pageInfo {
-          page
-          totalPage
+          startCursor
           hasNextPage
         }
-        edges {
-          cursor
-          node {
+        products {
             id
             name
             brand
@@ -55,15 +51,18 @@
               id
             }
           }
-        }
       }
     }`;
-
+  
     const {
       data: {
-        products,
+        getInfiniteProducts: {
+          products,
+        },
       },
     } = await graphqlApi(query);
+
+    console.log(products);
 
     return { products };
   }
@@ -78,12 +77,10 @@
 
   async function getShopItems({ sort, category } : {sort: string, category: number}) {
     const {
-      products: {
-        edges,
-      },
+      products,
     } = await getProducts({ sort, category });
 
-    const shopItems = setShopItems({ products: edges, sort });
+    const shopItems = setShopItems({ products, sort });
 
     return { shopItems };
   }
@@ -104,15 +101,13 @@
       });
   }
 
-  function setShopItems({ products, sort }: { products: IProductEdge[], sort: string }) {
-    return products
-      .map(({ node }) => node)
-      .map((product, index) => {
-        return {
-          ...product,
-          badge: getBadge({ sort, index }),
-        };
-      })
+  function setShopItems({ products, sort }: { products: IProduct[], sort: string }) {
+    return products.map((product, index) => {
+      return {
+        ...product,
+        badge: getBadge({ sort, index }),
+      };
+    })
     ;
   }
 
