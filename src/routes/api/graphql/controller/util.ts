@@ -1,4 +1,4 @@
-import type { Product, Program, VideoContent, Celeb } from '../../../../lib/models/backend/backend';
+import type { Product, Program, VideoContent, Celeb, VideoContentProduct } from '../../../../lib/models/backend/backend';
 import dayjs from 'dayjs';
 import { GET } from '../../../../lib/_api';
 import type { ICeleb, IContent } from '../../../../global/types';
@@ -53,18 +53,55 @@ export const convertProduct = (product?: Product, videoContentId?: number) => {
   if (!product) {
     return ;
   }
-  const { id, VideoContentProduct } = product;
-  let exposed;
-  if (VideoContentProduct && videoContentId) {
-    const videoContentProduct = VideoContentProduct.find(videoContentProduct => videoContentProduct.videoContentId === videoContentId);
-    if (videoContentProduct?.VideoExposureTime) {
-      exposed = videoContentProduct.VideoExposureTime.map(videoExposureTime => [(+videoExposureTime.exposedOffsetBeginMs / 1000), (+videoExposureTime.exposedOffsetEndMs / 1000)]);
+  const { id, VideoContentProduct, CelebProduct } = product;
+  let exposed: number[][] = [];
+  const relatedItems: any[] = [];
+
+  if (VideoContentProduct) {
+    const content = convertContent(VideoContentProduct[0].VideoContent);
+    relatedItems.push({
+      id: content.id,
+      type: 'Content',
+      title: content.title,
+      thumbnail: content.thumb,
+    });
+
+    if (videoContentId) {
+      const videoContentProduct = VideoContentProduct.find(videoContentProduct => videoContentProduct.videoContentId === videoContentId);
+      if (videoContentProduct?.VideoExposureTime) {
+        exposed = videoContentProduct.VideoExposureTime.map(videoExposureTime => {
+          const begin = videoExposureTime.exposedOffsetBeginMs;
+          const end = videoExposureTime.exposedOffsetEndMs || begin;
+          return [(+begin / 1000), (+end / 1000)];
+        });
+      }
     }
   }
+
+
+  if (CelebProduct) {
+    const celeb = convertCeleb(CelebProduct[0].Celeb);
+    relatedItems.push({
+      id: celeb.id,
+      type: 'Celeb',
+      title: celeb.name,
+      thumbnail: celeb.image,
+    });
+  }
+
+
   return JSON.parse(JSON.stringify({
-    ...product,
     id: id.toString(),
+    name: product.name,
+    brand: product.Brand.name,
+    price: product.price,
+    discountRate: product.discountRate,
+    image: product.image,
     exposed,
+    storeUrl: product.storeUrl,
+    views: product.views,
+    createDt: +new Date(product.createdAt),
+    relatedItems,
   }));
 };
 
