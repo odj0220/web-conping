@@ -4,7 +4,6 @@ import ProductItem from './ProductItem.svelte';
 
 export let moreButton: false;
 export let data: any[] = [];
-export let onClickTimeButton : (num: number) => void;
 export let timelineButtonVisible = false;
 
 let list: any[] = [];
@@ -28,7 +27,7 @@ const onClickMore = () => {
     <div class="contents">
         <ul class="list">
             {#each list as el}
-                <ProductItem {...el} {onClickTimeButton} {timelineButtonVisible}/>
+                <ProductItem {...el} {timelineButtonVisible} on:set-video-current-time/>
             {/each}
         </ul>
         {#if data?.length > 5 && displayMore && moreButton}
