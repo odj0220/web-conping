@@ -102,7 +102,7 @@ export const onAndroidExit = () => {
   win['flutter_inappwebview'].callHandler('onAndroidExit');
 };
 
-export const onInitialized = () => {
+export const onInitialized = (callback: () => void) => {
   const win: any = window;
   let initCheck = false;
   const interval = setInterval(() => {
@@ -113,6 +113,7 @@ export const onInitialized = () => {
     if (win['flutter_inappwebview']) {
       win['flutter_inappwebview'].callHandler('onInitialized');
       initCheck = true;
+      callback();
     }
   }, 200);
 };
