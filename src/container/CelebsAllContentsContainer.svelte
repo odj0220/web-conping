@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { ITabItem } from '../global/types';
   import CelebsProductContainer from './CelebsProductContainer.svelte';
   import CelebsContentsContainer from './CelebsContentsContainer.svelte';
   import CelebsShortsContainer from './CelebsShortsContainer.svelte';
