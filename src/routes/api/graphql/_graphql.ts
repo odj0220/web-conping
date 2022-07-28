@@ -4,7 +4,6 @@ import {
   product,
   products,
   getProductsByContentId,
-  getProductByCelebId,
   getInfiniteProducts,
 } from './controller/products';
 import { getBanners } from './controller/banner';
@@ -56,7 +55,6 @@ export async function Graphql(query: string) {
       getProductsByCelebId(id: ID!, cursor: Int, limit: Int): PageProduct
       getCelebsByProductId(id:ID!): [Celeb]
       getCelebsByProgramId(id:ID!): [Celeb]
-      getProductByCelebId(id:ID! limit: Int): [Product]
       getContentsByCelebId(id:ID!, cursor: Int, limit: Int, shorts: Boolean): PageContent
       getShortsByCelebId(id:ID!, cursor: Int, limit: Int, shorts: Boolean): PageContent
       getProductsByCategory(category:String!): [Product]
@@ -102,8 +100,6 @@ export async function Graphql(query: string) {
     getCelebsByProductId,
     getCelebsByContentId,
     getCelebsByProgramId,
-    // TODO: api 연동하기
-    getProductByCelebId,
     getShortsByCelebId: async ({ id, cursor, limit }: {id: string; cursor: number; limit: number}) => {
       return await shortsByCelebId(id, cursor, limit);
     },
