@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { onMessageFromApp, onAndroidExit, onInitialized } from '../lib/_app_communication';
   import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
   import { historyBack } from '../lib/utils/goto';
 
   onMount(() => {
@@ -13,6 +14,9 @@
 
       const onAndroidBackKeyMessage = onMessageFromApp('onAndroidBackKeyMessage');
       onAndroidBackKeyMessage(() => {
+        if ($page.url.pathname === '/' || $page.url.pathname === '/shop' || $page.url.pathname === '/celebs') {
+          return onAndroidExit();
+        }
         historyBack(-1, () => onAndroidExit());
       });
     });
