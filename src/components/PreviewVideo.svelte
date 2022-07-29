@@ -219,7 +219,7 @@
 
 <li class="preview-layout" bind:this={container} on:click={() => onClick(`${content.id}`)}>
   <section class="player-wrap">
-    <div id='{playerId}' class="youtube-player"></div>
+    <div id='{playerId}' class="youtube-player" allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen" msallowfullscreen="msallowfullscreen" oallowfullscreen="oallowfullscreen" webkitallowfullscreen="webkitallowfullscreen"></div>
     <section class="thumb-wrap" bind:this={thumbnailElement}>
       <img src={content.thumb} alt={content.title + '의 썸네일'}>
     </section>

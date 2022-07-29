@@ -61,7 +61,7 @@ onMount(async () => {
   class="player-wrap"
   on:click={toggleMuted}
 >
-  <div id={videoId} class="youtube-player" allow="autoplay"></div>
+  <div id={videoId} class="youtube-player" allow="autoplay" allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen" msallowfullscreen="msallowfullscreen" oallowfullscreen="oallowfullscreen" webkitallowfullscreen="webkitallowfullscreen"></div>
   <slot></slot>
   
   {#if displayToast}

@@ -105,7 +105,7 @@
 </script>
 
 <div class="player-wrap">
-    <div id='{playerId}' class="youtube-player"></div>
+    <div id='{playerId}' class="youtube-player" allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen" msallowfullscreen="msallowfullscreen" oallowfullscreen="oallowfullscreen" webkitallowfullscreen="webkitallowfullscreen"></div>
 </div>
 
 <style lang="scss">
