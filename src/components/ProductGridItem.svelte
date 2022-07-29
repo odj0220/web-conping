@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { createEventDispatcher } from 'svelte';
   import type { IProduct } from 'src/global/types';
 
   import Thumbnail from './common/shared/Thumbnail.svelte';
@@ -6,11 +7,17 @@
   export let data: IProduct;
 
   const { name, price, image, storeUrl } = data;
+  const dispatch = createEventDispatcher<{'go-link': {targetUrl: string}}>();
 
+  function goProductPage() {
+    dispatch('go-link', {
+      targetUrl: storeUrl,
+    });
+  }
 </script>
 
-<li class="product-grid-item">
-  <Thumbnail src={image} alt={name} targetUrl={storeUrl} width="100%" height="100%" on:go-link/>
+<li class="product-grid-item" on:click={goProductPage}>
+  <Thumbnail src={image} alt={name} width="100%" height="100%"/>
   <div class="info">
     <h6 class="name">{name}</h6>
     <span class="price">{price.toLocaleString()}</span>
@@ -32,5 +39,4 @@
         }
       }  
     }
-    
 </style>
