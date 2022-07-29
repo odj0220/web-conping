@@ -10,7 +10,7 @@
   export let rank = '';
   export let iconTheme = '';
 
-  const setImageSrc = (value: string) => {
+  const setImageSrc = (value: null) => {
     src = value;
   };
 
@@ -21,15 +21,16 @@
   style="width: {width}; padding-bottom: {height}; border-radius:{borderRadius}"
   >
   {#if src}
-    <img src={src} alt={alt} on:error="{() => setImageSrc("")}"/>
-    {:else}
+    <img src={src} alt={alt} on:error="{() => setImageSrc(null)}"/>
+  {:else}
     <div class="empty">
       <Icon name="loading_small" />
     </div>
-    {/if}
-    {#if rank }
-      <RankBadge {rank} {iconTheme} />
-    {/if}
+  {/if}
+
+  {#if rank }
+    <RankBadge {rank} {iconTheme} />
+  {/if}
   </div>
 
 <style lang="scss">
