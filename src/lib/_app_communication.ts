@@ -1,3 +1,5 @@
+import { goto } from '$app/navigation';
+
 const onMessageFormAppListener: Array<(eventName: string, data: any) => void> = [];
 const onMessageFormAppCb = (callback: any) => {
   const win:any = window;
@@ -94,7 +96,11 @@ export const getNotch = async () => {
 
 export const onSettingTap = () => {
   const win: any = window;
-  win['flutter_inappwebview'].callHandler('onSettingTap');
+  if (win['flutter_inappwebview']) {
+    win['flutter_inappwebview'].callHandler('onSettingTap');
+    return;
+  }
+  goto('/settings');
 };
 
 export const onAndroidExit = () => {
