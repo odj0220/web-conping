@@ -4,8 +4,10 @@
   import Avatar from './common/shared/Avatar.svelte';
 
   import type { ICeleb } from 'src/global/types';
+  import { gotoCelebs } from '../lib/utils/goto';
 
   export let celebs:ICeleb[] = [];
+
 </script>
 
 <Container type="grayBox wide" margin="2.4rem 0 0">
@@ -16,7 +18,7 @@
   />
   <ul class="celebs">
     {#each celebs as celeb}
-      <li class="celeb">
+      <li class="celeb" on:click={gotoCelebs(celeb.id)}>
         <Avatar size={8} src={celeb.thumbnail} />
         <span class="celeb-name">{celeb.name}</span>
       </li>

@@ -49,6 +49,7 @@
       }
 
       getCelebsByProgramId(id:"${id}"){
+        id
         thumbnail
         name
         categories {
@@ -61,7 +62,7 @@
     }`;
 
     const { data: { program, getCelebsByProgramId: celebs } } = await graphqlApi(query);
-
+  
     return {
       program,
       celebs,
