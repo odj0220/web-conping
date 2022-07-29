@@ -1,11 +1,15 @@
 <script lang="ts">
 import { toHHMMSS } from '../lib/util';
 import { createEventDispatcher } from 'svelte';
+import { openBrowser } from '../lib/util';
+import Thumbnail from './common/shared/Thumbnail.svelte';
 
 export let timelineButtonVisible: boolean;
 export let name:string;
 export let price: number;
 export let exposed: any[] = [];
+export let storeUrl: string;
+export let image: string;
 
 const dispatch = createEventDispatcher<{'set-video-current-time': {currentTime: number}}>();
 
@@ -20,14 +24,18 @@ function setCurrentTime(time: number) {
     currentTime: time,
   });
 }
+
+function goStore() {
+  openBrowser(storeUrl);
+}
 </script>
 
 <li class="container">
-    <div class="thumbnail">
-        <img src="" alt="" />
+    <div class="thumbnail" on:click={goStore}>
+        <Thumbnail src={image} alt={name + '의 이미지'} width="8rem" height="8rem"/>
     </div>
     <div class="contents">
-        <h6 class="name">{name}</h6>
+        <h6 class="name" on:click={goStore}>{name}</h6>
         <span class="price">{price.toLocaleString()}원</span>
         
         {#if timelineButtonVisible }
