@@ -12,7 +12,7 @@
 
   import type { ITabItem } from 'src/global/types';
   import { callShare } from '../lib/_app_communication';
-import CelebsDetailSkeleton from '$component/skeleton/container/CelebsDetailSkeleton.svelte';
+  import CelebsDetailSkeleton from '$component/skeleton/container/CelebsDetailSkeleton.svelte';
 
   export let id: string;
 

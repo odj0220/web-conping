@@ -37,7 +37,7 @@
   async function loadContents(): Promise<any> {
     const query = `{
           getContentsByCelebId(
-              id: 2
+              id: ${id}
               limit: ${num},
               ${cursor ? `cursor: ${cursor}` : ''}
           ) {

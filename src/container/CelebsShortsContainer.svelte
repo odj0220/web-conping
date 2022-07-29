@@ -39,7 +39,7 @@
   const loadShorts = async () => {
     const query = `{
           getShortsByCelebId (
-              id: 1,
+              id: ${id},
               shorts: true,
               limit: ${num},
               ${cursor ? `cursor: ${cursor}` : ''}
