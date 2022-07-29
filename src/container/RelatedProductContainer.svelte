@@ -14,13 +14,15 @@
         name
         price
         exposed
+        storeUrl
+        image
       }
     }`;
   
     const result = await graphqlApi(query);
   
     const productList = result?.data?.getProductsByContentId;
-
+  
     return productList;
   };
 </script>
