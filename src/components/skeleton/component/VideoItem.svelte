@@ -11,7 +11,7 @@
 </script>
 
 <Item margin={margin} display={display} direction={direction}>
-  <Thumbnail width="12rem" height="6.8rem" borderRadius="0.2rem" bgColor="bg-gray-32"/>
+  <Thumbnail width="12rem" height="6.8rem" borderRadius="0.2rem"/>
   <Rect margin="0 0 0 1.2rem">
     <Bar width="8rem" height="1.2rem" margin="0 0 0.6rem" />
     <Bar width="14rem" height="1.2rem" margin="0 0 0.3rem" />
