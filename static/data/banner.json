@@ -1,0 +1,20 @@
+[
+  {
+    "id": "banner1",
+    "title": "[축! 골라라TV 오픈] 배우 이세은님 축하 메세지",
+    "imgPath": "/images/Home_Banner_01.png",
+    "link": {
+      "to": "/programs/1",
+      "openBrowser": false
+    }
+  },
+  {
+    "id": "banner2",
+    "title": "[비하인드] 출연자가 출연자를 메이크업 해줍니다.",
+    "imgPath": "/images/Home_Banner_02.png",
+    "link": {
+      "to": "https://gollala.notion.site/0615fbe2cce947fca3ba1bc4750aa064",
+      "openBrowser": true
+    }
+  }
+]

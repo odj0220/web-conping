@@ -1,0 +1,262 @@
+[
+  {
+    "id": "celeb1",
+    "name": "장삐쭈",
+    "description": "국내 테크리뷰 유튜버. 어려서부터 기계에 관심이 많아서 뜯어 고쳐보곤 하다가 평소 취미인 영상 콘텐츠 제작으로 이어졌다. 폭 넓고 다양한 제품군을 다루지만 그 중에서도 모바일과 애플 제품 관련 영상이 많이 올라오고 있다.",
+    "categories": ["category1", "category2"],
+    "thumbnail": "/images/celob.png",
+    "banner": "/images/bg_profile_01.png",
+    "follows": {
+      "instagram": 1000,
+      "youtube": 1200,
+      "total": 2200
+    }
+  },
+  {
+    "id": "celeb2",
+    "name": "허혜원",
+    "description": "안녕하세요",
+    "categories": ["category3"],
+    "thumbnail": "/images/celob.png",
+    "banner": "/images/bg_profile_02.png",
+    "follows": {
+      "instagram": 10000,
+      "youtube": 22000,
+      "total": 32000
+    }
+  },
+  {
+    "id": "celeb3",
+    "name": "지정민",
+    "description": "안녕하세요",
+    "categories": ["category1", "category4"],
+    "thumbnail": "/images/celob.png",
+    "banner": "/images/bg_profile_03.png",
+    "follows": {
+      "instagram": 10,
+      "youtube": 1,
+      "total": 11
+    }
+  },
+  {
+    "id": "celeb4",
+    "name": "류호찬",
+    "description": "안녕하세요",
+    "categories": ["category4"],
+    "thumbnail": "/images/celob.png",
+    "banner": "/images/bg_profile_04.png",
+    "follows": {
+      "instagram": 150,
+      "youtube": 220,
+      "total": 370
+    }
+  },
+  {
+    "id": "celeb5",
+    "name": "최민아",
+    "description": "안녕하세요",
+    "categories": ["category2"],
+    "thumbnail": "/images/celob.png",
+    "banner": "/images/bg_profile_05.png",
+    "follows": {
+      "instagram": 150,
+      "youtube": 220,
+      "total": 370
+    }
+  },
+  {
+    "id": "celeb6",
+    "name": "크리스",
+    "description": "안녕하세요",
+    "categories": ["category3"],
+    "thumbnail": "/images/celob.png",
+    "banner": "/images/bg_profile_06.png",
+    "follows": {
+      "instagram": 150,
+      "youtube": 220,
+      "total": 370
+    }
+  },
+  {
+    "id": "celeb7",
+    "name": "윤성원",
+    "description": "안녕하세요",
+    "categories": ["category1"],
+    "thumbnail": "/images/celob.png",
+    "banner": "/images/bg_profile_07.png",
+    "follows": {
+      "instagram": 150,
+      "youtube": 220,
+      "total": 370
+    }
+  },
+  {
+    "id": "celeb8",
+    "name": "포포",
+    "description": "안녕하세요",
+    "categories": ["category2", "category3"],
+    "thumbnail": "/images/celob.png",
+    "banner": "/images/bg_profile_01.png",
+    "follows": {
+      "instagram": 0,
+      "youtube": 0,
+      "total": 0
+    }
+  },
+  {
+    "id": "celeb9",
+    "name": "원동우",
+    "description": "안녕하세요",
+    "categories": ["category4"],
+    "thumbnail": "/images/celob.png",
+    "banner": "/images/bg_profile_02.png",
+    "follows": {
+      "instagram": 0,
+      "youtube": 1,
+      "total": 1
+    }
+  },
+  {
+    "id": "celeb10",
+    "name": "강선영",
+    "description": "안녕하세요",
+    "categories": ["category3"],
+    "thumbnail": "/images/celob.png",
+    "banner": "/images/bg_profile_03.png",
+    "follows": {
+      "instagram": 3000000,
+      "youtube": 4000000,
+      "total": 7000000
+    }
+  },
+  {
+    "id": "celeb11",
+    "name": "박정인",
+    "description": "안녕하세요",
+    "categories": ["category1", "category2"],
+    "thumbnail": "/images/celob.png",
+    "banner": "/images/bg_profile_04.png",
+    "follows": {
+      "instagram": 3000000,
+      "youtube": 4000000,
+      "total": 7000000
+    }
+  },
+  {
+    "id": "celeb12",
+    "name": "권태웅",
+    "description": "안녕하세요",
+    "categories": ["category3"],
+    "thumbnail": "/images/celob.png",
+    "banner": "/images/bg_profile_05.png",
+    "follows": {
+      "instagram": 3000000,
+      "youtube": 4000000,
+      "total": 7000000
+    }
+  },
+  {
+    "id": "celeb13",
+    "name": "강찬",
+    "description": "안녕하세요",
+    "categories": ["category1", "category4"],
+    "thumbnail": "/images/celob.png",
+    "banner": "/images/bg_profile_06.png",
+    "follows": {
+      "instagram": 3000000,
+      "youtube": 4000000,
+      "total": 7000000
+    }
+  },
+  {
+    "id": "celeb14",
+    "name": "J.Fla",
+    "description": "안녕하세요",
+    "categories": ["category3"],
+    "thumbnail": "/images/celob.png",
+    "banner": "/images/bg_profile_07.png",
+    "follows": {
+      "instagram": 3000000,
+      "youtube": 4000000,
+      "total": 7000000
+    }
+  },
+  {
+    "id": "celeb15",
+    "name": "침착맨",
+    "description": "안녕하세요",
+    "categories": ["category1"],
+    "thumbnail": "/images/celob.png",
+    "banner": "/images/bg_profile_01.png",
+    "follows": {
+      "instagram": 13000000,
+      "youtube": 14000000,
+      "total": 27000000
+    }
+  },
+  {
+    "id": "celeb16",
+    "name": "곽튜브",
+    "description": "안녕하세요",
+    "categories": ["category2"],
+    "thumbnail": "/images/celob.png",
+    "banner": "/images/bg_profile_02.png",
+    "follows": {
+      "instagram": 0,
+      "youtube": 0,
+      "total": 0
+    }
+  },
+  {
+    "id": "celeb17",
+    "name": "빠니보틀",
+    "description": "안녕하세요",
+    "categories": ["category4"],
+    "thumbnail": "/images/celob.png",
+    "banner": "/images/bg_profile_03.png",
+    "follows": {
+      "instagram": 0,
+      "youtube": 0,
+      "total": 0
+    }
+  },
+  {
+    "id": "celeb18",
+    "name": "박은혜",
+    "description": "안녕하세요",
+    "categories": ["category3"],
+    "thumbnail": "/images/celob.png",
+    "banner": "/images/bg_profile_04.png",
+    "follows": {
+      "instagram": 0,
+      "youtube": 0,
+      "total": 0
+    }
+  },
+  {
+    "id": "celeb19",
+    "name": "이수정",
+    "description": "안녕하세요",
+    "categories": ["category2"],
+    "thumbnail": "/images/celob.png",
+    "banner": "/images/bg_profile_05.png",
+    "follows": {
+      "instagram": 0,
+      "youtube": 0,
+      "total": 0
+    }
+  },
+  {
+    "id": "celeb20",
+    "name": "수경",
+    "description": "안녕하세요",
+    "categories": ["category1", "category2", "category3", "category4", "category5"],
+    "thumbnail": "/images/celob.png",
+    "banner": "/images/bg_profile_06.png",
+    "follows": {
+      "instagram": 0,
+      "youtube": 0,
+      "total": 0
+    }
+  }
+]

@@ -1,0 +1,29 @@
+name: PULL REQUEST - Test Before Merging
+
+# main에 PR 요청을 할 때에만 테스트를 진행한다.
+# 테스트는 Lint Test, Unit Test 순으로 진행하며
+# 두 테스트가 모두 통과했을 경우에만 Merge가 가능하다.
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name:  PROD - Test Before Merging
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 16.x ]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{matrix.node-version}}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{matrix.node_version}}
+      - run: npm i
+      - run: npm run build --if-present
+      - run: npm run lint
+#      - run: npm run test
+
+

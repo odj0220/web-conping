@@ -1,0 +1,14 @@
+[
+  {
+    "id": "instagram1",
+    "type": "instagram",
+    "board_thumbnails": ["/images/insta_01.png", "/images/insta_02.png", "/images/insta_03.png", "/images/insta_04.png", "/images/insta_05.png", "/images/insta_06.png"],
+    "link":"https://www.instagram.com/gollala_official/"
+  },
+  {
+    "id": "instagram2",
+    "type": "instagram",
+    "board_thumbnails": ["/images/insta_01.png", "/images/insta_02.png", "/images/insta_03.png", "/images/insta_04.png"],
+    "link":"https://www.instagram.com/gollala_official/"
+  }
+]
