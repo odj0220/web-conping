@@ -6,10 +6,10 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-  ZONE: asia-northeast3
+  ZONE: asia-northeast1
   IMAGE: prod
   SERVICE_ID: ${{ secrets.GCP_PROD_SERVICE_ID }}
-  ARTIFACT_REGISTRY_REPO_NAME: gollala-frontend-web
+  ARTIFACT_REGISTRY_REPO_NAME: conping
 
 jobs:
   test:
@@ -44,18 +44,18 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
 
       - run: |-
-          gcloud --quiet auth configure-docker asia-northeast3-docker.pkg.dev
+          gcloud --quiet auth configure-docker asia-northeast1-docker.pkg.dev
 
       # Build and Deploy Docker Image
       - name: PROD - Build
         run: |-
           gcloud builds submit \
-            --tag "asia-northeast3-docker.pkg.dev/$PROJECT_ID/$ARTIFACT_REGISTRY_REPO_NAME/$IMAGE" --timeout "2h15m5s"
+            --tag "asia-northeast1-docker.pkg.dev/$PROJECT_ID/$ARTIFACT_REGISTRY_REPO_NAME/$IMAGE" --timeout "2h15m5s"
       - name: PROD - Deploy to Cloud Run
         id: deploy
         uses: google-github-actions/deploy-cloudrun@main
         with:
           service: ${{ env.SERVICE_ID }}
           region: ${{ env.ZONE }}
-          image: asia-northeast3-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY_REPO_NAME }}/${{ env.IMAGE }}:latest
+          image: asia-northeast1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY_REPO_NAME }}/${{ env.IMAGE }}:latest
           credentials: ${{ secrets.GCP_SERVICE_ACCOUNT }}
