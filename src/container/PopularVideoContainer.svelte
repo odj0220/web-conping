@@ -45,6 +45,7 @@ import PopularVideoSkeleton from '$component/skeleton/container/PopularVideoSkel
       },
     } = await graphqlApi(query);
 
+    console.log(title, contents);
     return { title, contents };
   }
 </script>

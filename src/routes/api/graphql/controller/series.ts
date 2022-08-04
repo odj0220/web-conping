@@ -1,15 +1,19 @@
-import { GET } from '../../../../lib/_api';
-import type { VideoContent } from '../../../../lib/models/backend/backend';
-import { convertProgram, convertContent } from './util';
+import { convertContentByPlaylistItem, convertPopularContent } from './util';
+import { playlistItems, playListVideoId } from '../../../../lib/_youtube';
 
 export const getMainSeries = async () => {
-  const programId = '1';
-  const response = await GET(`/video-content?sort=[{views:desc}]&programId=${programId}&program=true&cursor=0&size=5`);
-  const contents = response.items.map((content: VideoContent) => convertContent(content));
+  const programId = 'PLWeQO3UkBcB3sOdyY_aCl0pG8c5-bKbHR';
+  const response = await playlistItems(programId);
+  const programByVideoId = await playListVideoId();
+  const contents = response?.items?.map((content:any) => convertContentByPlaylistItem({
+    ...content,
+    program: content?.snippet?.resourceId?.videoId,
+  }));
   let series;
   if (contents[0].ProgramInfo) {
-    series = convertProgram(contents[0].ProgramInfo.Program);
+    series = contents[0].program;
   }
+  console.log(contents);
   return {
     title: [
       {

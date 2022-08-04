@@ -7,7 +7,8 @@ import relationJson from '../../../../../static/data/relation.json';
 import contentJson from '../../../../../static/data/content.json';
 import programJson from '../../../../../static/data/program.json';
 import type { ICeleb, IContent } from '../../../../global/types';
-import { celebById, contentsByProgramId, convertCeleb, convertContent } from './util';
+import { celebById, contentsByProgramId, convertCeleb, convertContent, convertPopularContent } from './util';
+import { popularContents } from '../../../../lib/_youtube';
 
 const setOrderBy = (sortField?: string, sortOrder?: string) => {
   if (
@@ -85,10 +86,9 @@ export const getProgramContentsByContentId = async ({ id }: { id: string }) => {
 };
 
 export const getMainContents = async () => {
-  const contents = await GET(
-    '/video-content?sort=[{views:desc}]&cursor=0&size=2&program=true',
-  );
-  return {
+  const popular = await popularContents();
+  const contents = popular.contents.slice(0, 2).map((content:any) => convertPopularContent(content));
+  const result = {
     title: [
       {
         text: '지금',
@@ -101,32 +101,20 @@ export const getMainContents = async () => {
         text: '콘텐츠',
       },
     ],
-    contents: contents.items.map((content: VideoContent) =>
-      convertContent(content),
-    ),
+    contents: contents,
   };
+
+  return result;
 };
 
 export const getMainInfiniteContents = async ({ limit, cursor }: {
   limit: number;
   cursor: string;
 }) => {
-  const response = await GET(`/video-content?size=${limit}&cursor=${cursor || 0}&type=FULL,HIGHLIGHT&program=true`);
-  const contents: any[] = response.items.map((content: any) => convertContent(content));
-
-  let startCursor = 0;
-  if (contents.length > 0) {
-    startCursor = contents.slice(-1)[0].id;
-  }
-  const hasNextPage = contents.length >= limit;
-
+  const result = await popularContents(limit, cursor, 'date');
   return {
-    totalCount: 0,
-    contents,
-    pageInfo: {
-      startCursor,
-      hasNextPage,
-    },
+    ...result,
+    contents: result.contents.map((content:any) => convertPopularContent(content)),
   };
 };
 
