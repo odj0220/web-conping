@@ -143,9 +143,9 @@ export const onAndroidExit = () => {
 export const onInitialized = (callback: () => void) => {
   const win: any = window;
   const interval = setInterval(() => {
-    if (win['flutter_inappwebview']) {
+    if (win['ConpingInterface']) {
       clearInterval(interval);
-      win['flutter_inappwebview'].callHandler('onInitialized');
+      win['ConpingInterface'].onInitialized();
       callback();
     }
   }, 200);

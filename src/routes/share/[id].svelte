@@ -13,7 +13,7 @@
   <img class="section page-top" src="/images/deeplink_top.png" alt="공유 상단 이미지">
   <div class="section page-content">
     <div class="content-image">
-      <a href="https://gollalanextgollalaapp.page.link/{id}" id="deeplink">
+      <a href="https://conping.page.link/{id}" id="deeplink">
         콘핑 앱 설치하기
       </a>
     </div>
