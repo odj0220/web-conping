@@ -1,4 +1,5 @@
 import { goto } from '$app/navigation';
+import { guid } from './util';
 
 const onMessageFormAppListener: Array<(eventName: string, data: any) => void> = [];
 const onMessageFormAppCb = (callback: any) => {
@@ -11,6 +12,29 @@ const onMessageFormAppCb = (callback: any) => {
       });
     };
   }
+};
+
+const conpingCallbackListener: Array<(eventName: string, data: any) => void> = [];
+const conpingCallback = (callback: any) => {
+  const win:any = window;
+  conpingCallbackListener.push(callback);
+  if (!win['conpingCallback']) {
+    win['conpingCallback'] = (callId: string, data: any) => {
+      conpingCallbackListener.forEach((listener: (callId: string, data: any) => void) => {
+        listener(callId, data);
+      });
+    };
+  }
+};
+
+const communicationPromise = (uuid: string) => {
+  return new Promise((resolve, reject) => {
+    conpingCallback((eventName:string, data: any) => {
+      if (uuid === eventName) {
+        resolve(data);
+      }
+    });
+  });
 };
 
 /**
@@ -31,42 +55,50 @@ export const onMessageFromApp = (event: string) => {
 
 export const callToast = (message: string) => {
   const win: any = window;
-  win['flutter_inappwebview'].callHandler('callToast', message);
+  win['ConpingInterface'].callToast(message);
 };
 
-export const callShare = async (type: string, id: string, title?: string) => {
+export const callShare = (type: string, id: string, title?: string) => {
   const win: any = window;
-  return await win['flutter_inappwebview'].callHandler('callShare', JSON.stringify({ type, id, title }));
+  const uuid = guid();
+  win['ConpingInterface'].callShare(JSON.stringify({ type, id, title }), uuid);
+  return communicationPromise(uuid);
 };
 
 export const callAlert = (message: string, title?: string, subject?: string) => {
   const win: any = window;
-  win['flutter_inappwebview'].callHandler('callAlert', JSON.stringify({ message, title, subject }));
+  win['ConpingInterface'].callAlert(JSON.stringify({ message, title, subject }));
 };
 
-export const callConfirm = async (message: string, title?: string, subject?: string) => {
+export const callConfirm = (message: string, title?: string, subject?: string) => {
   const win: any = window;
-  return await win['flutter_inappwebview'].callHandler('callConfirm', JSON.stringify({ message, title, subject }));
+  const uuid = guid();
+  win['ConpingInterface'].callConfirm(JSON.stringify({ message, title, subject }), uuid);
+  return communicationPromise(uuid);
 };
 
-export const getStorage = async (key: string) => {
+export const getStorage = (key: string) => {
   const win: any = window;
-  return await win['flutter_inappwebview'].callHandler('getStorage', key);
+  const uuid = guid();
+  win['ConpingInterface'].getStorage(key, uuid);
+  return communicationPromise(uuid);
 };
 
 export const setStorage = (key: string, value: string) => {
   const win: any = window;
-  win['flutter_inappwebview'].callHandler('setStorage', JSON.stringify({ key, value }));
+  win['ConpingInterface'].setStorage(JSON.stringify({ key, value }));
 };
 
-export const getVersion = async (): Promise<string> => {
+export const getVersion = () => {
   const win: any = window;
-  return await win['flutter_inappwebview'].callHandler('getVersion');
+  const uuid = guid();
+  win['ConpingInterface'].getVersion(uuid);
+  return communicationPromise(uuid);
 };
 
 export const copyToClipboard = (text: string) => {
   const win: any = window;
-  win['flutter_inappwebview'].callHandler('copyToClipboard', text);
+  win['ConpingInterface'].copyToClipboard(text);
 };
 
 export const launchTel = async (phoneNumber: string): Promise<boolean> => {
@@ -76,7 +108,7 @@ export const launchTel = async (phoneNumber: string): Promise<boolean> => {
 
 export const launchWeb = async (url: string, headers?: string): Promise<boolean> => {
   const win: any = window;
-  return await win['flutter_inappwebview'].callHandler('launchWeb', JSON.stringify({ url, headers }));
+  return await win['ConpingInterface'].launchWeb(JSON.stringify({ url, headers }));
 };
 
 export const launchSystemNotification = () => {

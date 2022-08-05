@@ -7,7 +7,7 @@
   const shareString = 'share({type:"contents", id:"3"})';
 
   async function sendConfirm() {
-    const boolean = await callConfirm('오키 할래 안할래?');
+    const boolean = await callConfirm('오키 할래 안할래?222');
     alert(boolean);
   }
   async function callGetStorage() {
@@ -16,14 +16,14 @@
   }
   async function callGetVersion() {
     const version = await getVersion();
-    const { major, minor, build } = version ? JSON.parse(version) : { major: 0, minor: 0, build: 0 };
-    alert(`${major}.${minor}.${build}`);
+    alert(version);
   }
   function sendToast() {
     callToast('토스트 전송');
   }
-  function sendShare() {
-    callShare('contents', '3');
+  async function sendShare() {
+    const link = await callShare('contents', '3');
+    alert(link);
   }
   function sendAlert1() {
     callAlert('안녕하세용');

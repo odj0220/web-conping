@@ -93,8 +93,7 @@ const listUpdatehandler = async () => {
   if (appCheck()) {
     const version: any = await getVersion();
     if (version) {
-      const { major, minor, build } = version;
-      appVersion = `${major}.${minor}.${build}`;
+      appVersion = version;
     }
     return list;
   }
