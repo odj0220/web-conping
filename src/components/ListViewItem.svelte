@@ -16,7 +16,7 @@
     },
   } = content;
 
-  $: metaDataContent = `${programTitle} ${episode}화`;
+  $: metaDataContent = `${programTitle} ${episode ? episode + '화' : ''}`;
 </script>
 
 <li class="grid-item" on:click={() => onClick(id)}>

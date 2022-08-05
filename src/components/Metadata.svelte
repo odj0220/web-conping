@@ -45,7 +45,7 @@
         data.info = [...data.info, content?.program?.title];
       }
       if (content?.episode) {
-        data.info = [...data.info, `${content?.episode}화`];
+        data.info = [...data.info, `${content?.episode ? content?.episode + '화' : ''}`];
       }
       if (content?.views) {
         data.info = [...data.info, `조회수 ${content?.views}회`];

@@ -88,7 +88,7 @@
 
 {#await getData()}
 {:then data}
-  <SubHeaderContainer title='{content?.program.title} {content?.episode}화' />
+  <SubHeaderContainer title='{content?.program.title} {content?.episode ? content?.episode + "화" : ""}' />
   <Container type="full" margin="0">
     <Player content={content} on:get-player={setPlayer}/>
 

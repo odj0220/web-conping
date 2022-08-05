@@ -85,7 +85,7 @@
   $: programId = content.program?.id;
   $: programName = content.program?.title;
   $: programThumbnail = content.program?.thumbnail;
-  $: episode = `${content.episode && `${content.episode}화`}`;
+  $: episode = `${content.episode && `${content.episode ? content.episode + '화' : ''}`}`;
   $: createdAt = content.createDt;
   $: views = content.views ? `조회수 ${content.views}회` : '';
 
