@@ -1,13 +1,5 @@
 import adapter from '@sveltejs/adapter-node';
 import preprocess from 'svelte-preprocess';
-import { youtubeSubscribeServer } from './src/server/youtube.js';
-
-const youtubeServer = {
-  name: 'youtubeServer',
-  configureServer(server) {
-    youtubeSubscribeServer(server);
-  },
-};
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -15,9 +7,6 @@ const config = {
     adapter: adapter({
       out: 'build',
     }),
-    vite: {
-      plugins: [youtubeServer],
-    },
     alias: {
       $container: 'src/container',
       $component: 'src/components',
