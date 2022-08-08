@@ -1,10 +1,10 @@
-import { GET } from '../../../../lib/_api';
 import type { Program } from '../../../../lib/models/backend/backend';
-import { convertProgram } from './util';
+import { convertProgramByPlayList } from './util';
+import { playList } from '../../../../lib/_youtube';
 
 export const getMainOrigin = async () => {
-  const response = await GET('/program');
-  const programs = response.map((program: Program) => convertProgram(program));
+  const response = await playList();
+  const programs = response.items.map((program: Program) => convertProgramByPlayList(program));
   return {
     title: [
       {

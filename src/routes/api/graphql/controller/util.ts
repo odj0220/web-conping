@@ -22,6 +22,47 @@ export const convertProgram = (program?: Program) => {
 };
 
 export const getThumbnail = (videoId?: string) => `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+
+export const convertProgramByChannel = (channelInfo: any) => {
+  const thumbnail = channelInfo?.thumbnails?.default?.url;
+  const airingBeginAt = channelInfo?.publishedAt;
+  const regularAiringAt = channelInfo?.publishedAt;
+  return {
+    ...channelInfo,
+    thumbnail,
+    airingBeginAt,
+    regularAiringAt,
+  };
+};
+
+export const convertPopularContent = (content: any) => {
+  const createDt = +dayjs(content?.publishedAt);
+  return JSON.parse(JSON.stringify({
+    ...content,
+    createDt,
+    programId: content?.program?.id,
+    contentType: 'EPISODE',
+    thumb: getThumbnail(content.videoId || ''),
+    program: convertProgramByChannel(content.program),
+  }));
+};
+
+export const convertContentByPlaylistItem = (content: any) => {
+  const videoId = content?.snippet?.resourceId?.videoId;
+  const createDt = +dayjs(content?.publishedAt);
+  return JSON.parse(JSON.stringify({
+    ...content.snippet,
+    id: videoId,
+    createDt,
+    videoId,
+    programId: content?.program?.id,
+    contentType: 'EPISODE',
+    thumb: getThumbnail(videoId || ''),
+    program: convertProgramByChannel(content.program),
+  }));
+};
+
+
 export const convertContent = (content?: VideoContent) => {
   if (!content) {
     return ;
@@ -301,5 +342,20 @@ export const youtubeToContent = async ({ id, snippet }: YoutubeVideo) => {
     duration: dayjs.duration(videoInfo?.contentDetails?.duration || 0).asSeconds(),
     views: videoInfo?.statistics?.viewCount,
     thumb: getThumbnail(videoId),
+  }));
+};
+
+export const convertProgramByPlayList = async ({ id, snippet }: any) => {
+  if (!id || !snippet) {
+    return ;
+  }
+  const { thumbnails, publishedAt } = snippet;
+  return JSON.parse(JSON.stringify({
+    id,
+    ...snippet,
+    createDt: +dayjs(publishedAt),
+    airingBeginAt: +dayjs(publishedAt),
+    thumbnail: thumbnails?.high?.url,
+    banner: thumbnails?.high?.url,
   }));
 };
