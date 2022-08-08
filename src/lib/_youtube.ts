@@ -17,6 +17,7 @@ const defaultOption = {
 const YOUTUBE_URL = 'https://www.googleapis.com/youtube/v3';
 const YOUTUBE_KEY = 'AIzaSyAXcRXKhdtIedFRiQ7KU8d6fZwO_zZfrJk';
 const GOLLALA_CHANNEL_ID = 'UCQU44DD_X3LwgHjTPvs9LvQ';
+const INFLUENCER_SECTION_ID = 'UCQU44DD_X3LwgHjTPvs9LvQ.__WLXNpu6u8';
 
 export const popularContents = async (limit = 5, cursor = '', order = 'viewCount') => {
   const response:any = await api('/search', {
@@ -114,7 +115,32 @@ export const playListVideoId = async () => {
   return youtubeContents;
 };
 
-const videoIdsByPlaylistId = async (playlistId: string) => {
+export const celebList = async () => {
+  const channels = (await api('/channelSections', {
+    params: {
+      part: 'contentDetails',
+      key: YOUTUBE_KEY,
+      maxResults: 50,
+      id: INFLUENCER_SECTION_ID,
+    },
+  })).items[0].contentDetails.channels;
+
+  const celebs = (await api('/channels', {
+    params: {
+      part: 'snippet,brandingSettings,statistics,topicDetails',
+      key: YOUTUBE_KEY,
+      maxResults: 50,
+      id: channels.join(','),
+    },
+  })).items;
+
+  return celebs.map((celeb: any) => {
+    const { id, snippet, statistics, topicDetails, brandingSettings } = celeb;
+    return { ...snippet, id, statistics, topicDetails, brandingSettings };
+  });
+};
+
+export const videoIdsByPlaylistId = async (playlistId: string) => {
   const response = await api('/playlistItems', {
     params: {
       part: 'contentDetails, status',
@@ -127,6 +153,16 @@ const videoIdsByPlaylistId = async (playlistId: string) => {
     ...response,
     playlistId,
   };
+};
+
+export const contentsByVideoIds = (videoIds: string) => {
+  return api('/videos', {
+    params: {
+      part: 'snippet,contentDetails,statistics,status',
+      key: YOUTUBE_KEY,
+      id: videoIds,
+    },
+  });
 };
 
 function api(url: string, option: fetchOption) {

@@ -359,3 +359,7 @@ export const convertProgramByPlayList = async ({ id, snippet }: any) => {
     banner: thumbnails?.high?.url,
   }));
 };
+
+export const durationToSeconds = (duration: string) => {
+  return dayjs.duration(duration).asSeconds();
+};
