@@ -88,6 +88,11 @@ const deleteQueryBatch = async (db: any, query: any, resolve: any, collectionPat
   return;
 };
 
+export const firestoreProgramById = async (id: string) => {
+  const document = await getDoc(doc(collection(db, 'program'), id));
+  return document.data();
+};
+
 export const firestorePrograms = async () => {
   const first = query(collection(db, 'program'), orderBy('publishedAt', 'desc'));
   const documentSnapshots = await getDocs(first);
@@ -130,8 +135,8 @@ export const firestoreContents = async (limitCnt = 5, cursor = '', order = 'stat
     totalCount: 0,
     contents,
     pageInfo: {
-      startCursor: lastVisible.id,
-      hasNextPage: !!lastVisible,
+      startCursor: lastVisible && lastVisible.id,
+      hasNextPage: !!lastVisible && documentSnapshots.docs.length >= limitCnt,
     },
   };
 };
@@ -163,20 +168,36 @@ export const firestoreContentsByProgramId = async (programId: string, limitCnt =
     totalCount: 0,
     contents,
     pageInfo: {
-      startCursor: lastVisible.id,
-      hasNextPage: !!lastVisible,
+      startCursor: lastVisible && lastVisible.id,
+      hasNextPage: !!lastVisible && documentSnapshots.docs.length >= limitCnt,
     },
   };
 };
 
-export const firestoreCeleb = async () => {
-  const first = query(collection(db, 'celeb'), orderBy('statistics.viewCount', 'desc'));
+export const firestoreCeleb = async (limitCnt = 5, cursor = '', order = 'statistics.subscriberCount', direction:'desc' | 'asc' = 'desc') => {
+  let first;
+  if (cursor) {
+    const nextCur = await getDoc(doc(collection(db, 'celeb'), cursor));
+    first = query(collection(db, 'celeb'), orderBy(order, direction), startAfter(nextCur), limit(limitCnt));
+  } else {
+    first = query(collection(db, 'celeb'), orderBy(order, direction), limit(limitCnt));
+  }
+
   const documentSnapshots = await getDocs(first);
   const celebs: DocumentData[] = [];
   documentSnapshots.forEach(doc => {
     celebs.push(doc.data());
   });
-  return celebs;
+  const lastVisible = documentSnapshots.docs[documentSnapshots.docs.length - 1];
+
+  return {
+    totalCount: 0,
+    celebs,
+    pageInfo: {
+      startCursor: lastVisible && lastVisible.id,
+      hasNextPage: !!lastVisible && documentSnapshots.docs.length >= limitCnt,
+    },
+  };
 };
 
 export const filterContentType = (type: string) => {

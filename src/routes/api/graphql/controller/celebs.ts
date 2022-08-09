@@ -43,39 +43,19 @@ export const getInfiniteCelebs = async ({
   first: number;
   afterCursor: string;
 }) => {
-  const params: any = {
-    category: true,
-    snsFollowerCount: true,
-    productCount: true,
-    videoContentCount: true,
-    sort: JSON.stringify([{ createdAt: 'desc' }]),
-    cursor: afterCursor || 0,
-  };
-
-  if (first) {
-    params['size'] = first;
-  }
-  const response = await GET('/celeb', { params });
-  const edges = response.map((celeb: Celeb) => {
-    const node = convertCeleb(celeb);
+  const response:any = await firestoreCeleb(first, afterCursor);
+  const { celebs, pageInfo } = response;
+  const edges = celebs.map((celeb: any) => {
+    const node = convertCelebByFirestore(celeb);
     return {
       node,
       cursor: node.id,
     };
   });
 
-  let startCursor = 0;
-  if (edges.length > 0) {
-    startCursor = edges[edges.length - 1].node.id;
-  }
-  const hasNextPage = edges.length >= first;
-
   return {
     totalCount: 0,
     edges,
-    pageInfo: {
-      startCursor,
-      hasNextPage,
-    },
+    pageInfo,
   };
 };

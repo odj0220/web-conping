@@ -1,24 +1,15 @@
-import { GET } from '../../../../lib/_api';
-import type {
-  Celeb,
-  VideoContent,
-} from '../../../../lib/models/backend/backend';
 import relationJson from '../../../../../static/data/relation.json';
 import contentJson from '../../../../../static/data/content.json';
-import type { ICeleb, IContent } from '../../../../global/types';
+import type { ICeleb } from '../../../../global/types';
 import {
   celebById,
-  contentsByProgramId,
-  convertCeleb,
   convertContent,
   convertContentByFirestore,
-  convertPopularContent,
 } from './util';
 import {
   filterContentType,
   firestoreContentById,
   firestoreContents, firestoreContentsByProgramId,
-  updateEpisodeToFull,
 } from '../../../../lib/_firestore';
 
 const setOrderBy = (sortField?: string, sortOrder?: string) => {
@@ -68,10 +59,8 @@ export const contents = async ({
       sort,
     }),
   );
-  const contents = await GET(
-    `/video-content?${new URLSearchParams(params).toString()}`,
-  );
-  return contents.map((content: VideoContent) => convertContent(content));
+  const contents = await firestoreContents(999, undefined, undefined, sortOrder, filterContentType(type));
+  return contents.contents.map((content: any) => convertContentByFirestore(content));
 };
 
 export const content = async ({ id }: { id: string }) => {
@@ -93,7 +82,7 @@ export const getProgramContentsByContentId = async ({ id }: { id: string }) => {
     return [];
   }
   const contents = await firestoreContentsByProgramId(programId);
-  return contents.contents.filter((content) => content.id !== id).splice(0, 2);
+  return contents.contents.filter((content) => content.id !== id).splice(0, 2).map((content: any) => convertContentByFirestore(content));
 };
 
 export const getMainContents = async () => {

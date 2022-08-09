@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import { GET } from '../../../../lib/_api';
 import type { ICeleb, IContent } from '../../../../global/types';
 import type { YoutubeVideo } from '../../../../global/types';
+import { filterContentType, firestoreContentsByProgramId } from '../../../../lib/_firestore';
 
 export const EXPOSED_DEFAULT_DURATION = 3000;
 
@@ -241,17 +242,10 @@ export const contentsByCelebId = async (id: string, cursor: number, limit: numbe
   };
 };
 
-export const contentsByProgramId = async (id: string, type?: string) => {
-  const queryType = type ? '&type=' + type : '';
-  const response = await GET(`/video-content?programId=${id}&program=true&sort=[{"ProgramInfo": {"episode": "desc"} }]${queryType}`);
-  const contents = response.items.map((content: VideoContent) => convertContent(content));
-  return contents
-    .filter((content: IContent) => {
-      if (!type) {
-        return true;
-      }
-      return content.contentType === type;
-    });
+export const contentsByProgramId = async (id: string, type?:string) => {
+  const response = await firestoreContentsByProgramId(id, 50, undefined, 'publishedAt', 'desc', type ? filterContentType(type) : undefined);
+  const contents = response.contents.map((content: any) => convertContentByFirestore(content));
+  return contents;
 };
 
 export const productsByCelebId = async (id: string, limit: number, cursor: number) => {
@@ -368,7 +362,6 @@ export const durationToSeconds = (duration: string) => {
 export const convertContentByFirestore = (content: any) => {
   const createDt = +dayjs(content?.publishedAt);
   const { id, type, statistics, contentDetails, program } = content;
-  console.log(type);
   return JSON.parse(JSON.stringify({
     ...content,
     createDt,
@@ -383,12 +376,23 @@ export const convertContentByFirestore = (content: any) => {
 };
 
 export const convertProgramByFirestore = (channelInfo: any) => {
-  const thumbnail = channelInfo?.thumbnails?.high?.url;
-  const airingBeginAt = channelInfo?.publishedAt;
-  const regularAiringAt = channelInfo?.publishedAt;
+  const { id, thumbnails, publishedAt } = channelInfo;
+  const thumbnail = thumbnails?.high?.url;
+  const airingBeginAt = publishedAt;
+  const regularAiringAt = publishedAt;
+
+  let banner = thumbnail;
+  if (id === 'PLWeQO3UkBcB16CyWkwkigJsisnNSzbwrh') {
+    banner = 'https://yt3.ggpht.com/3eR1TISpkHimmosSEq-PJMoXe7_d1TclSjoOaqY_jZSj0sr9O9ZZjTYH9bmXVX8yw7ZMr87lsw';
+  } else if (id === 'PLWeQO3UkBcB3XSMF5HJ_umXOzQVqiD-JV') {
+    banner = 'https://yt3.ggpht.com/-M0WuI-jS90PSv6avFM-GYFdmHhTwthAZd9oYUcjUE3VCxmI8-GtwlMi9CPL7tqFrpV_aXPlFQ';
+  } else if (id === 'PLWeQO3UkBcB3sOdyY_aCl0pG8c5-bKbHR') {
+    banner = '/images/Home_Banner_01.png';
+  }
   return {
     ...channelInfo,
     thumbnail,
+    banner,
     airingBeginAt,
     regularAiringAt,
   };

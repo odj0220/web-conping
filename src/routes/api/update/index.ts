@@ -48,7 +48,7 @@ const allVideos = async (videoIds: any, programs: any) => {
       ...content.contentDetails,
       duration: dayjs.duration(content.contentDetails.duration).asSeconds(),
     };
-    content.snippet['type'] = content.contentDetails.duration > 60 ? 'FULL' : 'SHORTS';
+    content.snippet['type'] = content.contentDetails.duration > 40 ? 'FULL' : 'SHORTS';
   });
 
   return contents.map((content: any) => {
