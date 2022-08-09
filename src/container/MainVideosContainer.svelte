@@ -50,7 +50,7 @@
       end = !getMainInfiniteContents.pageInfo.hasNextPage;
       cursor = getMainInfiniteContents.pageInfo.startCursor;
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 

@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, writeBatch, collection, query, orderBy, limit, getDocs } from 'firebase/firestore';
+import { getFirestore, doc, writeBatch, collection, query, orderBy, where, limit, getDocs, startAfter, type DocumentData, getDoc } from 'firebase/firestore';
+import type { QueryConstraint } from '@firebase/firestore';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCJnm78_e8NnTDT_4ctgYGaiJNYB799CJw',
@@ -50,6 +51,15 @@ export const updateDb = async (programs: any, contents: any, celebs: any) => {
 
 };
 
+export const updateEpisodeToFull = async () => {
+  const getQuery = query(collection(db, 'contents'), where('type', '==', 'EPISODE'));
+  const queryDocs = await getDocs(getQuery);
+  queryDocs.forEach((doc) => {
+    batch.update(doc.ref, 'type', 'FULL');
+  });
+  batch.commit();
+};
+
 const deleteCollection = async (db: any, collectionPath: string, batchSize: number) => {
   const collectionRef = collection(db, collectionPath);
   const q = query(collectionRef, orderBy('id'));
@@ -58,7 +68,7 @@ const deleteCollection = async (db: any, collectionPath: string, batchSize: numb
     deleteQueryBatch(db, q, resolve, collectionPath).catch(reject);
   });
 };
-const deleteQueryBatch = async (db: any, query: any, resolve: any, collectionPath:string) => {
+const deleteQueryBatch = async (db: any, query: any, resolve: any, collectionPath: string) => {
   const snapshot = await getDocs(query);
 
   const batchSize = snapshot.size;
@@ -76,4 +86,99 @@ const deleteQueryBatch = async (db: any, query: any, resolve: any, collectionPat
 
   resolve();
   return;
+};
+
+export const firestorePrograms = async () => {
+  const first = query(collection(db, 'program'), orderBy('publishedAt', 'desc'));
+  const documentSnapshots = await getDocs(first);
+  const programs: DocumentData[] = [];
+  documentSnapshots.forEach(doc => {
+    programs.push(doc.data());
+  });
+  return programs;
+};
+
+export const firestoreContentById = async (id: string) => {
+  const document = await getDoc(doc(collection(db, 'contents'), id));
+  return document.data();
+};
+
+export const firestoreContents = async (limitCnt = 5, cursor = '', order = 'statistics.viewCount', direction:'desc' | 'asc' = 'desc', whereQuery?: QueryConstraint) => {
+  let first;
+  if (cursor) {
+    const nextCur = await getDoc(doc(collection(db, 'contents'), cursor));
+    if (whereQuery) {
+      first = query(collection(db, 'contents'), whereQuery, orderBy(order, direction), startAfter(nextCur), limit(limitCnt));
+    } else {
+      first = query(collection(db, 'contents'), orderBy(order, direction), startAfter(nextCur), limit(limitCnt));
+    }
+  } else {
+    if (whereQuery) {
+      first = query(collection(db, 'contents'), whereQuery, orderBy(order, direction), limit(limitCnt));
+    } else {
+      first = query(collection(db, 'contents'), orderBy(order, direction), limit(limitCnt));
+    }
+  }
+  const documentSnapshots = await getDocs(first);
+  const contents: DocumentData[] = [];
+  documentSnapshots.forEach(doc => {
+    contents.push(doc.data());
+  });
+  const lastVisible = documentSnapshots.docs[documentSnapshots.docs.length - 1];
+
+  return {
+    totalCount: 0,
+    contents,
+    pageInfo: {
+      startCursor: lastVisible.id,
+      hasNextPage: !!lastVisible,
+    },
+  };
+};
+
+export const firestoreContentsByProgramId = async (programId: string, limitCnt = 5, cursor = '', order = 'statistics.viewCount', direction:'desc' | 'asc' = 'desc', whereQuery?: QueryConstraint) => {
+  let first;
+  if (cursor) {
+    const nextCur = await getDoc(doc(collection(db, 'contents'), cursor));
+    if (whereQuery) {
+      first = query(collection(db, 'contents'), where('program.id', '==', programId), whereQuery, orderBy(order, direction), startAfter(nextCur), limit(limitCnt));
+    } else {
+      first = query(collection(db, 'contents'), where('program.id', '==', programId), orderBy(order, direction), startAfter(nextCur), limit(limitCnt));
+    }
+  } else {
+    if (whereQuery) {
+      first = query(collection(db, 'contents'), where('program.id', '==', programId), whereQuery, orderBy(order, direction), limit(limitCnt));
+    } else {
+      first = query(collection(db, 'contents'), where('program.id', '==', programId), orderBy(order, direction), limit(limitCnt));
+    }
+  }
+  const documentSnapshots = await getDocs(first);
+  const contents: DocumentData[] = [];
+  documentSnapshots.forEach(doc => {
+    contents.push(doc.data());
+  });
+  const lastVisible = documentSnapshots.docs[documentSnapshots.docs.length - 1];
+
+  return {
+    totalCount: 0,
+    contents,
+    pageInfo: {
+      startCursor: lastVisible.id,
+      hasNextPage: !!lastVisible,
+    },
+  };
+};
+
+export const firestoreCeleb = async () => {
+  const first = query(collection(db, 'celeb'), orderBy('statistics.viewCount', 'desc'));
+  const documentSnapshots = await getDocs(first);
+  const celebs: DocumentData[] = [];
+  documentSnapshots.forEach(doc => {
+    celebs.push(doc.data());
+  });
+  return celebs;
+};
+
+export const filterContentType = (type: string) => {
+  return where('type', '==', type);
 };

@@ -41,7 +41,7 @@ export const convertPopularContent = (content: any) => {
     ...content,
     createDt,
     programId: content?.program?.id,
-    contentType: 'EPISODE',
+    contentType: 'FULL',
     thumb: getThumbnail(content.videoId || ''),
     program: convertProgramByChannel(content.program),
   }));
@@ -56,7 +56,7 @@ export const convertContentByPlaylistItem = (content: any) => {
     createDt,
     videoId,
     programId: content?.program?.id,
-    contentType: 'EPISODE',
+    contentType: 'FULL',
     thumb: getThumbnail(videoId || ''),
     program: convertProgramByChannel(content.program),
   }));
@@ -363,3 +363,70 @@ export const convertProgramByPlayList = async ({ id, snippet }: any) => {
 export const durationToSeconds = (duration: string) => {
   return dayjs.duration(duration).asSeconds();
 };
+
+
+export const convertContentByFirestore = (content: any) => {
+  const createDt = +dayjs(content?.publishedAt);
+  const { id, type, statistics, contentDetails, program } = content;
+  console.log(type);
+  return JSON.parse(JSON.stringify({
+    ...content,
+    createDt,
+    programId: id,
+    contentType: type,
+    videoId: id,
+    thumb: getThumbnail(id || ''),
+    views: statistics?.viewCount,
+    program: convertProgramByFirestore(program),
+    duration: contentDetails?.duration,
+  }));
+};
+
+export const convertProgramByFirestore = (channelInfo: any) => {
+  const thumbnail = channelInfo?.thumbnails?.high?.url;
+  const airingBeginAt = channelInfo?.publishedAt;
+  const regularAiringAt = channelInfo?.publishedAt;
+  return {
+    ...channelInfo,
+    thumbnail,
+    airingBeginAt,
+    regularAiringAt,
+  };
+};
+
+export const convertCelebByFirestore = (celeb?: any) => {
+  if (!celeb) {
+    return ;
+  }
+  const { id, brandingSettings, statistics, thumbnails, topicDetails } = celeb;
+  const thumbnail = thumbnails?.high?.url;
+  const banner = brandingSettings?.image?.bannerExternalUrl;
+  const countOfFollowers = statistics?.subscriberCount || 0;
+  const countOfProducts = 0;
+  const countOfContents = statistics?.videoCount || 0;
+
+  let categories:any[] = [];
+  if (topicDetails?.topicCategories) {
+    categories = topicDetails?.topicCategories.map((url:string) => {
+      const split = url.split('/');
+      return {
+        name: split[split.length - 1],
+        fontColor: '#0A0A0A',
+        backColor: '#BE65F2',
+      };
+    });
+  }
+
+  return JSON.parse(JSON.stringify({
+    ...celeb,
+    id: id.toString(),
+    name: celeb.title,
+    thumbnail,
+    banner,
+    categories,
+    countOfFollowers,
+    countOfProducts,
+    countOfContents,
+  }));
+};
+

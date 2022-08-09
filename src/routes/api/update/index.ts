@@ -48,11 +48,12 @@ const allVideos = async (videoIds: any, programs: any) => {
       ...content.contentDetails,
       duration: dayjs.duration(content.contentDetails.duration).asSeconds(),
     };
-    content.snippet['type'] = content.contentDetails.duration > 60 ? 'EPISODE' : 'SHORTS';
+    content.snippet['type'] = content.contentDetails.duration > 60 ? 'FULL' : 'SHORTS';
   });
 
   return contents.map((content: any) => {
     const { id, snippet, contentDetails, status, statistics } = content;
+    const { commentCount, favoriteCount, likeCount, viewCount } = statistics;
     let program;
     for (let i = 0; i < programs.length; i++) {
       const target = programs[i];
@@ -66,7 +67,12 @@ const allVideos = async (videoIds: any, programs: any) => {
       id,
       contentDetails,
       status,
-      statistics,
+      statistics: {
+        commentCount: +commentCount,
+        favoriteCount: +favoriteCount,
+        likeCount: +likeCount,
+        viewCount: +viewCount,
+      },
       program,
     };
   });

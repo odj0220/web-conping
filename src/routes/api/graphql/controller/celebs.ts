@@ -3,19 +3,12 @@ import relationJson from '../../../../../static/data/relation.json';
 import contentJson from '../../../../../static/data/content.json';
 import { GET } from '../../../../lib/_api';
 import type { Celeb, VideoContentCast } from '../../../../lib/models/backend/backend';
-import { celebById, convertCeleb } from './util';
+import { celebById, convertCeleb, convertCelebByFirestore } from './util';
+import { firestoreCeleb } from '../../../../lib/_firestore';
 
 export const celebs = async () => {
-  const params: any = {
-    category: true,
-    snsFollowerCount: true,
-    productCount: true,
-    videoContentCount: true,
-    sort: JSON.stringify([{ createdAt: 'desc' }]),
-    size: 10,
-  };
-  const response = await GET('/celeb', { params });
-  const celebs = response.map((celeb: Celeb) => convertCeleb(celeb));
+  const response: any = await firestoreCeleb();
+  const celebs = response.map((celeb: any) => convertCelebByFirestore(celeb));
 
   return celebs;
 };

@@ -1,10 +1,9 @@
-import { GET } from '../../../../lib/_api';
-import type { VideoContent } from '../../../../lib/models/backend/backend';
-import { convertContent } from './util';
+import { convertContentByFirestore } from './util';
+import { filterContentType, firestoreContents } from '../../../../lib/_firestore';
 
 export const getMainShorts = async () => {
-  const response = await GET('/video-content?sort=[{views:desc}]&type=SHORTS&cursor=0&size=6');
-  const shorts = response.items.map((content: VideoContent) => convertContent(content));
+  const fireStoreData: any = await firestoreContents(6, undefined, undefined, undefined, filterContentType('SHORTS'));
+  const shorts = fireStoreData.contents.map((content:any) => convertContentByFirestore(content));
   return {
     title: [
       {

@@ -5,10 +5,21 @@ import type {
 } from '../../../../lib/models/backend/backend';
 import relationJson from '../../../../../static/data/relation.json';
 import contentJson from '../../../../../static/data/content.json';
-import programJson from '../../../../../static/data/program.json';
 import type { ICeleb, IContent } from '../../../../global/types';
-import { celebById, contentsByProgramId, convertCeleb, convertContent, convertPopularContent } from './util';
-import { popularContents } from '../../../../lib/_youtube';
+import {
+  celebById,
+  contentsByProgramId,
+  convertCeleb,
+  convertContent,
+  convertContentByFirestore,
+  convertPopularContent,
+} from './util';
+import {
+  filterContentType,
+  firestoreContentById,
+  firestoreContents, firestoreContentsByProgramId,
+  updateEpisodeToFull,
+} from '../../../../lib/_firestore';
 
 const setOrderBy = (sortField?: string, sortOrder?: string) => {
   if (
@@ -64,8 +75,8 @@ export const contents = async ({
 };
 
 export const content = async ({ id }: { id: string }) => {
-  const content = await GET(`/video-content/${id}?program=true`);
-  return convertContent(content);
+  const content = await firestoreContentById(id);
+  return convertContentByFirestore(content);
 };
 
 export const getContentsByProductId = ({ id }: { id: string }) => {
@@ -76,18 +87,18 @@ export const getContentsByProductId = ({ id }: { id: string }) => {
 };
 
 export const getProgramContentsByContentId = async ({ id }: { id: string }) => {
-  const content: VideoContent = await GET(`/video-content/${id}?program=true`);
-  const programId = content?.ProgramInfo?.programId;
+  const content = await firestoreContentById(id);
+  const programId = content?.program?.id;
   if (!programId) {
     return [];
   }
-  const contents = await contentsByProgramId(programId.toString());
-  return contents.filter((content: IContent) => content.id !== id).splice(0, 2);
+  const contents = await firestoreContentsByProgramId(programId);
+  return contents.contents.filter((content) => content.id !== id).splice(0, 2);
 };
 
 export const getMainContents = async () => {
-  const popular = await popularContents();
-  const contents = popular.contents.slice(0, 2).map((content:any) => convertPopularContent(content));
+  const fireStoreData: any = await firestoreContents(2, undefined, undefined, undefined, filterContentType('FULL'));
+  const contents = fireStoreData.contents.map((content:any) => convertContentByFirestore(content));
   const result = {
     title: [
       {
@@ -111,10 +122,10 @@ export const getMainInfiniteContents = async ({ limit, cursor }: {
   limit: number;
   cursor: string;
 }) => {
-  const result = await popularContents(limit, cursor, 'date');
+  const result = await firestoreContents(limit, cursor, 'publishedAt', 'desc', filterContentType('FULL'));
   return {
     ...result,
-    contents: result.contents.map((content:any) => convertPopularContent(content)),
+    contents: result.contents.map((content:any) => convertContentByFirestore(content)),
   };
 };
 
