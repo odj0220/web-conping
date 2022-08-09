@@ -1,10 +1,9 @@
-import { GET } from '../../../../lib/_api';
-import type { Program } from '../../../../lib/models/backend/backend';
-import { convertProgram } from './util';
+import { convertProgramByFirestore, convertProgramByPlayList } from './util';
+import { firestorePrograms } from '../../../../lib/_firestore';
 
 export const getMainOrigin = async () => {
-  const response = await GET('/program');
-  const programs = response.map((program: Program) => convertProgram(program));
+  const response = await firestorePrograms();
+  const programs = response.map((program: any) => convertProgramByFirestore(program));
   return {
     title: [
       {

@@ -1,14 +1,13 @@
-import { GET } from '../../../../lib/_api';
-import type { VideoContent } from '../../../../lib/models/backend/backend';
-import { convertProgram, convertContent } from './util';
+import { convertContentByFirestore, convertContentByPlaylistItem, convertPopularContent } from './util';
+import { filterContentType, firestoreContentsByProgramId } from '../../../../lib/_firestore';
 
 export const getMainSeries = async () => {
-  const programId = '1';
-  const response = await GET(`/video-content?sort=[{views:desc}]&programId=${programId}&program=true&cursor=0&size=5`);
-  const contents = response.items.map((content: VideoContent) => convertContent(content));
+  const programId = 'PLWeQO3UkBcB3sOdyY_aCl0pG8c5-bKbHR';
+  const response:any = await firestoreContentsByProgramId(programId, undefined, undefined, 'publishedAt', undefined, filterContentType('FULL'));
+  const contents = response?.contents.map((content:any) => convertContentByFirestore(content));
   let series;
-  if (contents[0].ProgramInfo) {
-    series = convertProgram(contents[0].ProgramInfo.Program);
+  if (contents[0].program) {
+    series = contents[0].program;
   }
   return {
     title: [

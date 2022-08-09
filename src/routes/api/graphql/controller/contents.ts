@@ -1,13 +1,16 @@
-import { GET } from '../../../../lib/_api';
-import type {
-  Celeb,
-  VideoContent,
-} from '../../../../lib/models/backend/backend';
 import relationJson from '../../../../../static/data/relation.json';
 import contentJson from '../../../../../static/data/content.json';
-import programJson from '../../../../../static/data/program.json';
-import type { ICeleb, IContent } from '../../../../global/types';
-import { celebById, contentsByProgramId, convertCeleb, convertContent } from './util';
+import type { ICeleb } from '../../../../global/types';
+import {
+  celebById,
+  convertContent,
+  convertContentByFirestore,
+} from './util';
+import {
+  filterContentType,
+  firestoreContentById,
+  firestoreContents, firestoreContentsByProgramId,
+} from '../../../../lib/_firestore';
 
 const setOrderBy = (sortField?: string, sortOrder?: string) => {
   if (
@@ -56,15 +59,13 @@ export const contents = async ({
       sort,
     }),
   );
-  const contents = await GET(
-    `/video-content?${new URLSearchParams(params).toString()}`,
-  );
-  return contents.map((content: VideoContent) => convertContent(content));
+  const contents = await firestoreContents(999, undefined, undefined, sortOrder, filterContentType(type));
+  return contents.contents.map((content: any) => convertContentByFirestore(content));
 };
 
 export const content = async ({ id }: { id: string }) => {
-  const content = await GET(`/video-content/${id}?program=true`);
-  return convertContent(content);
+  const content = await firestoreContentById(id);
+  return convertContentByFirestore(content);
 };
 
 export const getContentsByProductId = ({ id }: { id: string }) => {
@@ -75,20 +76,19 @@ export const getContentsByProductId = ({ id }: { id: string }) => {
 };
 
 export const getProgramContentsByContentId = async ({ id }: { id: string }) => {
-  const content: VideoContent = await GET(`/video-content/${id}?program=true`);
-  const programId = content?.ProgramInfo?.programId;
+  const content = await firestoreContentById(id);
+  const programId = content?.program?.id;
   if (!programId) {
     return [];
   }
-  const contents = await contentsByProgramId(programId.toString());
-  return contents.filter((content: IContent) => content.id !== id).splice(0, 2);
+  const contents = await firestoreContentsByProgramId(programId);
+  return contents.contents.filter((content) => content.id !== id).splice(0, 2).map((content: any) => convertContentByFirestore(content));
 };
 
 export const getMainContents = async () => {
-  const contents = await GET(
-    '/video-content?sort=[{views:desc}]&cursor=0&size=2&program=true',
-  );
-  return {
+  const fireStoreData: any = await firestoreContents(2, undefined, undefined, undefined, filterContentType('FULL'));
+  const contents = fireStoreData.contents.map((content:any) => convertContentByFirestore(content));
+  const result = {
     title: [
       {
         text: '지금',
@@ -101,32 +101,20 @@ export const getMainContents = async () => {
         text: '콘텐츠',
       },
     ],
-    contents: contents.items.map((content: VideoContent) =>
-      convertContent(content),
-    ),
+    contents: contents,
   };
+
+  return result;
 };
 
 export const getMainInfiniteContents = async ({ limit, cursor }: {
   limit: number;
   cursor: string;
 }) => {
-  const response = await GET(`/video-content?size=${limit}&cursor=${cursor || 0}&type=FULL,HIGHLIGHT&program=true`);
-  const contents: any[] = response.items.map((content: any) => convertContent(content));
-
-  let startCursor = 0;
-  if (contents.length > 0) {
-    startCursor = contents.slice(-1)[0].id;
-  }
-  const hasNextPage = contents.length >= limit;
-
+  const result = await firestoreContents(limit, cursor, 'publishedAt', 'desc', filterContentType('FULL'));
   return {
-    totalCount: 0,
-    contents,
-    pageInfo: {
-      startCursor,
-      hasNextPage,
-    },
+    ...result,
+    contents: result.contents.map((content:any) => convertContentByFirestore(content)),
   };
 };
 

@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import { GET } from '../../../../lib/_api';
 import type { ICeleb, IContent } from '../../../../global/types';
 import type { YoutubeVideo } from '../../../../global/types';
+import { filterContentType, firestoreContentsByProgramId } from '../../../../lib/_firestore';
 
 export const EXPOSED_DEFAULT_DURATION = 3000;
 
@@ -22,6 +23,47 @@ export const convertProgram = (program?: Program) => {
 };
 
 export const getThumbnail = (videoId?: string) => `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+
+export const convertProgramByChannel = (channelInfo: any) => {
+  const thumbnail = channelInfo?.thumbnails?.default?.url;
+  const airingBeginAt = channelInfo?.publishedAt;
+  const regularAiringAt = channelInfo?.publishedAt;
+  return {
+    ...channelInfo,
+    thumbnail,
+    airingBeginAt,
+    regularAiringAt,
+  };
+};
+
+export const convertPopularContent = (content: any) => {
+  const createDt = +dayjs(content?.publishedAt);
+  return JSON.parse(JSON.stringify({
+    ...content,
+    createDt,
+    programId: content?.program?.id,
+    contentType: 'FULL',
+    thumb: getThumbnail(content.videoId || ''),
+    program: convertProgramByChannel(content.program),
+  }));
+};
+
+export const convertContentByPlaylistItem = (content: any) => {
+  const videoId = content?.snippet?.resourceId?.videoId;
+  const createDt = +dayjs(content?.publishedAt);
+  return JSON.parse(JSON.stringify({
+    ...content.snippet,
+    id: videoId,
+    createDt,
+    videoId,
+    programId: content?.program?.id,
+    contentType: 'FULL',
+    thumb: getThumbnail(videoId || ''),
+    program: convertProgramByChannel(content.program),
+  }));
+};
+
+
 export const convertContent = (content?: VideoContent) => {
   if (!content) {
     return ;
@@ -200,17 +242,10 @@ export const contentsByCelebId = async (id: string, cursor: number, limit: numbe
   };
 };
 
-export const contentsByProgramId = async (id: string, type?: string) => {
-  const queryType = type ? '&type=' + type : '';
-  const response = await GET(`/video-content?programId=${id}&program=true&sort=[{"ProgramInfo": {"episode": "desc"} }]${queryType}`);
-  const contents = response.items.map((content: VideoContent) => convertContent(content));
-  return contents
-    .filter((content: IContent) => {
-      if (!type) {
-        return true;
-      }
-      return content.contentType === type;
-    });
+export const contentsByProgramId = async (id: string, type?:string) => {
+  const response = await firestoreContentsByProgramId(id, 50, undefined, 'publishedAt', 'desc', type ? filterContentType(type) : undefined);
+  const contents = response.contents.map((content: any) => convertContentByFirestore(content));
+  return contents;
 };
 
 export const productsByCelebId = async (id: string, limit: number, cursor: number) => {
@@ -303,3 +338,99 @@ export const youtubeToContent = async ({ id, snippet }: YoutubeVideo) => {
     thumb: getThumbnail(videoId),
   }));
 };
+
+export const convertProgramByPlayList = async ({ id, snippet }: any) => {
+  if (!id || !snippet) {
+    return ;
+  }
+  const { thumbnails, publishedAt } = snippet;
+  return JSON.parse(JSON.stringify({
+    id,
+    ...snippet,
+    createDt: +dayjs(publishedAt),
+    airingBeginAt: +dayjs(publishedAt),
+    thumbnail: thumbnails?.high?.url,
+    banner: thumbnails?.high?.url,
+  }));
+};
+
+export const durationToSeconds = (duration: string) => {
+  return dayjs.duration(duration).asSeconds();
+};
+
+
+export const convertContentByFirestore = (content: any) => {
+  const createDt = +dayjs(content?.publishedAt);
+  const { id, type, statistics, contentDetails, program } = content;
+  return JSON.parse(JSON.stringify({
+    ...content,
+    createDt,
+    programId: id,
+    contentType: type,
+    videoId: id,
+    thumb: getThumbnail(id || ''),
+    views: statistics?.viewCount,
+    program: convertProgramByFirestore(program),
+    duration: contentDetails?.duration,
+  }));
+};
+
+export const convertProgramByFirestore = (channelInfo: any) => {
+  const { id, thumbnails, publishedAt } = channelInfo;
+  const thumbnail = thumbnails?.high?.url;
+  const airingBeginAt = publishedAt;
+  const regularAiringAt = publishedAt;
+
+  let banner = thumbnail;
+  if (id === 'PLWeQO3UkBcB16CyWkwkigJsisnNSzbwrh') {
+    banner = 'https://yt3.ggpht.com/3eR1TISpkHimmosSEq-PJMoXe7_d1TclSjoOaqY_jZSj0sr9O9ZZjTYH9bmXVX8yw7ZMr87lsw';
+  } else if (id === 'PLWeQO3UkBcB3XSMF5HJ_umXOzQVqiD-JV') {
+    banner = 'https://yt3.ggpht.com/-M0WuI-jS90PSv6avFM-GYFdmHhTwthAZd9oYUcjUE3VCxmI8-GtwlMi9CPL7tqFrpV_aXPlFQ';
+  } else if (id === 'PLWeQO3UkBcB3sOdyY_aCl0pG8c5-bKbHR') {
+    banner = '/images/Home_Banner_01.png';
+  }
+  return {
+    ...channelInfo,
+    thumbnail,
+    banner,
+    airingBeginAt,
+    regularAiringAt,
+  };
+};
+
+export const convertCelebByFirestore = (celeb?: any) => {
+  if (!celeb) {
+    return ;
+  }
+  const { id, brandingSettings, statistics, thumbnails, topicDetails } = celeb;
+  const thumbnail = thumbnails?.high?.url;
+  const banner = brandingSettings?.image?.bannerExternalUrl;
+  const countOfFollowers = statistics?.subscriberCount || 0;
+  const countOfProducts = 0;
+  const countOfContents = statistics?.videoCount || 0;
+
+  let categories:any[] = [];
+  if (topicDetails?.topicCategories) {
+    categories = topicDetails?.topicCategories.map((url:string) => {
+      const split = url.split('/');
+      return {
+        name: split[split.length - 1],
+        fontColor: '#0A0A0A',
+        backColor: '#BE65F2',
+      };
+    });
+  }
+
+  return JSON.parse(JSON.stringify({
+    ...celeb,
+    id: id.toString(),
+    name: celeb.title,
+    thumbnail,
+    banner,
+    categories,
+    countOfFollowers,
+    countOfProducts,
+    countOfContents,
+  }));
+};
+

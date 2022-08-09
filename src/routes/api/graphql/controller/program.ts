@@ -1,14 +1,13 @@
-import { GET } from '../../../../lib/_api';
-import type { Program } from '../../../../lib/models/backend/backend';
-import { convertProgram } from './util';
+import { convertProgramByFirestore } from './util';
+import { firestoreProgramById, firestorePrograms } from '../../../../lib/_firestore';
 
 
 export const programs = async () => {
-  const programs = await GET('/program');
-  return programs.map((program: Program) => convertProgram(program));
+  const programs = await firestorePrograms();
+  return programs.map((program: any) => convertProgramByFirestore(program));
 };
 
 export const program = async ({ id }: { id: string }) => {
-  const program = await GET(`/program/${id}`);
-  return convertProgram(program);
+  const program = await firestoreProgramById(id);
+  return convertProgramByFirestore(program);
 };

@@ -78,7 +78,7 @@
 
 {#await getData()}
 {:then {content, celebs}}
-  <SubHeaderContainer title='{content?.program.title} {content?.episode}화' onClickShare={onClickShare}/>
+  <SubHeaderContainer title='{content?.program.title} {content?.episode ? content?.episode + "화" : ""}' onClickShare={onClickShare}/>
 
   <Container type="full" margin="0">
     <Player content={content} on:get-player={setPlayer}/>

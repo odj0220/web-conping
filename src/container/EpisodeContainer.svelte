@@ -29,8 +29,6 @@
 
     const result = await graphqlApi(query);
 
-    console.log('result', result);
-
     const contents = result.data.getContentsByProgramId;
 
     return contents;

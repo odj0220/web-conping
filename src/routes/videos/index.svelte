@@ -36,7 +36,6 @@
         `;
 
       const response = await graphqlApi(query);
-      console.log(response);
     }
 
     async function getProducts() {
@@ -67,7 +66,6 @@
           }
         }`;
       const response = await graphqlApi(query);
-      console.log(response);
     }
 
     async function getCategories() {
@@ -78,7 +76,6 @@
         }
       }`;
       const response = await graphqlApi(query);
-      console.log(response);
     }
 
     async function getCelebs() {
