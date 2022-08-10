@@ -137,7 +137,7 @@ export const onSettingTap = () => {
 
 export const onAndroidExit = () => {
   const win: any = window;
-  win['flutter_inappwebview'].callHandler('onAndroidExit');
+  win['ConpingInterface'].onAndroidExit();
 };
 
 export const onInitialized = (callback: () => void) => {
