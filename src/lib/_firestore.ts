@@ -15,15 +15,16 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
-const batch = writeBatch(db);
+let batch = writeBatch(db);
 
 
 export const updateDb = async (programs: any, contents: any, celebs: any) => {
+  batch = writeBatch(db);
   try {
     // 컬렉션 의 모든 데이터 삭제
-    await deleteCollection(db, 'program', 20);
-    await deleteCollection(db, 'contents', 20);
-    await deleteCollection(db, 'celeb', 20);
+    await deleteCollection(db, 'program');
+    await deleteCollection(db, 'contents');
+    await deleteCollection(db, 'celeb');
 
     // 모든 데이터 추가
     contents.forEach((content: any) => {
@@ -45,22 +46,14 @@ export const updateDb = async (programs: any, contents: any, celebs: any) => {
     console.log(`add programs: ${programs.length}`);
 
     await batch.commit();
+    return ;
   } catch (e) {
     console.error('Error adding document: ', e);
   }
 
 };
 
-export const updateEpisodeToFull = async () => {
-  const getQuery = query(collection(db, 'contents'), where('type', '==', 'EPISODE'));
-  const queryDocs = await getDocs(getQuery);
-  queryDocs.forEach((doc) => {
-    batch.update(doc.ref, 'type', 'FULL');
-  });
-  batch.commit();
-};
-
-const deleteCollection = async (db: any, collectionPath: string, batchSize: number) => {
+const deleteCollection = async (db: any, collectionPath: string) => {
   const collectionRef = collection(db, collectionPath);
   const q = query(collectionRef, orderBy('id'));
 
