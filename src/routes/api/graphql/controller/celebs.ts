@@ -4,7 +4,7 @@ import contentJson from '../../../../../static/data/content.json';
 import { GET } from '../../../../lib/_api';
 import type { Celeb, VideoContentCast } from '../../../../lib/models/backend/backend';
 import { celebById, convertCeleb, convertCelebByFirestore } from './util';
-import { firestoreCeleb } from '../../../../lib/_firestore';
+import { firestoreCeleb, firestoreCelebById } from '../../../../lib/_firestore';
 
 export const celebs = async () => {
   const response: any = await firestoreCeleb();
@@ -14,7 +14,7 @@ export const celebs = async () => {
 };
 
 export const celeb = async ({ id }: { id: string }) => {
-  return await celebById(id);
+  return convertCelebByFirestore(await firestoreCelebById(id));
 };
 
 export const getCelebsByContentId = async ({ id }: { id: string }) => {

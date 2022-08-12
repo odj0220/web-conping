@@ -193,6 +193,11 @@ export const firestoreCeleb = async (limitCnt = 5, cursor = '', order = 'statist
   };
 };
 
+export const firestoreCelebById = async (id: string) => {
+  const document = await getDoc(doc(collection(db, 'celeb'), id));
+  return document.data();
+};
+
 export const filterContentType = (type: string) => {
   return where('type', '==', type);
 };

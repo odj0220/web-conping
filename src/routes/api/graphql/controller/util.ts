@@ -408,6 +408,7 @@ export const convertCelebByFirestore = (celeb?: any) => {
   const countOfFollowers = statistics?.subscriberCount || 0;
   const countOfProducts = 0;
   const countOfContents = statistics?.videoCount || 0;
+  const countOfYoutubeFollowers = statistics?.subscriberCount || 0;
 
   let categories:any[] = [];
   if (topicDetails?.topicCategories) {
@@ -431,6 +432,7 @@ export const convertCelebByFirestore = (celeb?: any) => {
     countOfFollowers,
     countOfProducts,
     countOfContents,
+    countOfYoutubeFollowers,
   }));
 };
 
