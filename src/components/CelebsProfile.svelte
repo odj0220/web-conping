@@ -29,12 +29,6 @@
         </span>
         <span class="sns-follows">{countOfYoutubeFollowers || 0} 명</span>
       </li>
-      <li class="sns-item">
-        <span class="sns-icon">
-          <Icon name="instagram" />
-        </span>
-        <span class="sns-follows">1,400 명</span>
-      </li>
     </ul>
   </div>
 </div>
