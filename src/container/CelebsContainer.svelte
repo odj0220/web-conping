@@ -9,6 +9,7 @@
   import CelebsSkeleton from '$component/skeleton/container/CelebsSkeleton.svelte';
 
   import type { ICeleb } from 'src/global/types';
+import GlobalBlock from '$component/common/layout/GlobalBlock.svelte';
 
   let contents: ICeleb[] = [];
   let end = false;
@@ -49,12 +50,15 @@
 
 </script>
 
-{#await getData(8)}
-<CelebsSkeleton />
-{:then data}
-<MainHeaderContainer title="셀럽존" />
+<GlobalBlock>
+  {#await getData(8)}
+  <CelebsSkeleton />
+  {:then data}
+  <MainHeaderContainer title="셀럽존" />
+  
+  <Container margin="8px 0 1.6rem 0 ">
+    <Celebs celebs={contents} onClick={gotoCelebs} {end} {cursor} infiniteScroll={true} on:request-more={runInfiniteScrolling}/>
+  </Container>
+  {/await}
 
-<Container margin="8px 0 1.6rem 0 ">
-  <Celebs celebs={contents} onClick={gotoCelebs} {end} {cursor} infiniteScroll={true} on:request-more={runInfiniteScrolling}/>
-</Container>
-{/await}
+</GlobalBlock>
