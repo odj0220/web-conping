@@ -19,6 +19,7 @@
   import ShopNavbarSkeleton from '$component/skeleton/container/ShopNavbarSkeleton.svelte';
 import ShopEmpty from '$component/ShopEmpty.svelte';
 import GlobalBlock from '$component/common/layout/GlobalBlock.svelte';
+import MainHeaderContainer from './MainHeaderContainer.svelte';
 
   let hasNextPage: boolean;
   let cursor = 0;
@@ -201,7 +202,7 @@ import GlobalBlock from '$component/common/layout/GlobalBlock.svelte';
 </script>
 
 <GlobalBlock>
-  
+  <MainHeaderContainer title="쇼핑존" />
   
   {#await getShopItems({ sort, category })}
   <ShopNavbarSkeleton />
