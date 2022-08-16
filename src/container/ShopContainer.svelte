@@ -17,6 +17,8 @@
   import ShopList from '$component/ShopList.svelte';
   import ShopSekeleton from '$component/skeleton/container/ShopSekeleton.svelte';
   import ShopNavbarSkeleton from '$component/skeleton/container/ShopNavbarSkeleton.svelte';
+import ShopEmpty from '$component/ShopEmpty.svelte';
+import GlobalBlock from '$component/common/layout/GlobalBlock.svelte';
 
   let hasNextPage: boolean;
   let cursor = 0;
@@ -154,7 +156,6 @@
   }
 
   function handleClickProductItem(event) {
-    console.log('event', event);
     openBrowser(event.detail.targetUrl);
   }
 
@@ -194,47 +195,61 @@
       gotoContents(id);
     }
   };
+  
+  console.log("shopingProducts", shopingProducts.length)
 
 </script>
 
-{#await getTabItems()}
-<ShopNavbarSkeleton />
-{:then}
-  {#if tabItems?.length }
-    <ShopNavbar
-      {tabItems}
-      {selectedTab}
-      sort={sortedName}
-      onClickTab={handleClickTab}
-      onClickSort={openPopup}
-    />
-  {/if}
-{/await}
+<GlobalBlock>
+  
+  
+  {#await getShopItems({ sort, category })}
+  <ShopNavbarSkeleton />
+  <ShopSekeleton />
+  {:then}
+    {#await getTabItems()}
+    <ShopNavbarSkeleton />
+    {:then}
+      {#if tabItems?.length }
+        <ShopNavbar
+          {tabItems}
+          {selectedTab}
+          sort={sortedName}
+          onClickTab={handleClickTab}
+          onClickSort={openPopup}
+        />
+      {/if}
+    {/await}
 
-{#await getShopItems({ sort, category })}
-<ShopSekeleton />
-{:then}
-  <Container margin="3.2rem 0 4rem">
-    <InfiniteScroll
-      {infiniteScrollActive}
-      end={!hasNextPage}
-      on:request-more={runInfiniteScrolling}
-    >
-      <ShopList
-        products={shopingProducts}
-        {onClickRelatedItem}
-        on:go-link={handleClickProductItem}
+    {#if shopingProducts.length}
+    <Container margin="3.2rem 0 4rem">
+      <InfiniteScroll
+        {infiniteScrollActive}
+        end={!hasNextPage}
+        on:request-more={runInfiniteScrolling}
+      >
+        <ShopList
+          products={shopingProducts}
+          {onClickRelatedItem}
+          on:go-link={handleClickProductItem}
+        />
+      </InfiniteScroll>
+    </Container>
+  
+    <LayoutPopup visible={isPopupVisible} {closePopup}>
+      <SelectPopup
+        title='정렬 기준'
+        onClickSelectButton={handleClickSelectButton}
+        onClickCloseButton={closePopup}
+        selected={sort}
+        selectItems={sortItems}
       />
-    </InfiniteScroll>
-  </Container>
-
-  <LayoutPopup visible={isPopupVisible} {closePopup}>
-    <SelectPopup
-      title='정렬 기준'
-      onClickSelectButton={handleClickSelectButton}
-      onClickCloseButton={closePopup}
-      selected={sort}
-      selectItems={sortItems}
-    />
-  </LayoutPopup>
-{/await}
+    </LayoutPopup>
+    {:else}
+    <ShopEmpty />
+    {/if}
+  {:catch error}
+    <ShopEmpty />
+  {/await}
+  
+</GlobalBlock>

@@ -6,8 +6,6 @@
   import Footer from '$component/Footer.svelte';
 </script>
 
-<GlobalBlock>
-  <MainHeaderContainer title="쇼핑존" />
-  <ShopContainer />
-</GlobalBlock>
+<MainHeaderContainer title="쇼핑존" />
+<ShopContainer />
 <Footer/>
