@@ -196,21 +196,20 @@ import MainHeaderContainer from './MainHeaderContainer.svelte';
       gotoContents(id);
     }
   };
-  
-  console.log("shopingProducts", shopingProducts.length)
+
 
 </script>
 
 <GlobalBlock>
   <MainHeaderContainer title="쇼핑존" />
-  
+
   {#await getShopItems({ sort, category })}
   <ShopNavbarSkeleton />
   <ShopSekeleton />
-  {:then}
+  {:then shopData}
     {#await getTabItems()}
     <ShopNavbarSkeleton />
-    {:then}
+    {:then tabData}
       {#if tabItems?.length }
         <ShopNavbar
           {tabItems}
